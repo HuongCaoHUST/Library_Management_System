@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.project.controller.handleRegister"
+            prefWidth="350.0" prefHeight="300.0"
+            style="-fx-background-color: linear-gradient(to bottom, #e0eafc, #cfdef3);">
+
+    <children>
+        <GridPane layoutX="30.0" layoutY="40.0" prefWidth="290.0" prefHeight="220.0"
+                  alignment="CENTER" hgap="10" vgap="15"
+                  AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+                  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <columnConstraints>
+                <ColumnConstraints minWidth="100" halignment="RIGHT"/>
+                <ColumnConstraints minWidth="150" halignment="LEFT"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints prefHeight="30.0"/>
+                <RowConstraints prefHeight="30.0"/>
+                <RowConstraints prefHeight="30.0"/>
+                <RowConstraints prefHeight="30.0"/>
+            </rowConstraints>
+
+            <children>
+                <Label text="Tên đăng ký:" GridPane.rowIndex="0" GridPane.columnIndex="0">
+                    <font>
+                        <Font name="Inter Medium" size="12.0" />
+                    </font>
+                </Label>
+
+                <Label text="Mật khẩu:" GridPane.rowIndex="1" GridPane.columnIndex="0">
+                    <font>
+                        <Font name="Inter Medium" size="12.0" />
+                    </font>
+                </Label>
+
+                <Label text="Email:" GridPane.rowIndex="2" GridPane.columnIndex="0">
+                    <font>
+                        <Font name="Inter Medium" size="12.0" />
+                    </font>
+                </Label>
+
+                <TextField fx:id="txtUsername" promptText="Nhập tên đăng ký"
+                           GridPane.columnIndex="1" GridPane.rowIndex="0"
+                           style="-fx-background-radius: 8;" />
+
+                <PasswordField fx:id="txtPassword" promptText="Nhập mật khẩu"
+                               GridPane.columnIndex="1" GridPane.rowIndex="1"
+                               style="-fx-background-radius: 8;" />
+
+                <TextField fx:id="txtEmail" promptText="Nhập email"
+                           GridPane.columnIndex="1" GridPane.rowIndex="2"
+                           style="-fx-background-radius: 8;" />
+
+                <Button fx:id="btnRegister"
+                        text="ĐĂNG KÝ"
+                        onAction="#handleRegister"
+                        GridPane.columnIndex="1" GridPane.rowIndex="3"
+                        prefWidth="120" prefHeight="30"
+                        style="-fx-background-color: #34a853; -fx-text-fill: white; -fx-background-radius: 10;">
+                    <font>
+                        <Font name="Inter SemiBold" size="13.0" />
+                    </font>
+                </Button>
+            </children>
+        </GridPane>
+    </children>
+</AnchorPane>
