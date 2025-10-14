@@ -5,6 +5,5 @@ module com.example.project {
     requires com.dlsc.formsfx;
 
     opens com.example.project to javafx.fxml;
-    opens com.example.project.controller to javafx.fxml;
     exports com.example.project;
 }
