@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -28,8 +29,9 @@ public class RegisterController {
     @FXML private TextField txtChuyenmon; // Chuyên môn
     @FXML private TextField txtNoicongtac; // Nơi công tác
     @FXML private TextField txtDiachi; // Địa chỉ liên hệ
+    @FXML private TextField txtMatkhau;
+    @FXML private TextField txtNhaplaimatkhau;
     @FXML
-
     private void handleBackToLogin(MouseEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("login_form.fxml"));
@@ -53,13 +55,15 @@ public class RegisterController {
         String specialty = txtChuyenmon.getText().trim();
         String workPlace = txtNoicongtac.getText().trim();
         String address = txtDiachi.getText().trim();
+        String username = txtMatkhau.getText().trim();
+        String password = txtNhaplaimatkhau.getText().trim();
 
         if(mssv.isEmpty() || gender.isEmpty() || birthDate.isEmpty() || phone.isEmpty() || email.isEmpty()) {
             showAlert("Vui lòng điền đầy đủ các thông tin bắt buộc!");
             return;
         }
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("users.txt", true))) {
-            writer.write(String.join(",", mssv, gender, birthDate, phone, email, cccd, birthPlace, issuedPlace, specialty, workPlace, address));
+            writer.write(String.join(",", mssv, gender, birthDate, phone, email, cccd, birthPlace, issuedPlace, specialty, workPlace, address, username, password,"pending"));
             writer.newLine();
             showAlert("Đăng ký thành công!");
             clearFields();
@@ -73,6 +77,8 @@ public class RegisterController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText(null);
         alert.setContentText(message);
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("logo_HUB.png")));
         alert.showAndWait();
     }
 
@@ -89,5 +95,7 @@ public class RegisterController {
         txtChuyenmon.clear();
         txtNoicongtac.clear();
         txtDiachi.clear();
+        txtMatkhau.clear();
+        txtNhaplaimatkhau.clear();
     }
 }

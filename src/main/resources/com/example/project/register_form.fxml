@@ -12,25 +12,26 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.control.PasswordField?>
 
-<AnchorPane id="AnchorPane" prefHeight="503.0" prefWidth="943.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/22.0.1" fx:controller="com.example.project.RegisterController" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefHeight="503.0" prefWidth="1041.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.RegisterController">
     <children>
-        <AnchorPane prefHeight="503.0" prefWidth="275.0" style="-fx-background-color: #0C39FF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <AnchorPane prefHeight="503.0" prefWidth="374.0" style="-fx-background-color: #0C39FF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <ImageView fitHeight="503.0" fitWidth="296.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="503.0" fitWidth="384.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@thu_vien.png" />
+                        <Image url="@welcome.png" />
                     </image>
                <viewport>
-                  <Rectangle2D height="503.0" minX="60.0" width="275.0" />
+                  <Rectangle2D height="503.0" minX="15.0" width="383.0" />
                </viewport>
                 </ImageView>
             </children>
         </AnchorPane>
-        <Pane layoutX="343.0" layoutY="77.0" prefHeight="386.0" prefWidth="569.0" AnchorPane.bottomAnchor="40.0" AnchorPane.topAnchor="77.0">
+        <Pane layoutX="446.0" layoutY="75.0" prefHeight="408.0" prefWidth="569.0" AnchorPane.bottomAnchor="20.0" AnchorPane.topAnchor="75.0">
             <children>
-                <Button fx:id="btnSignup" onAction="#handleSignup" layoutX="17.0" layoutY="305.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="535.0" stylesheets="@fullpackstyling.css" text="Gửi đăng ký" />
-            <GridPane layoutX="13.0" layoutY="19.0" prefHeight="257.0" prefWidth="535.0">
+                <Button fx:id="btnSignup" layoutX="17.0" layoutY="327.0" mnemonicParsing="false" onAction="#handleSignup" prefHeight="34.0" prefWidth="535.0" defaultButton="true" stylesheets="@fullpackstyling.css" text="Gửi đăng ký" />
+            <GridPane layoutX="13.0" layoutY="7.0" prefHeight="301.0" prefWidth="535.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="196.0" minWidth="10.0" percentWidth="20.0" prefWidth="76.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="471.0" minWidth="10.0" percentWidth="28.0" prefWidth="118.0" />
@@ -45,6 +46,8 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="32.0" minHeight="4.0" prefHeight="15.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="52.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <TextField fx:id="txtTen" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="1" />
@@ -99,18 +102,22 @@
                   <TextField fx:id="txtChuyenmon" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
                   <TextField fx:id="txtNoicongtac" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
                   <TextField fx:id="txtDiachi" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                  <Label text="Mật khẩu:" textFill="#a81c29" GridPane.rowIndex="7" />
+                  <PasswordField fx:id="txtMatkhau" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                  <PasswordField fx:id="txtNhaplaimatkhau" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+                  <Label text="Nhập lại mật khẩu" textFill="#a81c29" GridPane.columnIndex="3" GridPane.rowIndex="7" />
                </children>
             </GridPane>
-            <Label fx:id="btnBack" onMouseClicked="#handleBackToLogin" stylesheets="@fullpackstyling.css" alignment="CENTER" layoutX="175.0" layoutY="349.0" prefHeight="23.0" prefWidth="211.0" text="Quay lại trang đăng nhập" textAlignment="CENTER" textFill="#5383ff">
+            <Label fx:id="btnBack" alignment="CENTER" layoutX="175.0" layoutY="371.0" onMouseClicked="#handleBackToLogin" prefHeight="23.0" prefWidth="211.0" stylesheets="@fullpackstyling.css" text="Quay lại trang đăng nhập" textAlignment="CENTER" textFill="#5383ff">
                <font>
                   <Font name="Segoe UI" size="14.0" />
                </font>
             </Label>
             </children>
         </Pane>
-        <Label fx:id="btnForgot1" alignment="CENTER" layoutX="530.0" layoutY="52.0" prefHeight="23.0" prefWidth="200.0" text="ĐĂNG KÝ TÀI KHOẢN" textFill="#5383ff">
+        <Label fx:id="btnForgot1" alignment="CENTER" layoutX="631.0" layoutY="52.0" prefHeight="23.0" prefWidth="200.0" text="ĐĂNG KÝ TÀI KHOẢN" textFill="#a81c29">
             <font>
-                <Font name="Segoe UI Bold" size="12.0" />
+                <Font name="Segoe UI Bold" size="18.0" />
             </font>
         </Label>
     </children>
