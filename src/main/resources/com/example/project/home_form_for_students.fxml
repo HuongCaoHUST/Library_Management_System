@@ -52,11 +52,6 @@
                               <Font name="Segoe UI" size="14.0" />
                            </font>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="228.0" styleClass="button_dashboard" stylesheets="@fullpackstyling.css" text="Duyệt tài khoản" GridPane.rowIndex="1">
-                           <font>
-                              <Font name="Segoe UI" size="14.0" />
-                           </font>
-                        </Button>
                      </children>
                   </GridPane>
                </children>
