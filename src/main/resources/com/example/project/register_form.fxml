@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.control.PasswordField?>
 
 <AnchorPane id="AnchorPane" prefHeight="503.0" prefWidth="1041.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.RegisterController">
     <children>
@@ -30,8 +29,8 @@
         </AnchorPane>
         <Pane layoutX="446.0" layoutY="75.0" prefHeight="408.0" prefWidth="569.0" AnchorPane.bottomAnchor="20.0" AnchorPane.topAnchor="75.0">
             <children>
-                <Button fx:id="btnSignup" layoutX="17.0" layoutY="327.0" mnemonicParsing="false" onAction="#handleSignup" prefHeight="34.0" prefWidth="535.0" defaultButton="true" stylesheets="@fullpackstyling.css" text="Gửi đăng ký" />
-            <GridPane layoutX="13.0" layoutY="7.0" prefHeight="301.0" prefWidth="535.0">
+                <Button fx:id="btnSignup" defaultButton="true" layoutX="17.0" layoutY="327.0" mnemonicParsing="false" onAction="#handleSignup" prefHeight="34.0" prefWidth="535.0" stylesheets="@fullpackstyling.css" text="Gửi đăng ký" />
+            <GridPane layoutX="13.0" layoutY="19.0" prefHeight="264.0" prefWidth="546.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="196.0" minWidth="10.0" percentWidth="20.0" prefWidth="76.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="471.0" minWidth="10.0" percentWidth="28.0" prefWidth="118.0" />
@@ -46,8 +45,6 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="32.0" minHeight="4.0" prefHeight="15.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="52.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <TextField fx:id="txtTen" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="1" />
@@ -102,10 +99,6 @@
                   <TextField fx:id="txtChuyenmon" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
                   <TextField fx:id="txtNoicongtac" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
                   <TextField fx:id="txtDiachi" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
-                  <Label text="Mật khẩu:" textFill="#a81c29" GridPane.rowIndex="7" />
-                  <PasswordField fx:id="txtMatkhau" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                  <PasswordField fx:id="txtNhaplaimatkhau" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="4" GridPane.rowIndex="7" />
-                  <Label text="Nhập lại mật khẩu" textFill="#a81c29" GridPane.columnIndex="3" GridPane.rowIndex="7" />
                </children>
             </GridPane>
             <Label fx:id="btnBack" alignment="CENTER" layoutX="175.0" layoutY="371.0" onMouseClicked="#handleBackToLogin" prefHeight="23.0" prefWidth="211.0" stylesheets="@fullpackstyling.css" text="Quay lại trang đăng nhập" textAlignment="CENTER" textFill="#5383ff">

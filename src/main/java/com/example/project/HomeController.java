@@ -6,6 +6,11 @@ import javafx.scene.control.Label;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 
 public class HomeController {
 
@@ -21,6 +26,7 @@ public class HomeController {
     @FXML private Label lblNoicap;
     @FXML private Label lblChuyenmon;
     @FXML private Label lblNoicongtac;
+    @FXML private Label notificationBadge;
     public void loadUserByMSSV(String mssv) {
         try (BufferedReader reader = new BufferedReader(new FileReader("./data/users.txt"))) {
             String line;
@@ -58,5 +64,27 @@ public class HomeController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public void updateNotificationBadge() {
+        Path filePath = Paths.get("./data/register_queue.txt");
+
+        try {
+            if (Files.exists(filePath)) {
+                List<String> lines = Files.readAllLines(filePath);
+                int count = lines.size();
+                if (count > 0) {
+                    notificationBadge.setText(String.valueOf(count));
+                    notificationBadge.setVisible(true);
+                } else {
+                    notificationBadge.setVisible(false);
+                }
+            } else {
+                notificationBadge.setVisible(false);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            notificationBadge.setVisible(false);
+        }
     }
 }

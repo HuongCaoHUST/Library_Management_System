@@ -82,6 +82,7 @@ public class LoginController {
 
             HomeController controller = loader.getController();
             controller.loadUserByMSSV(mssv);
+            controller.updateNotificationBadge();
 
             Stage stage = new Stage();
             stage.setScene(scene);

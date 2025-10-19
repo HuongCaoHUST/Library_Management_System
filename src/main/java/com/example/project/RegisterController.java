@@ -29,8 +29,7 @@ public class RegisterController {
     @FXML private TextField txtChuyenmon; // Chuyên môn
     @FXML private TextField txtNoicongtac; // Nơi công tác
     @FXML private TextField txtDiachi; // Địa chỉ liên hệ
-    @FXML private TextField txtMatkhau;
-    @FXML private TextField txtNhaplaimatkhau;
+
     @FXML
     private void handleBackToLogin(MouseEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -55,15 +54,13 @@ public class RegisterController {
         String specialty = txtChuyenmon.getText().trim();
         String workPlace = txtNoicongtac.getText().trim();
         String address = txtDiachi.getText().trim();
-        String username = txtMatkhau.getText().trim();
-        String password = txtNhaplaimatkhau.getText().trim();
 
         if(mssv.isEmpty() || gender.isEmpty() || birthDate.isEmpty() || phone.isEmpty() || email.isEmpty()) {
             showAlert("Vui lòng điền đầy đủ các thông tin bắt buộc!");
             return;
         }
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("users.txt", true))) {
-            writer.write(String.join(",", mssv, gender, birthDate, phone, email, cccd, birthPlace, issuedPlace, specialty, workPlace, address, username, password,"pending"));
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("./data/register_queue.txt", true))) {
+            writer.write(String.join(",", mssv, gender, birthDate, phone, email, cccd, birthPlace, issuedPlace, specialty, workPlace, address, "pending"));
             writer.newLine();
             showAlert("Đăng ký thành công!");
             clearFields();
@@ -95,7 +92,5 @@ public class RegisterController {
         txtChuyenmon.clear();
         txtNoicongtac.clear();
         txtDiachi.clear();
-        txtMatkhau.clear();
-        txtNhaplaimatkhau.clear();
     }
 }
