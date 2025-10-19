@@ -50,7 +50,7 @@ public class LoginController {
         }
     }
     private String checkAccount(String username, String password) {
-        try (BufferedReader reader = new BufferedReader(new FileReader("account.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("./data/account.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
@@ -87,7 +87,7 @@ public class LoginController {
             stage.setScene(scene);
             stage.setTitle("Trang chủ");
             stage.centerOnScreen();
-            stage.getIcons().add(new Image(getClass().getResourceAsStream("logo_HUB.png")));
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/logo/logo_HUB.png")));
             stage.show();
 
             ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();

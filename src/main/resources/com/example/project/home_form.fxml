@@ -165,7 +165,7 @@
                </Label>
                </GridPane>
            </children></AnchorPane>
-      <AnchorPane prefHeight="112.0" prefWidth="1280.0" style="-fx-background-color: ffffff;">
+      <AnchorPane prefHeight="112.0" prefWidth="1280.0" style="-fx-background-color: ffffff;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label fx:id="btnForgot11" layoutX="113.0" layoutY="63.0" prefHeight="23.0" prefWidth="283.0" styleClass="left-label" stylesheets="@fullpackstyling.css" text="DÀNH CHO CHUYÊN VIÊN" textFill="#1f3368">
                <font>
@@ -182,7 +182,7 @@
             </Label>
             <ImageView fitHeight="76.0" fitWidth="50.0" layoutX="41.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@logo2.png" />
+                  <Image url="@logo/logo2.png" />
                </image>
             </ImageView>
             <GridPane layoutX="702.0" layoutY="33.0" prefHeight="49.0" prefWidth="494.0">

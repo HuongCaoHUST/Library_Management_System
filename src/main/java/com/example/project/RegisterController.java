@@ -78,7 +78,7 @@ public class RegisterController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("logo_HUB.png")));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("logo/logo_HUB.png")));
         alert.showAndWait();
     }
 

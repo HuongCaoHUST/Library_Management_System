@@ -22,7 +22,7 @@ public class HomeController {
     @FXML private Label lblChuyenmon;
     @FXML private Label lblNoicongtac;
     public void loadUserByMSSV(String mssv) {
-        try (BufferedReader reader = new BufferedReader(new FileReader("users.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("./data/users.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");

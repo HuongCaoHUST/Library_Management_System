@@ -14,7 +14,7 @@ public class HelloApplication extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login_form.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 900, 503);
         stage.setTitle("HỆ THỐNG QUẢN LÝ THƯ VIỆN");
-        stage.getIcons().add(new Image(HelloApplication.class.getResourceAsStream("logo_HUB.png")));
+        stage.getIcons().add(new Image(HelloApplication.class.getResourceAsStream("logo/logo_HUB.png")));
         stage.setScene(scene);
         stage.show();
     }
