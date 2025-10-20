@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="503.0" prefWidth="1041.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.RegisterController">
+<AnchorPane id="AnchorPane" prefHeight="503.0" prefWidth="1041.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.controller.RegisterController">
     <children>
         <AnchorPane prefHeight="503.0" prefWidth="374.0" style="-fx-background-color: #0C39FF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -47,7 +47,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TextField fx:id="txtTen" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="1" />
+                  <TextField fx:id="txtFullName" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="1" />
                   <Label text="Họ và tên:" textFill="#5383ff">
                      <font>
                         <Font name="Segoe UI" size="12.0" />
@@ -58,10 +58,10 @@
                   <Label text="Ngày sinh:" textFill="#5383ff" GridPane.rowIndex="3" />
                   <Label text="Số điện thoại:" textFill="#5383ff" GridPane.rowIndex="4" />
                   <Label text="Email:" textFill="#5383ff" GridPane.rowIndex="5" />
-                  <TextField fx:id="txtMSSV" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField fx:id="txtGioitinh" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextField fx:id="txtNgaysinh" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <TextField fx:id="txtSodienthoai" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <TextField fx:id="txtStudentId" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="txtGender" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="txtBirthDate" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="txtPhoneNumber" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <TextField fx:id="txtEmail" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                   <Label text="Số CCCD:" textFill="#5383ff" GridPane.columnIndex="3" GridPane.rowIndex="2">
                      <font>
@@ -93,12 +93,12 @@
                         <Font name="Segoe UI" size="12.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtCCCD" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="4" />
-                  <TextField fx:id="txtNoisinh" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                  <TextField fx:id="txtNoicap" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                  <TextField fx:id="txtChuyenmon" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
-                  <TextField fx:id="txtNoicongtac" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-                  <TextField fx:id="txtDiachi" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                  <TextField fx:id="txtIdCardNumber" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="4" />
+                  <TextField fx:id="txtPlaceOfBirth" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <TextField fx:id="txtIssuedPlace" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                  <TextField fx:id="txtMajor" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                  <TextField fx:id="txtWorkPlace" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                  <TextField fx:id="txtAddress" prefHeight="28.0" prefWidth="67.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
                </children>
             </GridPane>
             <Label fx:id="btnBack" alignment="CENTER" layoutX="175.0" layoutY="371.0" onMouseClicked="#handleBackToLogin" prefHeight="23.0" prefWidth="211.0" stylesheets="@fullpackstyling.css" text="Quay lại trang đăng nhập" textAlignment="CENTER" textFill="#5383ff">

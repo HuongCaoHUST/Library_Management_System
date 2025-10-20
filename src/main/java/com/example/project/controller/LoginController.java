@@ -1,4 +1,4 @@
-package com.example.project;
+package com.example.project.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,10 +38,10 @@ public class LoginController {
                 showAlert(Alert.AlertType.INFORMATION, "Tài khoản của bạn đang chờ duyệt!");
             } else if (role.equalsIgnoreCase("chuyenvien")) {
                 showAlert(Alert.AlertType.INFORMATION, "Đăng nhập thành công!");
-                loadForm(event, "home_form.fxml", username);
+                loadForm(event, "home_form", username);
             } else if (role.equalsIgnoreCase("ban_doc")) {
                 showAlert(Alert.AlertType.INFORMATION, "Đăng nhập thành công!");
-                loadForm(event, "home_form_for_students.fxml", username);
+                loadForm(event, "home_form_for_students", username);
             } else {
                 showAlert(Alert.AlertType.ERROR, "Tài khoản không hợp lệ!");
             }
@@ -75,14 +75,25 @@ public class LoginController {
         return null;
     }
 
-    private void loadForm(ActionEvent event, String fxmlFile, String mssv) {
+    private void loadForm(ActionEvent event, String form_name, String StudentID) {
         try {
+            String fxmlFile = null;
+            if (form_name == "home_form") {
+                fxmlFile = "/com/example/project/home_form.fxml";
+            } else if (form_name == "home_form_for_students") {
+                fxmlFile = "/com/example/project/home_form_for_students.fxml";
+
+            }
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Scene scene = new Scene(loader.load());
 
-            HomeController controller = loader.getController();
-            controller.loadUserByMSSV(mssv);
-            controller.updateNotificationBadge();
+            if (form_name == "home_form") {
+                HomeControllerForAdmin controller = loader.getController();
+                controller.updateNotificationBadge();
+            } else if (form_name == "home_form_for_students") {
+                HomeControllerForStudent controller = loader.getController();
+                controller.loadUserByStudentID(StudentID);
+            }
 
             Stage stage = new Stage();
             stage.setScene(scene);
@@ -95,13 +106,12 @@ public class LoginController {
 
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Không thể mở giao diện: " + fxmlFile);
         }
     }
 
     @FXML
     private void handleSignup(ActionEvent event) throws IOException {
-        loadScene(event, "register_form.fxml");
+        loadScene(event, "/com/example/project/register_form.fxml");
     }
     private void loadScene(ActionEvent event, String fxmlFile) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
