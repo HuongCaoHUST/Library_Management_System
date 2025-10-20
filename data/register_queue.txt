@@ -1,20 +1,12 @@
-admin,Nguyễn Văn An,Nam,15/05/2000,0912345678,an.nguyen@email.com,001200123456,Hà Nội,Hà Nội,Công nghệ thông tin,Công ty ABC,123 Trần Hưng Đạo, Hà Nội
 20213963,Trần Thị Bình,Nữ,20/08/2001,0923456789,binh.tran@email.com,001200123457,Hải Phòng,Hải Phòng,Quản trị kinh doanh,Công ty XYZ,456 Lê Lợi, Hải Phòng
-SV003,Lê Văn Cường,Nam,10/03/1999,0934567890,cuong.le@email.com,001200123458,Đà Nẵng,Đà Nẵng,Kỹ thuật điện,Công ty DEF,789 Nguyễn Huệ, Đà Nẵng
-SV004,Phạm Thị Dung,Nữ,25/12/2000,0945678901,dung.pham@email.com,001200123459,Cần Thơ,Cần Thơ,Y học,Bệnh viện GHI,321 Hùng Vương, Cần Thơ
 SV005,Hoàng Văn Đạt,Nam,05/07/2001,0956789012,dat.hoang@email.com,001200123460,Quảng Ninh,Quảng Ninh,Luật,Văn phòng luật JKL,654 Lý Thường Kiệt, Hạ Long
 SV006,Vũ Thị Em,Nữ,15/09/2000,0967890123,em.vu@email.com,001200123461,Hà Giang,Hà Giang,Du lịch,Khách sạn MNO,987 Quang Trung, Hà Giang
-SV007,Đặng Văn Phong,Nam,30/01/1999,0978901234,phong.dang@email.com,001200123462,Thanh Hóa,Thanh Hóa,Xây dựng,Công ty PQR,147 Phan Chu Trinh, Thanh Hóa
-SV008,Bùi Thị Giang,Nữ,12/06/2001,0989012345,giang.bui@email.com,001200123463,Nghệ An,Nghệ An,Sư phạm,Trường học STU,258 Lê Duẩn, Vinh
-SV009,Ngô Văn Hải,Nam,08/11/2000,0990123456,hai.ngo@email.com,001200123464,Thái Bình,Thái Bình,Cơ khí,Nhà máy VWX,369 Trường Chinh, Thái Bình
-SV010,Dương Thị Hương,Nữ,22/04/2001,0911234567,huong.duong@email.com,001200123465,Hải Dương,Hải Dương,Kế toán,Công ty YZ,741 Ngô Quyền, Hải Dương
 SV011,Mai Văn Khánh,Nam,18/02/1999,0922345678,khanh.mai@email.com,001200123466,Bắc Ninh,Bắc Ninh,Công nghệ thực phẩm,Công ty ABC,852 Lý Tự Trọng, Bắc Ninh
 SV012,Lý Thị Lan,Nữ,03/10/2000,0933456789,lan.ly@email.com,001200123467,Vĩnh Phúc,Vĩnh Phúc,Tài chính ngân hàng,Ngân hàng DEF,963 Hoàng Văn Thụ, Vĩnh Phúc
-SV013,Chu Văn Minh,Nam,28/07/2001,0944567890,minh.chu@email.com,001200123468,Bình Dương,Bình Dương,Marketing,Công ty GHI,159 Lê Văn Việt, Bình Dương
 SV014,Nguyễn Thị Ngọc,Nữ,14/12/1999,0955678901,ngoc.nguyen@email.com,001200123469,Đồng Nai,Đồng Nai,Ngoại ngữ,Trung tâm JKL,753 Nguyễn Văn Linh, Biên Hòa
 SV015,Trần Văn Quân,Nam,09/05/2000,0966789012,quan.tran@email.com,001200123470,Long An,Long An,Nông nghiệp,Trang trại MNO,486 Quốc lộ 1A, Tân An
 SV016,Lê Thị Hồng,Nữ,17/08/2001,0977890123,hong.le@email.com,001200123471,An Giang,An Giang,Dược,Bệnh viện PQR,624 Nguyễn Trãi, Long Xuyên
 SV017,Phan Văn Sơn,Nam,06/03/1999,0988901234,son.phan@email.com,001200123472,Kiên Giang,Kiên Giang,Thủy sản,Công ty STU,937 Lê Hồng Phong, Rạch Giá
 SV018,Hồ Thị Tuyết,Nữ,24/11/2000,0999012345,tuyet.ho@email.com,001200123473,Tiền Giang,Tiền Giang,Giao thông vận tải,Công ty VWX,264 Ấp Bắc, Mỹ Tho
-SV019,Võ Văn Tuấn,Nam,19/01/2001,0910123456,tuan.vo@email.com,001200123474,Bến Tre,Bến Tre,Môi trường,Công ty YZ,579 Nguyễn Đình Chiểu, Bến Tre
-SV020,Nguyễn Thị Vân,Nữ,07/06/1999,0921234567,van.nguyen@email.com,001200123475,Cà Mau,Cà Mau,Kinh tế,Sở Kế hoạch Đầu tư,831 Phan Ngọc Hiển, Cà Mau
+132,test2,121,321,321,32,132,1,32,132,123,13
+admin,Nguyễn Văn An,Nam,15/05/2000,0912345678,an.nguyen@email.com,001200123456,Hà Nội,Hà Nội,Công nghệ thông tin,Công ty ABC,123 Trần Hưng Đạo

@@ -1,4 +1,5 @@
 package com.example.project.controller;
+import com.example.project.model_controller.UserController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,13 +13,17 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import com.example.project.models.User;
 
 public class HomeControllerForAdmin {
@@ -35,6 +40,13 @@ public class HomeControllerForAdmin {
     @FXML private TableColumn<User, String> colWorkplace;
     @FXML private TableColumn<User, String> colDetail;
     @FXML private TableColumn<User, String> colApprove;
+    @FXML private TableColumn<User, String> colReject;
+    private UserController userController;
+
+    @FXML
+    public void initialize() {
+        userController = new UserController();
+    }
 
     @FXML
     private void handleApproveAccount(ActionEvent event) {
@@ -85,7 +97,6 @@ public class HomeControllerForAdmin {
                 List<String> lines = Files.readAllLines(path);
 
                 for (String line : lines) {
-                    // Giả sử file phân tách bằng dấu phẩy
                     String[] parts = line.split(",");
                     if (parts.length >= 12) {
                         User user = new User(parts);
@@ -163,6 +174,30 @@ public class HomeControllerForAdmin {
             }
         });
 
+        // Tạo nút "Từ chối"
+        colReject.setCellFactory(col -> new TableCell<User, String>() {
+            private final Button btn = new Button("Từ chối");
+
+            {
+                btn.setStyle(
+                        "-fx-background-color: #a81c29; " + "-fx-text-fill: white; " + "-fx-font-weight: bold; " + "-fx-background-radius: 5;" );
+                btn.setOnAction(e -> {
+                    User user = getTableView().getItems().get(getIndex());
+                    rejectUser(user);
+                });
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) setGraphic(null);
+                else {
+                    setGraphic(btn);
+                    setStyle("-fx-alignment: CENTER;");
+                }
+            }
+        });
+
         tableView.setItems(userList);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tableView.setRowFactory(tv -> {
@@ -174,22 +209,86 @@ public class HomeControllerForAdmin {
 
     // Hiển thị chi tiết người dùng (có thể mở popup hoặc Alert)
     private void showUserDetails(User user) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Chi tiết người dùng");
-        alert.setHeaderText(user.getFullName());
-        String content = "MSSV: " + user.getStudentId() + "\n" +
-                "Ngày sinh: " + user.getBirthDate() + "\n" +
-                "Giới tính: " + user.getGender() + "\n" +
-                "Số CCCD: " + user.getIdCardNumber() + "\n" +
-                "Nơi công tác: " + user.getWorkPlace() + "\n" +
-                "Địa chỉ: " + user.getAddress();
-        alert.setContentText(content);
-        alert.showAndWait();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/detail_register_form.fxml"));
+            AnchorPane root = loader.load();
+
+            User userSelected = loadUserByStudentID(user.getStudentId());
+            DetailRegisterController controller = loader.getController();
+            controller.setUser(userSelected);
+            controller.setUserController(userController);
+            System.out.println("userSelected: " + userSelected);
+
+            // Tạo Stage mới
+            Stage stage = new Stage();
+            stage.setTitle("Chi tiết người dùng");
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/logo/logo_HUB.png")));
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL); // cửa sổ modal
+            stage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public User loadUserByStudentID(String studentID) {
+        Path path = Paths.get("data/register_queue.txt");
+        try {
+            if (Files.exists(path)) {
+                List<String> lines = Files.readAllLines(path);
+
+                for (String line : lines) {
+                    String[] parts = line.split(",");
+                    if (parts.length >= 12) {
+                        // Giả sử StudentID là phần đầu tiên (index 0)
+                        if (parts[0].equals(studentID)) {
+                            return new User(parts);
+                        }
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     // Xử lý phê duyệt người dùng
     private void approveUser(User user) {
+        userController.addUser(user);
+        removeFromRegisterQueue(user);
+        showAlert("Duyệt tài khoản thành công!");
+    }
+
+    private void rejectUser(User user) {
         // Ở đây bạn có thể xoá người dùng khỏi file hoặc đánh dấu đã duyệt
-        System.out.println("Đã phê duyệt: " + user.getFullName());
+        System.out.println("Đã từ chối: " + user.getFullName());
+    }
+
+    private void removeFromRegisterQueue(User user) {
+        Path path = Paths.get("data/register_queue.txt");
+        try {
+            if (!Files.exists(path)) return;
+
+            List<String> lines = Files.readAllLines(path);
+            List<String> updated = lines.stream()
+                    .filter(line -> !line.startsWith(user.getStudentId() + ","))
+                    .collect(Collectors.toList());
+
+            Files.write(path, updated, StandardOpenOption.TRUNCATE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Lỗi khi xóa khỏi register_queue.txt");
+        }
+    }
+
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Thông báo");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

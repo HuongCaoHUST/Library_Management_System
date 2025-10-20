@@ -172,3 +172,15 @@
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
 }
+
+.button_approval {
+    -fx-background-color: #1f3368 !important;
+    -fx-text-fill: #e7e5e5 !important;
+    -fx-border-color: transparent !important;
+}
+
+.button_reject {
+    -fx-background-color: #a81c29 !important;
+    -fx-text-fill: #e7e5e5 !important;
+    -fx-border-color: transparent !important;
+}

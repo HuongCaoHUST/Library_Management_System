@@ -15,6 +15,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 public class RegisterController {
     @FXML private TextField txtFullName;
@@ -67,9 +71,42 @@ public class RegisterController {
         String[] parts = {studentId, fullName, gender, birthDate, phoneNumber, email, idCardNumber, placeOfBirth, issuedPlace, major, workPlace, address};
         User newUser = new User(parts);
 
-        userController.addUser(newUser);
+        addUserToRegisterQueue(newUser);
         showAlert("Đăng ký thành công!");
         clearFields();
+    }
+
+    private void addUserToRegisterQueue(User user) {
+        Path path = Paths.get("data/register_queue.txt");
+
+        try {
+            if (!Files.exists(path)) {
+                Files.createFile(path);
+            }
+
+            // Chuyển User thành dòng CSV
+            String line = String.join(",",
+                    user.getStudentId(),
+                    user.getFullName(),
+                    user.getGender(),
+                    user.getBirthDate(),
+                    user.getPhoneNumber(),
+                    user.getEmail(),
+                    user.getIdCardNumber(),
+                    user.getPlaceOfBirth(),
+                    user.getIssuedPlace(),
+                    user.getMajor(),
+                    user.getWorkPlace(),
+                    user.getAddress()
+            );
+
+            // Ghi thêm vào file
+            Files.write(path, (line + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Lỗi khi ghi vào register_queue.txt");
+        }
     }
 
     private void showAlert(String message) {

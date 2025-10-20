@@ -61,12 +61,12 @@
                <children>
                   <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="228.0" styleClass="button_dashboard" stylesheets="@fullpackstyling.css" text="Thông tin tài khoản">
                      <font>
-                        <Font name="Segoe UI" size="14.0" />
+                        <Font name="Segoe UI Bold" size="16.0" />
                      </font>
                   </Button>
                    <Button fx:id="btnApproveAccount" mnemonicParsing="false" prefHeight="25.0" prefWidth="238.0" styleClass="button_dashboard" stylesheets="@fullpackstyling.css" text="Duyệt tài khoản" onAction="#handleApproveAccount" GridPane.columnIndex="1">
                        <font>
-                           <Font name="Segoe UI" size="14.0" />
+                           <Font name="Segoe UI Bold" size="16.0" />
                        </font>
                    </Button>
                </children>

@@ -26,6 +26,7 @@
                         <TableColumn fx:id="colWorkplace" prefWidth="200.0" text="Nơi công tác" />
                         <TableColumn fx:id="colDetail" prefWidth="100.0" text="Chi tiết" />
                         <TableColumn fx:id="colApprove" prefWidth="100.0" text="Phê duyệt" />
+                        <TableColumn fx:id="colReject" prefWidth="100.0" text="Từ chối" />
                     </columns>
                 </TableView>
             </children></AnchorPane>
@@ -76,12 +77,12 @@
                     <children>
                         <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="228.0" styleClass="button_dashboard" stylesheets="@fullpackstyling.css" text="Thông tin tài khoản">
                             <font>
-                                <Font name="Segoe UI" size="14.0" />
+                                <Font name="Segoe UI Bold" size="16.0" />
                             </font>
                         </Button>
                         <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="238.0" styleClass="button_dashboard" stylesheets="@fullpackstyling.css" text="Duyệt tài khoản" GridPane.columnIndex="1">
                             <font>
-                                <Font name="Segoe UI" size="14.0" />
+                                <Font name="Segoe UI Bold" size="16.0" />
                             </font>
                         </Button>
                     </children>
