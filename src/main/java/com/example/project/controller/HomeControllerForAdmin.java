@@ -9,6 +9,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -102,11 +104,22 @@ public class HomeControllerForAdmin {
         colCCCD.setCellValueFactory(new PropertyValueFactory<>("idCardNumber"));
         colWorkplace.setCellValueFactory(new PropertyValueFactory<>("workPlace"));
 
+        colName.setStyle("-fx-alignment: CENTER; -fx-font-family: 'Segoe UI Regular'; -fx-font-size: 16px;");
+        colMSSV.setStyle("-fx-alignment: CENTER; -fx-font-family: 'Segoe UI Regular'; -fx-font-size: 16px;");
+        colDOB.setStyle("-fx-alignment: CENTER; -fx-font-family: 'Segoe UI Regular'; -fx-font-size: 16px;");
+        colCCCD.setStyle("-fx-alignment: CENTER; -fx-font-family: 'Segoe UI Regular'; -fx-font-size: 16px;");
+        colWorkplace.setStyle("-fx-alignment: CENTER; -fx-font-family: 'Segoe UI Regular'; -fx-font-size: 16px;");
+
         // Tạo nút "Chi tiết"
         colDetail.setCellFactory(col -> new TableCell<User, String>() {
-            private final Button btn = new Button("Xem");
-
-            {
+            private final Button btn = new Button(); {
+                ImageView icon = new ImageView(
+                        new Image(getClass().getResourceAsStream("/com/example/project/logo/view.png"))
+                );
+                icon.setFitWidth(24);
+                icon.setFitHeight(24);
+                btn.setGraphic(icon);
+                btn.setStyle("-fx-background-color: transparent; " + "-fx-padding: 0;");
                 btn.setOnAction(e -> {
                     User user = getTableView().getItems().get(getIndex());
                     showUserDetails(user);
@@ -116,19 +129,23 @@ public class HomeControllerForAdmin {
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty) setGraphic(null);
-                else {
+                if (empty) {
+                    setGraphic(null);
+                } else {
                     setGraphic(btn);
                     setStyle("-fx-alignment: CENTER;");
                 }
             }
         });
 
+
         // Tạo nút "Phê duyệt"
         colApprove.setCellFactory(col -> new TableCell<User, String>() {
             private final Button btn = new Button("Phê duyệt");
 
             {
+                btn.setStyle(
+                        "-fx-background-color: #1f3368; " + "-fx-text-fill: white; " + "-fx-font-weight: bold; " + "-fx-background-radius: 5;" );
                 btn.setOnAction(e -> {
                     User user = getTableView().getItems().get(getIndex());
                     approveUser(user);
@@ -148,6 +165,11 @@ public class HomeControllerForAdmin {
 
         tableView.setItems(userList);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableView.setRowFactory(tv -> {
+            TableRow<User> row = new TableRow<>();
+            row.setPrefHeight(50);
+            return row;
+        });
     }
 
     // Hiển thị chi tiết người dùng (có thể mở popup hoặc Alert)
