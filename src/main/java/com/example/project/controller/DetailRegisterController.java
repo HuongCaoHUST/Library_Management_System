@@ -63,9 +63,9 @@ public class DetailRegisterController {
         this.userController = uc;
     }
 
-    private HomeControllerForAdmin parentController;
+    private ApprovalAccountController parentController;
 
-    public void setParentController(HomeControllerForAdmin parentController) {
+    public void setParentController(ApprovalAccountController parentController) {
         this.parentController = parentController;
     }
 

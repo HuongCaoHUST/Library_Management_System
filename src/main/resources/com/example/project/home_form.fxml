@@ -31,7 +31,7 @@
             </Label>
             <ImageView fitHeight="60.0" fitWidth="47.0" layoutX="41.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="25.0" AnchorPane.topAnchor="25.0">
                <image>
-                  <Image url="@logo/logo2.png" />
+                  <Image url="@logo/logo_mini.png" />
                </image>
             </ImageView>
              <ImageView fx:id="bellIcon" fitHeight="48.0" fitWidth="31.0" layoutX="1114.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
@@ -59,7 +59,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="228.0" styleClass="button_dashboard" stylesheets="@fullpackstyling.css" text="Thông tin tài khoản">
+                  <Button fx:id="btnAccountInfor" mnemonicParsing="false" prefHeight="25.0" prefWidth="228.0" styleClass="button_dashboard" stylesheets="@fullpackstyling.css" text="Thông tin tài khoản" onAction="#handleAccountInfor">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>

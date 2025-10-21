@@ -119,6 +119,12 @@
     -fx-cursor: hand;
 }
 
+.button_when_approval{
+    -fx-background-color: #10165F !important;
+    -fx-text-fill: #e7e5e5 !important;
+    -fx-border-color: transparent !important;
+}
+
 .button:hover{
     -fx-background-color : #10165F;
 }

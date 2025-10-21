@@ -39,7 +39,7 @@ public class RegisterController {
     @FXML
     private void handleBackToLogin(MouseEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("login_form.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/login_form.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         stage.setScene(scene);
