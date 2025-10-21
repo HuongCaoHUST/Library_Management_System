@@ -1,6 +1,0 @@
-admin,12345,chuyenvien,ready
-huongcao,123,ban_doc,ready
-user,test123,ban_doc,ready
-manager,admin@2025,chuyenvien,ready
-20213963,123,ban_doc,ready
-20210000,123,ban_doc,pending
