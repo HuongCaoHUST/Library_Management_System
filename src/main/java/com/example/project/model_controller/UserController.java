@@ -1,7 +1,7 @@
 package com.example.project.model_controller;
 
 import com.example.project.models.User;
-
+import java.security.SecureRandom;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,8 @@ import java.util.Optional;
 public class UserController {
     private final List<User> users;
     private final String FILE_PATH = "./data/users.txt";
+    private static final String ACCOUNT_FILE = "./data/account.txt";
+    private static final String CHAR_POOL = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
     public UserController() {
         users = new ArrayList<>();
@@ -33,6 +35,7 @@ public class UserController {
     public void addUser(User user) {
         users.add(user);
         saveToFile(user);
+        saveToFileAccount(user);
     }
 
     private void saveToFile(User user) {
@@ -56,6 +59,32 @@ public class UserController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void saveToFileAccount(User user) {
+        String username = user.getStudentId();
+        String password = generateRandomPassword(8);
+        String role = "ban_doc";
+        String status = Math.random() < 0.5 ? "ready" : "inactive";
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(ACCOUNT_FILE, true))) {
+            String line = String.join(",", username, password, role, status);
+            writer.write(line);
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Random password
+    private String generateRandomPassword(int length) {
+        SecureRandom random = new SecureRandom();
+        StringBuilder sb = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(CHAR_POOL.length());
+            sb.append(CHAR_POOL.charAt(index));
+        }
+        return sb.toString();
     }
 
     // REMOVE
