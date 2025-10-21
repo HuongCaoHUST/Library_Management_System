@@ -207,7 +207,6 @@ public class HomeControllerForAdmin {
         });
     }
 
-    // Hiển thị chi tiết người dùng (có thể mở popup hoặc Alert)
     private void showUserDetails(User user) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/detail_register_form.fxml"));
@@ -217,11 +216,12 @@ public class HomeControllerForAdmin {
             DetailRegisterController controller = loader.getController();
             controller.setUser(userSelected);
             controller.setUserController(userController);
+            controller.setParentController(this);
             System.out.println("userSelected: " + userSelected);
 
             // Tạo Stage mới
             Stage stage = new Stage();
-            stage.setTitle("Chi tiết người dùng");
+            stage.setTitle("Chi tiết tài khoản");
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/logo/logo_HUB.png")));
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL); // cửa sổ modal
@@ -259,12 +259,14 @@ public class HomeControllerForAdmin {
     private void approveUser(User user) {
         userController.addUser(user);
         removeFromRegisterQueue(user);
+        tableView.getItems().remove(user);
         showAlert("Duyệt tài khoản thành công!");
     }
 
     private void rejectUser(User user) {
-        // Ở đây bạn có thể xoá người dùng khỏi file hoặc đánh dấu đã duyệt
-        System.out.println("Đã từ chối: " + user.getFullName());
+        removeFromRegisterQueue(user);
+        tableView.getItems().remove(user);
+        showAlert("Từ chối tài khoản thành công!");
     }
 
     private void removeFromRegisterQueue(User user) {
@@ -289,6 +291,9 @@ public class HomeControllerForAdmin {
         alert.setTitle("Thông báo");
         alert.setHeaderText(null);
         alert.setContentText(message);
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/logo/logo_HUB.png")));
+        alert.getDialogPane().setStyle("-fx-font-size: 16px; -fx-font-family: 'Segoe UI';");
         alert.showAndWait();
     }
 }

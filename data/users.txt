@@ -1,0 +1,37 @@
+3,3,3,3,3,3,3,3,33,3,3,pending
+5,5,5,5,5,5,5,5,5,5,5,pending
+2,2,2,2,2,2,2,2,2,22,,pending
+21321,231,231,32,132,321,231,32,132,132,1,pending
+admin,Nguyễn Văn An,Nam,15/05/2000,0912345678,an.nguyen@email.com,001200123456,Hà Nội,Hà Nội,Công nghệ thông tin,Công ty ABC,123 Trần Hưng Đạo, Hà Nội
+20213963,Trần Thị Bình,Nữ,20/08/2001,0923456789,binh.tran@email.com,001200123457,Hải Phòng,Hải Phòng,Quản trị kinh doanh,Công ty XYZ,456 Lê Lợi, Hải Phòng
+admin,212,132,123,13,231,132,321,23,132,123,pending
+2,1,23,546,6546,65465,46,654,64,465,6546,46
+55,55,55,55,55,55,55,55,55,55,55,55
+66,66,666,66,66,66,66,66,66,66,66,66
+77,77,77,77,77,77,77,7,77,7,77,77
+123456789,Cao Quý Hưởng,Nam,16/06/2003,0979999116,caoquyhuong1662003@gmail.com,Hải Phòng,Hạ Long, Quảng Ninh,031203001875,Quảng Ninh,Sinh viên,Đại học Bách khoa
+admin,Nguyễn Văn An,Nam,15/05/2000,0912345678,an.nguyen@email.com,001200123456,Hà Nội,Hà Nội,Công nghệ thông tin,Công ty ABC,123 Trần Hưng Đạo
+123456789,Cao Quý Hưởng,Nam,16/06/2003,0979999116,caoquyhuong1662003@gmail.com,Hải Phòng,Hạ Long,Quảng Ninh,031203001875,Quảng Ninh,Sinh viên
+SV004,Phạm Thị Dung,Nữ,25/12/2000,0945678901,dung.pham@email.com,001200123459,Cần Thơ,Cần Thơ,Y học,Bệnh viện GHI,321 Hùng Vương
+SV010,Dương Thị Hương,Nữ,22/04/2001,0911234567,huong.duong@email.com,001200123465,Hải Dương,Hải Dương,Kế toán,Công ty YZ,741 Ngô Quyền
+SV020,Nguyễn Thị Vân,Nữ,07/06/1999,0921234567,van.nguyen@email.com,001200123475,Cà Mau,Cà Mau,Kinh tế,Sở Kế hoạch Đầu tư,831 Phan Ngọc Hiển
+SV008,Bùi Thị Giang,Nữ,12/06/2001,0989012345,giang.bui@email.com,001200123463,Nghệ An,Nghệ An,Sư phạm,Trường học STU,258 Lê Duẩn
+SV019,Võ Văn Tuấn,Nam,19/01/2001,0910123456,tuan.vo@email.com,001200123474,Bến Tre,Bến Tre,Môi trường,Công ty YZ,579 Nguyễn Đình Chiểu
+SV007,Đặng Văn Phong,Nam,30/01/1999,0978901234,phong.dang@email.com,001200123462,Thanh Hóa,Thanh Hóa,Xây dựng,Công ty PQR,147 Phan Chu Trinh
+SV009,Ngô Văn Hải,Nam,08/11/2000,0990123456,hai.ngo@email.com,001200123464,Thái Bình,Thái Bình,Cơ khí,Nhà máy VWX,369 Trường Chinh
+SV009,Ngô Văn Hải,Nam,08/11/2000,0990123456,hai.ngo@email.com,001200123464,Thái Bình,Thái Bình,Cơ khí,Nhà máy VWX,369 Trường Chinh
+SV013,Chu Văn Minh,Nam,28/07/2001,0944567890,minh.chu@email.com,001200123468,Bình Dương,Bình Dương,Marketing,Công ty GHI,159 Lê Văn Việt
+SV003,Lê Văn Cường,Nam,10/03/1999,0934567890,cuong.le@email.com,001200123458,Đà Nẵng,Đà Nẵng,Kỹ thuật điện,Công ty DEF,789 Nguyễn Huệ
+20213963,Trần Thị Bình,Nữ,20/08/2001,0923456789,binh.tran@email.com,001200123457,Hải Phòng,Hải Phòng,Quản trị kinh doanh,Công ty XYZ,456 Lê Lợi
+SV005,Hoàng Văn Đạt,Nam,05/07/2001,0956789012,dat.hoang@email.com,001200123460,Quảng Ninh,Quảng Ninh,Luật,Văn phòng luật JKL,654 Lý Thường Kiệt
+SV011,Mai Văn Khánh,Nam,18/02/1999,0922345678,khanh.mai@email.com,001200123466,Bắc Ninh,Bắc Ninh,Công nghệ thực phẩm,Công ty ABC,852 Lý Tự Trọng
+admin,Nguyễn Văn An,Nam,15/05/2000,0912345678,an.nguyen@email.com,001200123456,Hà Nội,Hà Nội,Công nghệ thông tin,Công ty ABC,123 Trần Hưng Đạo
+132,test2,121,321,321,32,132,1,32,132,123,13
+SV006,Vũ Thị Em,Nữ,15/09/2000,0967890123,em.vu@email.com,001200123461,Hà Giang,Hà Giang,Du lịch,Khách sạn MNO,987 Quang Trung
+SV012,Lý Thị Lan,Nữ,03/10/2000,0933456789,lan.ly@email.com,001200123467,Vĩnh Phúc,Vĩnh Phúc,Tài chính ngân hàng,Ngân hàng DEF,963 Hoàng Văn Thụ
+SV014,Nguyễn Thị Ngọc,Nữ,14/12/1999,0955678901,ngoc.nguyen@email.com,001200123469,Đồng Nai,Đồng Nai,Ngoại ngữ,Trung tâm JKL,753 Nguyễn Văn Linh
+SV015,Trần Văn Quân,Nam,09/05/2000,0966789012,quan.tran@email.com,001200123470,Long An,Long An,Nông nghiệp,Trang trại MNO,486 Quốc lộ 1A
+SV010,Dương Thị Hương,Nữ,22/04/2001,0911234567,huong.duong@email.com,001200123465,Hải Dương,Hải Dương,Kế toán,Công ty YZ,741 Ngô Quyền
+SV012,Lý Thị Lan,Nữ,03/10/2000,0933456789,lan.ly@email.com,001200123467,Vĩnh Phúc,Vĩnh Phúc,Tài chính ngân hàng,Ngân hàng DEF,963 Hoàng Văn Thụ
+SV004,Phạm Thị Dung,Nữ,25/12/2000,0945678901,dung.pham@email.com,001200123459,Cần Thơ,Cần Thơ,Y học,Bệnh viện GHI,321 Hùng Vương
+SV019,Võ Văn Tuấn,Nam,19/01/2001,0910123456,tuan.vo@email.com,001200123474,Bến Tre,Bến Tre,Môi trường,Công ty YZ,579 Nguyễn Đình Chiểu

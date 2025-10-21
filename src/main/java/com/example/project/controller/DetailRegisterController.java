@@ -5,7 +5,6 @@ import com.example.project.model_controller.UserController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -64,14 +63,38 @@ public class DetailRegisterController {
         this.userController = uc;
     }
 
+    private HomeControllerForAdmin parentController;
+
+    public void setParentController(HomeControllerForAdmin parentController) {
+        this.parentController = parentController;
+    }
+
     @FXML
     private void handleApprove() {
         if (currentUser != null && userController != null) {
             System.out.println("Controler: " + userController);
             userController.addUser(currentUser);
-
             removeFromRegisterQueue(currentUser);
             showAlert("Duyệt tài khoản thành công!");
+            if (parentController != null) {
+                parentController.loadRegisterQueue();
+            }
+            Stage stage = (Stage) lblFullName.getScene().getWindow();
+            stage.close();
+        }
+    }
+
+    @FXML
+    private void handleReject() {
+        if (currentUser != null) {
+            removeFromRegisterQueue(currentUser);
+            showAlert("Từ chối tài khoản thành công!");
+
+            if (parentController != null) {
+                parentController.loadRegisterQueue();
+            }
+            Stage stage = (Stage) lblFullName.getScene().getWindow();
+            stage.close();
         }
     }
 
@@ -99,7 +122,6 @@ public class DetailRegisterController {
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/logo/logo_HUB.png")));
         alert.getDialogPane().setStyle("-fx-font-size: 16px; -fx-font-family: 'Segoe UI';");
-
         alert.showAndWait();
     }
 }

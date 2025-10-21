@@ -148,7 +148,7 @@
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnReject" mnemonicParsing="false" prefHeight="25.0" prefWidth="238.0" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Từ chối" GridPane.columnIndex="1">
+                  <Button fx:id="btnReject" mnemonicParsing="false" prefHeight="25.0" prefWidth="238.0" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Từ chối" onAction="#handleReject" GridPane.columnIndex="1">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
