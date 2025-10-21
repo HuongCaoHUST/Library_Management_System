@@ -41,7 +41,9 @@ public class HomeControllerForAdmin {
     @FXML private TableColumn<User, String> colDetail;
     @FXML private TableColumn<User, String> colApprove;
     @FXML private TableColumn<User, String> colReject;
+    @FXML private TextField searchField;
     private UserController userController;
+    private ObservableList<User> originalList = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
@@ -197,7 +199,7 @@ public class HomeControllerForAdmin {
                 }
             }
         });
-
+        originalList.setAll(userList);
         tableView.setItems(userList);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tableView.setRowFactory(tv -> {
@@ -284,6 +286,28 @@ public class HomeControllerForAdmin {
             e.printStackTrace();
             System.out.println("Lỗi khi xóa khỏi register_queue.txt");
         }
+    }
+
+    @FXML
+    private void search_account() {
+        String keyword = searchField.getText().trim().toLowerCase();
+
+        if (keyword.isEmpty()) {
+            tableView.setItems(originalList);
+            return;
+        }
+
+        ObservableList<User> filteredList = FXCollections.observableArrayList();
+
+        for (User user : originalList) {
+            if (user.getFullName().toLowerCase().contains(keyword) ||
+                    user.getStudentId().toLowerCase().contains(keyword)) {
+                filteredList.add(user);
+            }
+        }
+
+        tableView.setItems(filteredList);
+        tableView.refresh();
     }
 
     private void showAlert(String message) {
