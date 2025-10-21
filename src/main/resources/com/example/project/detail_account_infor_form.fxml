@@ -198,10 +198,11 @@
         </AnchorPane>
         <AnchorPane layoutY="110.0" prefHeight="38.0" prefWidth="1280.0" style="-fx-background-color: a81c29;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <children>
-                <GridPane layoutX="772.0" prefHeight="49.0" prefWidth="494.0" AnchorPane.rightAnchor="10.0">
+                <GridPane layoutX="772.0" prefHeight="49.0" prefWidth="494.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="10.0">
                     <columnConstraints>
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -212,7 +213,12 @@
                                 <Font name="Segoe UI Bold" size="16.0" />
                             </font>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="238.0" styleClass="button_dashboard" stylesheets="@fullpackstyling.css" text="Duyệt tài khoản" onAction="#handleApproveAccount" GridPane.columnIndex="1">
+                        <Button fx:id="btnAccountManager" mnemonicParsing="false" onAction="#handleAccountManager" prefHeight="25.0" prefWidth="228.0" styleClass="button_dashboard" stylesheets="@fullpackstyling.css" text="Quản lý tài khoản" GridPane.columnIndex="1">
+                            <font>
+                                <Font name="Segoe UI Bold" size="16.0" />
+                            </font>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#handleApproveAccount" prefHeight="25.0" prefWidth="238.0" styleClass="button_dashboard" stylesheets="@fullpackstyling.css" text="Duyệt tài khoản" GridPane.columnIndex="2">
                             <font>
                                 <Font name="Segoe UI Bold" size="16.0" />
                             </font>

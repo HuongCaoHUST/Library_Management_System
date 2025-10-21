@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="1000.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.controller.DetailAccountController">
+   <children>
+      <AnchorPane prefHeight="480.0" prefWidth="1000.0">
+         <children>
+             <GridPane hgap="10" layoutX="14.0" layoutY="14.0" prefHeight="391.0" prefWidth="960.0" vgap="10" AnchorPane.bottomAnchor="69.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                 <columnConstraints>
+                     <ColumnConstraints percentWidth="20" />
+                     <ColumnConstraints percentWidth="28" />
+                     <ColumnConstraints percentWidth="3" />
+                     <ColumnConstraints percentWidth="20" />
+                     <ColumnConstraints percentWidth="28" />
+                 </columnConstraints>
+                 <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="150.0" />
+                     <RowConstraints prefHeight="30" />
+                     <RowConstraints prefHeight="30" />
+                     <RowConstraints prefHeight="30" />
+                     <RowConstraints prefHeight="30" />
+                     <RowConstraints prefHeight="30" />
+                     <RowConstraints prefHeight="30" />
+                 </rowConstraints>
+
+                 <Label text="Ảnh thẻ:" textFill="#1f3368">
+                     <font>
+                         <Font name="Segoe UI Bold" size="16" />
+                     </font>
+                 </Label>
+                 <ImageView fx:id="imgPhoto" fitHeight="150.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
+
+                 <Label text="Họ và tên:" textFill="#1f3368" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                     <font><Font name="Segoe UI Bold" size="16" /></font>
+                 </Label>
+                 <Label fx:id="lblFullName" prefHeight="28" textFill="#1f3368" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <font>
+                     <Font size="16.0" />
+                  </font></Label>
+
+                 <Label text="MSSV:" textFill="#1f3368" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                     <font><Font name="Segoe UI Bold" size="16" /></font>
+                 </Label>
+                 <Label fx:id="lblStudentId" prefHeight="28" textFill="#1f3368" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <font>
+                     <Font size="16.0" />
+                  </font></Label>
+
+                 <Label text="Giới tính:" textFill="#1f3368" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                     <font><Font name="Segoe UI Bold" size="16" /></font>
+                 </Label>
+                 <Label fx:id="lblGender" prefHeight="28" textFill="#1f3368" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <font>
+                     <Font size="16.0" />
+                  </font></Label>
+
+                 <Label text="Ngày sinh:" textFill="#1f3368" GridPane.columnIndex="0" GridPane.rowIndex="4">
+                     <font><Font name="Segoe UI Bold" size="16" /></font>
+                 </Label>
+                 <Label fx:id="lblBirthDate" prefHeight="28" textFill="#1f3368" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <font>
+                     <Font size="16.0" />
+                  </font></Label>
+
+                 <Label text="Số điện thoại:" textFill="#1f3368" GridPane.columnIndex="0" GridPane.rowIndex="5">
+                     <font><Font name="Segoe UI Bold" size="16" /></font>
+                 </Label>
+                 <Label fx:id="lblPhoneNumber" prefHeight="28" textFill="#1f3368" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                  <font>
+                     <Font size="16.0" />
+                  </font></Label>
+
+                 <Label text="Email:" textFill="#1f3368" GridPane.columnIndex="0" GridPane.rowIndex="6">
+                     <font><Font name="Segoe UI Bold" size="16" /></font>
+                 </Label>
+                 <Label fx:id="lblEmail" prefHeight="28" textFill="#1f3368" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                  <font>
+                     <Font size="16.0" />
+                  </font></Label>
+
+                 <Label text="Nơi sinh:" textFill="#1f3368" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                     <font><Font name="Segoe UI Bold" size="16" /></font>
+                 </Label>
+                 <Label fx:id="lblPlaceOfBirth" prefHeight="28" textFill="#1f3368" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                  <font>
+                     <Font size="16.0" />
+                  </font></Label>
+
+                 <Label text="Địa chỉ liên hệ:" textFill="#1f3368" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                     <font><Font name="Segoe UI Bold" size="16" /></font>
+                 </Label>
+                 <Label fx:id="lblAddress" prefHeight="28" textFill="#1f3368" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                  <font>
+                     <Font size="16.0" />
+                  </font></Label>
+
+                 <Label text="Số CCCD:" textFill="#1f3368" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                     <font><Font name="Segoe UI Bold" size="16" /></font>
+                 </Label>
+                 <Label fx:id="lblIdCardNumber" prefHeight="28" textFill="#1f3368" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                  <font>
+                     <Font size="16.0" />
+                  </font></Label>
+
+                 <Label text="Nơi cấp:" textFill="#1f3368" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                     <font><Font name="Segoe UI Bold" size="16" /></font>
+                 </Label>
+                 <Label fx:id="lblIssuedPlace" prefHeight="28" textFill="#1f3368" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                  <font>
+                     <Font size="16.0" />
+                  </font></Label>
+
+                 <Label text="Chuyên môn:" textFill="#1f3368" GridPane.columnIndex="3" GridPane.rowIndex="5">
+                     <font><Font name="Segoe UI Bold" size="16" /></font>
+                 </Label>
+                 <Label fx:id="lblMajor" prefHeight="28" textFill="#1f3368" GridPane.columnIndex="4" GridPane.rowIndex="5">
+                  <font>
+                     <Font size="16.0" />
+                  </font></Label>
+
+                 <Label text="Nơi công tác:" textFill="#1f3368" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                     <font><Font name="Segoe UI Bold" size="16" /></font>
+                 </Label>
+                 <Label fx:id="lblWorkPlace" prefHeight="28" textFill="#1f3368" GridPane.columnIndex="4" GridPane.rowIndex="6">
+                  <font>
+                     <Font size="16.0" />
+                  </font></Label>
+             </GridPane>
+         </children></AnchorPane>
+   </children>
+</AnchorPane>

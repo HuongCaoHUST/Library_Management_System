@@ -50,21 +50,27 @@
       </AnchorPane>
       <AnchorPane layoutY="110.0" prefHeight="38.0" prefWidth="1280.0" style="-fx-background-color: a81c29;">
          <children>
-            <GridPane layoutX="772.0" prefHeight="49.0" prefWidth="494.0">
+            <GridPane layoutX="591.0" prefHeight="49.0" prefWidth="675.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="10.0">
               <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="btnAccountInfor" mnemonicParsing="false" prefHeight="25.0" prefWidth="228.0" styleClass="button_dashboard" stylesheets="@fullpackstyling.css" text="Thông tin tài khoản" onAction="#handleAccountInfor">
+                  <Button fx:id="btnAccountInfor" mnemonicParsing="false" onAction="#handleAccountInfor" prefHeight="25.0" prefWidth="228.0" styleClass="button_dashboard" stylesheets="@fullpackstyling.css" text="Thông tin tài khoản">
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
                   </Button>
-                   <Button fx:id="btnApproveAccount" mnemonicParsing="false" prefHeight="25.0" prefWidth="238.0" styleClass="button_dashboard" stylesheets="@fullpackstyling.css" text="Duyệt tài khoản" onAction="#handleApproveAccount" GridPane.columnIndex="1">
+                   <Button fx:id="btnAccountManager" mnemonicParsing="false" onAction="#handleAccountManager" prefHeight="25.0" prefWidth="228.0" styleClass="button_dashboard" stylesheets="@fullpackstyling.css" text="Quản lý tài khoản" GridPane.columnIndex="1">
+                       <font>
+                           <Font name="Segoe UI Bold" size="16.0" />
+                       </font>
+                   </Button>
+                   <Button fx:id="btnApproveAccount" mnemonicParsing="false" onAction="#handleApproveAccount" prefHeight="25.0" prefWidth="238.0" styleClass="button_dashboard" stylesheets="@fullpackstyling.css" text="Duyệt tài khoản" GridPane.columnIndex="2">
                        <font>
                            <Font name="Segoe UI Bold" size="16.0" />
                        </font>

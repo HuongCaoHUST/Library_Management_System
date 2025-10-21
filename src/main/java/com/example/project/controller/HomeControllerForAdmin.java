@@ -1,8 +1,6 @@
 package com.example.project.controller;
 import com.example.project.model_controller.UserController;
 import com.example.project.models.User;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,16 +8,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
 
 public class HomeControllerForAdmin extends LoadForm {
     @FXML
@@ -54,6 +45,24 @@ public class HomeControllerForAdmin extends LoadForm {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Phê duyệt tài khoản");
+            stage.centerOnScreen();
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    protected void handleAccountManager(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/account_manager_form.fxml"));
+            Parent root = loader.load();
+            AccountManagerController controller = loader.getController();
+            controller.loadAccountList();
+            controller.updateNotificationBadge();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Quản lý tài khoản");
             stage.centerOnScreen();
             stage.show();
 
