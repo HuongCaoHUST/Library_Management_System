@@ -41,6 +41,7 @@ public class ApprovalAccountController extends HomeControllerForAdmin {
 
     @FXML
     public void initialize() {
+        super.initialize();
         userController = new UserController();
     }
 

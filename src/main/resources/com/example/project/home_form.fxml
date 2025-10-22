@@ -48,7 +48,7 @@
              </ImageView>
          </children>
       </AnchorPane>
-      <AnchorPane layoutY="110.0" prefHeight="38.0" prefWidth="1280.0" style="-fx-background-color: a81c29;">
+      <AnchorPane layoutY="110.0" prefHeight="38.0" prefWidth="1280.0" style="-fx-background-color: a81c29;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <GridPane layoutX="591.0" prefHeight="49.0" prefWidth="675.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="10.0">
               <columnConstraints>

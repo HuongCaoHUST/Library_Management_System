@@ -43,6 +43,7 @@ public class AccountManagerController extends HomeControllerForAdmin {
     @FXML
     private AnchorPane mainContent;
     private UserController userController;
+    private ObservableList<User> originalList = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
@@ -75,7 +76,6 @@ public class AccountManagerController extends HomeControllerForAdmin {
             e.printStackTrace();
         }
 
-        // Gán dữ liệu cho các cột
         colName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
         colMSSV.setCellValueFactory(new PropertyValueFactory<>("studentId"));
         colDOB.setCellValueFactory(new PropertyValueFactory<>("birthDate"));
@@ -116,7 +116,7 @@ public class AccountManagerController extends HomeControllerForAdmin {
                 }
             }
         });
-
+        originalList.setAll(userList);
         tableView.setItems(userList);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tableView.setRowFactory(tv -> {
@@ -171,6 +171,28 @@ public class AccountManagerController extends HomeControllerForAdmin {
         }
 
         return null;
+    }
+
+    @FXML
+    private void search_account() {
+        String keyword = searchField.getText().trim().toLowerCase();
+
+        if (keyword.isEmpty()) {
+            tableView.setItems(originalList);
+            return;
+        }
+
+        ObservableList<User> filteredList = FXCollections.observableArrayList();
+
+        for (User user : originalList) {
+            if (user.getFullName().toLowerCase().contains(keyword) ||
+                    user.getStudentId().toLowerCase().contains(keyword)) {
+                filteredList.add(user);
+            }
+        }
+
+        tableView.setItems(filteredList);
+        tableView.refresh();
     }
 
     @FXML

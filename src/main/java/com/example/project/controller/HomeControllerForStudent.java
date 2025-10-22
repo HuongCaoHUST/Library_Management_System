@@ -6,17 +6,11 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-
 public class HomeControllerForStudent {
 
     @FXML private Label lblTen, lblMSSV, lblGioitinh, lblNgaysinh, lblSodienthoai,
             lblEmail, lblNoisinh, lblDiachi, lblCCCD, lblNoicap, lblChuyenmon,
-            lblNoicongtac, notificationBadge;
+            lblNoicongtac;
 
     private final UserController userController = new UserController();
 
@@ -27,7 +21,6 @@ public class HomeControllerForStudent {
             return;
         }
 
-        // Gán dữ liệu lên Label
         lblMSSV.setText(user.getStudentId());
         lblTen.setText(user.getFullName());
         lblGioitinh.setText(user.getGender());
