@@ -1,0 +1,13 @@
+UserID,FullName,Gender,BirthDate,PhoneNumber,Email,IdCardNumber,PlaceOfBirth,IssuedPlace,Major,WorkPlace,Address,AccountCreationDate,AccountApprovalDateAccountant,AccountApproverAccountant,AccountApproverOfficer,AccountApprovalDateOfficer,Username,Password,AccountStatus,PaymentAmount,PaymentTime,CardImage
+20210000,Hoa,MALE,08/10/2025,hfghfg,fhgfh,254,hfh,ghfh,fghgh,fghgfh,fghgf,,,,,,,,INACTIVE,0.0,,
+20210000,sadsd,MALE,02/10/2025,sadsad,sadasd,ádsad,ádsad,sadsd,ádsad,sadsad,sadasd,,,,,,,,INACTIVE,0.0,,
+20210000,Hòa,MALE,09/10/2025,545,45,45,4,54,5,45,4,,,,,,,,INACTIVE,0.0,,
+20210000,Giang,FEMALE,02/10/2025,46,4,654,6,546,46,4,6546,,,,,,,,INACTIVE,0.0,,
+20210000,Hùng,MALE,08/10/2025,65,465,4,654,654,65,4,56465,,,,,,,,INACTIVE,0.0,,
+20210000,Hùng2,MALE,09/10/2025,54,564,56,465,456,465,465,4,,,,,,,,INACTIVE,0.0,,
+,Hoàng,MALE,15/10/2025,đa,dấd,sad,đá,ád,ádasd,ádsa,áda,,,,,,20250006,,INACTIVE,0.0,,
+,Hoàng,MALE,02/10/2025,ưeqewqq,qeqw,ưqeqưe,qeq,qưe,ưqeqw,qeqwe,eqeqwe,,,,,,20250006,,INACTIVE,0.0,,
+,Hồng,MALE,09/10/2025,qưeqe,qqwe,qưeqe,qưeqwe,qưewq,ưqewq,qưe,eqwe,,,,,,20250006,,INACTIVE,0.0,,
+,Hồng,FEMALE,09/10/2025,ưerwe,ưerw,ưerưer,rử,ưerew,ưer,ưere,wer,26/10/2025,,,,,20250006,,INACTIVE,0.0,,
+,ad,MALE,14/10/2025,ád,ádads,ádas,ád,ád,dsad,ád,ádád,26/10/2025,,,,,20250006,,INACTIVE,0.0,,
+,Tâm,FEMALE,02/10/2025,qưeqw,qưe,ưqew,eq,qư,qưe,ưe,qqwe,26/10/2025 13:38:39,,,,,20250006,,INACTIVE,0.0,,

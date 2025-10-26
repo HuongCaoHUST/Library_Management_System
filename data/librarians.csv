@@ -1,0 +1,8 @@
+UserID,FullName,Gender,BirthDate,PhoneNumber,Email,IdCardNumber,PlaceOfBirth,IssuedPlace,Major,WorkPlace,Address,AccountCreationDate,Username,Password,AccountStatus,CardImage
+HUB001,Nguyễn Văn Admin,Nam,1990-05-15,0912345678,admin@company.com,001123456789,Hà Nội,Hà Nội,Quản trị hệ thống,Công ty ABC,123 Đường Lê Lợi,2023-01-15,admin,12345,Active,admin_card.jpg
+HUB00002,Trần Thị Bình,Nữ,1992-08-20,0923456789,binhtt@email.com,001123456790,Hải Phòng,Hải Phòng,Kế toán,Công ty XYZ,456 Đường Nguyễn Huệ,2023-02-10,HUB00002,pass123,Active,binh_card.jpg
+HUB00003,Lê Văn Cường,Nam,1988-12-05,0934567890,cuonglv@email.com,001123456791,Đà Nẵng,Đà Nẵng,IT,Công ty DEF,789 Đường Trần Hưng Đạo,2023-03-05,HUB00003,abc@123,Active,cuong_card.jpg
+HUB00004,Phạm Thị Dung,Nữ,1995-03-25,0945678901,dungpt@email.com,001123456792,Cần Thơ,Cần Thơ,Nhân sự,Công ty GHI,321 Đường Lý Tự Trọng,2023-04-12,HUB00004,dung456,Pending,dung_card
+HUB00005,Hoàng Văn Em,Nam,1993-07-18,0956789012,emhv@email.com,001123456793,Hà Nội,Hà Nội,Marketing,Công ty JKL,654 Đường Ba Đình,2023-05-20,HUB00005,em789,Active,em_card.jpg
+HUB00006,Vũ Thị Phương,Nữ,1991-11-30,0967890123,phuongvt@email.com,001123456794,Hải Dương,Hải Dương,Tài chính,Công ty MNO,987 Đường Quang Trung,2023-06-08,HUB00006,phuong@1,Inactive,phuong_card.jpg
+HUB00007,Đặng Văn Giang,Nam,1989-04-12,0978901234,giangdv@email.com,001123456795,Quảng Ninh,Quảng Ninh,Kỹ thuật,Công ty PQR,147 Đường Lê Duẩn,2023-07-14,HUB00007,giang123,Active,giang_card.jpg

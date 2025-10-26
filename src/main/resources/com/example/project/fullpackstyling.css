@@ -106,3 +106,87 @@
     -fx-border-color: derive(-fx-pie-color, 1%);
     -fx-border-width: 0px;
 }
+
+.button_dashboard
+{
+    -fx-background-color: #a81c29 !important;
+    -fx-text-fill: #e7e5e5 !important;
+    -fx-border-color: transparent !important;
+}
+
+.button_dashboard:hover {
+    -fx-background-color: #10165F !important;
+    -fx-cursor: hand;
+}
+
+.button_when_approval{
+    -fx-background-color: #10165F !important;
+    -fx-text-fill: #e7e5e5 !important;
+    -fx-border-color: transparent !important;
+}
+
+.button:hover{
+    -fx-background-color : #10165F;
+}
+.button:pressed
+{
+    -fx-background-color : #1620A1;
+}
+
+.scroll-pane {
+    -fx-background-color: #02030A;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color: #10165F;
+    -fx-background-radius: 5em;
+}
+
+.scroll-pane > .corner {
+    -fx-background-color: black;
+}
+
+.left-label {
+    -fx-alignment: CENTER-LEFT;
+    -fx-text-alignment: left;
+}
+
+#bellIcon {
+    -fx-cursor: hand;
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+}
+
+#bellIcon:hover {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.button_approval {
+    -fx-background-color: #1f3368 !important;
+    -fx-text-fill: #e7e5e5 !important;
+    -fx-border-color: transparent !important;
+}
+
+.button_reject {
+    -fx-background-color: #a81c29 !important;
+    -fx-text-fill: #e7e5e5 !important;
+    -fx-border-color: transparent !important;
+}
