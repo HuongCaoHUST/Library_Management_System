@@ -4,11 +4,13 @@ import com.example.project.models.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -25,6 +27,8 @@ public class HomeControllerForAdmin extends LoadForm {
     @FXML private TableColumn<User, String> colDetail;
     @FXML private TableColumn<User, String> colApprove;
     @FXML private TableColumn<User, String> colReject;
+    @FXML private Button btnDocumentManager;
+    @FXML private ImageView avatarImage;
 
     private UserController userController;
 
@@ -33,7 +37,39 @@ public class HomeControllerForAdmin extends LoadForm {
         userController = new UserController();
         super.notificationBadge = this.notificationBadge;
         updateNotificationBadge();
+        setupReaderButtonMenu();
     }
+
+    private void setupReaderButtonMenu() {
+        ContextMenu documentMenu = new ContextMenu();
+        MenuItem item1 = new MenuItem("Nhận tài liệu");
+        MenuItem item2 = new MenuItem("Mượn tài liệu");
+        MenuItem item3 = new MenuItem("Trả tài liệu");
+        MenuItem item4 = new MenuItem("Xử lý báo, tạp chí");
+        MenuItem item5 = new MenuItem("Xác nhận nghĩa vụ thư viện");
+
+        documentMenu.getItems().addAll(item1, item2, item3, item4, item5);
+
+        item1.setOnAction(e -> handleDocumentReceive());
+//        approvalItem.setOnAction(e -> openApproval());
+
+        btnDocumentManager.setOnMouseEntered(event -> {
+            if (!documentMenu.isShowing()) {
+                Bounds bounds = btnDocumentManager.localToScreen(btnDocumentManager.getBoundsInLocal());
+                double menuX = bounds.getMaxX();
+                double menuY = bounds.getMaxY();
+                documentMenu.show(btnDocumentManager, menuX - 160, menuY);
+            }
+        });
+
+        btnDocumentManager.setOnMouseExited(event -> {
+            btnDocumentManager.setOnMouseExited(ev -> {
+                btnDocumentManager.setOnMouseExited(null);
+                documentMenu.hide();
+            });
+        });
+    }
+
     @FXML
     protected void handleApproveAccount(ActionEvent event) {
         try {
@@ -85,5 +121,25 @@ public class HomeControllerForAdmin extends LoadForm {
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/logo/logo_HUB.png")));
         alert.getDialogPane().setStyle("-fx-font-size: 16px; -fx-font-family: 'Segoe UI';");
         alert.showAndWait();
+    }
+
+    @FXML
+    protected void handleDocumentReceive() {
+        try {
+            FXMLLoader loader = loadFormInStage("/com/example/project/document_receive_form.fxml", "Nhận tài liệu");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected FXMLLoader loadFormInStage(String fxmlPath, String title) throws IOException {
+        Stage currentStage = (Stage) avatarImage.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+        Parent root = loader.load();
+
+        currentStage.setTitle(title);
+        currentStage.setScene(new Scene(root));
+
+        return loader; // trả về để lấy controller
     }
 }
