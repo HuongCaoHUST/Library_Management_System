@@ -11,26 +11,25 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.io.IOException;
+import javafx.stage.Window;
 
 public class HomeControllerForAdmin extends LoadForm {
     @FXML
     private Label notificationBadge;
 
-    @FXML private TableView<User> tableView;
-    @FXML private TableColumn<User, String> colName;
-    @FXML private TableColumn<User, String> colMSSV;
-    @FXML private TableColumn<User, String> colDOB;
-    @FXML private TableColumn<User, String> colCCCD;
-    @FXML private TableColumn<User, String> colWorkplace;
-    @FXML private TableColumn<User, String> colDetail;
-    @FXML private TableColumn<User, String> colApprove;
-    @FXML private TableColumn<User, String> colReject;
-
-    private UserController userController;
+//    @FXML private TableView<User> tableView;
+//    @FXML private TableColumn<User, String> colName;
+//    @FXML private TableColumn<User, String> colMSSV;
+//    @FXML private TableColumn<User, String> colDOB;
+//    @FXML private TableColumn<User, String> colCCCD;
+//    @FXML private TableColumn<User, String> colWorkplace;
+//    @FXML private TableColumn<User, String> colDetail;
+//    @FXML private TableColumn<User, String> colApprove;
+//    @FXML private TableColumn<User, String> colReject;
 
     @FXML
     public void initialize() {
-        userController = new UserController();
+        UserController userController = new UserController();
         super.notificationBadge = this.notificationBadge;
         updateNotificationBadge();
     }
@@ -42,7 +41,8 @@ public class HomeControllerForAdmin extends LoadForm {
             ApprovalAccountController controller = loader.getController();
             controller.loadRegisterQueue();
             controller.updateNotificationBadge();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            Stage stage = getStage(event);
             stage.setScene(new Scene(root));
             stage.setTitle("Phê duyệt tài khoản");
             stage.centerOnScreen();
@@ -60,7 +60,8 @@ public class HomeControllerForAdmin extends LoadForm {
             AccountManagerController controller = loader.getController();
             controller.loadAccountList();
             controller.updateNotificationBadge();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            Stage stage = getStage(event);
             stage.setScene(new Scene(root));
             stage.setTitle("Quản lý tài khoản");
             stage.centerOnScreen();
@@ -68,6 +69,22 @@ public class HomeControllerForAdmin extends LoadForm {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    // Tiện ích: lấy Stage từ ActionEvent cho cả Button (Node) và MenuItem
+    private Stage getStage(ActionEvent event) {
+        Object src = event.getSource();
+        if (src instanceof Node node) {
+            return (Stage) node.getScene().getWindow();
+        } else if (src instanceof MenuItem item) {
+            Window owner = item.getParentPopup() != null ? item.getParentPopup().getOwnerWindow() : null;
+            if (owner instanceof Stage stage) {
+                return stage;
+            }
+            throw new IllegalStateException("Không lấy được Stage từ MenuItem (ownerWindow null)");
+        } else {
+            throw new IllegalStateException("Unsupported event source: " + src);
         }
     }
 
