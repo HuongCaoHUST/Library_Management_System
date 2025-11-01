@@ -5,6 +5,7 @@ module com.example.project {
     requires com.dlsc.formsfx;
     requires javafx.graphics;
     requires javafx.base;
+    requires com.example.project;
 
     opens com.example.project to javafx.fxml;
     exports com.example.project;
