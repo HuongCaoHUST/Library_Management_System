@@ -6,7 +6,6 @@ public class Doc {
     private final String author;    // Tác giả
     private final String publisher; // Nhà xuất bản
     private final String pubYear;   // Năm xuất bản
-    private final String classNo;   // Số hiệu phân loại
     private final String category;  // Thể loại (khoa học, văn học, v.v.)
     private final String shelfLoc;  // Vị trí trên kệ
     private final String docType;   // Loại tài liệu (print/digital)
@@ -19,7 +18,6 @@ public class Doc {
         this.author    = parts[2].trim();
         this.publisher = parts[3].trim();
         this.pubYear   = parts[4].trim();
-        this.classNo   = parts[5].trim();
         this.category  = parts[6].trim();
         this.shelfLoc  = parts[7].trim();
         this.docType   = parts[8].trim();
@@ -33,7 +31,6 @@ public class Doc {
     public String getAuthor() { return author; }
     public String getPublisher() { return publisher; }
     public String getPubYear() { return pubYear; }
-    public String getClassNo() { return classNo; }
     public String getCategory() { return category; }
     public String getShelfLoc() { return shelfLoc; }
     public String getDocType() { return docType; }
