@@ -1,0 +1,12 @@
+DOC1001,Nhà giả kim,Paulo Coelho,NXB Văn Học,2006,Văn học,in,A1-05,,còn
+DOC1002,Giải tích 1,Ngô Bảo Châu,NXB Giáo Dục,2009,Toán học,in,G1-08,,đang mượn
+DOC1003,Phân tích dữ liệu với Python,Trần Thị D,NXB Công Nghệ,2021,CNTT,số,,https://lib.example.vn/doc/DOC1003,còn
+DOC1004,Kỹ năng thuyết trình,Nguyễn Quốc F,NXB Trẻ,2017,Kỹ năng,in,B2-14,,còn
+DOC1005,Lập trình Java nâng cao,Ngô Đức C,NXB Công Nghệ,2022,CNTT,số,,https://lib.example.vn/doc/DOC1005,đang mượn
+DOC1006,Marketing số căn bản,Phạm Minh K,NXB Lao Động,2019,Kinh tế,số,,https://lib.example.vn/doc/DOC1006,còn
+DOC1007,Lịch sử Việt Nam hiện đại,Trần Văn B,NXB Chính Trị Quốc Gia,2012,Lịch sử,in,D1-02,,còn
+DOC1008,Tâm lý học đám đông,Gustave Le Bon,NXB Tri Thức,2010,Tâm lý,in,E4-09,,đang mượn
+DOC1009,Học máy cơ bản,Nguyễn An P,NXB Công Nghệ,2020,CNTT,số,,https://lib.example.vn/doc/DOC1009,còn
+DOC1010,Thiền và chánh niệm,Thích Nhất Hạnh,NXB Hồng Đức,2014,Tâm linh,in,H2-10,,còn
+DOC1011,Thiết kế cơ sở dữ liệu,Phạm Minh Quân,NXB Thống Kê,2019,CNTT,số,,https://lib.example.vn/doc/DOC1011,đang mượn
+DOC1012,Phân tích tài chính doanh nghiệp,Trần Hải M,NXB Kinh Tế,2018,Tài chính,số,,https://lib.example.vn/doc/DOC1012,còn
