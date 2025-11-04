@@ -24,7 +24,7 @@ public class DocController {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
+                String[] parts = line.split(",",-1);
                 if (parts.length < 11) continue; // bỏ qua dòng không đủ trường
                 docs.add(new Doc(parts));
             }

@@ -61,8 +61,8 @@ public class DocManagerController extends HomeControllerForAdmin {
             if (Files.exists(path)) {
                 List<String> lines = Files.readAllLines(path);
                 for (String line : lines) {
-                    String[] parts = line.split(",");
-                    // File docs.txt đang lưu 10 trường (docId,title,author,publisher,pubYear,category,shelfLoc,docType,accessUrl,status)
+                    String[] parts = line.split(",",-1);
+                    // File docs.txt đang lưu 10 trường
                     if (parts.length >= 10) {
                         docList.add(new Doc(parts));
                     }
