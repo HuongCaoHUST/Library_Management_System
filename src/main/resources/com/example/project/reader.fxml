@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.project.controller.ReaderController">
+    <children>
+        <TableView fx:id="readerTable" layoutY="150" prefWidth="600" prefHeight="300">
+            <columns>
+                <TableColumn fx:id="colFullName" text="Full Name"/>
+                <TableColumn fx:id="colEmail" text="Email"/>
+                <TableColumn fx:id="colPhone" text="Phone"/>
+            </columns>
+        </TableView>
+    </children>
+</AnchorPane>

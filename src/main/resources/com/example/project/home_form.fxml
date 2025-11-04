@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #1f3368;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <AnchorPane layoutX="33.0" layoutY="191.0" prefHeight="366.0" prefWidth="1156.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="190.0" />
+        <AnchorPane prefHeight="100.0" prefWidth="1280.0" style="-fx-background-color: ffffff;" stylesheets="@fullpackstyling.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Label fx:id="btnForgot11" layoutX="102.0" layoutY="57.0" prefHeight="23.0" prefWidth="283.0" styleClass="left-label" stylesheets="@fullpackstyling.css" text="DÀNH CHO CHUYÊN VIÊN" textFill="#1f3368" AnchorPane.bottomAnchor="25.0">
+                    <font>
+                        <Font name="Segoe UI Bold" size="22.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="NONE" />
+                    </cursor>
+                </Label>
+                <Label fx:id="btnForgot1" layoutX="102.0" layoutY="26.0" prefHeight="24.0" prefWidth="397.0" styleClass="left-label" stylesheets="@fullpackstyling.css" text="HỆ THỐNG QUẢN LÝ THƯ VIỆN" textFill="#a81c29" AnchorPane.topAnchor="25.0">
+                    <font>
+                        <Font name="Segoe UI Bold" size="22.0" />
+                    </font>
+                </Label>
+                <ImageView fitHeight="60.0" fitWidth="47.0" layoutX="41.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="25.0" AnchorPane.topAnchor="25.0">
+                    <image>
+                        <Image url="@images/logo2.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="bellIcon" fitHeight="48.0" fitWidth="31.0" layoutX="1114.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/bell.png" />
+                    </image>
+                </ImageView>
+                <Label fx:id="notificationBadge" layoutX="1139.0" layoutY="27.0" prefHeight="18.0" prefWidth="18.0" style="-fx-background-color: a81c29; -fx-text-fill: white; -fx-font-size: 12; -fx-font-weight: bold; -fx-alignment: center; -fx-background-radius: 9px;" text="3" AnchorPane.topAnchor="30.0">
+                </Label>
+                <ImageView fx:id="avatarImage" fitHeight="60.0" fitWidth="62.0" layoutX="1180.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="25.0">
+                    <image>
+                        <Image url="@images/boy.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutY="110.0" prefHeight="38.0" prefWidth="1280.0" style="-fx-background-color: a81c29;">
+            <children>
+                <GridPane layoutX="591.0" prefHeight="49.0" prefWidth="675.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="10.0">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Button fx:id="btnAccountInfor" mnemonicParsing="false"  prefHeight="25.0" prefWidth="228.0" styleClass="button_dashboard" stylesheets="@fullpackstyling.css" text="Thông tin tài khoản">
+                            <font>
+                                <Font name="Segoe UI Bold" size="16.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="btnAccountManager" mnemonicParsing="false"  prefHeight="25.0" prefWidth="228.0" styleClass="button_dashboard" stylesheets="@fullpackstyling.css" text="Quản lý tài khoản" GridPane.columnIndex="1">
+                            <font>
+                                <Font name="Segoe UI Bold" size="16.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="btnApproveAccount" mnemonicParsing="false"  prefHeight="25.0" prefWidth="238.0" styleClass="button_dashboard" stylesheets="@fullpackstyling.css" text="Duyệt tài khoản" GridPane.columnIndex="2">
+                            <font>
+                                <Font name="Segoe UI Bold" size="16.0" />
+                            </font>
+                        </Button>
+                    </children>
+                </GridPane>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>
