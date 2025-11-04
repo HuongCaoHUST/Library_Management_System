@@ -19,8 +19,8 @@ public class Doc {
         this.publisher = parts[3].trim();
         this.pubYear   = parts[4].trim();
         this.category  = parts[6].trim();
-        this.shelfLoc  = parts[7].trim();
-        this.docType   = parts[8].trim();
+        this.docType   = parts[7].trim();
+        this.shelfLoc  = parts[8].trim();
         this.accessUrl = parts[9].trim();
         this.status    = parts[10].trim();
     }
