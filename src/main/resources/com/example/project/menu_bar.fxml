@@ -67,9 +67,9 @@
                <children>
                   <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="238.0" styleClass="menu_button" stylesheets="@fullpackstyling.css" text="Quản lý tài liệu" GridPane.columnIndex="2">
                     <items>
-                      <MenuItem mnemonicParsing="false" styleClass="menu_item" text="Danh sách tài liệu" />
-                      <MenuItem mnemonicParsing="false" styleClass="menu_item" text="Thêm tài liệu" />
-                        <MenuItem mnemonicParsing="false" styleClass="menu_item" text="Yêu cầu mượn" />
+                      <MenuItem mnemonicParsing="false" onAction="#handleDocManager" styleClass="menu_item" text="Danh sách tài liệu" />
+                      <MenuItem mnemonicParsing="false" onAction="#handleDocAdd" styleClass="menu_item" text="Thêm tài liệu" />
+                        <MenuItem mnemonicParsing="false" onAction="#handleApproveReq" styleClass="menu_item" text="Yêu cầu mượn" />
                     </items>
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />

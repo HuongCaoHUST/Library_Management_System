@@ -29,7 +29,6 @@ public class HomeControllerForAdmin extends LoadForm {
 
     @FXML
     public void initialize() {
-        UserController userController = new UserController();
         super.notificationBadge = this.notificationBadge;
         updateNotificationBadge();
     }
@@ -50,8 +49,10 @@ public class HomeControllerForAdmin extends LoadForm {
 
         } catch (IOException e) {
             e.printStackTrace();
+            showAlert("Không thể mở màn hình Phê duyệt tài khoản:\n" + e.getMessage());
         }
     }
+
     @FXML
     protected void handleAccountManager(ActionEvent event) {
         try {
@@ -63,13 +64,45 @@ public class HomeControllerForAdmin extends LoadForm {
 
             Stage stage = getStage(event);
             stage.setScene(new Scene(root));
-            stage.setTitle("Quản lý tài khoản");
+            stage.setTitle("Danh sách tài khoản");
             stage.centerOnScreen();
             stage.show();
 
         } catch (IOException e) {
             e.printStackTrace();
+            showAlert("Không thể mở màn hình Danh sách tài khoản:\n" + e.getMessage());
         }
+    }
+
+    @FXML
+    protected void handleDocManager(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/project/doc_manager_form.fxml")
+            );
+            Parent root = loader.load();
+
+            // Đổi DocManagerController thành tên controller thật trong FXML nếu khác
+            DocManagerController controller = loader.getController();
+            controller.loadDocList();
+            controller.updateNotificationBadge();
+
+            Stage stage = getStage(event);
+            stage.setScene(new Scene(root));
+            stage.setTitle("Danh sách tài liệu");
+            stage.centerOnScreen();
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Không thể mở màn hình Danh sách tài liệu:\n" + e.getMessage());
+        }
+    }
+
+    public void handleDocAdd(ActionEvent actionEvent) {
+    }
+    
+    public void handleApproveReq(ActionEvent actionEvent) {
     }
 
     // Tiện ích: lấy Stage từ ActionEvent cho cả Button (Node) và MenuItem
