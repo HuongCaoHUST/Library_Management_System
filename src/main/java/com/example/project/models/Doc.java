@@ -7,8 +7,8 @@ public class Doc {
     private final String publisher; // Nhà xuất bản
     private final String pubYear;   // Năm xuất bản
     private final String category;  // Thể loại (khoa học, văn học, v.v.)
-    private final String shelfLoc;  // Vị trí trên kệ
     private final String docType;   // Loại tài liệu (print/digital)
+    private final String shelfLoc;  // Vị trí trên kệ
     private final String accessUrl; // Liên kết truy cập (nếu là tài nguyên số)
     private final String status;    // Tình trạng (còn/hết)
 
@@ -18,11 +18,11 @@ public class Doc {
         this.author    = parts[2].trim();
         this.publisher = parts[3].trim();
         this.pubYear   = parts[4].trim();
-        this.category  = parts[6].trim();
-        this.docType   = parts[7].trim();
-        this.shelfLoc  = parts[8].trim();
-        this.accessUrl = parts[9].trim();
-        this.status    = parts[10].trim();
+        this.category  = parts[5].trim();
+        this.docType   = parts[6].trim();
+        this.shelfLoc  = parts[7].trim();
+        this.accessUrl = parts[8].trim();
+        this.status    = parts[9].trim();
     }
 
     // getters
