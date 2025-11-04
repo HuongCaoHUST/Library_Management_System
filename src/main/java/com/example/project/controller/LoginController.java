@@ -2,8 +2,10 @@ package com.example.project.controller;
 
 import com.example.project.model.Librarian;
 import com.example.project.repository.LibrarianRepository;
+import com.example.project.util.SpringFxmlLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -35,10 +37,13 @@ public class LoginController {
     @Autowired
     private LibrarianRepository librarianRepository;
 
+    @Autowired
+    private SpringFxmlLoader fxmlLoader;
+
     @FXML
     public void initialize() {
         btnSignin.setOnAction(event -> handleLogin());
-        btnSignup.setOnAction(event -> openSignupForm());
+        btnSignup.setOnAction(event -> onSignup());
     }
 
     private void handleLogin() {
@@ -81,17 +86,19 @@ public class LoginController {
         }
     }
 
-    private void openSignupForm() {
+    private void onSignup() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/signup_form.fxml"));
-            Scene signupScene = new Scene(loader.load());
+            Parent root = fxmlLoader.load("/com/example/project/signup_form.fxml");
+            Scene signupScene = new Scene(root);
+
             Stage stage = (Stage) btnSignup.getScene().getWindow();
             stage.setScene(signupScene);
             stage.setTitle("Đăng ký - Hệ thống quản lý thư viện");
             stage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
-            lblErrors.setText("Không thể mở form đăng ký");
+            lblErrors.setText("Không thể mở form đăng ký: " + e.getMessage());
         }
     }
 }
