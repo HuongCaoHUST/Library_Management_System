@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.io.IOException;
 import javafx.stage.Window;
+import javafx.stage.Modality;
 
 public class HomeControllerForAdmin extends LoadForm {
     @FXML
@@ -99,7 +100,35 @@ public class HomeControllerForAdmin extends LoadForm {
         }
     }
 
-    public void handleDocAdd(ActionEvent actionEvent) {
+    public void handleDocAdd(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/project/doc_add_form.fxml")
+            );
+            Parent root = loader.load();
+
+            // Lấy stage hiện tại làm owner
+            Stage owner = getStage(event);
+
+            // Tạo cửa sổ modal đè lên
+            Stage dialog = new Stage();
+            dialog.initOwner(owner);
+            dialog.initModality(Modality.WINDOW_MODAL); // chặn cửa sổ phía dưới
+            dialog.setTitle("Thêm tài liệu");
+            dialog.setScene(new Scene(root));
+            dialog.getIcons().add(new Image(
+                    getClass().getResourceAsStream("/com/example/project/logo/logo_HUB.png")
+            ));
+            dialog.setResizable(false);
+            dialog.centerOnScreen();
+
+            // Mở và chờ đến khi form được đóng
+            dialog.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Không thể mở màn hình Thêm tài liệu:\n" + e.getMessage());
+        }
     }
     
     public void handleApproveReq(ActionEvent actionEvent) {
