@@ -79,7 +79,7 @@ public class LoginController {
         try {
             String fxmlFile = null;
             if (form_name == "home_form") {
-                fxmlFile = "/com/example/project/home_form.fxml";
+                fxmlFile = "/com/example/project/detail_account_infor_form.fxml";
             } else if (form_name == "home_form_for_students") {
                 fxmlFile = "/com/example/project/home_form_for_students.fxml";
 

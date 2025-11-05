@@ -190,3 +190,86 @@
     -fx-text-fill: #e7e5e5 !important;
     -fx-border-color: transparent !important;
 }
+
+/* ========== MenuButton (class: menu_button) ========== */
+.menu_button {
+    /* Màu dùng chung (looked-up colors) */
+    -app-red: #a81c29;      /* nền khi bình thường */
+    -app-blue: #10165F;     /* nền khi hover/nhấn/mở menu */
+    -app-light-red: derive(-app-red, 35%); /* đỏ nhạt hơn một chút cho dropdown */
+
+    /* Nền & chữ */
+    -fx-background-color: -app-red;
+    -fx-text-fill: white;
+    -fx-background-radius: 3;
+    -fx-background-insets: 0;
+    -fx-padding: 0.07em 0.75em; /* chỉnh padding cho nút */
+}
+
+/* Chữ trên nút luôn trắng */
+.menu_button > .label {
+    -fx-text-fill: white;
+}
+
+/* Bỏ mũi tên của MenuButton */
+.menu_button > .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-min-width: 0;
+    -fx-pref-width: 0;
+    -fx-max-width: 0;
+}
+.menu_button > .arrow-button > .arrow {
+    -fx-background-color: transparent;
+    -fx-padding: 0px -1px;
+}
+
+/* Hover: chuyển xanh */
+.menu_button:hover {
+    -fx-background-color: -app-blue;
+    -fx-cursor: hand;
+}
+
+/* Khi nhấn hoặc đang mở menu: giữ nguyên màu xanh */
+.menu_button:armed,
+.menu_button:pressed,
+.menu_button:showing {
+    -fx-background-color: -app-blue;
+}
+
+/* ========== ContextMenu (dropdown của MenuButton) ========== */
+/* Nền dropdown: đỏ nhạt hơn; chiều rộng: 200px */
+.menu_button .context-menu {
+    -fx-background-color: -app-light-red;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-padding: 6px 0 6px 0;
+
+    /* Cố định chiều rộng dropdown */
+    -fx-min-width: 100px;
+    -fx-pref-width: 190px;
+}
+
+/* ========== MenuItem (class: menu_item) ========== */
+/* Nền item trong suốt để lộ nền dropdown, padding dễ bấm */
+.menu_button .menu-item,
+.menu_item {
+    -fx-background-color: transparent;
+    -fx-padding: 10px 14px;
+}
+
+/* Hover/Focus của item: hơi đậm hơn nền dropdown để phân biệt */
+.menu_button .menu-item:hover,
+.menu_button .menu-item:focused,
+.menu_item:hover,
+.menu_item:focused {
+    -fx-background-color: derive(-app-light-red, -10%);
+    -fx-cursor: hand;
+}
+
+/* Chữ item: trắng để nổi bật trên nền đỏ */
+.menu_button .menu-item > .label,
+.menu_item > .label {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}

@@ -4,72 +4,35 @@ import com.example.project.models.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import java.io.IOException;
+import javafx.stage.Window;
+import javafx.stage.Modality;
 
 public class HomeControllerForAdmin extends LoadForm {
     @FXML
     private Label notificationBadge;
 
-    @FXML private TableView<User> tableView;
-    @FXML private TableColumn<User, String> colName;
-    @FXML private TableColumn<User, String> colMSSV;
-    @FXML private TableColumn<User, String> colDOB;
-    @FXML private TableColumn<User, String> colCCCD;
-    @FXML private TableColumn<User, String> colWorkplace;
-    @FXML private TableColumn<User, String> colDetail;
-    @FXML private TableColumn<User, String> colApprove;
-    @FXML private TableColumn<User, String> colReject;
-    @FXML private Button btnDocumentManager;
-    @FXML private ImageView avatarImage;
-
-    private UserController userController;
+//    @FXML private TableView<User> tableView;
+//    @FXML private TableColumn<User, String> colName;
+//    @FXML private TableColumn<User, String> colMSSV;
+//    @FXML private TableColumn<User, String> colDOB;
+//    @FXML private TableColumn<User, String> colCCCD;
+//    @FXML private TableColumn<User, String> colWorkplace;
+//    @FXML private TableColumn<User, String> colDetail;
+//    @FXML private TableColumn<User, String> colApprove;
+//    @FXML private TableColumn<User, String> colReject;
 
     @FXML
     public void initialize() {
-        userController = new UserController();
         super.notificationBadge = this.notificationBadge;
         updateNotificationBadge();
-        setupReaderButtonMenu();
     }
-
-    private void setupReaderButtonMenu() {
-        ContextMenu documentMenu = new ContextMenu();
-        MenuItem item1 = new MenuItem("Nhận tài liệu");
-        MenuItem item2 = new MenuItem("Mượn tài liệu");
-        MenuItem item3 = new MenuItem("Trả tài liệu");
-        MenuItem item4 = new MenuItem("Xử lý báo, tạp chí");
-        MenuItem item5 = new MenuItem("Xác nhận nghĩa vụ thư viện");
-
-        documentMenu.getItems().addAll(item1, item2, item3, item4, item5);
-
-        item1.setOnAction(e -> handleDocumentReceive());
-//        approvalItem.setOnAction(e -> openApproval());
-
-        btnDocumentManager.setOnMouseEntered(event -> {
-            if (!documentMenu.isShowing()) {
-                Bounds bounds = btnDocumentManager.localToScreen(btnDocumentManager.getBoundsInLocal());
-                double menuX = bounds.getMaxX();
-                double menuY = bounds.getMaxY();
-                documentMenu.show(btnDocumentManager, menuX - 160, menuY);
-            }
-        });
-
-        btnDocumentManager.setOnMouseExited(event -> {
-            btnDocumentManager.setOnMouseExited(ev -> {
-                btnDocumentManager.setOnMouseExited(null);
-                documentMenu.hide();
-            });
-        });
-    }
-
     @FXML
     protected void handleApproveAccount(ActionEvent event) {
         try {
@@ -78,7 +41,8 @@ public class HomeControllerForAdmin extends LoadForm {
             ApprovalAccountController controller = loader.getController();
             controller.loadRegisterQueue();
             controller.updateNotificationBadge();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            Stage stage = getStage(event);
             stage.setScene(new Scene(root));
             stage.setTitle("Phê duyệt tài khoản");
             stage.centerOnScreen();
@@ -86,8 +50,10 @@ public class HomeControllerForAdmin extends LoadForm {
 
         } catch (IOException e) {
             e.printStackTrace();
+            showAlert("Không thể mở màn hình Phê duyệt tài khoản:\n" + e.getMessage());
         }
     }
+
     @FXML
     protected void handleAccountManager(ActionEvent event) {
         try {
@@ -96,14 +62,91 @@ public class HomeControllerForAdmin extends LoadForm {
             AccountManagerController controller = loader.getController();
             controller.loadAccountList();
             controller.updateNotificationBadge();
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            Stage stage = getStage(event);
             stage.setScene(new Scene(root));
-            stage.setTitle("Quản lý tài khoản");
+            stage.setTitle("Danh sách tài khoản");
             stage.centerOnScreen();
             stage.show();
 
         } catch (IOException e) {
             e.printStackTrace();
+            showAlert("Không thể mở màn hình Danh sách tài khoản:\n" + e.getMessage());
+        }
+    }
+
+    @FXML
+    protected void handleDocManager(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/project/doc_manager_form.fxml")
+            );
+            Parent root = loader.load();
+
+            // Đổi DocManagerController thành tên controller thật trong FXML nếu khác
+            DocManagerController controller = loader.getController();
+            controller.loadDocList();
+            controller.updateNotificationBadge();
+
+            Stage stage = getStage(event);
+            stage.setScene(new Scene(root));
+            stage.setTitle("Danh sách tài liệu");
+            stage.centerOnScreen();
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Không thể mở màn hình Danh sách tài liệu:\n" + e.getMessage());
+        }
+    }
+
+    public void handleDocAdd(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/project/doc_add_form.fxml")
+            );
+            Parent root = loader.load();
+
+            // Lấy stage hiện tại làm owner
+            Stage owner = getStage(event);
+
+            // Tạo cửa sổ modal đè lên
+            Stage dialog = new Stage();
+            dialog.initOwner(owner);
+            dialog.initModality(Modality.WINDOW_MODAL); // chặn cửa sổ phía dưới
+            dialog.setTitle("Thêm tài liệu");
+            dialog.setScene(new Scene(root));
+            dialog.getIcons().add(new Image(
+                    getClass().getResourceAsStream("/com/example/project/logo/logo_HUB.png")
+            ));
+            dialog.setResizable(false);
+            dialog.centerOnScreen();
+
+            // Mở và chờ đến khi form được đóng
+            dialog.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Không thể mở màn hình Thêm tài liệu:\n" + e.getMessage());
+        }
+    }
+    
+    public void handleApproveReq(ActionEvent actionEvent) {
+    }
+
+    // Tiện ích: lấy Stage từ ActionEvent cho cả Button (Node) và MenuItem
+    private Stage getStage(ActionEvent event) {
+        Object src = event.getSource();
+        if (src instanceof Node node) {
+            return (Stage) node.getScene().getWindow();
+        } else if (src instanceof MenuItem item) {
+            Window owner = item.getParentPopup() != null ? item.getParentPopup().getOwnerWindow() : null;
+            if (owner instanceof Stage stage) {
+                return stage;
+            }
+            throw new IllegalStateException("Không lấy được Stage từ MenuItem (ownerWindow null)");
+        } else {
+            throw new IllegalStateException("Unsupported event source: " + src);
         }
     }
 
@@ -121,25 +164,5 @@ public class HomeControllerForAdmin extends LoadForm {
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/logo/logo_HUB.png")));
         alert.getDialogPane().setStyle("-fx-font-size: 16px; -fx-font-family: 'Segoe UI';");
         alert.showAndWait();
-    }
-
-    @FXML
-    protected void handleDocumentReceive() {
-        try {
-            FXMLLoader loader = loadFormInStage("/com/example/project/document_receive_form.fxml", "Nhận tài liệu");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    protected FXMLLoader loadFormInStage(String fxmlPath, String title) throws IOException {
-        Stage currentStage = (Stage) avatarImage.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-        Parent root = loader.load();
-
-        currentStage.setTitle(title);
-        currentStage.setScene(new Scene(root));
-
-        return loader; // trả về để lấy controller
     }
 }
