@@ -65,4 +65,42 @@ public class DetailDocController {
     public void setParentController(DocManagerController parentController) {
         this.parentController = parentController;
     }
+
+    @FXML
+    private void handleDelete() {
+        if (currentDoc == null) {
+            showInfo("Không có tài liệu để xoá.");
+            return;
+        }
+        if (docController == null) {
+            // Fallback: vẫn có thể xóa qua file (khởi tạo mới sẽ nạp file và thao tác)
+            docController = new com.example.project.model_controller.DocController();
+        }
+
+        boolean ok = docController.deleteDocById(currentDoc.getDocId());
+        if (ok) {
+            showInfo("Xoá tài liệu thành công.");
+
+            // Cập nhật danh sách ở màn hình cha (nếu có)
+            if (parentController != null) {
+                try {
+                    parentController.loadDocList();
+                    // nếu có badge: parentController.updateNotificationBadge();
+                } catch (Exception ignored) {}
+            }
+            // Đóng cửa sổ chi tiết
+            Stage stage = (Stage) imgCover.getScene().getWindow();
+            stage.close();
+        } else {
+            showInfo("Không tìm thấy tài liệu hoặc xoá thất bại.");
+        }
+    }
+
+    private void showInfo(String msg) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Thông báo");
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
+    }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -24,7 +25,7 @@
                            <children>
                               <Text fx:id="lblDocId" fill="#1f3368" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER">
                                  <font>
-                                    <Font name="Segoe UI Bold" size="18.0" />
+                                    <Font name="Segoe UI Bold" size="16.0" />
                                  </font>
                               </Text>
                            </children></TextFlow>
@@ -49,15 +50,15 @@
                   </AnchorPane>
                </children>
             </VBox>
-            <AnchorPane prefHeight="440.0" prefWidth="680.0">
+            <AnchorPane prefHeight="440.0" prefWidth="479.0">
                <children>
-                  <GridPane alignment="CENTER" layoutX="62.0" layoutY="120.0" prefHeight="400.0" prefWidth="640.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                  <GridPane alignment="CENTER" layoutX="62.0" layoutY="120.0" prefHeight="400.0" prefWidth="640.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="315.20001220703125" minWidth="10.0" prefWidth="205.6000244140625" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="491.2000274658203" minWidth="10.0" prefWidth="415.1999755859376" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="315.20001220703125" minWidth="10.0" prefWidth="142.3999755859375" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="491.2000274658203" minWidth="10.0" prefWidth="308.0000244140625" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="4.0" vgrow="SOMETIMES" />
                       <RowConstraints minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
@@ -65,91 +66,100 @@
                         <RowConstraints minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="89.59998779296876" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="38.4000244140625" minHeight="6.400012207031239" prefHeight="4.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <Label text="Tác giả:" textFill="#1f3368" GridPane.rowIndex="1">
                            <font>
-                              <Font name="Segoe UI Bold" size="18.0" />
+                              <Font name="Segoe UI Bold" size="16.0" />
                            </font>
                         </Label>
                         <Label text="Nhà xuất bản:" textFill="#1f3368" GridPane.rowIndex="2">
                            <font>
-                              <Font name="Segoe UI Bold" size="18.0" />
+                              <Font name="Segoe UI Bold" size="16.0" />
                            </font>
                         </Label>
                         <Label text="Năm xuất bản:" textFill="#1f3368" GridPane.rowIndex="3">
                            <font>
-                              <Font name="Segoe UI Bold" size="18.0" />
+                              <Font name="Segoe UI Bold" size="16.0" />
                            </font>
                         </Label>
                         <Label text="Thể loại:" textFill="#1f3368" GridPane.rowIndex="4">
                            <font>
-                              <Font name="Segoe UI Bold" size="18.0" />
+                              <Font name="Segoe UI Bold" size="16.0" />
                            </font>
                         </Label>
                         <Label text="Loại tài liệu:" textFill="#1f3368" GridPane.rowIndex="5">
                            <font>
-                              <Font name="Segoe UI Bold" size="18.0" />
+                              <Font name="Segoe UI Bold" size="16.0" />
                            </font>
                         </Label>
                         <Label text="Vị trí trên kệ:" textFill="#1f3368" GridPane.rowIndex="6">
                            <font>
-                              <Font name="Segoe UI Bold" size="18.0" />
+                              <Font name="Segoe UI Bold" size="16.0" />
                            </font>
                         </Label>
                         <Label text="Link truy cập:" textFill="#1f3368" GridPane.rowIndex="7">
                            <font>
-                              <Font name="Segoe UI Bold" size="18.0" />
+                              <Font name="Segoe UI Bold" size="16.0" />
                            </font>
                         </Label>
                         <Label text="Trạng thái:" textFill="#1f3368" GridPane.rowIndex="8">
                            <font>
-                              <Font name="Segoe UI Bold" size="18.0" />
+                              <Font name="Segoe UI Bold" size="16.0" />
                            </font>
                         </Label>
                         <Label fx:id="lblAuthor" textFill="#1f3368" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <font>
-                              <Font name="Segoe UI Bold" size="18.0" />
+                              <Font name="Segoe UI Bold" size="16.0" />
                            </font>
                         </Label>
                         <Label fx:id="lblPublisher" textFill="#1f3368" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <font>
-                              <Font name="Segoe UI Bold" size="18.0" />
+                              <Font name="Segoe UI Bold" size="16.0" />
                            </font>
                         </Label>
                         <Label fx:id="lblPubYear" textFill="#1f3368" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <font>
-                              <Font name="Segoe UI Bold" size="18.0" />
+                              <Font name="Segoe UI Bold" size="16.0" />
                            </font>
                         </Label>
                         <Label fx:id="lblCategory" textFill="#1f3368" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <font>
-                              <Font name="Segoe UI Bold" size="18.0" />
+                              <Font name="Segoe UI Bold" size="16.0" />
                            </font>
                         </Label>
                         <Label fx:id="lblDocType" textFill="#1f3368" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <font>
-                              <Font name="Segoe UI Bold" size="18.0" />
+                              <Font name="Segoe UI Bold" size="16.0" />
                            </font>
                         </Label>
                         <Label fx:id="lblShelfLoc" textFill="#1f3368" GridPane.columnIndex="1" GridPane.rowIndex="6">
                            <font>
-                              <Font name="Segoe UI Bold" size="18.0" />
+                              <Font name="Segoe UI Bold" size="16.0" />
                            </font>
                         </Label>
                         <Label fx:id="lblAccessUrl" textFill="#1f3368" GridPane.columnIndex="1" GridPane.rowIndex="7">
                            <font>
-                              <Font name="Segoe UI Bold" size="18.0" />
+                              <Font name="Segoe UI Bold" size="16.0" />
                            </font>
                         </Label>
                         <Label fx:id="lblStatus" textFill="#1f3368" GridPane.columnIndex="1" GridPane.rowIndex="8">
                            <font>
-                              <Font name="Segoe UI Bold" size="18.0" />
+                              <Font name="Segoe UI Bold" size="16.0" />
                            </font>
                         </Label>
                      </children>
                   </GridPane>
+               </children></AnchorPane>
+            <AnchorPane prefHeight="440.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="btnDelete" layoutX="15.0" layoutY="394.0" mnemonicParsing="false" onAction="#handleDelete" prefHeight="32.0" prefWidth="170.0" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Xoá tài liệu">
+                     <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                     </font>
+                  </Button>
                </children></AnchorPane>
          </children>
       </HBox>

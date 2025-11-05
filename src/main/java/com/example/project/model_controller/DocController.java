@@ -25,7 +25,7 @@ public class DocController {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",",-1);
-                if (parts.length < 11) continue; // bỏ qua dòng không đủ trường
+                if (parts.length < 10) continue; // bỏ qua dòng không đủ trường
                 docs.add(new Doc(parts));
             }
         } catch (IOException e) {
@@ -54,6 +54,38 @@ public class DocController {
             );
             writer.write(line);
             writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean deleteDocById(String id) {
+        if (id == null) return false;
+        boolean removed = docs.removeIf(d -> id.equals(d.getDocId()));
+        if (removed) {
+            rewriteFile(); // ghi lại file sau khi xoá
+        }
+        return removed;
+    }
+
+    private void rewriteFile() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, false))) {
+            for (Doc doc : docs) {
+                String line = String.join(",",
+                        doc.getDocId(),
+                        doc.getTitle(),
+                        doc.getAuthor(),
+                        doc.getPublisher(),
+                        doc.getPubYear(),
+                        doc.getCategory(),
+                        doc.getDocType(),
+                        doc.getShelfLoc() == null ? "" : doc.getShelfLoc(),
+                        doc.getAccessUrl() == null ? "" : doc.getAccessUrl(),
+                        doc.getStatus() == null ? "" : doc.getStatus()
+                );
+                writer.write(line);
+                writer.newLine();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
