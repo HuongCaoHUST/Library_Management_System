@@ -1,5 +1,6 @@
 package com.example.project.controller;
 
+import com.example.project.util.SpringFxmlLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -34,6 +35,9 @@ public class SignupController {
 
     @Autowired
     private ReaderService readerService;
+
+    @Autowired
+    private SpringFxmlLoader springFxmlLoader;
 
     @FXML
     private void initialize() {
@@ -91,8 +95,8 @@ public class SignupController {
     @FXML
     private void handleBackToLogin(MouseEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/login.fxml"));
-        Parent root = loader.load();
+        Parent root = springFxmlLoader.load("/com/example/project/login.fxml");
+
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

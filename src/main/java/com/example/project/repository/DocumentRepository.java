@@ -1,12 +1,11 @@
 package com.example.project.repository;
 
-import com.example.project.model.Reader;
+import com.example.project.model.Document;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface ReaderRepository extends JpaRepository<Reader, Long> {
-    List<Reader> findByStatus(String status);
+public interface DocumentRepository extends JpaRepository<Document, Long> {
 }

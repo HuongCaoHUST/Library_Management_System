@@ -23,8 +23,8 @@ public class LibrarianService {
         return repository.findById(id);
     }
 
-    public Librarian save(Librarian reader) {
-        return repository.save(reader);
+    public Librarian save(Librarian librarian) {
+        return repository.save(librarian);
     }
 
     public void delete(Long id) {

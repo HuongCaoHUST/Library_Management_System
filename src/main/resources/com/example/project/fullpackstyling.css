@@ -273,3 +273,16 @@
     -fx-text-fill: white;
     -fx-font-size: 14px;
 }
+
+.text-field:focused:empty {
+    -fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);
+}
+.text-field:empty {
+    -fx-prompt-text-fill: #999999;
+}
+.combo-box:focused:empty .text {
+    -fx-fill: derive(-fx-control-inner-background, -30%);
+}
+.combo-box:empty .text {
+    -fx-fill: #999999;
+}

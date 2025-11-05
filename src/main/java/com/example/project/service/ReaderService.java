@@ -2,6 +2,7 @@ package com.example.project.service;
 
 import com.example.project.model.Reader;
 import com.example.project.repository.ReaderRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -32,6 +33,9 @@ public class ReaderService {
     public void delete(Long id) {
         repository.deleteById(id);
     }
+
+    @Autowired
+    private ReaderRepository readerRepository;
 
     public Reader registerReader(Reader inputReader) {
         String email = inputReader.getEmail().trim().toLowerCase();
@@ -66,4 +70,13 @@ public class ReaderService {
 
         return repository.save(reader);
     }
+
+    public List<Reader> getPendingReaders() {
+        return readerRepository.findByStatus("PENDING");
+    }
+
+    public List<Reader> getApprovedReaders() {
+        return readerRepository.findByStatus("APPROVED");
+    }
+
 }

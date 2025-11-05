@@ -71,8 +71,8 @@ public class LoginController {
 
     private void openHomePage() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/home_form.fxml"));
-            Scene homeScene = new Scene(loader.load());
+            Parent root = fxmlLoader.load("/com/example/project/home_form.fxml");
+            Scene homeScene = new Scene(root);
 
             Stage stage = (Stage) btnSignin.getScene().getWindow();
             stage.setScene(homeScene);
@@ -80,9 +80,10 @@ public class LoginController {
             stage.setTitle("Trang chủ - Hệ thống quản lý thư viện");
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/images/logo_HUB.png")));
             stage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
-            lblErrors.setText("Lỗi khi mở trang chủ");
+            lblErrors.setText("Lỗi khi mở trang chủ: " + e.getMessage());
         }
     }
 
