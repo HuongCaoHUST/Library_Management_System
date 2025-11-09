@@ -35,7 +35,9 @@ public class Reader {
     private String password;
     private LocalDateTime registrationDate;
     private LocalDateTime approvedDate;
-    private String approvedBy;
     private String status;
     private BigDecimal depositAmount;
+    @ManyToOne
+    @JoinColumn(name = "approved_by")
+    private Librarian approvedBy;
 }

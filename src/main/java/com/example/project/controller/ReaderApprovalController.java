@@ -1,18 +1,25 @@
 package com.example.project.controller;
+import com.example.project.model.Librarian;
 import com.example.project.model.Reader;
 import com.example.project.service.ReaderService;
+import com.example.project.util.SendEmail;
+import com.example.project.util.SessionManager;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import java.security.SecureRandom;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -35,6 +42,8 @@ public class ReaderApprovalController implements Initializable {
 
     @Autowired
     private ReaderService readerService;
+    @Autowired
+    private SendEmail sendEmail;
 
     private ObservableList<Reader> masterData; // Dữ liệu gốc (PENDING)
     private ObservableList<Reader> filteredData; // Dữ liệu sau tìm kiếm
@@ -56,11 +65,22 @@ public class ReaderApprovalController implements Initializable {
         // Detail Col
         colDetail.setCellFactory(tc -> new TableCell<>() {
             private final Button detailBtn = createButton("Xem", "#4CAF50");
-
+            private final HBox container = new HBox(detailBtn);
+            {
+                container.setAlignment(Pos.CENTER);
+                detailBtn.setOnAction(e -> {
+                    Reader reader = getTableView().getItems().get(getIndex());
+                    showDetailDialog(reader);
+                });
+            }
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                setGraphic(empty || getTableRow() == null || getTableRow().getItem() == null ? null : detailBtn);
+                if (empty || getTableRow() == null || getTableRow().getItem() == null) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(container);
+                }
             }
 
             {
@@ -74,11 +94,22 @@ public class ReaderApprovalController implements Initializable {
         // Approval Col
         colApprove.setCellFactory(tc -> new TableCell<>() {
             private final Button approveBtn = createButton("Duyệt", "#2196F3");
-
+            private final HBox container = new HBox(approveBtn);
+            {
+                container.setAlignment(Pos.CENTER);
+                approveBtn.setOnAction(e -> {
+                    Reader reader = getTableView().getItems().get(getIndex());
+                    showDetailDialog(reader);
+                });
+            }
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                setGraphic(empty || getTableRow() == null || getTableRow().getItem() == null ? null : approveBtn);
+                if (empty || getTableRow() == null || getTableRow().getItem() == null) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(container);
+                }
             }
 
             {
@@ -92,11 +123,22 @@ public class ReaderApprovalController implements Initializable {
         // Reject Col
         colReject.setCellFactory(tc -> new TableCell<>() {
             private final Button rejectBtn = createButton("Từ chối", "#f44336");
-
+            private final HBox container = new HBox(rejectBtn);
+            {
+                container.setAlignment(Pos.CENTER);
+                rejectBtn.setOnAction(e -> {
+                    Reader reader = getTableView().getItems().get(getIndex());
+                    showDetailDialog(reader);
+                });
+            }
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                setGraphic(empty || getTableRow() == null || getTableRow().getItem() == null ? null : rejectBtn);
+                if (empty || getTableRow() == null || getTableRow().getItem() == null) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(container);
+                }
             }
 
             {
@@ -106,6 +148,7 @@ public class ReaderApprovalController implements Initializable {
                 });
             }
         });
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
     }
 
     private Button createButton(String text, String color) {
@@ -169,7 +212,23 @@ public class ReaderApprovalController implements Initializable {
 
     private void approveReader(Reader reader) {
         if (confirmAction("Phê duyệt", "Bạn có chắc muốn phê duyệt reader này?")) {
+            String rawPassword = generateRandomPassword(8);
+            reader.setPassword(rawPassword);
             reader.setStatus("APPROVED");
+            reader.setApprovedDate(LocalDateTime.now());
+            Librarian librarian = SessionManager.getCurrentLibrarian();
+            reader.setApprovedBy(librarian);
+
+            String subject = "Tài khoản thư viện của bạn đã được phê duyệt";
+            String body = "Xin chào " + reader.getFullName() + ",\n\n"
+                    + "Tài khoản của bạn đã được phê duyệt thành công!\n"
+                    + "Tên đăng nhập: " + reader.getUsername() + "\n"
+                    + "Mật khẩu: " + rawPassword + "\n\n"
+                    + "Vui lòng đăng nhập và đổi mật khẩu ngay sau khi sử dụng lần đầu.\n\n"
+                    + "Thân mến,\nPhòng Thư viện";
+
+            sendEmail.sendMail("huongcao.seee@gmail.com", subject, body);
+
             readerService.save(reader);
             refreshTable();
             showInfo("Đã phê duyệt thành công!");
@@ -178,8 +237,9 @@ public class ReaderApprovalController implements Initializable {
 
     private void rejectReader(Reader reader) {
         if (confirmAction("Từ chối", "Bạn có chắc muốn từ chối reader này?")) {
-            reader.setStatus("REJECTED");
-            readerService.save(reader);
+//            reader.setStatus("REJECTED");
+//            readerService.save(reader);
+            readerService.delete(reader.getUserId());
             refreshTable();
             showInfo("Đã từ chối!");
         }
@@ -201,5 +261,15 @@ public class ReaderApprovalController implements Initializable {
     private void refreshTable() {
         loadPendingReaders();
         filterTable(searchField.getText());
+    }
+
+    private String generateRandomPassword(int length) {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%";
+        SecureRandom random = new SecureRandom();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            sb.append(chars.charAt(random.nextInt(chars.length())));
+        }
+        return sb.toString();
     }
 }

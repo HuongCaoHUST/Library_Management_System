@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface LibrarianRepository extends JpaRepository<Librarian, Long> {
     Optional<Librarian> findByUsernameAndPassword(String username, String password);
     Optional<Librarian> findByEmailAndPassword(String email, String password);
+    Optional<Librarian> findById(Long id);
 }

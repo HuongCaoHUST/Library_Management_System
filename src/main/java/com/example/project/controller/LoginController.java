@@ -2,6 +2,7 @@ package com.example.project.controller;
 
 import com.example.project.model.Librarian;
 import com.example.project.repository.LibrarianRepository;
+import com.example.project.util.SessionManager;
 import com.example.project.util.SpringFxmlLoader;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -61,6 +62,8 @@ public class LoginController {
         }
 
         if (librarianOpt.isPresent()) {
+            Librarian librarian = librarianOpt.get();
+            SessionManager.setCurrentLibrarian(librarian);
             lblErrors.setText("");
             System.out.println("Đăng nhập thành công: " + librarianOpt.get().getFullName());
             openHomePage();

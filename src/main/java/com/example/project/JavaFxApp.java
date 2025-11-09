@@ -25,6 +25,8 @@ public class JavaFxApp extends Application {
         stage.setScene(scene);
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/images/logo_HUB.png")));
         stage.setTitle("Đăng nhập - Hệ thống thư viện");
+        System.out.println("EMAIL_USERNAME env: " + System.getenv("EMAIL_USERNAME"));
+        System.out.println("EMAIL_PASSWORD env: " + System.getenv("EMAIL_PASSWORD"));
         stage.show();
     }
 

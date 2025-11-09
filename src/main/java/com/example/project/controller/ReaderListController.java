@@ -5,8 +5,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -53,11 +55,22 @@ public class ReaderListController implements Initializable {
         // Detail Col
         colDetail.setCellFactory(tc -> new TableCell<>() {
             private final Button detailBtn = createButton("Xem", "#4CAF50");
-
+            private final HBox container = new HBox(detailBtn);
+            {
+                container.setAlignment(Pos.CENTER);
+                detailBtn.setOnAction(e -> {
+                    Reader reader = getTableView().getItems().get(getIndex());
+                    showDetailDialog(reader);
+                });
+            }
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                setGraphic(empty || getTableRow() == null || getTableRow().getItem() == null ? null : detailBtn);
+                if (empty || getTableRow() == null || getTableRow().getItem() == null) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(container);
+                }
             }
 
             {
@@ -67,6 +80,7 @@ public class ReaderListController implements Initializable {
                 });
             }
         });
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
     }
 
     private Button createButton(String text, String color) {
