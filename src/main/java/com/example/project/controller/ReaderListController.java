@@ -130,13 +130,17 @@ public class ReaderListController implements Initializable {
                         "Ngày sinh: %s\n" +
                         "CCCD: %s\n" +
                         "Nơi công tác: %s\n" +
-                        "Trạng thái: %s",
+                        "Trạng thái: %s\n" +
+                        "Ngày duyệt: %s\n" +
+                        "Người duyệt: %s",
                 reader.getFullName(),
                 reader.getUserId(),
                 reader.getBirthDate(),
                 reader.getIdCardNumber(),
                 reader.getWorkPlace(),
-                reader.getStatus()
+                reader.getStatus(),
+                reader.getApprovedDate(),
+                reader.getApprovedBy().getFullName()
         );
 
         alert.setContentText(content);
