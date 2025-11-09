@@ -20,6 +20,8 @@ public class SpringFxmlLoader {
         FXMLLoader loader = new FXMLLoader();
         loader.setControllerFactory(context::getBean); // Dùng Spring tạo controller
         loader.setLocation(getClass().getResource(fxmlPath));
-        return loader.load();
+        Parent parent = loader.load();
+        parent.setUserData(loader.getController());
+        return parent;
     }
 }

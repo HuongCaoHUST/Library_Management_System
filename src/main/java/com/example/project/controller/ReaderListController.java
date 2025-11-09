@@ -52,6 +52,12 @@ public class ReaderListController implements Initializable {
         colCCCD.setCellValueFactory(new PropertyValueFactory<>("idCardNumber"));
         colWorkplace.setCellValueFactory(new PropertyValueFactory<>("workPlace"));
 
+        colName.setStyle("-fx-alignment: CENTER;");
+        colMSSV.setStyle("-fx-alignment: CENTER;");
+        colDOB.setStyle("-fx-alignment: CENTER;");
+        colCCCD.setStyle("-fx-alignment: CENTER;");
+        colWorkplace.setStyle("-fx-alignment: CENTER;");
+
         // Detail Col
         colDetail.setCellFactory(tc -> new TableCell<>() {
             private final Button detailBtn = createButton("Xem", "#4CAF50");

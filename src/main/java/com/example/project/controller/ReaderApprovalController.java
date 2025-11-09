@@ -4,15 +4,24 @@ import com.example.project.model.Reader;
 import com.example.project.service.ReaderService;
 import com.example.project.util.SendEmail;
 import com.example.project.util.SessionManager;
+import com.example.project.util.SpringFxmlLoader;
+import com.example.project.controller.ReaderApprovalDetailController;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,6 +32,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
+
 
 @Component
 public class ReaderApprovalController implements Initializable {
@@ -44,9 +54,11 @@ public class ReaderApprovalController implements Initializable {
     private ReaderService readerService;
     @Autowired
     private SendEmail sendEmail;
+    @Autowired
+    private SpringFxmlLoader fxmlLoader;
 
-    private ObservableList<Reader> masterData; // Dữ liệu gốc (PENDING)
-    private ObservableList<Reader> filteredData; // Dữ liệu sau tìm kiếm
+    private ObservableList<Reader> masterData;
+    private ObservableList<Reader> filteredData;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -61,6 +73,12 @@ public class ReaderApprovalController implements Initializable {
         colDOB.setCellValueFactory(new PropertyValueFactory<>("birthDate"));
         colCCCD.setCellValueFactory(new PropertyValueFactory<>("idCardNumber"));
         colWorkplace.setCellValueFactory(new PropertyValueFactory<>("workPlace"));
+
+        colName.setStyle("-fx-alignment: CENTER;");
+        colMSSV.setStyle("-fx-alignment: CENTER;");
+        colDOB.setStyle("-fx-alignment: CENTER;");
+        colCCCD.setStyle("-fx-alignment: CENTER;");
+        colWorkplace.setStyle("-fx-alignment: CENTER;");
 
         // Detail Col
         colDetail.setCellFactory(tc -> new TableCell<>() {
@@ -187,31 +205,40 @@ public class ReaderApprovalController implements Initializable {
     }
 
     private void showDetailDialog(Reader reader) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Chi tiết Reader");
-        alert.setHeaderText(reader.getFullName() + " - " + reader.getUserId());
-
-        String content = String.format(
-                "Họ và tên: %s\n" +
-                        "MSSV: %s\n" +
-                        "Ngày sinh: %s\n" +
-                        "CCCD: %s\n" +
-                        "Nơi công tác: %s\n" +
-                        "Trạng thái: %s",
-                reader.getFullName(),
-                reader.getUserId(),
-                reader.getBirthDate(),
-                reader.getIdCardNumber(),
-                reader.getWorkPlace(),
-                reader.getStatus()
-        );
-
-        alert.setContentText(content);
-        alert.showAndWait();
+        try {
+            Parent root = fxmlLoader.load("/com/example/project/reader_approval_form_detail.fxml");
+            Stage stage = new Stage();
+            ReaderApprovalDetailController controller = (ReaderApprovalDetailController) root.getUserData();
+            controller.setReader(reader);
+            stage.setTitle("Chi tiết bạn đọc");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+            refreshTable();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void approveReader(Reader reader) {
         if (confirmAction("Phê duyệt", "Bạn có chắc muốn phê duyệt reader này?")) {
+            Stage owner = (Stage) tableView.getScene().getWindow();
+            ProgressIndicator progress = new ProgressIndicator();
+            progress.setPrefSize(50, 50);
+            Label label = new Label("Đang gửi email thông báo...");
+            VBox box = new VBox(20, label, progress);
+            box.setAlignment(Pos.CENTER);
+            box.setStyle("-fx-padding: 30; -fx-background-color: white;");
+
+            Stage waitStage = new Stage();
+            waitStage.initOwner(owner);
+            waitStage.initModality(Modality.APPLICATION_MODAL);
+            waitStage.initStyle(StageStyle.UNDECORATED);
+            waitStage.setScene(new Scene(box));
+            waitStage.sizeToScene();
+            waitStage.show();
+            waitStage.getScene().getRoot().requestFocus();
+
             String rawPassword = generateRandomPassword(8);
             reader.setPassword(rawPassword);
             reader.setStatus("APPROVED");
@@ -230,6 +257,7 @@ public class ReaderApprovalController implements Initializable {
             sendEmail.sendMail("huongcao.seee@gmail.com", subject, body);
 
             readerService.save(reader);
+            waitStage.close();
             refreshTable();
             showInfo("Đã phê duyệt thành công!");
         }
@@ -237,8 +265,6 @@ public class ReaderApprovalController implements Initializable {
 
     private void rejectReader(Reader reader) {
         if (confirmAction("Từ chối", "Bạn có chắc muốn từ chối reader này?")) {
-//            reader.setStatus("REJECTED");
-//            readerService.save(reader);
             readerService.delete(reader.getUserId());
             refreshTable();
             showInfo("Đã từ chối!");
