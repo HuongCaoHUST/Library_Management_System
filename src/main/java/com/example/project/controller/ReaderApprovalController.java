@@ -28,6 +28,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -287,11 +288,60 @@ public class ReaderApprovalController implements Initializable {
 
 
     private void rejectReader(Reader reader) {
-        if (confirmAction("Từ chối", "Bạn có chắc muốn từ chối reader này?")) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Từ chối tài khoản");
+        dialog.setHeaderText(null);
+        dialog.setContentText("Vui lòng nhập lý do từ chối tài khoản:");
+        Optional<String> result = dialog.showAndWait();
+
+        final String reason = result.isPresent() && !result.get().trim().isEmpty() ? result.get().trim(): " ";
+
+        Stage owner = (Stage) tableView.getScene().getWindow();
+        ProgressIndicator progress = new ProgressIndicator();
+        progress.setPrefSize(50, 50);
+        Label label = new Label("Đang gửi email thông báo...");
+        VBox box = new VBox(20, label, progress);
+        box.setAlignment(Pos.CENTER);
+        box.setStyle("-fx-padding: 30; -fx-background-color: white;");
+
+        Stage waitStage = new Stage();
+        waitStage.initOwner(owner);
+        waitStage.initModality(Modality.APPLICATION_MODAL);
+        waitStage.initStyle(StageStyle.UNDECORATED);
+        waitStage.setScene(new Scene(box));
+        waitStage.sizeToScene();
+        waitStage.show();
+        waitStage.getScene().getRoot().requestFocus();
+
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                String subject = "Tài khoản thư viện của bạn đã bị từ chối";
+                String body = "Xin chào " + reader.getFullName() + ",\n\n"
+                        + "Tài khoản của bạn đã bị từ chối!\n"
+                        + "Lý do từ chối: " + reason + "\n"
+                        + "Vui lòng liên hệ Trung tâm thư viện trong giờ hành chính để được giúp đỡ.\n\n"
+                        + "Thân mến,\nPhòng Thư viện";
+
+                sendEmail.sendMail("huongcao.seee@gmail.com", subject, body);
+                readerService.save(reader);
+
+                return null;
+            }
+        };
+
+        task.setOnSucceeded(e -> {
+            waitStage.close();
             readerService.delete(reader.getUserId());
             refreshTable();
-            showInfo("Đã từ chối!");
-        }
+            showInfo("Đã gửi email thông báo tới bạn đọc thành công!");
+        });
+
+        task.setOnFailed(e -> {
+            waitStage.close();
+        });
+
+        new Thread(task).start();
     }
 
     private boolean confirmAction(String title, String message) {

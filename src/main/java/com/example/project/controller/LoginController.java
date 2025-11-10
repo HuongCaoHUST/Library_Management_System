@@ -1,6 +1,8 @@
 package com.example.project.controller;
 
 import com.example.project.model.Librarian;
+import com.example.project.model.Reader;
+import com.example.project.repository.ReaderRepository;
 import com.example.project.repository.LibrarianRepository;
 import com.example.project.util.SessionManager;
 import com.example.project.util.SpringFxmlLoader;
@@ -37,6 +39,8 @@ public class LoginController {
 
     @Autowired
     private LibrarianRepository librarianRepository;
+    @Autowired
+    private ReaderRepository readerRepository;
 
     @Autowired
     private SpringFxmlLoader fxmlLoader;
@@ -65,16 +69,49 @@ public class LoginController {
             Librarian librarian = librarianOpt.get();
             SessionManager.setCurrentLibrarian(librarian);
             lblErrors.setText("");
-            System.out.println("Đăng nhập thành công: " + librarianOpt.get().getFullName());
+            System.out.println("Đăng nhập thành công (Thủ thư): " + librarian.getFullName());
             openHomePage();
-        } else {
-            lblErrors.setText("Tên đăng nhập hoặc mật khẩu không đúng");
+            return;
         }
+
+        Optional<Reader> readerOpt = readerRepository.findByUsernameAndPassword(usernameOrEmail, password);
+        if (readerOpt.isEmpty()) {
+            readerOpt = readerRepository.findByEmailAndPassword(usernameOrEmail, password);
+        }
+
+        if (readerOpt.isPresent()) {
+            Reader reader = readerOpt.get();
+//            SessionManager.setCurrentReader(reader);
+            lblErrors.setText("");
+            System.out.println("Đăng nhập thành công (Bạn đọc): " + reader.getFullName());
+            openReaderHomePage();
+            return;
+        }
+
+        lblErrors.setText("Tên đăng nhập hoặc mật khẩu không đúng");
     }
 
     private void openHomePage() {
         try {
             Parent root = fxmlLoader.load("/com/example/project/home_form.fxml");
+            Scene homeScene = new Scene(root);
+
+            Stage stage = (Stage) btnSignin.getScene().getWindow();
+            stage.setScene(homeScene);
+            stage.centerOnScreen();
+            stage.setTitle("Trang chủ - Hệ thống quản lý thư viện");
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/images/logo_HUB.png")));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            lblErrors.setText("Lỗi khi mở trang chủ: " + e.getMessage());
+        }
+    }
+
+    private void openReaderHomePage() {
+        try {
+            Parent root = fxmlLoader.load("/com/example/project/reader_home_form.fxml");
             Scene homeScene = new Scene(root);
 
             Stage stage = (Stage) btnSignin.getScene().getWindow();
