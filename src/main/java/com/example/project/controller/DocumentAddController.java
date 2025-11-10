@@ -28,7 +28,7 @@ public class DocumentAddController {
     @FXML
     public void initialize() {
         cbType.getItems().addAll("Tài liệu In", "Tài liệu Số");
-        cbStatus.getItems().addAll("Còn", "Hết");
+        cbStatus.getItems().addAll("Được mượn", "Không được mượn");
         txtAccessLink.setVisible(false);
 
         cbType.valueProperty().addListener((obs, oldVal, newVal) -> {
@@ -56,7 +56,7 @@ public class DocumentAddController {
                     .shelfLocation(txtShelf.getText())
                     .documentType(cbType.getValue())
                     .accessLink(txtAccessLink.getText())
-                    .availabilityStatus(cbStatus.getValue())
+                    .status(cbStatus.getValue())
                     .build();
 
             documentService.save(doc);

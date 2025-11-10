@@ -1,7 +1,11 @@
 package com.example.project.service;
 
 import com.example.project.model.Document;
+import com.example.project.model.Reader;
 import com.example.project.repository.DocumentRepository;
+import com.example.project.specification.DocumentSpecification;
+import com.example.project.specification.ReaderSpecification;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,5 +33,15 @@ public class DocumentService {
 
     public void delete(Long id) {
         repository.deleteById(id);
+    }
+
+    public List<Document> filterDocuments(String title, String author, String publisher, Integer publicationYear) {
+        Specification<Document> spec = Specification
+                .where(DocumentSpecification.hasTitle(title))
+                .and(DocumentSpecification.hasAuthor(author))
+                .and(DocumentSpecification.hasPublisher(publisher))
+                .and(DocumentSpecification.hasPublicationYear(publicationYear));
+
+        return repository.findAll(spec);
     }
 }

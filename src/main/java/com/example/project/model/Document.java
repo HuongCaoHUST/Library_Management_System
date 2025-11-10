@@ -20,10 +20,17 @@ public class Document {
     private String author;
     private String publisher;
     private Integer publicationYear;
+    private String ddcNumber;
+    private String cutterCode;
+    @Column(nullable = false)
+    private Integer availableCopies;
+    @Column(nullable = false)
+    private Integer borrowedCopies;
+    private Double coverPrice;
     private String classificationNumber;
     private String category;
     private String shelfLocation;
     private String documentType;
     private String accessLink;
-    private String availabilityStatus;
+    private String status;
 }

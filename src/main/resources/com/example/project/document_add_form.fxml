@@ -17,7 +17,7 @@
         <TextField fx:id="txtShelf" prefHeight="400.0" promptText="Vị trí trên kệ" />
         <ComboBox fx:id="cbType" prefHeight="400.0" promptText="Loại tài liệu (in/số)" />
         <TextField fx:id="txtAccessLink" prefHeight="400.0" promptText="Liên kết truy cập" />
-        <ComboBox fx:id="cbStatus" prefHeight="400.0" promptText="Tình trạng (còn/hết)" />
+        <ComboBox fx:id="cbStatus" prefHeight="400.0" promptText="Trạng thái" />
 
         <HBox alignment="CENTER_RIGHT" prefHeight="400.0" prefWidth="380.0" spacing="10">
             <Button onAction="#onSaveDocument" text="Lưu" />

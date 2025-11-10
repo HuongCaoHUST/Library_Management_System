@@ -113,6 +113,11 @@ public class ReaderListController implements Initializable {
             }
         });
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+        tableView.setRowFactory(tv -> new TableRow<>() {
+            {
+                setPrefHeight(50);
+            }
+        });
     }
 
     private Button createButton(String text, String color) {

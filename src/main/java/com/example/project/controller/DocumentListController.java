@@ -1,12 +1,15 @@
 package com.example.project.controller;
 import com.example.project.model.Document;
+import com.example.project.model.Reader;
 import com.example.project.service.DocumentService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,8 +26,11 @@ public class DocumentListController implements Initializable {
     @FXML private TableColumn<Document, String> colTitle;
     @FXML private TableColumn<Document, Long> colDocumentId;
     @FXML private TableColumn<Document, String> colAuthor;
+    @FXML private TableColumn<Document, String> colPublisher;
     @FXML private TableColumn<Document, String> colShelfLocation;
     @FXML private TableColumn<Document, String> colDocumentType;
+    @FXML private TableColumn<Document, String> colAvailableCopies;
+    @FXML private TableColumn<Document, String> colBorrowedCopies;
     @FXML private TableColumn<Document, Void> colDetail;
 
     @FXML private TextField searchField;
@@ -47,24 +53,54 @@ public class DocumentListController implements Initializable {
         colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         colDocumentId.setCellValueFactory(new PropertyValueFactory<>("documentId"));
         colAuthor.setCellValueFactory(new PropertyValueFactory<>("author"));
+        colPublisher.setCellValueFactory(new PropertyValueFactory<>("publisher"));
         colShelfLocation.setCellValueFactory(new PropertyValueFactory<>("shelfLocation"));
         colDocumentType.setCellValueFactory(new PropertyValueFactory<>("documentType"));
+        colAvailableCopies.setCellValueFactory(new PropertyValueFactory<>("availableCopies"));
+        colBorrowedCopies.setCellValueFactory(new PropertyValueFactory<>("borrowedCopies"));
+
+        String cellStyle = "-fx-alignment: CENTER;-fx-font-family: 'Segoe UI Regular'; -fx-font-size: 15px;";
+        colTitle.setStyle(cellStyle);
+        colDocumentId.setStyle(cellStyle);
+        colAuthor.setStyle(cellStyle);
+        colPublisher.setStyle(cellStyle);
+        colShelfLocation.setStyle(cellStyle);
+        colDocumentType.setStyle(cellStyle);
+        colAvailableCopies.setStyle(cellStyle);
+        colBorrowedCopies.setStyle(cellStyle);
 
         // Detail Col
         colDetail.setCellFactory(tc -> new TableCell<>() {
             private final Button detailBtn = createButton("Xem", "#4CAF50");
-
+            private final HBox container = new HBox(detailBtn);
+            {
+                container.setAlignment(Pos.CENTER);
+                detailBtn.setOnAction(e -> {
+                    Document document = getTableView().getItems().get(getIndex());
+//                    showDetailDialog(reader);
+                });
+            }
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                setGraphic(empty || getTableRow() == null || getTableRow().getItem() == null ? null : detailBtn);
+                if (empty || getTableRow() == null || getTableRow().getItem() == null) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(container);
+                }
             }
 
             {
                 detailBtn.setOnAction(e -> {
-                    Document reader = getTableView().getItems().get(getIndex());
+                    Document document = getTableView().getItems().get(getIndex());
 //                    showDetailDialog(reader);
                 });
+            }
+        });
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+        tableView.setRowFactory(tv -> new TableRow<>() {
+            {
+                setPrefHeight(50);
             }
         });
     }
@@ -84,47 +120,4 @@ public class DocumentListController implements Initializable {
         filteredData = FXCollections.observableArrayList(masterData);
         tableView.setItems(filteredData);
     }
-
-//    private void setupSearch() {
-//        searchField.textProperty().addListener((obs, oldText, newText) -> filterTable(newText));
-//        searchButton.setOnAction(e -> filterTable(searchField.getText()));
-//    }
-
-//    private void filterTable(String keyword) {
-//        if (keyword == null || keyword.trim().isEmpty()) {
-//            filteredData.setAll(masterData);
-//        } else {
-//            String lowerCaseKeyword = keyword.toLowerCase();
-//            List<Document> filtered = masterData.stream()
-//                    .filter(r ->
-//                            r.getFullName().toLowerCase().contains(lowerCaseKeyword)
-//                    )
-//                    .collect(Collectors.toList());
-//            filteredData.setAll(filtered);
-//        }
-//    }
-
-//    private void showDetailDialog(Document reader) {
-//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//        alert.setTitle("Chi tiết Reader");
-//        alert.setHeaderText(reader.getFullName() + " - " + reader.getUserId());
-//
-//        String content = String.format(
-//                "Họ và tên: %s\n" +
-//                        "MSSV: %s\n" +
-//                        "Ngày sinh: %s\n" +
-//                        "CCCD: %s\n" +
-//                        "Nơi công tác: %s\n" +
-//                        "Trạng thái: %s",
-//                reader.getFullName(),
-//                reader.getUserId(),
-//                reader.getBirthDate(),
-//                reader.getIdCardNumber(),
-//                reader.getWorkPlace(),
-//                reader.getStatus()
-//        );
-//
-//        alert.setContentText(content);
-//        alert.showAndWait();
-//    }
 }

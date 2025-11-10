@@ -12,7 +12,7 @@
         <fx:include source="librarian_menu_bar.fxml" AnchorPane.topAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"></fx:include>
         <HBox layoutX="30.0" layoutY="180.0" prefHeight="25.0" prefWidth="397.0" spacing="10.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="850.0" AnchorPane.topAnchor="180.0">
             <children>
-                <TextField fx:id="searchField" promptText="Nhập tên hoặc MSSV cần tìm..." HBox.hgrow="ALWAYS" />
+                <TextField fx:id="searchField" promptText="Nhập tên hoặc mã tài liệu cần tìm..." HBox.hgrow="ALWAYS" />
                 <Button fx:id="searchButton" defaultButton="true"  styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Tìm kiếm" />
             </children>
         </HBox>
@@ -23,8 +23,11 @@
                         <TableColumn fx:id="colTitle" prefWidth="200.0" text="Tên tài liệu" />
                         <TableColumn fx:id="colDocumentId" prefWidth="100" text="Mã tài liệu" />
                         <TableColumn fx:id="colAuthor" prefWidth="150.0" text="Tác giả" />
+                        <TableColumn fx:id="colPublisher" prefWidth="150.0" text="Nhà xuất bản" />
                         <TableColumn fx:id="colShelfLocation" prefWidth="200.0" text="Vị trí trên kệ" />
-                        <TableColumn fx:id="colDocumentType" prefWidth="200.0" text="Thể loại " />
+                        <TableColumn fx:id="colDocumentType" prefWidth="200.0" text="Thể loại" />
+                        <TableColumn fx:id="colAvailableCopies" prefWidth="200.0" text="Số lượng còn" />
+                        <TableColumn fx:id="colBorrowedCopies" prefWidth="200.0" text="Số lượng đã mượn" />
                         <TableColumn fx:id="colDetail" prefWidth="100.0" text="Chi tiết" />
                     </columns>
                 </TableView>
