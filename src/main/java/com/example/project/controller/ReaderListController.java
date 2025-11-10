@@ -1,14 +1,19 @@
 package com.example.project.controller;
 import com.example.project.model.Reader;
 import com.example.project.service.ReaderService;
+import com.example.project.util.SpringFxmlLoader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -35,6 +40,8 @@ public class ReaderListController implements Initializable {
 
     @Autowired
     private ReaderService readerService;
+    @Autowired
+    private SpringFxmlLoader fxmlLoader;
 
     private ObservableList<Reader> masterData; // Dữ liệu gốc (PENDING)
     private ObservableList<Reader> filteredData; // Dữ liệu sau tìm kiếm
@@ -130,30 +137,17 @@ public class ReaderListController implements Initializable {
     }
 
     private void showDetailDialog(Reader reader) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Chi tiết Reader");
-        alert.setHeaderText(reader.getFullName() + " - " + reader.getUserId());
-
-        String content = String.format(
-                "Họ và tên: %s\n" +
-                        "MSSV: %s\n" +
-                        "Ngày sinh: %s\n" +
-                        "CCCD: %s\n" +
-                        "Nơi công tác: %s\n" +
-                        "Trạng thái: %s\n" +
-                        "Ngày duyệt: %s\n" +
-                        "Người duyệt: %s",
-                reader.getFullName(),
-                reader.getUserId(),
-                reader.getBirthDate(),
-                reader.getIdCardNumber(),
-                reader.getWorkPlace(),
-                reader.getStatus(),
-                reader.getApprovedDate(),
-                reader.getApprovedBy().getFullName()
-        );
-
-        alert.setContentText(content);
-        alert.showAndWait();
+        try {
+            Parent root = fxmlLoader.load("/com/example/project/reader_detail_form.fxml");
+            Stage stage = new Stage();
+            ReaderDetailController controller = (ReaderDetailController) root.getUserData();
+            controller.setReader(reader);
+            stage.setTitle("Chi tiết bạn đọc");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

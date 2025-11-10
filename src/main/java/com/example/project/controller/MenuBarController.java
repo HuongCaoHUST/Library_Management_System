@@ -72,7 +72,7 @@ public class MenuBarController {
                     .getParentPopup().getOwnerWindow();
 
             stage.setScene(scene);
-            stage.setTitle("Duyệt tài khoản - Hệ thống quản lý thư viện");
+            stage.setTitle("Danh sách tài khoản - Hệ thống quản lý thư viện");
             stage.centerOnScreen();
             stage.getIcons().add(new javafx.scene.image.Image(
                     getClass().getResourceAsStream("/com/example/project/images/logo_HUB.png")
