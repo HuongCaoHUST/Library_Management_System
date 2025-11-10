@@ -26,6 +26,7 @@ public class ReaderListController implements Initializable {
     @FXML private TableColumn<Reader, String> colMSSV;
     @FXML private TableColumn<Reader, LocalDate> colDOB;
     @FXML private TableColumn<Reader, String> colCCCD;
+    @FXML private TableColumn<Reader, String> colMajor;
     @FXML private TableColumn<Reader, String> colWorkplace;
     @FXML private TableColumn<Reader, Void> colDetail;
 
@@ -50,13 +51,16 @@ public class ReaderListController implements Initializable {
         colMSSV.setCellValueFactory(new PropertyValueFactory<>("userId"));
         colDOB.setCellValueFactory(new PropertyValueFactory<>("birthDate"));
         colCCCD.setCellValueFactory(new PropertyValueFactory<>("idCardNumber"));
+        colMajor.setCellValueFactory(new PropertyValueFactory<>("major"));
         colWorkplace.setCellValueFactory(new PropertyValueFactory<>("workPlace"));
 
-        colName.setStyle("-fx-alignment: CENTER;");
-        colMSSV.setStyle("-fx-alignment: CENTER;");
-        colDOB.setStyle("-fx-alignment: CENTER;");
-        colCCCD.setStyle("-fx-alignment: CENTER;");
-        colWorkplace.setStyle("-fx-alignment: CENTER;");
+        String cellStyle = "-fx-alignment: CENTER;-fx-font-family: 'Segoe UI Regular'; -fx-font-size: 15px;";
+        colName.setStyle(cellStyle);
+        colMSSV.setStyle(cellStyle);
+        colDOB.setStyle(cellStyle);
+        colCCCD.setStyle(cellStyle);
+        colMajor.setStyle(cellStyle);
+        colWorkplace.setStyle(cellStyle);
 
         // Detail Col
         colDetail.setCellFactory(tc -> new TableCell<>() {

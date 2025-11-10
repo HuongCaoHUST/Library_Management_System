@@ -1,5 +1,7 @@
 package com.example.project.controller;
 
+import com.example.project.model.Librarian;
+import com.example.project.util.SessionManager;
 import com.example.project.util.SpringFxmlLoader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -43,7 +45,7 @@ public class MenuBarController {
     @FXML
     private void openApprovalForm(ActionEvent event) {
         try {
-            Parent root = fxmlLoader.load("/com/example/project/reader_approval_form.fxml");
+            Parent root = fxmlLoader.load("/com/example/project/reader_approval_list_form.fxml");
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((MenuItem) event.getSource())
                     .getParentPopup().getOwnerWindow();
@@ -141,7 +143,22 @@ public class MenuBarController {
     }
 
     private void onViewProfile() {
-        System.out.println("Mở trang cá nhân...");
+        try {
+
+            Parent root = fxmlLoader.load("/com/example/project/librarian_detail_form.fxml");
+            Stage stage = new Stage();
+
+            Librarian librarian = SessionManager.getCurrentLibrarian();
+            LibrarianDetailController controller = (LibrarianDetailController) root.getUserData();
+            controller.setLibrarian(librarian);
+
+            stage.setTitle("Thông tin tài khoản");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void onLogout() {

@@ -32,6 +32,7 @@
                         <TableColumn fx:id="colMSSV" prefWidth="100" text="MSSV" />
                         <TableColumn fx:id="colDOB" prefWidth="150.0" text="Ngày sinh" />
                         <TableColumn fx:id="colCCCD" prefWidth="200.0" text="Số CCCD" />
+                        <TableColumn fx:id="colMajor" prefWidth="200.0" text="Chuyên môn" />
                         <TableColumn fx:id="colWorkplace" prefWidth="200.0" text="Nơi công tác" />
                         <TableColumn fx:id="colDetail" prefWidth="100.0" text="Chi tiết" />
                         <TableColumn fx:id="colApprove" prefWidth="100.0" text="Phê duyệt" />

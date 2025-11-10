@@ -5,11 +5,9 @@ import com.example.project.service.ReaderService;
 import com.example.project.util.SendEmail;
 import com.example.project.util.SessionManager;
 import com.example.project.util.SpringFxmlLoader;
-import com.example.project.controller.ReaderApprovalDetailController;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -24,7 +22,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import java.security.SecureRandom;
 import java.net.URL;
 import java.time.LocalDate;
@@ -42,6 +40,7 @@ public class ReaderApprovalController implements Initializable {
     @FXML private TableColumn<Reader, String> colMSSV;
     @FXML private TableColumn<Reader, LocalDate> colDOB;
     @FXML private TableColumn<Reader, String> colCCCD;
+    @FXML private TableColumn<Reader, String> colMajor;
     @FXML private TableColumn<Reader, String> colWorkplace;
     @FXML private TableColumn<Reader, Void> colDetail;
     @FXML private TableColumn<Reader, Void> colApprove;
@@ -72,13 +71,16 @@ public class ReaderApprovalController implements Initializable {
         colMSSV.setCellValueFactory(new PropertyValueFactory<>("userId"));
         colDOB.setCellValueFactory(new PropertyValueFactory<>("birthDate"));
         colCCCD.setCellValueFactory(new PropertyValueFactory<>("idCardNumber"));
+        colMajor.setCellValueFactory(new PropertyValueFactory<>("major"));
         colWorkplace.setCellValueFactory(new PropertyValueFactory<>("workPlace"));
 
-        colName.setStyle("-fx-alignment: CENTER;");
-        colMSSV.setStyle("-fx-alignment: CENTER;");
-        colDOB.setStyle("-fx-alignment: CENTER;");
-        colCCCD.setStyle("-fx-alignment: CENTER;");
-        colWorkplace.setStyle("-fx-alignment: CENTER;");
+        String cellStyle = "-fx-alignment: CENTER;-fx-font-family: 'Segoe UI Regular'; -fx-font-size: 15px;";
+        colName.setStyle(cellStyle);
+        colMSSV.setStyle(cellStyle);
+        colDOB.setStyle(cellStyle);
+        colCCCD.setStyle(cellStyle);
+        colMajor.setStyle(cellStyle);
+        colWorkplace.setStyle(cellStyle);
 
         // Detail Col
         colDetail.setCellFactory(tc -> new TableCell<>() {
@@ -111,7 +113,7 @@ public class ReaderApprovalController implements Initializable {
 
         // Approval Col
         colApprove.setCellFactory(tc -> new TableCell<>() {
-            private final Button approveBtn = createButton("Duyệt", "#2196F3");
+            private final Button approveBtn = createButton("Duyệt", "#1f3368");
             private final HBox container = new HBox(approveBtn);
             {
                 container.setAlignment(Pos.CENTER);
@@ -140,7 +142,7 @@ public class ReaderApprovalController implements Initializable {
 
         // Reject Col
         colReject.setCellFactory(tc -> new TableCell<>() {
-            private final Button rejectBtn = createButton("Từ chối", "#f44336");
+            private final Button rejectBtn = createButton("Từ chối", "#a81c29");
             private final HBox container = new HBox(rejectBtn);
             {
                 container.setAlignment(Pos.CENTER);
@@ -167,6 +169,11 @@ public class ReaderApprovalController implements Initializable {
             }
         });
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+        tableView.setRowFactory(tv -> new TableRow<>() {
+            {
+                setPrefHeight(50);
+            }
+        });
     }
 
     private Button createButton(String text, String color) {
@@ -206,7 +213,7 @@ public class ReaderApprovalController implements Initializable {
 
     private void showDetailDialog(Reader reader) {
         try {
-            Parent root = fxmlLoader.load("/com/example/project/reader_approval_form_detail.fxml");
+            Parent root = fxmlLoader.load("/com/example/project/reader_approval_detail_form.fxml");
             Stage stage = new Stage();
             ReaderApprovalDetailController controller = (ReaderApprovalDetailController) root.getUserData();
             controller.setReader(reader);
@@ -221,47 +228,63 @@ public class ReaderApprovalController implements Initializable {
     }
 
     private void approveReader(Reader reader) {
-        if (confirmAction("Phê duyệt", "Bạn có chắc muốn phê duyệt reader này?")) {
-            Stage owner = (Stage) tableView.getScene().getWindow();
-            ProgressIndicator progress = new ProgressIndicator();
-            progress.setPrefSize(50, 50);
-            Label label = new Label("Đang gửi email thông báo...");
-            VBox box = new VBox(20, label, progress);
-            box.setAlignment(Pos.CENTER);
-            box.setStyle("-fx-padding: 30; -fx-background-color: white;");
+        if (!confirmAction("Phê duyệt", "Bạn có chắc muốn phê duyệt reader này?")) return;
 
-            Stage waitStage = new Stage();
-            waitStage.initOwner(owner);
-            waitStage.initModality(Modality.APPLICATION_MODAL);
-            waitStage.initStyle(StageStyle.UNDECORATED);
-            waitStage.setScene(new Scene(box));
-            waitStage.sizeToScene();
-            waitStage.show();
-            waitStage.getScene().getRoot().requestFocus();
+        Stage owner = (Stage) tableView.getScene().getWindow();
+        ProgressIndicator progress = new ProgressIndicator();
+        progress.setPrefSize(50, 50);
+        Label label = new Label("Đang gửi email thông báo...");
+        VBox box = new VBox(20, label, progress);
+        box.setAlignment(Pos.CENTER);
+        box.setStyle("-fx-padding: 30; -fx-background-color: white;");
 
-            String rawPassword = generateRandomPassword(8);
-            reader.setPassword(rawPassword);
-            reader.setStatus("APPROVED");
-            reader.setApprovedDate(LocalDateTime.now());
-            Librarian librarian = SessionManager.getCurrentLibrarian();
-            reader.setApprovedBy(librarian);
+        Stage waitStage = new Stage();
+        waitStage.initOwner(owner);
+        waitStage.initModality(Modality.APPLICATION_MODAL);
+        waitStage.initStyle(StageStyle.UNDECORATED);
+        waitStage.setScene(new Scene(box));
+        waitStage.sizeToScene();
+        waitStage.show();
+        waitStage.getScene().getRoot().requestFocus();
 
-            String subject = "Tài khoản thư viện của bạn đã được phê duyệt";
-            String body = "Xin chào " + reader.getFullName() + ",\n\n"
-                    + "Tài khoản của bạn đã được phê duyệt thành công!\n"
-                    + "Tên đăng nhập: " + reader.getUsername() + "\n"
-                    + "Mật khẩu: " + rawPassword + "\n\n"
-                    + "Vui lòng đăng nhập và đổi mật khẩu ngay sau khi sử dụng lần đầu.\n\n"
-                    + "Thân mến,\nPhòng Thư viện";
+        Task<Void> task = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                String rawPassword = generateRandomPassword(8);
+                reader.setPassword(rawPassword);
+                reader.setStatus("APPROVED");
+                reader.setApprovedDate(LocalDateTime.now());
+                Librarian librarian = SessionManager.getCurrentLibrarian();
+                reader.setApprovedBy(librarian);
 
-            sendEmail.sendMail("huongcao.seee@gmail.com", subject, body);
+                String subject = "Tài khoản thư viện của bạn đã được phê duyệt";
+                String body = "Xin chào " + reader.getFullName() + ",\n\n"
+                        + "Tài khoản của bạn đã được phê duyệt thành công!\n"
+                        + "Tên đăng nhập: " + reader.getUsername() + "\n"
+                        + "Mật khẩu: " + rawPassword + "\n\n"
+                        + "Vui lòng đăng nhập và đổi mật khẩu ngay sau khi sử dụng lần đầu.\n\n"
+                        + "Thân mến,\nPhòng Thư viện";
 
-            readerService.save(reader);
+                sendEmail.sendMail("huongcao.seee@gmail.com", subject, body);
+                readerService.save(reader);
+
+                return null;
+            }
+        };
+
+        task.setOnSucceeded(e -> {
             waitStage.close();
             refreshTable();
             showInfo("Đã phê duyệt thành công!");
-        }
+        });
+
+        task.setOnFailed(e -> {
+            waitStage.close();
+        });
+
+        new Thread(task).start();
     }
+
 
     private void rejectReader(Reader reader) {
         if (confirmAction("Từ chối", "Bạn có chắc muốn từ chối reader này?")) {
