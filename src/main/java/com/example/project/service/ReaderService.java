@@ -2,7 +2,9 @@ package com.example.project.service;
 
 import com.example.project.model.Reader;
 import com.example.project.repository.ReaderRepository;
+import com.example.project.specification.ReaderSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -78,5 +80,13 @@ public class ReaderService {
     public List<Reader> getApprovedReaders() {
         return readerRepository.findByStatus("APPROVED");
     }
+    public List<Reader> filterReaders(String fullName, String email, String status, String gender) {
+        Specification<Reader> spec = Specification
+                .where(ReaderSpecification.hasFullName(fullName))
+                .and(ReaderSpecification.hasEmail(email))
+                .and(ReaderSpecification.hasStatus(status))
+                .and(ReaderSpecification.hasGender(gender));
 
+        return repository.findAll(spec);
+    }
 }

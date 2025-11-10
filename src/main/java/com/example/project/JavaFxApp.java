@@ -14,7 +14,9 @@ public class JavaFxApp extends Application {
 
     @Override
     public void init() {
-        context = new SpringApplicationBuilder(LibraryApplication.class).run();
+        context = new SpringApplicationBuilder(LibraryApplication.class)
+                .web(org.springframework.boot.WebApplicationType.SERVLET)
+                .run();
     }
 
     @Override
