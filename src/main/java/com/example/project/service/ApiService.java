@@ -28,17 +28,18 @@ public class ApiService {
         if (email != null && !email.isEmpty()) query.append("email=").append(URLEncoder.encode(email, "UTF-8")).append("&");
         if (status != null && !status.isEmpty()) query.append("status=").append(status).append("&");
         if (gender != null && !gender.isEmpty()) query.append("gender=").append(gender);
+
         if (query.length() > 0) {
-            query.deleteCharAt(query.length() - 1);
+            if (query.charAt(query.length() - 1) == '&') {
+                query.deleteCharAt(query.length() - 1);
+            }
             url += "?" + query;
         }
-
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .GET()
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
         if (response.statusCode() == 200) {
             return mapper.readValue(response.body(), new TypeReference<List<Reader>>() {});
         } else {

@@ -47,6 +47,7 @@ public class ReaderListController implements Initializable {
 
     @FXML private TextField searchField;
     @FXML private Button searchButton;
+    @FXML private ComboBox<String> genderComboBox;
 
     @Autowired
     private SpringFxmlLoader fxmlLoader;
@@ -62,6 +63,7 @@ public class ReaderListController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupTableColumns();
         tableView.setItems(readerList);
+        setupComboBox();
         searchReaders();
         setupSearch();
     }
@@ -127,12 +129,17 @@ public class ReaderListController implements Initializable {
         String keyword = searchField.getText().trim();
         String fullName = keyword.isEmpty() ? null : keyword;
 
+        String gender = genderComboBox.getValue();
+        if ("Tất cả".equals(gender)) gender = null;
+
         showLoadingPopup("Đang tải danh sách bạn đọc...");
+
+        String finalGender = gender;
 
         Task<List<Reader>> task = new Task<>() {
             @Override
             protected List<Reader> call() throws Exception {
-                return apiService.filterReaders(fullName, null, "APPROVED", null);
+                return apiService.filterReaders(fullName, null, "APPROVED", finalGender);
             }
         };
         task.setOnSucceeded(e -> Platform.runLater(() -> {
@@ -167,6 +174,12 @@ public class ReaderListController implements Initializable {
         searchButton.setOnAction(e -> searchReaders());
     }
 
+    private void setupComboBox() {
+        genderComboBox.setItems(FXCollections.observableArrayList("Tất cả", "Nam", "Nữ"));
+        genderComboBox.setValue("Tất cả");
+        genderComboBox.setOnAction(e -> searchReaders());
+    }
+
     private void debounceSearch() {
         if (debounceTimeline != null) debounceTimeline.stop();
         debounceTimeline = new Timeline(new KeyFrame(Duration.millis(400), e -> searchReaders()));
@@ -194,12 +207,10 @@ public class ReaderListController implements Initializable {
         Label label = new Label(message);
         VBox box = new VBox(20, label, progress);
         box.setAlignment(Pos.CENTER);
-        box.setStyle("-fx-padding: 30; -fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 5);");
         loadingStage = new Stage();
         loadingStage.initStyle(StageStyle.TRANSPARENT);
 
         StackPane root = new StackPane(box);
-        root.setStyle("-fx-background-color: rgba(0,0,0,0.4);");
 
         Scene scene = new Scene(root, 300, 200);
         scene.setFill(Color.TRANSPARENT);
