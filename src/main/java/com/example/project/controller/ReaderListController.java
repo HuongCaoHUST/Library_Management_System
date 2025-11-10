@@ -1,9 +1,14 @@
 package com.example.project.controller;
 import com.example.project.model.Reader;
 import com.example.project.service.ReaderService;
+import com.example.project.service.ApiService;
 import com.example.project.util.SpringFxmlLoader;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -12,8 +17,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -39,17 +49,20 @@ public class ReaderListController implements Initializable {
     @FXML private Button searchButton;
 
     @Autowired
-    private ReaderService readerService;
-    @Autowired
     private SpringFxmlLoader fxmlLoader;
 
-    private ObservableList<Reader> masterData; // Dữ liệu gốc (PENDING)
-    private ObservableList<Reader> filteredData; // Dữ liệu sau tìm kiếm
+    @Autowired
+    private ApiService apiService;
+    private Stage loadingStage;
+
+    private final ObservableList<Reader> readerList = FXCollections.observableArrayList();
+    private Timeline debounceTimeline;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupTableColumns();
-        loadApprovedReaders();
+        tableView.setItems(readerList);
+        searchReaders();
         setupSearch();
     }
 
@@ -109,31 +122,55 @@ public class ReaderListController implements Initializable {
         return btn;
     }
 
-    private void loadApprovedReaders() {
-        List<Reader> approvedList = readerService.getApprovedReaders();
-        masterData = FXCollections.observableArrayList(approvedList);
-        filteredData = FXCollections.observableArrayList(masterData);
-        tableView.setItems(filteredData);
+
+    private void searchReaders() {
+        String keyword = searchField.getText().trim();
+        String fullName = keyword.isEmpty() ? null : keyword;
+
+        showLoadingPopup("Đang tải danh sách bạn đọc...");
+
+        Task<List<Reader>> task = new Task<>() {
+            @Override
+            protected List<Reader> call() throws Exception {
+                return apiService.filterReaders(fullName, null, "APPROVED", null);
+            }
+        };
+        task.setOnSucceeded(e -> Platform.runLater(() -> {
+            List<Reader> result = task.getValue();
+            readerList.setAll(result != null ? result : List.of());
+            tableView.refresh();
+
+            hideLoadingPopup();
+
+            if (result == null || result.isEmpty()) {
+                tableView.setPlaceholder(new Label("Không tìm thấy bạn đọc nào."));
+            } else {
+                tableView.setPlaceholder(new Label(""));
+            }
+        }));
+
+        task.setOnFailed(e -> Platform.runLater(() -> {
+            hideLoadingPopup();
+            Throwable ex = task.getException();
+            Alert alert = new Alert(Alert.AlertType.ERROR,
+                    "Không kết nối được server!\n" + ex.getMessage());
+            alert.show();
+            tableView.setPlaceholder(new Label("Lỗi tải dữ liệu..."));
+        }));
+
+        new Thread(task).start();
     }
 
 
     private void setupSearch() {
-        searchField.textProperty().addListener((obs, oldText, newText) -> filterTable(newText));
-        searchButton.setOnAction(e -> filterTable(searchField.getText()));
+        searchField.textProperty().addListener((obs, oldText, newText) -> debounceSearch());
+        searchButton.setOnAction(e -> searchReaders());
     }
 
-    private void filterTable(String keyword) {
-        if (keyword == null || keyword.trim().isEmpty()) {
-            filteredData.setAll(masterData);
-        } else {
-            String lowerCaseKeyword = keyword.toLowerCase();
-            List<Reader> filtered = masterData.stream()
-                    .filter(r ->
-                            r.getFullName().toLowerCase().contains(lowerCaseKeyword)
-                    )
-                    .collect(Collectors.toList());
-            filteredData.setAll(filtered);
-        }
+    private void debounceSearch() {
+        if (debounceTimeline != null) debounceTimeline.stop();
+        debounceTimeline = new Timeline(new KeyFrame(Duration.millis(400), e -> searchReaders()));
+        debounceTimeline.play();
     }
 
     private void showDetailDialog(Reader reader) {
@@ -148,6 +185,41 @@ public class ReaderListController implements Initializable {
             stage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void showLoadingPopup(String message) {
+        ProgressIndicator progress = new ProgressIndicator();
+        progress.setPrefSize(50, 50);
+        Label label = new Label(message);
+        VBox box = new VBox(20, label, progress);
+        box.setAlignment(Pos.CENTER);
+        box.setStyle("-fx-padding: 30; -fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 10, 0, 0, 5);");
+        loadingStage = new Stage();
+        loadingStage.initStyle(StageStyle.TRANSPARENT);
+
+        StackPane root = new StackPane(box);
+        root.setStyle("-fx-background-color: rgba(0,0,0,0.4);");
+
+        Scene scene = new Scene(root, 300, 200);
+        scene.setFill(Color.TRANSPARENT);
+        loadingStage.setScene(scene);
+        loadingStage.sizeToScene();
+
+        Platform.runLater(() -> {
+            Stage owner = (Stage) tableView.getScene().getWindow();
+            if (owner != null) {
+                loadingStage.initOwner(owner);
+                loadingStage.initModality(Modality.APPLICATION_MODAL);
+            }
+            loadingStage.show();
+        });
+    }
+
+    private void hideLoadingPopup() {
+        if (loadingStage != null && loadingStage.isShowing()) {
+            loadingStage.close();
+            loadingStage = null;
         }
     }
 }
