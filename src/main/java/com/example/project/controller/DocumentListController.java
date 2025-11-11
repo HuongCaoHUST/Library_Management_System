@@ -1,23 +1,34 @@
 package com.example.project.controller;
 import com.example.project.model.Document;
-import com.example.project.model.Reader;
+import com.example.project.service.DocumentApiService;
 import com.example.project.service.DocumentService;
+import com.example.project.util.SpringFxmlLoader;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 @Component
 public class DocumentListController implements Initializable {
@@ -35,18 +46,28 @@ public class DocumentListController implements Initializable {
 
     @FXML private TextField searchField;
     @FXML private Button searchButton;
+    @FXML private ComboBox<String> genderComboBox;
 
     @Autowired
     private DocumentService documentService;
 
-    private ObservableList<Document> masterData; // Dữ liệu gốc (PENDING)
-    private ObservableList<Document> filteredData; // Dữ liệu sau tìm kiếm
+    @Autowired
+    private SpringFxmlLoader fxmlLoader;
+
+    @Autowired
+    private DocumentApiService documentApiService;
+    private Stage loadingStage;
+
+    private final ObservableList<Document> documentList = FXCollections.observableArrayList();
+    private Timeline debounceTimeline;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupTableColumns();
-        loadDocuments();
-//        setupSearch();
+        tableView.setItems(documentList);
+        setupComboBox();
+        searchDocuments();
+        setupSearch();
     }
 
     private void setupTableColumns() {
@@ -114,10 +135,96 @@ public class DocumentListController implements Initializable {
         return btn;
     }
 
-    private void loadDocuments() {
-        List<Document> documents = documentService.findAll();
-        masterData = FXCollections.observableArrayList(documents);
-        filteredData = FXCollections.observableArrayList(masterData);
-        tableView.setItems(filteredData);
+    private void setupComboBox() {
+        genderComboBox.setItems(FXCollections.observableArrayList("Tất cả", "Nam", "Nữ"));
+        genderComboBox.setValue("Tất cả");
+        genderComboBox.setOnAction(e -> searchDocuments());
+    }
+
+    private void searchDocuments() {
+        String keyword = searchField.getText().trim();
+        String fullName = keyword.isEmpty() ? null : keyword;
+
+        String gender = genderComboBox.getValue();
+        if ("Tất cả".equals(gender)) gender = null;
+
+        showLoadingPopup("Đang tải danh sách bạn đọc...");
+
+        String finalGender = gender;
+
+        Task<List<Document>> task = new Task<>() {
+            @Override
+            protected List<Document> call() throws Exception {
+                return documentApiService.filterDocuments("Cơ", null, null, null);
+            }
+        };
+        task.setOnSucceeded(e -> Platform.runLater(() -> {
+            List<Document> result = task.getValue();
+            documentList.setAll(result != null ? result : List.of());
+            tableView.refresh();
+
+            hideLoadingPopup();
+
+            if (result == null || result.isEmpty()) {
+                tableView.setPlaceholder(new Label("Không tìm thấy bạn đọc nào."));
+            } else {
+                tableView.setPlaceholder(new Label(""));
+            }
+        }));
+
+        task.setOnFailed(e -> Platform.runLater(() -> {
+            hideLoadingPopup();
+            Throwable ex = task.getException();
+            Alert alert = new Alert(Alert.AlertType.ERROR,
+                    "Không kết nối được server!\n" + ex.getMessage());
+            alert.show();
+            tableView.setPlaceholder(new Label("Lỗi tải dữ liệu..."));
+        }));
+
+        new Thread(task).start();
+    }
+
+    private void setupSearch() {
+        searchField.textProperty().addListener((obs, oldText, newText) -> debounceSearch());
+        searchButton.setOnAction(e -> searchDocuments());
+    }
+
+    private void debounceSearch() {
+        if (debounceTimeline != null) debounceTimeline.stop();
+        debounceTimeline = new Timeline(new KeyFrame(Duration.millis(400), e -> searchDocuments()));
+        debounceTimeline.play();
+    }
+
+    private void showLoadingPopup(String message) {
+        ProgressIndicator progress = new ProgressIndicator();
+        progress.setPrefSize(50, 50);
+        Label label = new Label(message);
+        VBox box = new VBox(20, label, progress);
+        box.setAlignment(Pos.CENTER);
+        loadingStage = new Stage();
+        loadingStage.initStyle(StageStyle.TRANSPARENT);
+
+        StackPane root = new StackPane(box);
+
+        Scene scene = new Scene(root, 300, 200);
+        scene.setFill(Color.TRANSPARENT);
+        loadingStage.setScene(scene);
+        loadingStage.sizeToScene();
+
+        Platform.runLater(() -> {
+            Stage owner = (Stage) tableView.getScene().getWindow();
+            if (owner != null) {
+                loadingStage.initOwner(owner);
+                loadingStage.initModality(Modality.APPLICATION_MODAL);
+            }
+            loadingStage.show();
+        });
+    }
+
+    private void hideLoadingPopup() {
+        if (loadingStage != null && loadingStage.isShowing()) {
+            loadingStage.close();
+            loadingStage = null;
+        }
     }
 }

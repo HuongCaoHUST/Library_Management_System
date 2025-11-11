@@ -1,7 +1,6 @@
 package com.example.project.controller;
 import com.example.project.model.Reader;
-import com.example.project.service.ReaderService;
-import com.example.project.service.ApiService;
+import com.example.project.service.ReaderApiService;
 import com.example.project.util.SpringFxmlLoader;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -31,7 +30,6 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 @Component
 public class ReaderListController implements Initializable {
@@ -53,7 +51,7 @@ public class ReaderListController implements Initializable {
     private SpringFxmlLoader fxmlLoader;
 
     @Autowired
-    private ApiService apiService;
+    private ReaderApiService readerApiService;
     private Stage loadingStage;
 
     private final ObservableList<Reader> readerList = FXCollections.observableArrayList();
@@ -144,7 +142,7 @@ public class ReaderListController implements Initializable {
         Task<List<Reader>> task = new Task<>() {
             @Override
             protected List<Reader> call() throws Exception {
-                return apiService.filterReaders(fullName, null, "APPROVED", finalGender);
+                return readerApiService.filterReaders(fullName, null, "APPROVED", finalGender);
             }
         };
         task.setOnSucceeded(e -> Platform.runLater(() -> {
