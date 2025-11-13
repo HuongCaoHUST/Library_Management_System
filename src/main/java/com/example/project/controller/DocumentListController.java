@@ -1,5 +1,6 @@
 package com.example.project.controller;
 import com.example.project.model.Document;
+import com.example.project.model.Reader;
 import com.example.project.service.DocumentApiService;
 import com.example.project.service.DocumentService;
 import com.example.project.util.SpringFxmlLoader;
@@ -12,6 +13,7 @@ import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -23,8 +25,10 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import org.controlsfx.control.SearchableComboBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.controlsfx.control.textfield.TextFields;
 
 import java.net.URL;
 import java.util.List;
@@ -46,7 +50,7 @@ public class DocumentListController implements Initializable {
 
     @FXML private TextField searchField;
     @FXML private Button searchButton;
-    @FXML private ComboBox<String> genderComboBox;
+    @FXML private ComboBox<String> documentTypeComboBox;
 
     @Autowired
     private DocumentService documentService;
@@ -98,7 +102,7 @@ public class DocumentListController implements Initializable {
                 container.setAlignment(Pos.CENTER);
                 detailBtn.setOnAction(e -> {
                     Document document = getTableView().getItems().get(getIndex());
-//                    showDetailDialog(reader);
+                    showDetailDialog(document);
                 });
             }
             @Override
@@ -114,7 +118,7 @@ public class DocumentListController implements Initializable {
             {
                 detailBtn.setOnAction(e -> {
                     Document document = getTableView().getItems().get(getIndex());
-//                    showDetailDialog(reader);
+                    showDetailDialog(document);
                 });
             }
         });
@@ -135,27 +139,41 @@ public class DocumentListController implements Initializable {
         return btn;
     }
 
+    private void showDetailDialog(Document document) {
+        try {
+            Parent root = fxmlLoader.load("/com/example/project/document_detail_form.fxml");
+            Stage stage = new Stage();
+            DocumentDetailController controller = (DocumentDetailController) root.getUserData();
+            controller.setDocument(document);
+            stage.setTitle("Chi tiết bạn đọc");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void setupComboBox() {
-        genderComboBox.setItems(FXCollections.observableArrayList("Tất cả", "Nam", "Nữ"));
-        genderComboBox.setValue("Tất cả");
-        genderComboBox.setOnAction(e -> searchDocuments());
+        documentTypeComboBox.setItems(FXCollections.observableArrayList("Tất cả", "Tài liệu In", "Tài liệu Số"));
+        documentTypeComboBox.setOnAction(e -> searchDocuments());
     }
 
     private void searchDocuments() {
         String keyword = searchField.getText().trim();
-        String fullName = keyword.isEmpty() ? null : keyword;
+        String title = keyword.isEmpty() ? null : keyword;
 
-        String gender = genderComboBox.getValue();
-        if ("Tất cả".equals(gender)) gender = null;
+        String documentType = documentTypeComboBox.getValue();
+        if ("Tất cả".equals(documentType)) documentType = null;
 
         showLoadingPopup("Đang tải danh sách bạn đọc...");
 
-        String finalGender = gender;
+        String finalDocumentType = documentType;
 
         Task<List<Document>> task = new Task<>() {
             @Override
             protected List<Document> call() throws Exception {
-                return documentApiService.filterDocuments("Cơ", null, null, null);
+                return documentApiService.filterDocuments(title, null, null, finalDocumentType, null);
             }
         };
         task.setOnSucceeded(e -> Platform.runLater(() -> {

@@ -23,12 +23,13 @@ public class DocumentApiService {
             .registerModule(new JavaTimeModule())
             .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
-    public List<Document> filterDocuments(String title, String author, String publisher, Integer publicationYear) throws Exception {
+    public List<Document> filterDocuments(String title, String author, String publisher, String documentType, Integer publicationYear) throws Exception {
         String url = BASE_URL;
         StringBuilder query = new StringBuilder();
         if (title != null && !title.isEmpty()) query.append("title=").append(URLEncoder.encode(title, "UTF-8")).append("&");
         if (author != null && !author.isEmpty()) query.append("author=").append(URLEncoder.encode(author, "UTF-8")).append("&");
         if (publisher != null && !publisher.isEmpty()) query.append("publisher=").append(publisher).append("&");
+        if (documentType != null && !documentType.isEmpty()) query.append("documentType=").append(URLEncoder.encode(documentType, "UTF-8")).append("&");
         if (publicationYear != null) query.append("publicationYear=").append(publicationYear);
 
         if (query.length() > 0) {

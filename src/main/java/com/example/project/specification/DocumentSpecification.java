@@ -26,6 +26,13 @@ public class DocumentSpecification {
                         : cb.like(cb.lower(root.get("publisher")), "%" + publisher.toLowerCase() + "%");
     }
 
+    public static Specification<Document> hasDocumentType(String documentType) {
+        return (root, query, cb) ->
+                documentType == null || documentType.isEmpty()
+                        ? cb.conjunction()
+                        : cb.like(cb.lower(root.get("documentType")), "%" + documentType.toLowerCase() + "%");
+    }
+
     public static Specification<Document> hasPublicationYear(Integer publicationYear) {
         return (root, query, cb) ->
                 publicationYear == null

@@ -17,14 +17,7 @@
             <children>
                 <TextField fx:id="searchField" promptText="Nhập tên hoặc MSSV cần tìm..." HBox.hgrow="ALWAYS" />
                 <Button fx:id="searchButton" defaultButton="true" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Tìm kiếm" />
-                <ComboBox fx:id="genderComboBox" promptText="Trạng thái">
-                    <items>
-                        <FXCollections fx:factory="observableArrayList">
-                            <String fx:value="Tất cả" />
-                            <String fx:value="Nam" />
-                            <String fx:value="Nữ" />
-                        </FXCollections>
-                    </items>
+                <ComboBox fx:id="genderComboBox" promptText="Giới tính">
                 </ComboBox>
             </children>
         </HBox>
