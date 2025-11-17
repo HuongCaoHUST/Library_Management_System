@@ -167,7 +167,6 @@ public class ReaderApprovalDetailController {
 
                 sendEmail.sendMail("huongcao.seee@gmail.com", subject, body);
                 readerService.save(reader);
-
                 return null;
             }
         };

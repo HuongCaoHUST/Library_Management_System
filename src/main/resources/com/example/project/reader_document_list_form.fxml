@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.collections.FXCollections?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TableColumn?>
@@ -17,7 +15,7 @@
             <children>
                 <TextField fx:id="searchField" promptText="Nhập tên hoặc mã tài liệu cần tìm..." HBox.hgrow="ALWAYS" />
                 <Button fx:id="searchButton" defaultButton="true" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Tìm kiếm" />
-                <ComboBox fx:id="documentTypeComboBox" promptText="Loại tài liệu"/>
+                <ComboBox fx:id="documentTypeComboBox" promptText="Loại tài liệu" />
             </children>
         </HBox>
         <AnchorPane layoutX="33.0" layoutY="191.0" prefHeight="366.0" prefWidth="1156.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="220.0">
@@ -28,11 +26,11 @@
                         <TableColumn fx:id="colDocumentId" prefWidth="100" text="Mã tài liệu" />
                         <TableColumn fx:id="colAuthor" prefWidth="150.0" text="Tác giả" />
                         <TableColumn fx:id="colPublisher" prefWidth="150.0" text="Nhà xuất bản" />
-                        <TableColumn fx:id="colShelfLocation" prefWidth="200.0" text="Vị trí trên kệ" />
-                        <TableColumn fx:id="colDocumentType" prefWidth="200.0" text="Thể loại" />
-                        <TableColumn fx:id="colAvailableCopies" prefWidth="200.0" text="Số lượng còn" />
-                        <TableColumn fx:id="colBorrowedCopies" prefWidth="200.0" text="Số lượng đã mượn" />
-                        <TableColumn fx:id="colDetail" prefWidth="100.0" text="Chi tiết" />
+                        <TableColumn fx:id="colShelfLocation" maxWidth="100.0" prefWidth="100.0" text="Vị trí trên kệ" />
+                        <TableColumn fx:id="colDocumentType" maxWidth="150.0" prefWidth="100.0" text="Thể loại" />
+                        <TableColumn fx:id="colAvailableCopies" maxWidth="150.0" prefWidth="100.0" text="SL còn" />
+                        <TableColumn fx:id="colBorrowedCopies" maxWidth="150.0" prefWidth="100.0" text="SL đã mượn" />
+                        <TableColumn fx:id="colDetail" maxWidth="150.0" prefWidth="150.0" text="Chi tiết" />
                     </columns>
                 </TableView>
             </children>

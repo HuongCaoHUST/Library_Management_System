@@ -27,9 +27,7 @@ import java.security.SecureRandom;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -46,6 +44,10 @@ public class ReaderApprovalController implements Initializable {
     @FXML private TableColumn<Reader, Void> colDetail;
     @FXML private TableColumn<Reader, Void> colApprove;
     @FXML private TableColumn<Reader, Void> colReject;
+    @FXML private TableColumn<Reader, Void> colSelect;
+    @FXML private CheckBox selectAllCheckBox;
+    @FXML private Button approveSelectedBtn;
+    @FXML private Button rejectSelectedBtn;
 
     @FXML private TextField searchField;
     @FXML private Button searchButton;
@@ -59,11 +61,13 @@ public class ReaderApprovalController implements Initializable {
 
     private ObservableList<Reader> masterData;
     private ObservableList<Reader> filteredData;
+    private final Set<Long> selectedIds = new HashSet<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupTableColumns();
         loadPendingReaders();
+        setupSelectAll();
         setupSearch();
     }
 
@@ -112,6 +116,33 @@ public class ReaderApprovalController implements Initializable {
             }
         });
 
+        // Select Col
+        colSelect.setCellFactory(tc -> new TableCell<Reader, Void>() {
+            private final CheckBox cb = new CheckBox();
+            private final HBox box = new HBox(10, cb);
+            {
+                box.setAlignment(Pos.CENTER);
+                cb.setOnAction(e -> {
+                    Reader reader = getTableView().getItems().get(getIndex());
+                    Long id = reader.getUserId();
+                    if (cb.isSelected()) selectedIds.add(id);
+                    else selectedIds.remove(id);
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || getTableRow().getItem() == null) {
+                    setGraphic(null);
+                } else {
+                    Reader r = getTableRow().getItem();
+                    cb.setSelected(selectedIds.contains(r.getUserId()));
+                    setGraphic(box);
+                }
+            }
+        });
+
         // Approval Col
         colApprove.setCellFactory(tc -> new TableCell<>() {
             private final Button approveBtn = createButton("Duyệt", "#1f3368");
@@ -136,7 +167,14 @@ public class ReaderApprovalController implements Initializable {
             {
                 approveBtn.setOnAction(e -> {
                     Reader reader = getTableView().getItems().get(getIndex());
-                    approveReader(reader);
+                    readerService.approveReader(
+                            reader,
+                            () -> {
+                                refreshTable();
+                                showInfo("Đã phê duyệt thành công!");
+                            },
+                            () -> showError("Lỗi khi phê duyệt!")
+                    );
                 });
             }
         });
@@ -165,7 +203,14 @@ public class ReaderApprovalController implements Initializable {
             {
                 rejectBtn.setOnAction(e -> {
                     Reader reader = getTableView().getItems().get(getIndex());
-                    rejectReader(reader);
+                    readerService.rejectReader(
+                            reader,
+                            () -> {
+                                refreshTable();
+                                showInfo("Đã từ chối thành công!");
+                            },
+                            () -> showError("Lỗi khi từ chối!")
+                    );
                 });
             }
         });
@@ -228,147 +273,129 @@ public class ReaderApprovalController implements Initializable {
         }
     }
 
-    private void approveReader(Reader reader) {
-        if (!confirmAction("Phê duyệt", "Bạn có chắc muốn phê duyệt reader này?")) return;
-
-        Stage owner = (Stage) tableView.getScene().getWindow();
-        ProgressIndicator progress = new ProgressIndicator();
-        progress.setPrefSize(50, 50);
-        Label label = new Label("Đang gửi email thông báo...");
-        VBox box = new VBox(20, label, progress);
-        box.setAlignment(Pos.CENTER);
-        box.setStyle("-fx-padding: 30; -fx-background-color: white;");
-
-        Stage waitStage = new Stage();
-        waitStage.initOwner(owner);
-        waitStage.initModality(Modality.APPLICATION_MODAL);
-        waitStage.initStyle(StageStyle.UNDECORATED);
-        waitStage.setScene(new Scene(box));
-        waitStage.sizeToScene();
-        waitStage.show();
-        waitStage.getScene().getRoot().requestFocus();
-
-        Task<Void> task = new Task<>() {
-            @Override
-            protected Void call() throws Exception {
-                String rawPassword = generateRandomPassword(8);
-                reader.setPassword(rawPassword);
-                reader.setStatus("APPROVED");
-                reader.setApprovedDate(LocalDateTime.now());
-                Librarian librarian = SessionManager.getCurrentLibrarian();
-                reader.setApprovedBy(librarian);
-
-                String subject = "Tài khoản thư viện của bạn đã được phê duyệt";
-                String body = "Xin chào " + reader.getFullName() + ",\n\n"
-                        + "Tài khoản của bạn đã được phê duyệt thành công!\n"
-                        + "Tên đăng nhập: " + reader.getUsername() + "\n"
-                        + "Mật khẩu: " + rawPassword + "\n\n"
-                        + "Vui lòng đăng nhập và đổi mật khẩu ngay sau khi sử dụng lần đầu.\n\n"
-                        + "Thân mến,\nPhòng Thư viện";
-
-                sendEmail.sendMail("huongcao.seee@gmail.com", subject, body);
-                readerService.save(reader);
-
-                return null;
-            }
-        };
-
-        task.setOnSucceeded(e -> {
-            waitStage.close();
-            refreshTable();
-            showInfo("Đã phê duyệt thành công!");
-        });
-
-        task.setOnFailed(e -> {
-            waitStage.close();
-        });
-
-        new Thread(task).start();
-    }
-
-
-    private void rejectReader(Reader reader) {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Từ chối tài khoản");
-        dialog.setHeaderText(null);
-        dialog.setContentText("Vui lòng nhập lý do từ chối tài khoản:");
-        Optional<String> result = dialog.showAndWait();
-
-        final String reason = result.isPresent() && !result.get().trim().isEmpty() ? result.get().trim(): " ";
-
-        Stage owner = (Stage) tableView.getScene().getWindow();
-        ProgressIndicator progress = new ProgressIndicator();
-        progress.setPrefSize(50, 50);
-        Label label = new Label("Đang gửi email thông báo...");
-        VBox box = new VBox(20, label, progress);
-        box.setAlignment(Pos.CENTER);
-        box.setStyle("-fx-padding: 30; -fx-background-color: white;");
-
-        Stage waitStage = new Stage();
-        waitStage.initOwner(owner);
-        waitStage.initModality(Modality.APPLICATION_MODAL);
-        waitStage.initStyle(StageStyle.UNDECORATED);
-        waitStage.setScene(new Scene(box));
-        waitStage.sizeToScene();
-        waitStage.show();
-        waitStage.getScene().getRoot().requestFocus();
-
-        Task<Void> task = new Task<>() {
-            @Override
-            protected Void call() throws Exception {
-                String subject = "Tài khoản thư viện của bạn đã bị từ chối";
-                String body = "Xin chào " + reader.getFullName() + ",\n\n"
-                        + "Tài khoản của bạn đã bị từ chối!\n"
-                        + "Lý do từ chối: " + reason + "\n"
-                        + "Vui lòng liên hệ Trung tâm thư viện trong giờ hành chính để được giúp đỡ.\n\n"
-                        + "Thân mến,\nPhòng Thư viện";
-
-                sendEmail.sendMail("huongcao.seee@gmail.com", subject, body);
-                readerService.save(reader);
-
-                return null;
-            }
-        };
-
-        task.setOnSucceeded(e -> {
-            waitStage.close();
-            readerService.delete(reader.getUserId());
-            refreshTable();
-            showInfo("Đã gửi email thông báo tới bạn đọc thành công!");
-        });
-
-        task.setOnFailed(e -> {
-            waitStage.close();
-        });
-
-        new Thread(task).start();
-    }
-
-    private boolean confirmAction(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(title);
-        alert.setContentText(message);
-        return alert.showAndWait().filter(ButtonType.OK::equals).isPresent();
-    }
-
     private void showInfo(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText(message);
         alert.show();
     }
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Lỗi");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
     private void refreshTable() {
+        selectedIds.clear();
         loadPendingReaders();
         filterTable(searchField.getText());
     }
 
-    private String generateRandomPassword(int length) {
-        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        SecureRandom random = new SecureRandom();
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < length; i++) {
-            sb.append(chars.charAt(random.nextInt(chars.length())));
-        }
-        return sb.toString();
+    private void setupSelectAll() {
+        selectAllCheckBox.setOnAction(e -> {
+            if (selectAllCheckBox.isSelected()) {
+                filteredData.forEach(r -> selectedIds.add(r.getUserId()));
+            } else {
+                selectedIds.removeIf(id -> filteredData.stream().anyMatch(r -> r.getUserId().equals(id)));
+            }
+            tableView.refresh(); // Cập nhật checkbox
+        });
     }
+//
+//    @FXML
+//    private void handleApproveSelected() {
+//        if (selectedIds.isEmpty()) {
+//            showInfo("Chưa chọn bạn đọc nào!");
+//            return;
+//        }
+//
+//        if (!confirmAction("Phê duyệt", "Phê duyệt " + selectedIds.size() + " bạn đọc?")) return;
+//
+//        approveMultipleByIds(new ArrayList<>(selectedIds));
+//    }
+
+//    private void approveMultipleByIds(List<Long> userIds) {
+//        Task<Void> task = new Task<>() {
+//            @Override protected Void call() throws Exception {
+//                Librarian librarian = SessionManager.getCurrentLibrarian();
+//                LocalDateTime now = LocalDateTime.now();
+//
+//                for (Long id : userIds) {
+//                    Reader reader = readerService.findById(id);
+//                    if (reader == null) continue;
+//
+//                    String rawPassword = generateRandomPassword(8);
+//                    reader.setPassword(rawPassword);
+//                    reader.setStatus("APPROVED");
+//                    reader.setApprovedDate(now);
+//                    reader.setApprovedBy(librarian);
+//                    readerService.save(reader);
+//
+//                    String body = """
+//                    Xin chào %s,
+//                    Tài khoản đã được phê duyệt!
+//                    Username: %s
+//                    Mật khẩu: %s
+//                    Vui lòng đổi mật khẩu lần đầu.
+//                    """.formatted(reader.getFullName(), reader.getUsername(), rawPassword);
+//
+//                    sendEmail.sendMail("huongcao.seee@gmail.com", "Tài khoản được duyệt", body);
+//                }
+//                return null;
+//            }
+//        };
+//
+//        showProgressAndRun(task, "Đang phê duyệt...", () -> {
+//            selectedIds.clear();
+//            refreshTable();
+//            showInfo("Đã phê duyệt " + userIds.size() + " bạn đọc!");
+//        });
+//    }
+//
+//    @FXML
+//    private void handleRejectSelected() {
+//        if (selectedIds.isEmpty()) {
+//            showInfo("Chưa chọn bạn đọc nào!");
+//            return;
+//        }
+//
+//        TextInputDialog dialog = new TextInputDialog();
+//        dialog.setTitle("Từ chối hàng loạt");
+//        dialog.setContentText("Lý do từ chối:");
+//        Optional<String> result = dialog.showAndWait();
+//        String reason = result.orElse("Không có lý do");
+//
+//        rejectMultipleByIds(new ArrayList<>(selectedIds), reason);
+//    }
+//
+//    private void rejectMultipleByIds(List<Long> userIds, String reason) {
+//        Task<Void> task = new Task<>() {
+//            @Override protected Void call() throws Exception {
+//                for (Long id : userIds) {
+//                    Reader reader = readerService.findById(id);
+//                    if (reader == null) continue;
+//
+//                    String body = """
+//                    Xin chào %s,
+//                    Tài khoản bị từ chối.
+//                    Lý do: %s
+//                    Liên hệ thư viện để biết thêm.
+//                    """.formatted(reader.getFullName(), reason);
+//
+//                    sendEmail.sendMail("huongcao.seee@gmail.com", "Tài khoản bị từ chối", body);
+//                    readerService.delete(id);
+//                }
+//                return null;
+//            }
+//        };
+//
+//        showProgressAndRun(task, "Đang từ chối...", () -> {
+//            selectedIds.clear();
+//            refreshTable();
+//            showInfo("Đã từ chối " + userIds.size() + " bạn đọc!");
+//        });
+//    }
+
+
 }

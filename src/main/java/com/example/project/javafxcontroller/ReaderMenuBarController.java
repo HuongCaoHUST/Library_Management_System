@@ -45,7 +45,7 @@ public class ReaderMenuBarController {
     @FXML
     private void openDocumentListForm(ActionEvent event) {
         try {
-            Parent root = fxmlLoader.load("/com/example/project/reader_docum6ent_list_form.fxml");
+            Parent root = fxmlLoader.load("/com/example/project/reader_document_list_form.fxml");
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((MenuItem) event.getSource())
                     .getParentPopup().getOwnerWindow();
