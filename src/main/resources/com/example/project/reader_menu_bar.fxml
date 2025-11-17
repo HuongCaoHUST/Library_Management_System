@@ -1,25 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="160.0" prefWidth="1280.0" style="-fx-background-color: #1f3368;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.controller.MenuBarController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="160.0" prefWidth="1280.0" style="-fx-background-color: #1f3368;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.javafxcontroller.ReaderMenuBarController">
    <children>
       <AnchorPane prefHeight="100.0" prefWidth="1280.0" style="-fx-background-color: ffffff;" stylesheets="@fullpackstyling.css">
          <children>
-            <Label layoutX="102.0" layoutY="57.0" prefHeight="23.0" prefWidth="283.0" styleClass="left-label" stylesheets="@fullpackstyling.css" text="DÀNH CHO CHUYÊN VIÊN" textFill="#1f3368" AnchorPane.bottomAnchor="25.0">
+            <Label layoutX="102.0" layoutY="57.0" prefHeight="23.0" prefWidth="283.0" styleClass="left-label" stylesheets="@fullpackstyling.css" text="DÀNH CHO BẠN ĐỌC" textFill="#1f3368" AnchorPane.bottomAnchor="25.0">
                <font>
                   <Font name="Segoe UI Bold" size="22.0" />
                </font>
@@ -67,10 +59,10 @@
                <children>
                   <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="238.0" styleClass="menu_button" stylesheets="@fullpackstyling.css" text="Tài liệu" GridPane.columnIndex="2">
                     <items>
-                      <MenuItem fx:id="menuItemDocumentList" onAction="#openDocumentListForm" mnemonicParsing="false" styleClass="menu_item" text="Danh sách tài liệu" />
-                      <MenuItem fx:id="menuItemAddDocument" onAction="#openAddDocumentForm" mnemonicParsing="false" styleClass="menu_item" text="Yêu cầu mượn" />
+                      <MenuItem fx:id="menuItemDocumentList" mnemonicParsing="false" onAction="#openDocumentListForm" styleClass="menu_item" text="Danh sách tài liệu" />
+                      <MenuItem fx:id="menuItemAddDocument" mnemonicParsing="false"  styleClass="menu_item" text="Yêu cầu mượn" />
                         <MenuItem mnemonicParsing="false" styleClass="menu_item" text="Yêu cầu gia hạn" />
-                        <MenuItem  onAction="#openAddDocumentForm" mnemonicParsing="false" styleClass="menu_item" text="Yêu cầu trả" />
+                        <MenuItem mnemonicParsing="false" styleClass="menu_item" text="Yêu cầu trả" />
                     </items>
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />

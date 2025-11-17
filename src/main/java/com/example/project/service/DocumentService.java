@@ -45,4 +45,16 @@ public class DocumentService {
 
         return repository.findAll(spec);
     }
+
+    public List<Document> findAllById(List<Long> ids) {
+        return repository.findAllById(ids);
+    }
+
+    public List<Document> saveAll(List<Document> documents) {
+        return repository.saveAll(documents);
+    }
+
+    public void deleteAllById(List<Long> ids) {
+        repository.deleteAllById(ids);
+    }
 }

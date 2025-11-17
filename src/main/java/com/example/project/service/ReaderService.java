@@ -49,7 +49,6 @@ public class ReaderService {
             throw new IllegalArgumentException("Số CCCD đã được đăng ký!");
         }
 
-//        String username = inputReader.getEmail().split("@")[0].toLowerCase();
         String username = email;
         Reader reader = Reader.builder()
                 .fullName(inputReader.getFullName())

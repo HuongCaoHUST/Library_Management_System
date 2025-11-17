@@ -1,4 +1,4 @@
-package com.example.project.controller;
+package com.example.project.javafxcontroller;
 
 import com.example.project.model.Librarian;
 import com.example.project.model.Reader;
@@ -7,7 +7,6 @@ import com.example.project.repository.LibrarianRepository;
 import com.example.project.util.SessionManager;
 import com.example.project.util.SpringFxmlLoader;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;

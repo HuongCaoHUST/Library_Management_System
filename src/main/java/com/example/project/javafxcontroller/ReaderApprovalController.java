@@ -1,4 +1,4 @@
-package com.example.project.controller;
+package com.example.project.javafxcontroller;
 import com.example.project.model.Librarian;
 import com.example.project.model.Reader;
 import com.example.project.service.ReaderService;

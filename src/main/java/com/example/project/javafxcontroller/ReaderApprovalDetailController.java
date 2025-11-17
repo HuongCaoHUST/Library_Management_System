@@ -1,4 +1,4 @@
-package com.example.project.controller;
+package com.example.project.javafxcontroller;
 
 import com.example.project.model.Librarian;
 import com.example.project.model.Reader;
@@ -10,7 +10,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import com.example.project.util.SendEmail;
-import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -93,9 +92,12 @@ public class ReaderApprovalDetailController {
                 String rawPassword = generateRandomPassword(8);
                 reader.setPassword(rawPassword);
                 reader.setStatus("APPROVED");
-                reader.setApprovedDate(LocalDateTime.now());
+                LocalDateTime registrationDate = LocalDateTime.now();
+                reader.setApprovedDate(registrationDate);
                 Librarian librarian = SessionManager.getCurrentLibrarian();
                 reader.setApprovedBy(librarian);
+                LocalDateTime expirationDate = registrationDate.plusYears(1);
+                reader.setExpirationDate(expirationDate);
 
                 String subject = "Tài khoản thư viện của bạn đã được phê duyệt";
                 String body = "Xin chào " + reader.getFullName() + ",\n\n"

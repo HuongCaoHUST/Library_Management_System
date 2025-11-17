@@ -1,4 +1,4 @@
-package com.example.project.controller;
+package com.example.project.javafxcontroller;
 
 import com.example.project.model.Librarian;
 import com.example.project.util.SessionManager;
@@ -7,10 +7,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-public class MenuBarController {
+public class ReaderMenuBarController {
 
     @FXML private ImageView avatarImage;
     @FXML private MenuItem menuItemApproveAccount;
@@ -43,51 +43,9 @@ public class MenuBarController {
     }
 
     @FXML
-    private void openApprovalForm(ActionEvent event) {
-        try {
-            Parent root = fxmlLoader.load("/com/example/project/reader_approval_list_form.fxml");
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) ((MenuItem) event.getSource())
-                    .getParentPopup().getOwnerWindow();
-
-            stage.setScene(scene);
-            stage.setTitle("Duyệt tài khoản - Hệ thống quản lý thư viện");
-            stage.centerOnScreen();
-            stage.getIcons().add(new javafx.scene.image.Image(
-                    getClass().getResourceAsStream("/com/example/project/images/logo_HUB.png")
-            ));
-            stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void openReaderList(ActionEvent event) {
-        try {
-            Parent root = fxmlLoader.load("/com/example/project/reader_list_form.fxml");
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) ((MenuItem) event.getSource())
-                    .getParentPopup().getOwnerWindow();
-
-            stage.setScene(scene);
-            stage.setTitle("Danh sách tài khoản - Hệ thống quản lý thư viện");
-            stage.centerOnScreen();
-            stage.getIcons().add(new javafx.scene.image.Image(
-                    getClass().getResourceAsStream("/com/example/project/images/logo_HUB.png")
-            ));
-            stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
     private void openDocumentListForm(ActionEvent event) {
         try {
-            Parent root = fxmlLoader.load("/com/example/project/document_list_form.fxml");
+            Parent root = fxmlLoader.load("/com/example/project/reader_docum6ent_list_form.fxml");
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((MenuItem) event.getSource())
                     .getParentPopup().getOwnerWindow();
@@ -99,20 +57,6 @@ public class MenuBarController {
                     getClass().getResourceAsStream("/com/example/project/images/logo_HUB.png")
             ));
             stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void openAddDocumentForm(ActionEvent event) {
-        try {
-            Parent root = fxmlLoader.load("/com/example/project/document_add_form.fxml");
-            Stage stage = new Stage();
-            stage.setTitle("Thêm tài liệu mới");
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
         }

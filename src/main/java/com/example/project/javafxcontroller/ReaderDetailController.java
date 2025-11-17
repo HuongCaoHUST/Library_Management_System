@@ -1,4 +1,4 @@
-package com.example.project.controller;
+package com.example.project.javafxcontroller;
 import com.example.project.model.Reader;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -19,6 +19,7 @@ public class ReaderDetailController {
     @FXML private Label lblMajor;
     @FXML private Label lblWorkPlace;
     @FXML private Label lblApprovedDate;
+    @FXML private Label lblExpirationDate;
     @FXML private Label lblApprovedBy;
 
     public void setReader(Reader reader) {
@@ -35,6 +36,7 @@ public class ReaderDetailController {
         lblMajor.setText(reader.getMajor());
         lblWorkPlace.setText(reader.getWorkPlace());
         lblApprovedDate.setText(reader.getApprovedDate().toString());
+        lblExpirationDate.setText(reader.getExpirationDate().toString());
         lblApprovedBy.setText(reader.getApprovedBy().getFullName());
     }
 }

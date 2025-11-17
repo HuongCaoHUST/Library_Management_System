@@ -1,7 +1,6 @@
-package com.example.project.controller;
+package com.example.project.javafxcontroller;
 import com.example.project.model.Document;
-import com.example.project.model.Reader;
-import com.example.project.service.DocumentApiService;
+import com.example.project.apiservice.DocumentApiService;
 import com.example.project.service.DocumentService;
 import com.example.project.util.SpringFxmlLoader;
 import javafx.animation.KeyFrame;
@@ -25,10 +24,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import org.controlsfx.control.SearchableComboBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.controlsfx.control.textfield.TextFields;
 
 import java.net.URL;
 import java.util.List;

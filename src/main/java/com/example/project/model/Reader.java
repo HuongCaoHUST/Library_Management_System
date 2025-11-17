@@ -35,6 +35,7 @@ public class Reader {
     private String password;
     private LocalDateTime registrationDate;
     private LocalDateTime approvedDate;
+    private LocalDateTime expirationDate;
     private String status;
     private BigDecimal depositAmount;
     @ManyToOne

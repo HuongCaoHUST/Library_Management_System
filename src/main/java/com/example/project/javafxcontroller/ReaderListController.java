@@ -1,6 +1,6 @@
-package com.example.project.controller;
+package com.example.project.javafxcontroller;
 import com.example.project.model.Reader;
-import com.example.project.service.ReaderApiService;
+import com.example.project.apiservice.ReaderApiService;
 import com.example.project.util.SpringFxmlLoader;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
