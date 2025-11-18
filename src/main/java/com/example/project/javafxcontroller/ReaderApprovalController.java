@@ -299,103 +299,40 @@ public class ReaderApprovalController implements Initializable {
             } else {
                 selectedIds.removeIf(id -> filteredData.stream().anyMatch(r -> r.getUserId().equals(id)));
             }
-            tableView.refresh(); // Cập nhật checkbox
+            tableView.refresh();
         });
     }
-//
-//    @FXML
-//    private void handleApproveSelected() {
-//        if (selectedIds.isEmpty()) {
-//            showInfo("Chưa chọn bạn đọc nào!");
-//            return;
-//        }
-//
-//        if (!confirmAction("Phê duyệt", "Phê duyệt " + selectedIds.size() + " bạn đọc?")) return;
-//
-//        approveMultipleByIds(new ArrayList<>(selectedIds));
-//    }
 
-//    private void approveMultipleByIds(List<Long> userIds) {
-//        Task<Void> task = new Task<>() {
-//            @Override protected Void call() throws Exception {
-//                Librarian librarian = SessionManager.getCurrentLibrarian();
-//                LocalDateTime now = LocalDateTime.now();
-//
-//                for (Long id : userIds) {
-//                    Reader reader = readerService.findById(id);
-//                    if (reader == null) continue;
-//
-//                    String rawPassword = generateRandomPassword(8);
-//                    reader.setPassword(rawPassword);
-//                    reader.setStatus("APPROVED");
-//                    reader.setApprovedDate(now);
-//                    reader.setApprovedBy(librarian);
-//                    readerService.save(reader);
-//
-//                    String body = """
-//                    Xin chào %s,
-//                    Tài khoản đã được phê duyệt!
-//                    Username: %s
-//                    Mật khẩu: %s
-//                    Vui lòng đổi mật khẩu lần đầu.
-//                    """.formatted(reader.getFullName(), reader.getUsername(), rawPassword);
-//
-//                    sendEmail.sendMail("huongcao.seee@gmail.com", "Tài khoản được duyệt", body);
-//                }
-//                return null;
-//            }
-//        };
-//
-//        showProgressAndRun(task, "Đang phê duyệt...", () -> {
-//            selectedIds.clear();
-//            refreshTable();
-//            showInfo("Đã phê duyệt " + userIds.size() + " bạn đọc!");
-//        });
-//    }
-//
-//    @FXML
-//    private void handleRejectSelected() {
-//        if (selectedIds.isEmpty()) {
-//            showInfo("Chưa chọn bạn đọc nào!");
-//            return;
-//        }
-//
-//        TextInputDialog dialog = new TextInputDialog();
-//        dialog.setTitle("Từ chối hàng loạt");
-//        dialog.setContentText("Lý do từ chối:");
-//        Optional<String> result = dialog.showAndWait();
-//        String reason = result.orElse("Không có lý do");
-//
-//        rejectMultipleByIds(new ArrayList<>(selectedIds), reason);
-//    }
-//
-//    private void rejectMultipleByIds(List<Long> userIds, String reason) {
-//        Task<Void> task = new Task<>() {
-//            @Override protected Void call() throws Exception {
-//                for (Long id : userIds) {
-//                    Reader reader = readerService.findById(id);
-//                    if (reader == null) continue;
-//
-//                    String body = """
-//                    Xin chào %s,
-//                    Tài khoản bị từ chối.
-//                    Lý do: %s
-//                    Liên hệ thư viện để biết thêm.
-//                    """.formatted(reader.getFullName(), reason);
-//
-//                    sendEmail.sendMail("huongcao.seee@gmail.com", "Tài khoản bị từ chối", body);
-//                    readerService.delete(id);
-//                }
-//                return null;
-//            }
-//        };
-//
-//        showProgressAndRun(task, "Đang từ chối...", () -> {
-//            selectedIds.clear();
-//            refreshTable();
-//            showInfo("Đã từ chối " + userIds.size() + " bạn đọc!");
-//        });
-//    }
+    private boolean confirmAction(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        return alert.showAndWait().filter(ButtonType.OK::equals).isPresent();
+    }
 
+    @FXML
+    private void handleApproveSelected() {
+        if (selectedIds.isEmpty()) {
+            showInfo("Chưa chọn bạn đọc nào!");
+            return;
+        }
 
+        readerService.approveMultipleByIds(new ArrayList<>(selectedIds),
+                () -> refreshTable(),
+                () -> {}
+        );
+    }
+
+    @FXML
+    private void handleRejectSelected() {
+        if (selectedIds.isEmpty()) {
+            showInfo("Chưa chọn bạn đọc nào!");
+            return;
+        }
+
+        readerService.rejectMultipleByIds(new ArrayList<>(selectedIds),
+                () -> refreshTable(),
+                () -> {}
+        );
+    }
 }

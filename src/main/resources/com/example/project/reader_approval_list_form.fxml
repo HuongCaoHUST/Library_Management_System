@@ -15,8 +15,8 @@
             <children>
                 <TextField fx:id="searchField" promptText="Nhập tên hoặc MSSV cần tìm..." HBox.hgrow="ALWAYS" />
                 <Button fx:id="searchButton" defaultButton="true" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Tìm kiếm" />
-            <Button fx:id="approveSelectedBtn" defaultButton="true" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Phê duyệt đã chọn" />
-            <Button fx:id="rejectSelectedBtn" defaultButton="true" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Từ chối đã chọn" />
+            <Button fx:id="approveSelectedBtn" defaultButton="true" onAction="#handleApproveSelected" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Phê duyệt đã chọn" />
+            <Button fx:id="rejectSelectedBtn" defaultButton="true" onAction="#handleRejectSelected" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Từ chối đã chọn" />
             </children>
         </HBox>
         <AnchorPane layoutX="33.0" layoutY="191.0" prefHeight="366.0" prefWidth="1156.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="220.0">
