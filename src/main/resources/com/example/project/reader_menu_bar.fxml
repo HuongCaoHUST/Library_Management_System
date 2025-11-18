@@ -1,76 +1,146 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.CustomMenuItem?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="160.0" prefWidth="1280.0" style="-fx-background-color: #1f3368;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.javafxcontroller.ReaderMenuBarController">
-   <children>
-      <AnchorPane prefHeight="100.0" prefWidth="1280.0" style="-fx-background-color: ffffff;" stylesheets="@fullpackstyling.css">
-         <children>
-            <Label layoutX="102.0" layoutY="57.0" prefHeight="23.0" prefWidth="283.0" styleClass="left-label" stylesheets="@fullpackstyling.css" text="DÀNH CHO BẠN ĐỌC" textFill="#1f3368" AnchorPane.bottomAnchor="25.0">
-               <font>
-                  <Font name="Segoe UI Bold" size="22.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="NONE" />
-               </cursor>
-            </Label>
-            <Label layoutX="102.0" layoutY="26.0" prefHeight="24.0" prefWidth="397.0" styleClass="left-label" stylesheets="@fullpackstyling.css" text="HỆ THỐNG QUẢN LÝ THƯ VIỆN" textFill="#a81c29" AnchorPane.topAnchor="25.0">
-               <font>
-                  <Font name="Segoe UI Bold" size="22.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="60.0" fitWidth="47.0" layoutX="41.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="25.0" AnchorPane.topAnchor="25.0">
-               <image>
-                  <Image url="@images/logo2.png" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="bellIcon" fitHeight="48.0" fitWidth="31.0" layoutX="1114.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/bell.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="notificationBadge" layoutX="1139.0" layoutY="27.0" prefHeight="18.0" prefWidth="18.0" style="-fx-background-color: a81c29; -fx-text-fill: white; -fx-font-size: 12; -fx-font-weight: bold; -fx-alignment: center; -fx-background-radius: 9px;" text="3" AnchorPane.topAnchor="30.0" />
-            <ImageView fx:id="avatarImage" fitHeight="60.0" fitWidth="62.0" layoutX="1180.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="25.0">
-               <image>
-                  <Image url="@images/boy.png" />
-               </image>
-            </ImageView>
-         </children>
-      </AnchorPane>
-      <AnchorPane prefHeight="50.0" prefWidth="1280.0" style="-fx-background-color: a81c29;">
-         <children>
-            <GridPane layoutX="772.0" prefHeight="50.0" prefWidth="781.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="10.0">
-               <columnConstraints>
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="261.0" minWidth="10.0" prefWidth="260.33333333333" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="261.0" minWidth="10.0" prefWidth="260.33333333333" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="261.0" minWidth="10.0" prefWidth="260.33333333333" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <children>
-                  <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="238.0" styleClass="menu_button" stylesheets="@fullpackstyling.css" text="Tài liệu" GridPane.columnIndex="2">
-                    <items>
-                      <MenuItem fx:id="menuItemDocumentList" mnemonicParsing="false" onAction="#openDocumentListForm" styleClass="menu_item" text="Danh sách tài liệu" />
-                      <MenuItem fx:id="menuItemAddDocument" mnemonicParsing="false"  styleClass="menu_item" text="Yêu cầu mượn" />
-                        <MenuItem mnemonicParsing="false" styleClass="menu_item" text="Yêu cầu gia hạn" />
-                        <MenuItem mnemonicParsing="false" styleClass="menu_item" text="Yêu cầu trả" />
-                    </items>
-                     <font>
-                        <Font name="Segoe UI Bold" size="16.0" />
-                     </font>
-                  </MenuButton>
-               </children>
-            </GridPane>
-         </children>
-      </AnchorPane>
-   </children>
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="151.0" prefWidth="1280.0" style="-fx-background-color: #1f3368;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.javafxcontroller.ReaderMenuBarController">
+    <children>
+        <AnchorPane prefHeight="105.0" prefWidth="1278.0" style="-fx-background-color: #ffffff;" stylesheets="@fullpackstyling.css">
+            <children>
+                <Label layoutX="93.0" layoutY="54.0" prefHeight="23.0" prefWidth="283.0" styleClass="left-label" stylesheets="@fullpackstyling.css" text="Đại Học Ngân Hàng" textFill="#1f3368" AnchorPane.bottomAnchor="22.799999999999997">
+                    <font>
+                        <Font name="Segoe UI Bold" size="22.0" />
+                    </font>
+                    <cursor>
+                        <Cursor fx:constant="NONE" />
+                    </cursor>
+                </Label>
+                <Label layoutX="93.0" layoutY="28.0" prefHeight="24.0" prefWidth="397.0" styleClass="left-label" stylesheets="@fullpackstyling.css" text="Thư Viện" textFill="#a81c29" AnchorPane.topAnchor="28.0">
+                    <font>
+                        <Font name="Segoe UI Bold" size="22.0" />
+                    </font>
+                </Label>
+                <ImageView fitHeight="60.0" fitWidth="47.0" layoutX="41.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="15.0" AnchorPane.topAnchor="25.0">
+                    <image>
+                        <Image url="@images/logo2.png" />
+                    </image>
+                </ImageView>
+                <ImageView fx:id="bellIcon" fitHeight="48.0" fitWidth="31.0" layoutX="1114.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@images/bell.png" />
+                    </image>
+                </ImageView>
+                <Label fx:id="notificationBadge" layoutX="1139.0" layoutY="27.0" prefHeight="18.0" prefWidth="18.0" style="-fx-background-color: a81c29; -fx-text-fill: white; -fx-font-size: 12; -fx-font-weight: bold; -fx-alignment: center; -fx-background-radius: 9px;" text="3" AnchorPane.topAnchor="30.0" />
+                <ImageView fx:id="avatarImage" fitHeight="60.0" fitWidth="62.0" layoutX="1180.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="25.0">
+                    <image>
+                        <Image url="@images/boy.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </AnchorPane>
+        <AnchorPane maxHeight="50.0" prefHeight="46.0" prefWidth="1280.0" style="-fx-background-color: a81c29;">
+            <children>
+                <GridPane layoutX="57.0" layoutY="1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <MenuButton alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" prefHeight="46.0" prefWidth="150.0" styleClass="menu_button_reader" stylesheets="@fullpackstyling.css" text="Tài nguyên">
+                            <items>
+                                <CustomMenuItem mnemonicParsing="false">
+                                    <content>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tìm kiếm">
+                                            <font>
+                                                <Font name="Segoe UI Bold" size="16.0" />
+                                            </font>
+                                        </Text>
+                                    </content>
+                                </CustomMenuItem>
+                                <MenuItem fx:id="menuItemSearchAllDoc" mnemonicParsing="false" onAction="#openDocumentListForm" text="Tất cả" />
+                                <MenuItem mnemonicParsing="false" text="Tài liệu môn học" />
+                                <MenuItem mnemonicParsing="false" text="Tạp chí điện tử" />
+                            </items>
+                            <font>
+                                <Font name="Segoe UI" size="18.0" />
+                            </font>
+                        </MenuButton>
+                        <MenuButton alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" prefHeight="46.0" prefWidth="140.0" styleClass="menu_button_reader" stylesheets="@fullpackstyling.css" text="Dịch vụ" GridPane.columnIndex="1">
+                            <items>
+                                <CustomMenuItem mnemonicParsing="false">
+                                    <content>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nhóm dịch vụ">
+                                            <font>
+                                                <Font name="Segoe UI Bold" size="16.0" />
+                                            </font>
+                                        </Text>
+                                    </content>
+                                </CustomMenuItem>
+                                <MenuItem mnemonicParsing="false" text="Chính sách lưu hành" />
+                                <MenuItem mnemonicParsing="false" text="Đề nghị bổ sung tài liệu" />
+                                <MenuItem mnemonicParsing="false" text="Tham khảo &amp; thông tin" />
+                            </items>
+                            <font>
+                                <Font name="Segoe UI" size="18.0" />
+                            </font>
+                        </MenuButton>
+                        <MenuButton alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" prefHeight="46.0" prefWidth="150.0" styleClass="menu_button_reader" stylesheets="@fullpackstyling.css" text="Hướng dẫn" GridPane.columnIndex="2">
+                            <items>
+                                <CustomMenuItem mnemonicParsing="false">
+                                    <content>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hướng dẫn cần thiết">
+                                            <font>
+                                                <Font name="Segoe UI Bold" size="16.0" />
+                                            </font>
+                                        </Text>
+                                    </content>
+                                </CustomMenuItem>
+                                <MenuItem mnemonicParsing="false" text="Giờ hoạt động" />
+                                <MenuItem mnemonicParsing="false" text="Thẻ &amp; Tài khoản" />
+                            </items>
+                            <font>
+                                <Font name="Segoe UI" size="18.0" />
+                            </font>
+                        </MenuButton>
+                        <MenuButton alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" prefHeight="46.0" prefWidth="140.0" styleClass="menu_button_reader" stylesheets="@fullpackstyling.css" text="Cá nhân" GridPane.columnIndex="3">
+                            <items>
+                                <CustomMenuItem mnemonicParsing="false">
+                                    <content>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Góc cá nhân">
+                                            <font>
+                                                <Font name="Segoe UI Bold" size="16.0" />
+                                            </font>
+                                        </Text>
+                                    </content>
+                                </CustomMenuItem>
+                                <MenuItem fx:id="menuItemReaderDetail" mnemonicParsing="false" text="Tài khoản thư viện" />
+                                <MenuItem mnemonicParsing="false" text="Tài liệu đang mượn" />
+                                <MenuItem mnemonicParsing="false" text="Gia hạn tài liệu" />
+                            </items>
+                            <font>
+                                <Font name="Segoe UI" size="18.0" />
+                            </font>
+                        </MenuButton>
+                    </children>
+                </GridPane>
+            </children>
+        </AnchorPane>
+    </children>
 </VBox>

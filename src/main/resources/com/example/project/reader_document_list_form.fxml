@@ -7,33 +7,46 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #1f3368;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.javafxcontroller.DocumentListController">
     <children>
         <fx:include source="reader_menu_bar.fxml" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-        <HBox layoutX="30.0" layoutY="180.0" prefHeight="25.0" prefWidth="397.0" spacing="10.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="750.0" AnchorPane.topAnchor="180.0">
-            <children>
-                <TextField fx:id="searchField" promptText="Nhập tên hoặc mã tài liệu cần tìm..." HBox.hgrow="ALWAYS" />
-                <Button fx:id="searchButton" defaultButton="true" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Tìm kiếm" />
-                <ComboBox fx:id="documentTypeComboBox" promptText="Loại tài liệu" />
-            </children>
-        </HBox>
-        <AnchorPane layoutX="33.0" layoutY="191.0" prefHeight="366.0" prefWidth="1156.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="220.0">
-            <children>
-                <TableView fx:id="tableView" prefHeight="571.0" prefWidth="1220.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <columns>
-                        <TableColumn fx:id="colTitle" prefWidth="200.0" text="Tên tài liệu" />
-                        <TableColumn fx:id="colDocumentId" prefWidth="100" text="Mã tài liệu" />
-                        <TableColumn fx:id="colAuthor" prefWidth="150.0" text="Tác giả" />
-                        <TableColumn fx:id="colPublisher" prefWidth="150.0" text="Nhà xuất bản" />
-                        <TableColumn fx:id="colShelfLocation" maxWidth="100.0" prefWidth="100.0" text="Vị trí trên kệ" />
-                        <TableColumn fx:id="colDocumentType" maxWidth="150.0" prefWidth="100.0" text="Thể loại" />
-                        <TableColumn fx:id="colAvailableCopies" maxWidth="150.0" prefWidth="100.0" text="SL còn" />
-                        <TableColumn fx:id="colBorrowedCopies" maxWidth="150.0" prefWidth="100.0" text="SL đã mượn" />
-                        <TableColumn fx:id="colDetail" maxWidth="150.0" prefWidth="150.0" text="Chi tiết" />
-                    </columns>
-                </TableView>
-            </children>
+        <AnchorPane layoutX="-14.0" layoutY="151.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="151.0">
+            <AnchorPane fx:id="searchAreaPane" layoutX="14.4" layoutY="14.0" prefHeight="66.0" prefWidth="1280.0" styleClass="reader-search" stylesheets="@fullpackstyling.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <children>
+                    <VBox alignment="TOP_CENTER" fillWidth="true" layoutX="72.0" layoutY="36.8" maxWidth="1232.0" prefWidth="1184.0" spacing="10.0" AnchorPane.leftAnchor="64.0" AnchorPane.rightAnchor="64.0" AnchorPane.topAnchor="0.0">
+                        <HBox alignment="CENTER_LEFT" spacing="12.0" VBox.vgrow="NEVER">
+                            <HBox alignment="CENTER_LEFT" spacing="8.0" styleClass="search-surface" HBox.hgrow="ALWAYS">
+                                <TextField fx:id="searchField" promptText="Search anything" styleClass="search-field" HBox.hgrow="ALWAYS" />
+                                <Button fx:id="searchButton" styleClass="icon-btn" text="🔍">
+                                    <font>
+                                        <Font name="Segoe UI Bold" size="12.0" />
+                                    </font></Button>
+                            </HBox>
+                            <ComboBox fx:id="documentTypeComboBox" prefHeight="42.0" prefWidth="145.0" promptText="Loại tài liệu" styleClass="primary-btn" stylesheets="@fullpackstyling.css" />
+                        </HBox>
+                    </VBox>
+                </children>
+            </AnchorPane>
+            <AnchorPane fx:id="searchResultPane" layoutX="47.0" layoutY="75.2" prefHeight="574.0" prefWidth="1280.0" style="-fx-background-color: #1f3368;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="75.0">
+                <children>
+                    <TableView fx:id="tableView" prefHeight="571.0" prefWidth="1220.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
+                        <columns>
+                            <TableColumn fx:id="colTitle" prefWidth="200.0" text="Tên tài liệu" />
+                            <TableColumn fx:id="colDocumentId" prefWidth="100" text="Mã tài liệu" />
+                            <TableColumn fx:id="colAuthor" prefWidth="150.0" text="Tác giả" />
+                            <TableColumn fx:id="colPublisher" prefWidth="150.0" text="Nhà xuất bản" />
+                            <TableColumn fx:id="colShelfLocation" maxWidth="100.0" prefWidth="100.0" text="Vị trí trên kệ" />
+                            <TableColumn fx:id="colDocumentType" maxWidth="150.0" prefWidth="100.0" text="Thể loại" />
+                            <TableColumn fx:id="colAvailableCopies" maxWidth="150.0" prefWidth="100.0" text="SL còn" />
+                            <TableColumn fx:id="colBorrowedCopies" maxWidth="150.0" prefWidth="100.0" text="SL đã mượn" />
+                            <TableColumn fx:id="colDetail" maxWidth="150.0" prefWidth="150.0" text="Chi tiết" />
+                        </columns>
+                    </TableView>
+                </children>
+            </AnchorPane>
         </AnchorPane>
-        </children>
+    </children>
 </AnchorPane>

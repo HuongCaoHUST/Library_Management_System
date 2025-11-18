@@ -286,3 +286,219 @@
 .combo-box:empty .text {
     -fx-fill: #999999;
 }
+
+/* ========== MenuButtonReader (class: menu_button_reader) ========== */
+.menu_button_reader {
+    /* Màu dùng chung (looked-up colors) */
+    -app-red: #a81c29;      /* nền khi bình thường */
+    -app-blue: #10165F;     /* nền khi hover/nhấn/mở menu */
+    -app-light-red: derive(-app-red, 35%); /* đỏ nhạt hơn một chút cho dropdown */
+
+    /* Nền & chữ */
+    -fx-background-color: -app-red;
+    -fx-text-fill: white;
+    -fx-background-radius: 1;
+    -fx-background-insets: 0;
+    -fx-padding: 0.07em 0.75em; /* chỉnh padding cho nút */
+}
+
+/* Chữ trên nút luôn trắng */
+.menu_button_reader > .label {
+    -fx-text-fill: white;
+}
+
+/* Bỏ mũi tên của MenuButton */
+.menu_button_reader > .arrow-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-min-width: 0;
+    -fx-pref-width: 0;
+    -fx-max-width: 0;
+}
+.menu_button_reader > .arrow-button > .arrow {
+    -fx-background-color: transparent;
+    -fx-padding: 0px -1px;
+}
+
+/* Hover: chuyển xanh */
+.menu_button_reader:hover {
+    -fx-background-color: -app-blue;
+    -fx-cursor: hand;
+}
+
+/* Khi nhấn hoặc đang mở menu: giữ nguyên màu xanh */
+.menu_button_reader:armed,
+.menu_button_reader:pressed,
+.menu_button_reader:showing {
+    -fx-background-color: -app-blue;
+}
+
+/* ========== ContextMenu (dropdown của MenuButton) ========== */
+/* Nền dropdown: đỏ nhạt hơn; chiều rộng: 200px */
+.menu_button_reader .context-menu {
+    -fx-background-color: -app-light-red;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1;
+    -fx-padding: 3px 0 6px 0;
+
+    /* Cố định chiều rộng dropdown */
+    -fx-min-width: 100px;
+    -fx-pref-width: 250px;
+}
+
+/* ========== MenuItem (class: menu_item) ========== */
+/* Nền item trong suốt để lộ nền dropdown, padding dễ bấm */
+.menu_button_reader .menu-item,
+.menu_item {
+    -fx-background-color: transparent;
+    -fx-padding: 9px 0px 9px 14px;
+}
+
+/* Hover/Focus của item: hơi đậm hơn nền dropdown để phân biệt */
+.menu_button_reader .menu-item:hover,
+.menu_button_reader .menu-item:focused,
+.menu_item:hover,
+.menu_item:focused {
+    -fx-background-color: derive(-app-light-red, -10%);
+    -fx-cursor: hand;
+}
+
+/* Chữ item: trắng để nổi bật trên nền đỏ */
+.menu_button_reader .menu-item > .label,
+.menu_item > .label {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+
+.text-field:focused:empty {
+    -fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);
+}
+.text-field:empty {
+    -fx-prompt-text-fill: #999999;
+}
+.combo-box:focused:empty .text {
+    -fx-fill: derive(-fx-control-inner-background, -30%);
+}
+.combo-box:empty .text {
+    -fx-fill: #999999;
+}
+/* Text bên trong CustomMenuItem: */
+.menu_button_reader .custom-menu-item Text {
+    -fx-fill: white;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+.menu_button_reader .custom-menu-item:focused,
+.menu_button_reader .custom-menu-item:hover,
+.menu_button_reader .custom-menu-item:armed {
+    -fx-background-color: transparent;
+    -fx-cursor: pointer;
+}
+
+/* Search all form */
+/* Container background (lighter than #a81c29) */
+.reader-search {
+    -fx-background-color: #1f3368; /* lighter red */
+    -fx-padding: 22 24 10 24;
+}
+
+/* White surface holding the input + icon button */
+.reader-search .search-surface {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-padding: 4 4 4 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 10, 0.18, 0, 2);
+}
+
+/* TextField */
+.reader-search .search-field {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-border-color: transparent;
+    -fx-prompt-text-fill: #8a8a8a;
+    -fx-text-fill: #222222;
+    -fx-font-size: 14px;
+}
+
+/* Search button (no border) */
+.reader-search .icon-btn {
+    -fx-background-color: #c83c49;  /* blue */
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-background-radius: 6;
+    -fx-padding: 6 10;
+    -fx-cursor: hand;
+    -fx-background-insets: 0;
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+}
+.reader-search .icon-btn:hover {
+    -fx-background-color: derive(#c83c49, 25%);
+}
+.reader-search .icon-btn:focused {
+    -fx-border-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+/* Base ComboBox with styleClass="primary-btn" */
+.combo-box.primary-btn {
+    -fx-background-color: #c83c49;
+    -fx-background-radius: 8;
+    -fx-background-insets: 0;
+    -fx-padding: 6 12;
+    -fx-cursor: hand;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+
+    /* no border ring */
+    -fx-border-width: 0;
+    -fx-border-color: transparent;
+}
+.combo-box.primary-btn:hover {
+    -fx-background-color: derive(#c83c49, 20%);
+}
+.combo-box.primary-btn:focused {
+    -fx-border-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+.combo-box.primary-btn .list-cell {
+    -fx-text-fill: white;      /* selected/display cell */
+    -fx-background-color: transparent;
+}
+
+/* Arrow button and glyph */
+.combo-box.primary-btn > .arrow-button {
+    -fx-background-color: transparent;
+}
+.combo-box.primary-btn > .arrow-button > .arrow {
+    -fx-background-color: white;
+}
+
+/* Dropdown popup styling (affects ComboBox popups in this scene) */
+.combo-box-popup > .list-view {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-padding: 4 2;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.16), 12, 0.25, 0, 2);
+    -fx-border-color: rgba(200,60,73,0.25);
+    -fx-border-radius: 8;
+}
+
+/* Dropdown items */
+.combo-box-popup > .list-view .list-cell {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-padding: 8 12;
+}
+.combo-box-popup > .list-view .list-cell:hover {
+    -fx-background-color: #c83c49;   /* hover item */
+    -fx-text-fill: white;
+}
+.combo-box-popup > .list-view .list-cell:selected,
+.combo-box-popup > .list-view .list-cell:focused {
+    -fx-background-color: #10165F;   /* selected/focused item */
+    -fx-text-fill: white;
+}
