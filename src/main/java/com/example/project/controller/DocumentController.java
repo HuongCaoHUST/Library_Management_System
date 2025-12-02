@@ -12,13 +12,11 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/documents")
 @CrossOrigin(origins = "*")
 public class DocumentController {
-
     private final DocumentService documentService;
     private final DocumentMapper documentMapper;
 
@@ -46,40 +44,32 @@ public class DocumentController {
     @PostMapping
     public ResponseEntity<DocumentResponse> createDocument(
             @Valid @RequestBody DocumentRequest request) {
-
         Document entity = documentMapper.toEntity(request);
         Document saved = documentService.save(entity);
         DocumentResponse response = documentMapper.toResponse(saved);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @PostMapping("/bulk")
     public ResponseEntity<List<DocumentResponse>> createBulkDocuments(
             @Valid @RequestBody DocumentBulkRequest request) {
-
         List<Document> entities = request.getDocuments().stream()
                 .map(documentMapper::toEntity)
                 .toList();
-
-        List<Document> saved = documentService.saveAll(entities); // Lưu nhiều
-
+        List<Document> saved = documentService.saveAll(entities);
         List<DocumentResponse> responses = saved.stream()
                 .map(documentMapper::toResponse)
                 .toList();
-
         return ResponseEntity.status(HttpStatus.CREATED).body(responses);
     }
 
-    // Put one document
     @PutMapping("/{id}")
     public ResponseEntity<DocumentResponse> updateDocument(
-            @PathVariable Long id, @Valid @RequestBody DocumentRequest request) {
-
+            @PathVariable String id, @Valid @RequestBody DocumentRequest request) {  // Đổi từ Long sang String
         return documentService.findById(id)
                 .map(existing -> {
                     documentMapper.updateEntityFromRequest(request, existing);
-                    existing.setDocumentId(id); // giữ ID
+                    existing.setDocumentId(id);
                     Document updated = documentService.save(existing);
                     return ResponseEntity.ok(documentMapper.toResponse(updated));
                 })
@@ -88,9 +78,8 @@ public class DocumentController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<DocumentResponse> patchDocument(
-            @PathVariable Long id,
+            @PathVariable String id,  // Đổi từ Long sang String
             @Valid @RequestBody DocumentPatchRequest request) {
-
         return documentService.findById(id)
                 .map(existing -> {
                     documentMapper.updateFromPatch(request, existing);
@@ -100,22 +89,20 @@ public class DocumentController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // Delete 1 document
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteDocument(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteDocument(@PathVariable String id) {  // Đổi từ Long sang String
         if (!documentService.findById(id).isPresent()) {
             return ResponseEntity.notFound().build();
         }
         documentService.delete(id);
-        return ResponseEntity.noContent().build(); // 204 No Content
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/bulk")
     public ResponseEntity<Map<String, Object>> deleteBulkDocuments(
             @Valid @RequestBody DocumentDeleteRequest request) {
-
-        List<Long> ids = request.getDocumentIds();
-        List<Long> existingIds = documentService.findAllById(ids)
+        List<String> ids = request.getDocumentIds();  // Đổi từ List<Long> sang List<String>
+        List<String> existingIds = documentService.findAllById(ids)
                 .stream().map(Document::getDocumentId).toList();
 
         if (existingIds.isEmpty()) {

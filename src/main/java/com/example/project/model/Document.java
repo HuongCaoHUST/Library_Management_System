@@ -1,5 +1,4 @@
 package com.example.project.model;
-
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,24 +9,19 @@ import lombok.*;
 @Entity
 @Table(name = "documents")
 public class Document {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long documentId;
+    private String documentId;  // Nhập thủ công
     @Column(nullable = false)
     private String title;
     @Column(nullable = false)
     private String author;
     private String publisher;
     private Integer publicationYear;
-    private String ddcNumber;
-    private String cutterCode;
     @Column(nullable = false)
     private Integer availableCopies;
     @Column(nullable = false)
     private Integer borrowedCopies;
     private Double coverPrice;
-    private String classificationNumber;
     private String category;
     private String shelfLocation;
     private String documentType;

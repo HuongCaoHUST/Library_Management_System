@@ -51,7 +51,6 @@ public class DocumentAddControllerOld {
                     .author(txtAuthor.getText())
                     .publisher(txtPublisher.getText())
                     .publicationYear(Integer.parseInt(txtYear.getText()))
-                    .classificationNumber(txtClassification.getText())
                     .category(txtCategory.getText())
                     .shelfLocation(txtShelf.getText())
                     .documentType(cbType.getValue())

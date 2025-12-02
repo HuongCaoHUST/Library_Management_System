@@ -36,7 +36,7 @@ public class DocumentListController implements Initializable {
 
     @FXML private TableView<Document> tableView;
     @FXML private TableColumn<Document, String> colTitle;
-    @FXML private TableColumn<Document, Long> colDocumentId;
+    @FXML private TableColumn<Document, String> colDocumentId;
     @FXML private TableColumn<Document, String> colAuthor;
     @FXML private TableColumn<Document, String> colPublisher;
     @FXML private TableColumn<Document, String> colShelfLocation;

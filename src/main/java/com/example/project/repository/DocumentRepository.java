@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface DocumentRepository extends JpaRepository<Document, Long>, JpaSpecificationExecutor<Document> {
+public interface DocumentRepository extends JpaRepository<Document, String>, JpaSpecificationExecutor<Document> {
 }

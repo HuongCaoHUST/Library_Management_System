@@ -8,8 +8,6 @@ import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface DocumentMapper {
-
-    @Mapping(target = "documentId", ignore = true)
     @Mapping(target = "borrowedCopies", constant = "0")
     Document toEntity(DocumentRequest request);
 

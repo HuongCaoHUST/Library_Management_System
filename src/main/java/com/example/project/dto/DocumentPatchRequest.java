@@ -1,4 +1,3 @@
-// src/main/java/com/example/project/dto/DocumentPatchRequest.java
 package com.example.project.dto;
 
 import jakarta.validation.constraints.Min;
@@ -7,13 +6,15 @@ import lombok.Data;
 
 @Data
 public class DocumentPatchRequest {
-
     private String title;
     private String author;
     private String publisher;
     private Integer publicationYear;
-    private String ddcNumber;
-    private String cutterCode;
+
+    // XÓA 3 TRƯỜNG:
+    // private String ddcNumber;
+    // private String cutterCode;
+    // private String classificationNumber;
 
     @Min(value = 0, message = "Số bản có sẵn phải >= 0")
     private Integer availableCopies;
@@ -24,7 +25,6 @@ public class DocumentPatchRequest {
     @PositiveOrZero
     private Double coverPrice;
 
-    private String classificationNumber;
     private String category;
     private String shelfLocation;
     private String documentType;
