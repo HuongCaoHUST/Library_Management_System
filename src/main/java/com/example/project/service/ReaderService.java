@@ -461,6 +461,7 @@ public class ReaderService {
     public List<Reader> getApprovedReaders() {
         return readerRepository.findByStatus("APPROVED");
     }
+
     public List<Reader> filterReaders(String fullName, String email, String status, String gender) {
         Specification<Reader> spec = Specification
                 .where(ReaderSpecification.hasFullName(fullName))

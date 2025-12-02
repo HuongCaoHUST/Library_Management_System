@@ -22,12 +22,14 @@
                         <ColumnConstraints percentWidth="28" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints prefHeight="30" />
-                        <RowConstraints prefHeight="30" />
-                        <RowConstraints prefHeight="30" />
-                        <RowConstraints prefHeight="30" />
-                        <RowConstraints prefHeight="30" />
-                        <RowConstraints prefHeight="30" />
+                        <RowConstraints prefHeight="30.0" />
+                        <RowConstraints prefHeight="30.0" />
+                        <RowConstraints prefHeight="30.0" />
+                        <RowConstraints prefHeight="30.0" />
+                        <RowConstraints prefHeight="30.0" />
+                        <RowConstraints prefHeight="30.0" />
+                  <RowConstraints />
+                  <RowConstraints />
                     </rowConstraints>
 
                     <Label text="Họ và tên:" textFill="#1f3368">
@@ -160,12 +162,12 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Button fx:id="btnApprove" mnemonicParsing="false" prefHeight="25.0" prefWidth="228.0" styleClass="button_approval" stylesheets="@fullpackstyling.css" text="Duyệt tài khoản">
+                        <Button fx:id="btnApprove" mnemonicParsing="false" prefHeight="25.0" prefWidth="228.0" styleClass="button_approval" stylesheets="@fullpackstyling.css" text="Cập nhật">
                             <font>
                                 <Font name="Segoe UI Bold" size="16.0" />
                             </font>
                         </Button>
-                        <Button fx:id="btnReject" mnemonicParsing="false" prefHeight="25.0" prefWidth="238.0" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Từ chối" GridPane.columnIndex="1">
+                        <Button fx:id="btnDelete" mnemonicParsing="false" onAction="#deleteSelectedReader" prefHeight="25.0" prefWidth="238.0" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Xóa tài khoản" GridPane.columnIndex="1">
                             <font>
                                 <Font name="Segoe UI Bold" size="16.0" />
                             </font>

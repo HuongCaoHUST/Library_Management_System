@@ -1,25 +1,11 @@
 package com.example.project.javafxcontroller;
-
-import com.example.project.model.Librarian;
 import com.example.project.model.Reader;
 import com.example.project.service.ReaderService;
-import com.example.project.util.SessionManager;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import com.example.project.util.SendEmail;
-import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.security.SecureRandom;
-import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Component
 public class ReaderApprovalDetailController {

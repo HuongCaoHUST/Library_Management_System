@@ -1,6 +1,7 @@
 package com.example.project.javafxcontroller;
 import com.example.project.model.Reader;
 import com.example.project.apiservice.ReaderApiService;
+import com.example.project.service.ReaderService;
 import com.example.project.util.SpringFxmlLoader;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -30,6 +31,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 @Component
 public class ReaderListController implements Initializable {
@@ -52,10 +54,17 @@ public class ReaderListController implements Initializable {
 
     @Autowired
     private ReaderApiService readerApiService;
+
+    @Autowired
+    private ReaderService readerService;
+
     private Stage loadingStage;
 
     private final ObservableList<Reader> readerList = FXCollections.observableArrayList();
     private Timeline debounceTimeline;
+
+    private ObservableList<Reader> masterData;
+    private ObservableList<Reader> filteredData;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -174,7 +183,21 @@ public class ReaderListController implements Initializable {
 
     private void setupSearch() {
         searchField.textProperty().addListener((obs, oldText, newText) -> debounceSearch());
-        searchButton.setOnAction(e -> searchReaders());
+        searchButton.setOnAction(e -> filterTable(searchField.getText()));
+    }
+
+    private void filterTable(String keyword) {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            filteredData.setAll(masterData);
+        } else {
+            String lowerCaseKeyword = keyword.toLowerCase();
+            List<Reader> filtered = masterData.stream()
+                    .filter(r ->
+                            r.getFullName().toLowerCase().contains(lowerCaseKeyword)
+                    )
+                    .collect(Collectors.toList());
+            filteredData.setAll(filtered);
+        }
     }
 
     private void setupComboBox() {
@@ -198,6 +221,7 @@ public class ReaderListController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
             stage.showAndWait();
+            refreshTable();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -234,5 +258,17 @@ public class ReaderListController implements Initializable {
             loadingStage.close();
             loadingStage = null;
         }
+    }
+
+    private void refreshTable() {
+        loadApprovalReaders();
+        filterTable(searchField.getText());
+    }
+
+    private void loadApprovalReaders() {
+        List<Reader> approvedList = readerService.getApprovedReaders();
+        masterData = FXCollections.observableArrayList(approvedList);
+        filteredData = FXCollections.observableArrayList(masterData);
+        tableView.setItems(filteredData);
     }
 }

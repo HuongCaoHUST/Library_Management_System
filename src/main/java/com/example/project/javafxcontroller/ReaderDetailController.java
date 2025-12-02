@@ -1,7 +1,12 @@
 package com.example.project.javafxcontroller;
 import com.example.project.model.Reader;
+import com.example.project.service.ReaderService;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -22,7 +27,16 @@ public class ReaderDetailController {
     @FXML private Label lblExpirationDate;
     @FXML private Label lblApprovedBy;
 
+    @FXML
+    private Button btnReject;
+
+    private Reader currentReader;
+
+    @Autowired
+    private ReaderService readerService;
+
     public void setReader(Reader reader) {
+        this.currentReader = reader;
         lblFullName.setText(reader.getFullName());
         lblUserId.setText(String.valueOf(reader.getUserId()));
         lblGender.setText(reader.getGender());
@@ -38,5 +52,28 @@ public class ReaderDetailController {
         lblApprovedDate.setText(reader.getApprovedDate().toString());
         lblExpirationDate.setText(reader.getExpirationDate().toString());
         lblApprovedBy.setText(reader.getApprovedBy().getFullName());
+    }
+
+    @FXML
+    private void deleteSelectedReader() {
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Xác nhận xóa");
+        confirm.setHeaderText("Bạn có chắc muốn xóa tài khoản này?");
+        confirm.setContentText("Người dùng: " + currentReader.getFullName());
+
+        confirm.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                readerService.delete(currentReader.getUserId());
+                showAlert(Alert.AlertType.INFORMATION, "Đã xóa", "Tài khoản đã được xóa thành công!");
+            }
+        });
+    }
+
+    private void showAlert(Alert.AlertType type, String title, String msg) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
     }
 }
