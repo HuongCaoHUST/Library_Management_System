@@ -105,9 +105,9 @@ public class MenuBarController {
     }
 
     @FXML
-    private void openAddDocumentForm(ActionEvent event) {
+    private void openGrnAddForm(ActionEvent event) {
         try {
-            Parent root = fxmlLoader.load("/com/example/project/document_add_form.fxml");
+            Parent root = fxmlLoader.load("/com/example/project/grn_add_form.fxml");
             Stage stage = new Stage();
             stage.setTitle("Thêm tài liệu mới");
             stage.initModality(Modality.APPLICATION_MODAL);

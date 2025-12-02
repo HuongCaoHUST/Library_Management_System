@@ -68,7 +68,7 @@
                   <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="238.0" styleClass="menu_button" stylesheets="@fullpackstyling.css" text="Quản lý tài liệu" GridPane.columnIndex="2">
                     <items>
                       <MenuItem fx:id="menuItemDocumentList" onAction="#openDocumentListForm" mnemonicParsing="false" styleClass="menu_item" text="Danh sách tài liệu" />
-                      <MenuItem fx:id="menuItemAddDocument" onAction="#openAddDocumentForm" mnemonicParsing="false" styleClass="menu_item" text="Thêm tài liệu" />
+                      <MenuItem fx:id="menuItemAddDocument" onAction="#openGrnAddForm" mnemonicParsing="false" styleClass="menu_item" text="Thêm phiếu nhập kho" />
                         <MenuItem mnemonicParsing="false" styleClass="menu_item" text="Yêu cầu mượn" />
                     </items>
                      <font>

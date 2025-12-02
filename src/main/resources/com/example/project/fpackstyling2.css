@@ -1,0 +1,332 @@
+/* ============================================
+   Form CSS thứ 2 để tránh xung đột
+   ============================================ */
+
+/* ========== ROOT CONTAINER ========== */
+.grn-root-container {
+    -fx-background-color: linear-gradient(to bottom, #1a2a52, #10165F);
+}
+
+/* ========== HEADER SECTION ========== */
+.grn-header-section {
+    -fx-spacing: 15;
+}
+
+.grn-title-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+/* ========== INFO BOX (Form thông tin chung) ========== */
+.grn-info-box {
+    -fx-background-color: rgba(255, 255, 255, 0.95);
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 10, 0, 0, 3);
+}
+
+.grn-field-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #10165F;
+    -fx-min-width: 110;
+}
+
+/* ========== TEXT FIELDS ========== */
+.grn-text-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #c83c49;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 7 10;
+    -fx-font-size: 13px;
+}
+
+.grn-text-field:focused {
+    -fx-border-color: #10165F;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, rgba(16, 22, 95, 0.3), 5, 0, 0, 0);
+}
+
+.grn-text-field:hover {
+    -fx-border-color: #d94f5c;
+}
+
+/* ========== DATE PICKER ========== */
+.grn-date-picker {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #c83c49;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.grn-date-picker .text-field {
+    -fx-border-width: 0;
+    -fx-background-color: transparent;
+    -fx-padding: 7 10;
+    -fx-font-size: 13px;
+}
+
+.grn-date-picker .arrow-button {
+    -fx-background-color: #c83c49;
+    -fx-background-radius: 0 5 5 0;
+}
+
+.grn-date-picker .arrow-button:hover {
+    -fx-background-color: #d94f5c;
+}
+
+.grn-date-picker .arrow-button .arrow {
+    -fx-background-color: #ffffff;
+}
+
+.grn-date-picker-popup > .month-year-pane {
+    -fx-background-color: #10165F;
+}
+
+.grn-date-picker-popup > .month-year-pane > .label {
+    -fx-text-fill: #ffffff;
+}
+
+/* ========== TABLE SECTION ========== */
+.grn-table-section {
+    -fx-spacing: 8;
+}
+
+.grn-section-label {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+/* ========== TABLE VIEW ========== */
+.grn-table-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #1a2a52;
+    -fx-border-width: 2;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 0;
+}
+
+.grn-table-view .column-header-background {
+    -fx-background-color: #2c4a85;
+    -fx-background-radius: 8 8 0 0;
+}
+
+.grn-table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent rgba(255,255,255,0.2) transparent transparent;
+    -fx-border-width: 0 1 0 0;
+}
+
+.grn-table-view .column-header .label {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-padding: 8 5;
+    -fx-alignment: CENTER;
+}
+
+/* Table Column Alignment */
+.grn-col-center {
+    -fx-alignment: CENTER;
+}
+
+.grn-col-right {
+    -fx-alignment: CENTER-RIGHT;
+}
+
+.grn-col-default {
+    -fx-alignment: CENTER-LEFT;
+}
+
+/* Table Rows */
+.grn-table-view .table-row-cell {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent transparent #dddddd transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-cell-size: 38;
+}
+
+.grn-table-view .table-row-cell:odd {
+    -fx-background-color: #f5f5f5;
+}
+
+.grn-table-view .table-row-cell:selected,
+.grn-table-view .table-row-cell:selected:hover{
+    -fx-background-color: rgba(48, 75, 145, 0.7);
+    -fx-text-fill: #000000;
+}
+
+.grn-table-view .table-row-cell:hover {
+    -fx-background-color: rgba(16, 22, 95, 0.08);
+}
+
+.grn-table-view .table-cell{
+    -fx-font-size: 14px;
+}
+
+/* Editable Cells */
+.grn-table-view .text-field-table-cell text {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.grn-table-view .text-field-table-cell .text-field {
+    -fx-background-color: #ffffff;
+    -fx-padding: 4 8;
+    -fx-font-size: 14px;
+    -fx-text-fill: #000000;
+}
+
+/* Table Placeholder */
+.grn-table-placeholder {
+    -fx-text-fill: #888888;
+    -fx-font-style: italic;
+    -fx-font-size: 14px;
+}
+
+/* Scroll Bars for Table */
+.grn-table-view .scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.grn-table-view .scroll-bar .thumb {
+    -fx-background-color: rgba(16, 22, 95, 0.4);
+    -fx-background-radius: 5;
+}
+
+.grn-table-view .scroll-bar .thumb:hover {
+    -fx-background-color: rgba(16, 22, 95, 0.6);
+}
+
+.grn-table-view .scroll-bar .increment-button,
+.grn-table-view .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.grn-table-view .scroll-bar .increment-arrow,
+.grn-table-view .scroll-bar .decrement-arrow {
+    -fx-shape: "";
+    -fx-padding: 0;
+}
+
+/* ========== BUTTON SECTION ========== */
+.grn-button-section {
+    -fx-spacing: 12;
+}
+
+.grn-action-buttons {
+    -fx-spacing: 20;
+}
+
+/* ========== BUTTONS - BASE STYLE ========== */
+.grn-btn-add,
+.grn-btn-save,
+.grn-btn-clear,
+.grn-btn-cancel,
+.grn-btn-delete-row {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-padding: 8 16;
+    -fx-background-radius: 8;
+    -fx-border-width: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 3, 0, 0, 1);
+}
+
+.grn-btn-add:hover,
+.grn-btn-save:hover,
+.grn-btn-clear:hover,
+.grn-btn-cancel:hover,
+.grn-btn-delete-row:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0, 0, 2);
+}
+
+.grn-btn-add:pressed,
+.grn-btn-save:pressed,
+.grn-btn-clear:pressed,
+.grn-btn-cancel:pressed,
+.grn-btn-delete-row:pressed {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 2, 0, 0, 0);
+}
+
+/* ========== BUTTON - ADD ========== */
+.grn-btn-add {
+    -fx-background-color: #c83c49;
+    -fx-text-fill: #ffffff;
+}
+
+.grn-btn-add:hover {
+    -fx-background-color: #d94f5c;
+}
+
+.grn-btn-add:pressed {
+    -fx-background-color: #a82d38;
+}
+
+/* ========== BUTTON - SAVE ========== */
+.grn-btn-save {
+    -fx-background-color: #28a745;
+    -fx-text-fill: #ffffff;
+}
+
+.grn-btn-save:hover {
+    -fx-background-color: #218838;
+}
+
+.grn-btn-save:pressed {
+    -fx-background-color: #1e7e34;
+}
+
+/* ========== BUTTON - CLEAR ========== */
+.grn-btn-clear {
+    -fx-background-color: #c83c49;
+    -fx-text-fill: #ffffff;
+}
+
+.grn-btn-clear:hover {
+    -fx-background-color: #d94f5c;
+}
+
+.grn-btn-clear:pressed {
+    -fx-background-color: #a82d38;
+}
+
+/* ========== BUTTON - CANCEL ========== */
+.grn-btn-cancel {
+    -fx-background-color: #6c757d;
+    -fx-text-fill: #ffffff;
+}
+
+.grn-btn-cancel:hover {
+    -fx-background-color: #5a6268;
+}
+
+.grn-btn-cancel:pressed {
+    -fx-background-color: #545b62;
+}
+
+/* ========== BUTTON - DELETE ROW ========== */
+.grn-btn-delete-row {
+    -fx-background-color: #c83c49;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14px;
+    -fx-padding: 4 10;
+    -fx-background-radius: 5;
+    -fx-min-width: 30;
+    -fx-min-height: 25;
+}
+
+.grn-btn-delete-row:hover {
+    -fx-background-color: #d94f5c;
+    -fx-effect: dropshadow(gaussian, rgba(200, 60, 73, 0.4), 5, 0, 0, 0);
+}
+
+.grn-btn-delete-row:pressed {
+    -fx-background-color: #a82d38;
+}

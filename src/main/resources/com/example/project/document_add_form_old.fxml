@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="500" prefWidth="400" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@fullpackstyling.css" fx:controller="com.example.project.javafxcontroller.DocumentAddController">
+<AnchorPane prefHeight="500" prefWidth="400" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@fullpackstyling.css" fx:controller="com.example.project.javafxcontroller.DocumentAddControllerOld">
 
     <VBox AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="20.0">
         <Label prefHeight="400.0" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Thêm Tài Liệu" />

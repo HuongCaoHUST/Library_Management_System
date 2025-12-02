@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DocumentAddController {
+public class DocumentAddControllerOld {
 
     @FXML private TextField txtTitle;
     @FXML private TextField txtAuthor;
