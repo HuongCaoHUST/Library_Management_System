@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DocumentDetailController {
+    public Label lblAccessUrl;
     @FXML private Label lblAuthor;
     @FXML private Label lblPublisher;
     @FXML private Label lblPublicationYear;
@@ -30,6 +31,7 @@ public class DocumentDetailController {
         lblCategory.setText(document.getCategory());
         lblDocumentType.setText(document.getDocumentType());
         lblShelfLocation.setText(document.getShelfLocation());
+        lblAccessUrl.setText(document.getAccessLink());
         lblStatus.setText(document.getStatus());
 
     }
