@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--Form nhập thông tin phiếu nhập kho (GRN-goods receipt note)-->
 
 <?import javafx.geometry.Insets?>
@@ -40,28 +41,28 @@
                 <HBox alignment="CENTER_LEFT" spacing="20">
                     <HBox alignment="CENTER_LEFT" spacing="10" HBox.hgrow="ALWAYS">
                         <Label minWidth="110" styleClass="grn-field-label" text="Theo hoá đơn:" />
-                        <TextField fx:id="txtMaHoaDon" promptText="Nhập mã hoá đơn..." styleClass="grn-text-field" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="txtReceiptId" promptText="Nhập mã hoá đơn..." styleClass="grn-text-field" HBox.hgrow="ALWAYS" />
                     </HBox>
                     <HBox alignment="CENTER_LEFT" spacing="10" HBox.hgrow="ALWAYS">
                         <Label minWidth="110" styleClass="grn-field-label" text="Đơn vị cung cấp:" />
-                        <TextField fx:id="txtDonViCungCap" promptText="Nhập tên đơn vị cung cấp..." styleClass="grn-text-field" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="txtSupplier" promptText="Nhập tên đơn vị cung cấp..." styleClass="grn-text-field" HBox.hgrow="ALWAYS" />
                     </HBox>
                 </HBox>
 
                 <HBox alignment="CENTER_LEFT" spacing="20">
                     <HBox alignment="CENTER_LEFT" spacing="10" HBox.hgrow="ALWAYS">
                         <Label minWidth="110" styleClass="grn-field-label" text="Bên nhận:" />
-                        <TextField fx:id="txtBenNhan" promptText="Nhập tên người nhận..." styleClass="grn-text-field" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="txtReceiver" promptText="Nhập tên người nhận..." styleClass="grn-text-field" HBox.hgrow="ALWAYS" />
                     </HBox>
                     <HBox alignment="CENTER_LEFT" spacing="10" HBox.hgrow="ALWAYS">
                         <Label minWidth="110" styleClass="grn-field-label" text="Bên giao:" />
-                        <TextField fx:id="txtBenGiao" promptText="Nhập tên người giao..." styleClass="grn-text-field" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="txtDeliverer" promptText="Nhập tên người giao..." styleClass="grn-text-field" HBox.hgrow="ALWAYS" />
                     </HBox>
                 </HBox>
 
                 <HBox alignment="CENTER_LEFT" prefWidth="546.0" spacing="10">
                     <Label minWidth="110" styleClass="grn-field-label" text="Ngày nhận:" />
-                    <DatePicker fx:id="dpNgayNhan" prefHeight="37.0" prefWidth="240.0" promptText="Chọn ngày nhận" styleClass="grn-date-picker" HBox.hgrow="ALWAYS" />
+                    <DatePicker fx:id="dpReceiveDate" prefHeight="37.0" prefWidth="240.0" promptText="Chọn ngày nhận" styleClass="grn-date-picker" HBox.hgrow="ALWAYS" />
                 </HBox>
             </VBox>
         </VBox>
@@ -83,28 +84,29 @@
                     <TableColumn fx:id="colSTT" prefWidth="50.0" styleClass="grn-col-center" text="STT" />
 
                     <!-- Cột Thể loại -->
-                    <TableColumn fx:id="colTheLoai" prefWidth="160.0" styleClass="grn-col-default" text="Thể loại" />
+                    <TableColumn fx:id="colCategory" prefWidth="132.53332901000977" styleClass="grn-col-default" text="Thể loại" />
 
                     <!-- Cột Nhan đề -->
-                    <TableColumn fx:id="colNhanDe" prefWidth="220.0" styleClass="grn-col-default" text="Nhan đề" />
+                    <TableColumn fx:id="colTitle" prefWidth="178.66671752929688" styleClass="grn-col-default" text="Nhan đề" />
 
                     <!-- Cột Tác giả -->
-                    <TableColumn fx:id="colTacGia" prefWidth="200.0" styleClass="grn-col-default" text="Tác giả" />
+                    <TableColumn fx:id="colAuthor" prefWidth="181.60000610351562" styleClass="grn-col-default" text="Tác giả" />
+               <TableColumn fx:id="colPublisher" prefWidth="160.5333251953125" text="Nhà xuất bản" />
 
                     <!-- Cột Năm xuất bản -->
-                    <TableColumn fx:id="colNamXuatBan" prefWidth="100.0" styleClass="grn-col-center" text="Năm XB" />
+                    <TableColumn fx:id="colPublicationYear" prefWidth="94.13336181640625" styleClass="grn-col-center" text="Năm XB" />
 
                     <!-- Cột Vị trí kệ -->
-                    <TableColumn fx:id="colViTriKe" prefWidth="100.0" styleClass="grn-col-default" text="Vị trí kệ" />
+                    <TableColumn fx:id="colShelfLocation" prefWidth="75.46661376953125" styleClass="grn-col-default" text="Vị trí kệ" />
 
                     <!-- Cột Số lượng -->
-                    <TableColumn fx:id="colSoLuong" prefWidth="50.0" styleClass="grn-col-center" text="SL" />
+                    <TableColumn fx:id="colAvailableCopies" prefWidth="52.79998779296875" styleClass="grn-col-center" text="SL" />
 
                     <!-- Cột Đơn giá -->
-                    <TableColumn fx:id="colDonGia" prefWidth="110.0" styleClass="grn-col-right" text="Đơn giá" />
+                    <TableColumn fx:id="colCoverPrice" prefWidth="100.7999267578125" styleClass="grn-col-right" text="Đơn giá" />
 
                     <!-- Cột Số ĐKCB -->
-                    <TableColumn fx:id="colSoDKCB" prefWidth="100.0" styleClass="grn-col-default" text="Số ĐKCB" />
+                    <TableColumn fx:id="colDkcbCode" prefWidth="120.0" styleClass="grn-col-default" text="Số ĐKCB" />
 
                     <!-- Cột Xoá -->
                     <TableColumn fx:id="colXoa" editable="false" minWidth="50.0" prefWidth="50.0" resizable="false" sortable="false" styleClass="grn-col-center" text="Xoá" />

@@ -10,13 +10,15 @@ import lombok.*;
 @Table(name = "documents")
 public class Document {
     @Id
-    private String documentId;  // Nhập thủ công
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long documentId;
     @Column(nullable = false)
     private String title;
     @Column(nullable = false)
     private String author;
     private String publisher;
     private Integer publicationYear;
+    private String dkcbCode;
     @Column(nullable = false)
     private Integer availableCopies;
     @Column(nullable = false)

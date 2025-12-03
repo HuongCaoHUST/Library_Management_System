@@ -10,11 +10,8 @@ public class DocumentPatchRequest {
     private String author;
     private String publisher;
     private Integer publicationYear;
-
-    // XÓA 3 TRƯỜNG:
-    // private String ddcNumber;
-    // private String cutterCode;
-    // private String classificationNumber;
+    // ✅ THÊM TRƯỜNG MỚI:
+    private String dkcbCode;
 
     @Min(value = 0, message = "Số bản có sẵn phải >= 0")
     private Integer availableCopies;

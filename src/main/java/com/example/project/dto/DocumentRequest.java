@@ -5,9 +5,6 @@ import lombok.Data;
 
 @Data
 public class DocumentRequest {
-    @NotBlank(message = "Mã DKCB không được để trống")
-    private String documentId;  // THÊM FIELD MỚI - Librarian sẽ nhập mã này
-
     @NotBlank(message = "Tiêu đề không được để trống")
     private String title;
 
@@ -18,11 +15,7 @@ public class DocumentRequest {
 
     @Min(value = 0) @Max(value = 9999)
     private Integer publicationYear;
-
-    // XÓA 3 TRƯỜNG:
-    // private String ddcNumber;
-    // private String cutterCode;
-    // private String classificationNumber;
+    private String dkcbCode;
 
     @NotNull @Min(0)
     private Integer availableCopies;
@@ -34,12 +27,8 @@ public class DocumentRequest {
     private Double coverPrice;
 
     private String category;
-
     private String shelfLocation;
-
     private String documentType;
-
     private String accessLink;
-
     private String status;
 }

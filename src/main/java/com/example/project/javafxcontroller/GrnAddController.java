@@ -1,5 +1,8 @@
 package com.example.project.javafxcontroller;
 
+import com.example.project.model.Grn;
+import com.example.project.model.GrnDetail;
+import com.example.project.service.GrnService;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +14,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.LongStringConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
@@ -24,24 +28,28 @@ import java.util.ResourceBundle;
 public class GrnAddController implements Initializable {
 
     // ========== FXML Components - Thông tin chung ==========
-    @FXML private TextField txtMaHoaDon;
-    @FXML private TextField txtDonViCungCap;
-    @FXML private TextField txtBenNhan;
-    @FXML private TextField txtBenGiao;
-    @FXML private DatePicker dpNgayNhan;
+    @FXML private TextField txtReceiptId;
+    @FXML private TextField txtSupplier;
+    @FXML private TextField txtReceiver;
+    @FXML private TextField txtDeliverer;
+    @FXML private DatePicker dpReceiveDate;
 
     // ========== FXML Components - Bảng tài liệu ==========
-    @FXML private TableView<TaiLieuNhap> tableTaiLieu;
-    @FXML private TableColumn<TaiLieuNhap, Integer> colSTT;
-    @FXML private TableColumn<TaiLieuNhap, String> colTheLoai;
-    @FXML private TableColumn<TaiLieuNhap, String> colNhanDe;
-    @FXML private TableColumn<TaiLieuNhap, String> colTacGia;
-    @FXML private TableColumn<TaiLieuNhap, Integer> colNamXuatBan;
-    @FXML private TableColumn<TaiLieuNhap, String> colViTriKe;
-    @FXML private TableColumn<TaiLieuNhap, Integer> colSoLuong;
-    @FXML private TableColumn<TaiLieuNhap, Long> colDonGia;
-    @FXML private TableColumn<TaiLieuNhap, String> colSoDKCB;
-    @FXML private TableColumn<TaiLieuNhap, Void> colXoa;
+    @FXML private TableView<TaiLieuNhapUI> tableTaiLieu;
+    @FXML private TableColumn<TaiLieuNhapUI, Integer> colSTT;
+    @FXML private TableColumn<TaiLieuNhapUI, String> colCategory;
+    @FXML private TableColumn<TaiLieuNhapUI, String> colTitle;
+    @FXML private TableColumn<TaiLieuNhapUI, String> colAuthor;
+
+    // ✅ THÊM CỘT MỚI: Nhà xuất bản
+    @FXML private TableColumn<TaiLieuNhapUI, String> colPublisher;
+
+    @FXML private TableColumn<TaiLieuNhapUI, Integer> colPublicationYear;
+    @FXML private TableColumn<TaiLieuNhapUI, String> colShelfLocation;
+    @FXML private TableColumn<TaiLieuNhapUI, Integer> colAvailableCopies;
+    @FXML private TableColumn<TaiLieuNhapUI, Long> colCoverPrice;
+    @FXML private TableColumn<TaiLieuNhapUI, String> colDkcbCode;
+    @FXML private TableColumn<TaiLieuNhapUI, Void> colXoa;
 
     // ========== FXML Components - Buttons ==========
     @FXML private Button btnThemHang;
@@ -49,8 +57,12 @@ public class GrnAddController implements Initializable {
     @FXML private Button btnXoaTrang;
     @FXML private Button btnHuy;
 
+    // ========== Services ==========
+    @Autowired
+    private GrnService grnService;
+
     // ========== Data ==========
-    private final ObservableList<TaiLieuNhap> danhSachTaiLieu = FXCollections.observableArrayList();
+    private final ObservableList<TaiLieuNhapUI> danhSachTaiLieu = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -59,16 +71,10 @@ public class GrnAddController implements Initializable {
         setupTableEditing();
     }
 
-    /**
-     * Cấu hình DatePicker
-     */
     private void setupDatePicker() {
-        dpNgayNhan.setValue(LocalDate.now());
+        dpReceiveDate.setValue(LocalDate.now());
     }
 
-    /**
-     * Cấu hình bảng tài liệu
-     */
     private void setupTable() {
         // Cột STT - tự động đánh số
         colSTT.setCellValueFactory(cellData -> {
@@ -76,27 +82,20 @@ public class GrnAddController implements Initializable {
             return new SimpleIntegerProperty(index).asObject();
         });
 
-        // Cột Thể loại
-        colTheLoai.setCellValueFactory(new PropertyValueFactory<>("theLoai"));
+        colCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
+        colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        colAuthor.setCellValueFactory(new PropertyValueFactory<>("author"));
 
-        // Cột Nhan đề
-        colNhanDe.setCellValueFactory(new PropertyValueFactory<>("nhanDe"));
+        // ✅ THÊM CỘT PUBLISHER
+        colPublisher.setCellValueFactory(new PropertyValueFactory<>("publisher"));
 
-        // Cột Tác giả
-        colTacGia.setCellValueFactory(new PropertyValueFactory<>("tacGia"));
-
-        // Cột Năm xuất bản
-        colNamXuatBan.setCellValueFactory(new PropertyValueFactory<>("namXuatBan"));
-
-        // Cột Vị trí kệ
-        colViTriKe.setCellValueFactory(new PropertyValueFactory<>("viTriKe"));
-
-        // Cột Số lượng
-        colSoLuong.setCellValueFactory(new PropertyValueFactory<>("soLuong"));
+        colPublicationYear.setCellValueFactory(new PropertyValueFactory<>("publicationYear"));
+        colShelfLocation.setCellValueFactory(new PropertyValueFactory<>("shelfLocation"));
+        colAvailableCopies.setCellValueFactory(new PropertyValueFactory<>("availableCopies"));
 
         // Cột Đơn giá - format tiền tệ
-        colDonGia.setCellValueFactory(new PropertyValueFactory<>("donGia"));
-        colDonGia.setCellFactory(column -> new TableCell<>() {
+        colCoverPrice.setCellValueFactory(new PropertyValueFactory<>("coverPrice"));
+        colCoverPrice.setCellFactory(column -> new TableCell<>() {
             @Override
             protected void updateItem(Long item, boolean empty) {
                 super.updateItem(item, empty);
@@ -109,35 +108,27 @@ public class GrnAddController implements Initializable {
             }
         });
 
-        // Cột Số ĐKCB
-        colSoDKCB.setCellValueFactory(new PropertyValueFactory<>("soDKCB"));
-
-        // Cột Xoá - nút xoá
+        colDkcbCode.setCellValueFactory(new PropertyValueFactory<>("dkcbCode"));
         setupDeleteColumn();
 
-        // Gán dữ liệu cho bảng
         tableTaiLieu.setItems(danhSachTaiLieu);
         tableTaiLieu.setEditable(true);
     }
 
-    /**
-     * Cấu hình cột xoá với nút bấm
-     */
     private void setupDeleteColumn() {
         colXoa.setCellFactory(column -> new TableCell<>() {
             private final Button btnXoa = new Button("✕");
 
             {
                 btnXoa.getStyleClass().add("grn-btn-delete-row");
-
                 btnXoa.setOnAction(event -> {
-                    TaiLieuNhap taiLieu = getTableView().getItems().get(getIndex());
+                    TaiLieuNhapUI taiLieu = getTableView().getItems().get(getIndex());
 
                     Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
                     confirm.setTitle("Xác nhận xoá");
                     confirm.setHeaderText("Xoá tài liệu");
                     confirm.setContentText("Bạn có chắc muốn xoá tài liệu \"" +
-                            (taiLieu.getNhanDe() != null ? taiLieu.getNhanDe() : "chưa có tên") + "\"?");
+                            (taiLieu.getTitle() != null ? taiLieu.getTitle() : "chưa có tên") + "\"?");
 
                     Optional<ButtonType> result = confirm.showAndWait();
                     if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -155,158 +146,149 @@ public class GrnAddController implements Initializable {
         });
     }
 
-    /**
-     * Cấu hình cho phép chỉnh sửa trực tiếp trên bảng
-     */
     private void setupTableEditing() {
-        // Cho phép chỉnh sửa cột Thể loại
-        colTheLoai.setCellFactory(TextFieldTableCell.forTableColumn());
-        colTheLoai.setOnEditCommit(event -> {
-            event.getRowValue().setTheLoai(event.getNewValue());
-        });
+        colCategory.setCellFactory(TextFieldTableCell.forTableColumn());
+        colCategory.setOnEditCommit(event -> event.getRowValue().setCategory(event.getNewValue()));
 
-        // Cho phép chỉnh sửa cột Nhan đề
-        colNhanDe.setCellFactory(TextFieldTableCell.forTableColumn());
-        colNhanDe.setOnEditCommit(event -> {
-            event.getRowValue().setNhanDe(event.getNewValue());
-        });
+        colTitle.setCellFactory(TextFieldTableCell.forTableColumn());
+        colTitle.setOnEditCommit(event -> event.getRowValue().setTitle(event.getNewValue()));
 
-        // Cho phép chỉnh sửa cột Tác giả
-        colTacGia.setCellFactory(TextFieldTableCell.forTableColumn());
-        colTacGia.setOnEditCommit(event -> {
-            event.getRowValue().setTacGia(event.getNewValue());
-        });
+        colAuthor.setCellFactory(TextFieldTableCell.forTableColumn());
+        colAuthor.setOnEditCommit(event -> event.getRowValue().setAuthor(event.getNewValue()));
 
-        // Cho phép chỉnh sửa cột Năm xuất bản
-        colNamXuatBan.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        colNamXuatBan.setOnEditCommit(event -> {
-            event.getRowValue().setNamXuatBan(event.getNewValue());
-        });
+        // ✅ THÊM EDITING CHO PUBLISHER
+        colPublisher.setCellFactory(TextFieldTableCell.forTableColumn());
+        colPublisher.setOnEditCommit(event -> event.getRowValue().setPublisher(event.getNewValue()));
 
-        // Cho phép chỉnh sửa cột Vị trí kệ
-        colViTriKe.setCellFactory(TextFieldTableCell.forTableColumn());
-        colViTriKe.setOnEditCommit(event -> {
-            event.getRowValue().setViTriKe(event.getNewValue());
-        });
+        colPublicationYear.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        colPublicationYear.setOnEditCommit(event -> event.getRowValue().setPublicationYear(event.getNewValue()));
 
-        // Cho phép chỉnh sửa cột Số lượng
-        colSoLuong.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        colSoLuong.setOnEditCommit(event -> {
-            event.getRowValue().setSoLuong(event.getNewValue());
-        });
+        colShelfLocation.setCellFactory(TextFieldTableCell.forTableColumn());
+        colShelfLocation.setOnEditCommit(event -> event.getRowValue().setShelfLocation(event.getNewValue()));
 
-        // Cho phép chỉnh sửa cột Đơn giá
-        colDonGia.setCellFactory(TextFieldTableCell.forTableColumn(new LongStringConverter()));
-        colDonGia.setOnEditCommit(event -> {
-            event.getRowValue().setDonGia(event.getNewValue());
-        });
+        colAvailableCopies.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        colAvailableCopies.setOnEditCommit(event -> event.getRowValue().setAvailableCopies(event.getNewValue()));
 
-        // Cho phép chỉnh sửa cột Số ĐKCB
-        colSoDKCB.setCellFactory(TextFieldTableCell.forTableColumn());
-        colSoDKCB.setOnEditCommit(event -> {
-            event.getRowValue().setSoDKCB(event.getNewValue());
-        });
+        colCoverPrice.setCellFactory(TextFieldTableCell.forTableColumn(new LongStringConverter()));
+        colCoverPrice.setOnEditCommit(event -> event.getRowValue().setCoverPrice(event.getNewValue()));
+
+        colDkcbCode.setCellFactory(TextFieldTableCell.forTableColumn());
+        colDkcbCode.setOnEditCommit(event -> event.getRowValue().setDkcbCode(event.getNewValue()));
     }
 
     // ==================== EVENT HANDLERS ====================
 
-    /**
-     * Xử lý sự kiện thêm hàng mới
-     */
     @FXML
     private void handleThemHang() {
-        TaiLieuNhap taiLieuMoi = new TaiLieuNhap();
+        TaiLieuNhapUI taiLieuMoi = new TaiLieuNhapUI();
         danhSachTaiLieu.add(taiLieuMoi);
-
-        // Cuộn xuống hàng mới thêm
         tableTaiLieu.scrollTo(taiLieuMoi);
-
-        // Focus vào hàng mới để người dùng có thể nhập ngay
         int newIndex = danhSachTaiLieu.size() - 1;
         tableTaiLieu.getSelectionModel().select(newIndex);
-        tableTaiLieu.getFocusModel().focus(newIndex, colTheLoai);
+        tableTaiLieu.getFocusModel().focus(newIndex, colCategory);
     }
 
-    /**
-     * Xử lý sự kiện lưu phiếu
-     */
     @FXML
     private void handleLuuPhieu() {
-        // Kiểm tra dữ liệu đầu vào
         if (!validateInput()) {
             return;
         }
 
-        // Hiển thị thông tin phiếu (để debug)
-        System.out.println("========== PHIẾU NHẬP KHO ==========");
-        System.out.println("Mã hoá đơn: " + txtMaHoaDon.getText());
-        System.out.println("Đơn vị cung cấp: " + txtDonViCungCap.getText());
-        System.out.println("Bên nhận: " + txtBenNhan.getText());
-        System.out.println("Bên giao: " + txtBenGiao.getText());
-        System.out.println("Ngày nhận: " + dpNgayNhan.getValue());
-        System.out.println("Số lượng tài liệu: " + danhSachTaiLieu.size());
-        System.out.println("=====================================");
+        try {
+            // Tạo đối tượng Grn
+            Grn grn = Grn.builder()
+                    .receiptId(txtReceiptId.getText().trim())
+                    .supplier(txtSupplier.getText().trim())
+                    .receiver(txtReceiver.getText().trim())
+                    .deliverer(txtDeliverer.getText().trim())
+                    .receiveDate(dpReceiveDate.getValue())
+                    .build();
 
-        for (TaiLieuNhap tl : danhSachTaiLieu) {
-            System.out.println("- " + tl.getNhanDe() + " | " + tl.getTacGia() +
-                    " | SL: " + tl.getSoLuong() + " | Vị trí: " + tl.getViTriKe());
+            // ✅ Chuyển đổi UI model sang Entity model (THÊM PUBLISHER)
+            for (TaiLieuNhapUI uiItem : danhSachTaiLieu) {
+                GrnDetail detail = GrnDetail.builder()
+                        .category(uiItem.getCategory())
+                        .title(uiItem.getTitle())
+                        .author(uiItem.getAuthor())
+                        .publisher(uiItem.getPublisher())  // ✅ THÊM DÒNG NÀY
+                        .publicationYear(uiItem.getPublicationYear())
+                        .shelfLocation(uiItem.getShelfLocation())
+                        .availableCopies(uiItem.getAvailableCopies())
+                        .coverPrice(uiItem.getCoverPrice())
+                        .dkcbCode(uiItem.getDkcbCode())
+                        .build();
+
+                grn.addItem(detail);
+            }
+
+            // Lưu vào database
+            grnService.saveGrn(grn);
+
+            // Thông báo thành công
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Thành công");
+            alert.setHeaderText(null);
+            alert.setContentText("Phiếu nhập kho đã được lưu thành công!\n" +
+                    "Mã phiếu: " + grn.getReceiptId() + "\n" +
+                    "Số lượng tài liệu: " + danhSachTaiLieu.size());
+            alert.showAndWait();
+
+            // Đóng cửa sổ
+            clearAllData();
+            Stage stage = (Stage) btnLuu.getScene().getWindow();
+            stage.close();
+
+        } catch (IllegalArgumentException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Lỗi");
+            alert.setHeaderText("Không thể lưu phiếu nhập kho");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Lỗi");
+            alert.setHeaderText("Không thể lưu phiếu nhập kho");
+            alert.setContentText("Lỗi: " + e.getMessage());
+            alert.showAndWait();
         }
-
-        // TODO: Lưu vào database
-        // phieuNhapKhoService.save(...)
-
-        // Thông báo thành công
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Thành công");
-        alert.setHeaderText(null);
-        alert.setContentText("Phiếu nhập kho đã được lưu thành công!\nSố lượng tài liệu: " + danhSachTaiLieu.size());
-        alert.showAndWait();
-
-        // Đóng cửa sổ sau khi lưu thành công
-        clearAllData();
-        Stage stage = (Stage) btnLuu.getScene().getWindow();
-        stage.close();
     }
 
-    /**
-     * Kiểm tra dữ liệu đầu vào
-     */
     private boolean validateInput() {
         StringBuilder errors = new StringBuilder();
 
-        if (txtMaHoaDon.getText() == null || txtMaHoaDon.getText().trim().isEmpty()) {
+        if (txtReceiptId.getText() == null || txtReceiptId.getText().trim().isEmpty()) {
             errors.append("- Vui lòng nhập mã hoá đơn\n");
         }
 
-        if (txtDonViCungCap.getText() == null || txtDonViCungCap.getText().trim().isEmpty()) {
+        if (txtSupplier.getText() == null || txtSupplier.getText().trim().isEmpty()) {
             errors.append("- Vui lòng nhập đơn vị cung cấp\n");
         }
 
-        if (txtBenNhan.getText() == null || txtBenNhan.getText().trim().isEmpty()) {
+        if (txtReceiver.getText() == null || txtReceiver.getText().trim().isEmpty()) {
             errors.append("- Vui lòng nhập tên bên nhận\n");
         }
 
-        if (txtBenGiao.getText() == null || txtBenGiao.getText().trim().isEmpty()) {
+        if (txtDeliverer.getText() == null || txtDeliverer.getText().trim().isEmpty()) {
             errors.append("- Vui lòng nhập tên bên giao\n");
         }
 
-        if (dpNgayNhan.getValue() == null) {
+        if (dpReceiveDate.getValue() == null) {
             errors.append("- Vui lòng chọn ngày nhận\n");
         }
 
         if (danhSachTaiLieu.isEmpty()) {
             errors.append("- Vui lòng thêm ít nhất một tài liệu\n");
         } else {
-            // Kiểm tra từng tài liệu
             for (int i = 0; i < danhSachTaiLieu.size(); i++) {
-                TaiLieuNhap tl = danhSachTaiLieu.get(i);
-                if (tl.getNhanDe() == null || tl.getNhanDe().trim().isEmpty()) {
+                TaiLieuNhapUI tl = danhSachTaiLieu.get(i);
+                if (tl.getTitle() == null || tl.getTitle().trim().isEmpty()) {
                     errors.append("- Tài liệu dòng " + (i + 1) + ": Thiếu nhan đề\n");
                 }
-                if (tl.getSoLuong() <= 0) {
+                if (tl.getAvailableCopies() <= 0) {
                     errors.append("- Tài liệu dòng " + (i + 1) + ": Số lượng phải lớn hơn 0\n");
                 }
-                if (tl.getViTriKe() == null || tl.getViTriKe().trim().isEmpty()) {
+                if (tl.getShelfLocation() == null || tl.getShelfLocation().trim().isEmpty()) {
                     errors.append("- Tài liệu dòng " + (i + 1) + ": Thiếu vị trí kệ\n");
                 }
             }
@@ -324,9 +306,6 @@ public class GrnAddController implements Initializable {
         return true;
     }
 
-    /**
-     * Xử lý sự kiện xoá trắng form
-     */
     @FXML
     private void handleXoaTrang() {
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
@@ -340,9 +319,6 @@ public class GrnAddController implements Initializable {
         }
     }
 
-    /**
-     * Xử lý sự kiện huỷ
-     */
     @FXML
     private void handleHuy() {
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
@@ -353,175 +329,81 @@ public class GrnAddController implements Initializable {
         Optional<ButtonType> result = confirm.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             clearAllData();
-            // Đóng cửa sổ hiện tại
             Stage stage = (Stage) btnHuy.getScene().getWindow();
             stage.close();
         }
     }
 
-    /**
-     * Xóa toàn bộ dữ liệu trong form
-     */
     private void clearAllData() {
-        // Xoá thông tin chung
-        txtMaHoaDon.clear();
-        txtDonViCungCap.clear();
-        txtBenNhan.clear();
-        txtBenGiao.clear();
-        dpNgayNhan.setValue(LocalDate.now());
-
-        // Xoá danh sách tài liệu
+        txtReceiptId.clear();
+        txtSupplier.clear();
+        txtReceiver.clear();
+        txtDeliverer.clear();
+        dpReceiveDate.setValue(LocalDate.now());
         danhSachTaiLieu.clear();
     }
 
-    // ==================== GETTER METHODS (cho việc test/debug) ====================
-
-    public ObservableList<TaiLieuNhap> getDanhSachTaiLieu() {
+    public ObservableList<TaiLieuNhapUI> getDanhSachTaiLieu() {
         return danhSachTaiLieu;
     }
 
-    // ==================== INNER CLASS - Model TaiLieuNhap ====================
+    // ==================== INNER CLASS - UI Model ====================
 
     /**
-     * Model class cho mỗi tài liệu trong phiếu nhập kho
+     * UI Model cho tài liệu trong bảng (dùng JavaFX Property để binding)
      */
-    public static class TaiLieuNhap {
-        private final StringProperty theLoai = new SimpleStringProperty("");
-        private final StringProperty nhanDe = new SimpleStringProperty("");
-        private final StringProperty tacGia = new SimpleStringProperty("");
-        private final IntegerProperty namXuatBan = new SimpleIntegerProperty(LocalDate.now().getYear());
-        private final StringProperty viTriKe = new SimpleStringProperty("");
-        private final IntegerProperty soLuong = new SimpleIntegerProperty(1);
-        private final LongProperty donGia = new SimpleLongProperty(0);
-        private final StringProperty soDKCB = new SimpleStringProperty("");
+    public static class TaiLieuNhapUI {
+        private final StringProperty category = new SimpleStringProperty("");
+        private final StringProperty title = new SimpleStringProperty("");
+        private final StringProperty author = new SimpleStringProperty("");
 
-        public TaiLieuNhap() {
-        }
+        // ✅ THÊM TRƯỜNG MỚI: Nhà xuất bản
+        private final StringProperty publisher = new SimpleStringProperty("");
 
-        public TaiLieuNhap(String theLoai, String nhanDe, String tacGia, int namXuatBan,
-                           String viTriKe, int soLuong, long donGia, String soDKCB) {
-            this.theLoai.set(theLoai);
-            this.nhanDe.set(nhanDe);
-            this.tacGia.set(tacGia);
-            this.namXuatBan.set(namXuatBan);
-            this.viTriKe.set(viTriKe);
-            this.soLuong.set(soLuong);
-            this.donGia.set(donGia);
-            this.soDKCB.set(soDKCB);
-        }
+        private final IntegerProperty publicationYear = new SimpleIntegerProperty(LocalDate.now().getYear());
+        private final StringProperty shelfLocation = new SimpleStringProperty("");
+        private final IntegerProperty availableCopies = new SimpleIntegerProperty(1);
+        private final LongProperty coverPrice = new SimpleLongProperty(0);
+        private final StringProperty dkcbCode = new SimpleStringProperty("");
 
-        // ===== Thể loại =====
-        public String getTheLoai() {
-            return theLoai.get();
-        }
+        public TaiLieuNhapUI() {}
 
-        public void setTheLoai(String value) {
-            theLoai.set(value);
-        }
+        // ===== Getters / Setters / Property methods =====
+        public String getCategory() { return category.get(); }
+        public void setCategory(String value) { category.set(value); }
+        public StringProperty categoryProperty() { return category; }
 
-        public StringProperty theLoaiProperty() {
-            return theLoai;
-        }
+        public String getTitle() { return title.get(); }
+        public void setTitle(String value) { title.set(value); }
+        public StringProperty titleProperty() { return title; }
 
-        // ===== Nhan đề =====
-        public String getNhanDe() {
-            return nhanDe.get();
-        }
+        public String getAuthor() { return author.get(); }
+        public void setAuthor(String value) { author.set(value); }
+        public StringProperty authorProperty() { return author; }
 
-        public void setNhanDe(String value) {
-            nhanDe.set(value);
-        }
+        // ✅ GETTER/SETTER CHO PUBLISHER
+        public String getPublisher() { return publisher.get(); }
+        public void setPublisher(String value) { publisher.set(value); }
+        public StringProperty publisherProperty() { return publisher; }
 
-        public StringProperty nhanDeProperty() {
-            return nhanDe;
-        }
+        public int getPublicationYear() { return publicationYear.get(); }
+        public void setPublicationYear(int value) { publicationYear.set(value); }
+        public IntegerProperty publicationYearProperty() { return publicationYear; }
 
-        // ===== Tác giả =====
-        public String getTacGia() {
-            return tacGia.get();
-        }
+        public String getShelfLocation() { return shelfLocation.get(); }
+        public void setShelfLocation(String value) { shelfLocation.set(value); }
+        public StringProperty shelfLocationProperty() { return shelfLocation; }
 
-        public void setTacGia(String value) {
-            tacGia.set(value);
-        }
+        public int getAvailableCopies() { return availableCopies.get(); }
+        public void setAvailableCopies(int value) { availableCopies.set(value); }
+        public IntegerProperty availableCopiesProperty() { return availableCopies; }
 
-        public StringProperty tacGiaProperty() {
-            return tacGia;
-        }
+        public long getCoverPrice() { return coverPrice.get(); }
+        public void setCoverPrice(long value) { coverPrice.set(value); }
+        public LongProperty coverPriceProperty() { return coverPrice; }
 
-        // ===== Năm xuất bản =====
-        public int getNamXuatBan() {
-            return namXuatBan.get();
-        }
-
-        public void setNamXuatBan(int value) {
-            namXuatBan.set(value);
-        }
-
-        public IntegerProperty namXuatBanProperty() {
-            return namXuatBan;
-        }
-
-        // ===== Vị trí kệ =====
-        public String getViTriKe() {
-            return viTriKe.get();
-        }
-
-        public void setViTriKe(String value) {
-            viTriKe.set(value);
-        }
-
-        public StringProperty viTriKeProperty() {
-            return viTriKe;
-        }
-
-        // ===== Số lượng =====
-        public int getSoLuong() {
-            return soLuong.get();
-        }
-
-        public void setSoLuong(int value) {
-            soLuong.set(value);
-        }
-
-        public IntegerProperty soLuongProperty() {
-            return soLuong;
-        }
-
-        // ===== Đơn giá =====
-        public long getDonGia() {
-            return donGia.get();
-        }
-
-        public void setDonGia(long value) {
-            donGia.set(value);
-        }
-
-        public LongProperty donGiaProperty() {
-            return donGia;
-        }
-
-        // ===== Số ĐKCB =====
-        public String getSoDKCB() {
-            return soDKCB.get();
-        }
-
-        public void setSoDKCB(String value) {
-            soDKCB.set(value);
-        }
-
-        public StringProperty soDKCBProperty() {
-            return soDKCB;
-        }
-
-        @Override
-        public String toString() {
-            return "TaiLieuNhap{" +
-                    "nhanDe='" + nhanDe.get() + '\'' +
-                    ", tacGia='" + tacGia.get() + '\'' +
-                    ", viTriKe='" + viTriKe.get() + '\'' +
-                    ", soLuong=" + soLuong.get() +
-                    '}';
-        }
+        public String getDkcbCode() { return dkcbCode.get(); }
+        public void setDkcbCode(String value) { dkcbCode.set(value); }
+        public StringProperty dkcbCodeProperty() { return dkcbCode; }
     }
 }

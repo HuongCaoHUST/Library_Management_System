@@ -9,5 +9,5 @@ import java.util.List;
 public class DocumentDeleteRequest {
 
     @NotEmpty(message = "Danh sách ID không được rỗng")
-    private List<String> documentIds;
+    private List<Long> documentIds;
 }

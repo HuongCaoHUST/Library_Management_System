@@ -1,8 +1,10 @@
 package com.example.project.service;
 
 import com.example.project.model.Document;
+import com.example.project.model.Reader;
 import com.example.project.repository.DocumentRepository;
 import com.example.project.specification.DocumentSpecification;
+import com.example.project.specification.ReaderSpecification;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +23,7 @@ public class DocumentService {
         return repository.findAll();
     }
 
-    public Optional<Document> findById(String id) {  // Đổi từ Long sang String
+    public Optional<Document> findById(Long id) {
         return repository.findById(id);
     }
 
@@ -29,22 +31,22 @@ public class DocumentService {
         return repository.save(document);
     }
 
-    public void delete(String id) {  // Đổi từ Long sang String
+    public void delete(Long id) {
         repository.deleteById(id);
     }
 
-    public List<Document> filterDocuments(String title, String author, String publisher,
-                                          String documentType, Integer publicationYear) {
+    public List<Document> filterDocuments(String title, String author, String publisher, String documentType, Integer publicationYear) {
         Specification<Document> spec = Specification
                 .where(DocumentSpecification.hasTitle(title))
                 .and(DocumentSpecification.hasAuthor(author))
                 .and(DocumentSpecification.hasPublisher(publisher))
                 .and(DocumentSpecification.hasDocumentType(documentType))
                 .and(DocumentSpecification.hasPublicationYear(publicationYear));
+
         return repository.findAll(spec);
     }
 
-    public List<Document> findAllById(List<String> ids) {  // Đổi từ List<Long> sang List<String>
+    public List<Document> findAllById(List<Long> ids) {
         return repository.findAllById(ids);
     }
 
@@ -52,7 +54,7 @@ public class DocumentService {
         return repository.saveAll(documents);
     }
 
-    public void deleteAllById(List<String> ids) {  // Đổi từ List<Long> sang List<String>
+    public void deleteAllById(List<Long> ids) {
         repository.deleteAllById(ids);
     }
 }
