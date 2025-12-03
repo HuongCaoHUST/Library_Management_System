@@ -178,7 +178,7 @@ public class ReaderListController implements Initializable {
     }
 
     private void setupComboBox() {
-        genderComboBox.setItems(FXCollections.observableArrayList("Tất cả", "Nam", "Nữ"));
+        genderComboBox.setItems(FXCollections.observableArrayList("Tất cả", "Male", "Female"));
         genderComboBox.setOnAction(e -> searchReaders());
     }
 
