@@ -69,6 +69,7 @@
                     <items>
                       <MenuItem fx:id="menuItemDocumentList" onAction="#openDocumentListForm" mnemonicParsing="false" styleClass="menu_item" text="Danh sách tài liệu" />
                       <MenuItem fx:id="menuItemAddDocument" onAction="#openGrnAddForm" mnemonicParsing="false" styleClass="menu_item" text="Thêm phiếu nhập kho" />
+                        <MenuItem fx:id="menuItemGrnList" onAction="#openGrnListForm" mnemonicParsing="false" styleClass="menu_item" text="Danh sách phiếu nhập kho" />
                         <MenuItem mnemonicParsing="false" styleClass="menu_item" text="Yêu cầu mượn" />
                     </items>
                      <font>

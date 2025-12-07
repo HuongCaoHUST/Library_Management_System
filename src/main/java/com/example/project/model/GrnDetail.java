@@ -1,5 +1,6 @@
 package com.example.project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore; // ← Thêm import
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,7 +11,6 @@ import lombok.*;
 @Entity
 @Table(name = "grn_details")
 public class GrnDetail {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,27 +19,16 @@ public class GrnDetail {
     @JoinColumn(name = "grn_receipt_id", nullable = false)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
+    @JsonIgnore  // ← Thêm annotation này để ngăn serialize trường này
     private Grn grn;
 
-    private String category;           // Thể loại
-
-    @Column(nullable = false)
-    private String title;              // Nhan đề
-
-    private String author;             // Tác giả
-
-    // ✅ THÊM TRƯỜNG MỚI: Nhà xuất bản
-    private String publisher;          // Nhà xuất bản
-
-    private Integer publicationYear;   // Năm xuất bản
-
-    @Column(nullable = false)
-    private String shelfLocation;      // Vị trí kệ
-
-    @Column(nullable = false)
-    private Integer availableCopies;   // Số lượng
-
-    private Long coverPrice;           // Đơn giá
-
-    private String dkcbCode;           // Mã ĐKCB
+    private String category;
+    private String title;
+    private String author;
+    private String publisher;
+    private Integer publicationYear;
+    private String shelfLocation;
+    private Integer availableCopies;
+    private Double coverPrice;
+    private String dkcbCode;
 }

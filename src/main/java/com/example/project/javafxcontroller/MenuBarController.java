@@ -118,6 +118,25 @@ public class MenuBarController {
         }
     }
 
+    @FXML
+    private void openGrnListForm(ActionEvent event) {
+        try {
+            Parent root = fxmlLoader.load("/com/example/project/grn_list_form.fxml");
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((MenuItem) event.getSource())
+                    .getParentPopup().getOwnerWindow();
+            stage.setScene(scene);
+            stage.setTitle("Danh sách phiếu nhập kho - Hệ thống quản lý thư viện");
+            stage.centerOnScreen();
+            stage.getIcons().add(new javafx.scene.image.Image(
+                    getClass().getResourceAsStream("/com/example/project/images/logo_HUB.png")
+            ));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void createDropdownMenu() {
         dropdownMenu = new ContextMenu();
 

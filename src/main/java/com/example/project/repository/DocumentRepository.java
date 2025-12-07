@@ -11,4 +11,7 @@ import java.util.Optional;
 @Repository
 public interface DocumentRepository extends JpaRepository<Document, Long>, JpaSpecificationExecutor<Document> {
     Optional<Document> findByDkcbCode(String dkcbCode);
+    Optional<Document> findByTitleAndAuthorAndPublisherAndPublicationYear(
+            String title, String author, String publisher, int publicationYear
+    );
 }

@@ -13,7 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
-import javafx.util.converter.LongStringConverter;
+import javafx.util.converter.DoubleStringConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -47,7 +47,7 @@ public class GrnAddController implements Initializable {
     @FXML private TableColumn<TaiLieuNhapUI, Integer> colPublicationYear;
     @FXML private TableColumn<TaiLieuNhapUI, String> colShelfLocation;
     @FXML private TableColumn<TaiLieuNhapUI, Integer> colAvailableCopies;
-    @FXML private TableColumn<TaiLieuNhapUI, Long> colCoverPrice;
+    @FXML private TableColumn<TaiLieuNhapUI, Double> colCoverPrice;
     @FXML private TableColumn<TaiLieuNhapUI, String> colDkcbCode;
     @FXML private TableColumn<TaiLieuNhapUI, Void> colXoa;
 
@@ -97,7 +97,7 @@ public class GrnAddController implements Initializable {
         colCoverPrice.setCellValueFactory(new PropertyValueFactory<>("coverPrice"));
         colCoverPrice.setCellFactory(column -> new TableCell<>() {
             @Override
-            protected void updateItem(Long item, boolean empty) {
+            protected void updateItem(Double item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty || item == null) {
                     setText(null);
@@ -169,7 +169,7 @@ public class GrnAddController implements Initializable {
         colAvailableCopies.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         colAvailableCopies.setOnEditCommit(event -> event.getRowValue().setAvailableCopies(event.getNewValue()));
 
-        colCoverPrice.setCellFactory(TextFieldTableCell.forTableColumn(new LongStringConverter()));
+        colCoverPrice.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         colCoverPrice.setOnEditCommit(event -> event.getRowValue().setCoverPrice(event.getNewValue()));
 
         colDkcbCode.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -363,7 +363,7 @@ public class GrnAddController implements Initializable {
         private final IntegerProperty publicationYear = new SimpleIntegerProperty(LocalDate.now().getYear());
         private final StringProperty shelfLocation = new SimpleStringProperty("");
         private final IntegerProperty availableCopies = new SimpleIntegerProperty(1);
-        private final LongProperty coverPrice = new SimpleLongProperty(0);
+        private final DoubleProperty coverPrice = new SimpleDoubleProperty(0);
         private final StringProperty dkcbCode = new SimpleStringProperty("");
 
         public TaiLieuNhapUI() {}
@@ -398,9 +398,9 @@ public class GrnAddController implements Initializable {
         public void setAvailableCopies(int value) { availableCopies.set(value); }
         public IntegerProperty availableCopiesProperty() { return availableCopies; }
 
-        public long getCoverPrice() { return coverPrice.get(); }
-        public void setCoverPrice(long value) { coverPrice.set(value); }
-        public LongProperty coverPriceProperty() { return coverPrice; }
+        public double getCoverPrice() { return coverPrice.get(); }
+        public void setCoverPrice(double value) { coverPrice.set(value); }
+        public DoubleProperty coverPriceProperty() { return coverPrice; }
 
         public String getDkcbCode() { return dkcbCode.get(); }
         public void setDkcbCode(String value) { dkcbCode.set(value); }
