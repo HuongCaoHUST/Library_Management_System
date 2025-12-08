@@ -21,13 +21,7 @@ public class JavaFxApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
-        loader.setControllerFactory(context::getBean);
-        Scene scene = new Scene(loader.load());
-        stage.setScene(scene);
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/images/logo_HUB.png")));
-        stage.setTitle("Đăng nhập - Hệ thống thư viện");
-        stage.show();
+
     }
 
     @Override
