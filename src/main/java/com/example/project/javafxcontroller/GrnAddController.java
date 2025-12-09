@@ -40,10 +40,7 @@ public class GrnAddController implements Initializable {
     @FXML private TableColumn<TaiLieuNhapUI, String> colCategory;
     @FXML private TableColumn<TaiLieuNhapUI, String> colTitle;
     @FXML private TableColumn<TaiLieuNhapUI, String> colAuthor;
-
-    // ✅ THÊM CỘT MỚI: Nhà xuất bản
     @FXML private TableColumn<TaiLieuNhapUI, String> colPublisher;
-
     @FXML private TableColumn<TaiLieuNhapUI, Integer> colPublicationYear;
     @FXML private TableColumn<TaiLieuNhapUI, String> colShelfLocation;
     @FXML private TableColumn<TaiLieuNhapUI, Integer> colAvailableCopies;
@@ -85,10 +82,7 @@ public class GrnAddController implements Initializable {
         colCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
         colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         colAuthor.setCellValueFactory(new PropertyValueFactory<>("author"));
-
-        // ✅ THÊM CỘT PUBLISHER
         colPublisher.setCellValueFactory(new PropertyValueFactory<>("publisher"));
-
         colPublicationYear.setCellValueFactory(new PropertyValueFactory<>("publicationYear"));
         colShelfLocation.setCellValueFactory(new PropertyValueFactory<>("shelfLocation"));
         colAvailableCopies.setCellValueFactory(new PropertyValueFactory<>("availableCopies"));
@@ -156,7 +150,6 @@ public class GrnAddController implements Initializable {
         colAuthor.setCellFactory(TextFieldTableCell.forTableColumn());
         colAuthor.setOnEditCommit(event -> event.getRowValue().setAuthor(event.getNewValue()));
 
-        // ✅ THÊM EDITING CHO PUBLISHER
         colPublisher.setCellFactory(TextFieldTableCell.forTableColumn());
         colPublisher.setOnEditCommit(event -> event.getRowValue().setPublisher(event.getNewValue()));
 
@@ -204,13 +197,13 @@ public class GrnAddController implements Initializable {
                     .receiveDate(dpReceiveDate.getValue())
                     .build();
 
-            // ✅ Chuyển đổi UI model sang Entity model (THÊM PUBLISHER)
+            // Chuyển đổi UI model sang Entity model
             for (TaiLieuNhapUI uiItem : danhSachTaiLieu) {
                 GrnDetail detail = GrnDetail.builder()
                         .category(uiItem.getCategory())
                         .title(uiItem.getTitle())
                         .author(uiItem.getAuthor())
-                        .publisher(uiItem.getPublisher())  // ✅ THÊM DÒNG NÀY
+                        .publisher(uiItem.getPublisher())
                         .publicationYear(uiItem.getPublicationYear())
                         .shelfLocation(uiItem.getShelfLocation())
                         .availableCopies(uiItem.getAvailableCopies())
@@ -240,7 +233,7 @@ public class GrnAddController implements Initializable {
 
         } catch (IllegalArgumentException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Lỗi");
+            alert.setTitle("Lỗi trùng thông tin");
             alert.setHeaderText("Không thể lưu phiếu nhập kho");
             alert.setContentText(e.getMessage());
             alert.showAndWait();
@@ -343,10 +336,6 @@ public class GrnAddController implements Initializable {
         danhSachTaiLieu.clear();
     }
 
-    public ObservableList<TaiLieuNhapUI> getDanhSachTaiLieu() {
-        return danhSachTaiLieu;
-    }
-
     // ==================== INNER CLASS - UI Model ====================
 
     /**
@@ -356,10 +345,7 @@ public class GrnAddController implements Initializable {
         private final StringProperty category = new SimpleStringProperty("");
         private final StringProperty title = new SimpleStringProperty("");
         private final StringProperty author = new SimpleStringProperty("");
-
-        // ✅ THÊM TRƯỜNG MỚI: Nhà xuất bản
         private final StringProperty publisher = new SimpleStringProperty("");
-
         private final IntegerProperty publicationYear = new SimpleIntegerProperty(LocalDate.now().getYear());
         private final StringProperty shelfLocation = new SimpleStringProperty("");
         private final IntegerProperty availableCopies = new SimpleIntegerProperty(1);
@@ -381,7 +367,6 @@ public class GrnAddController implements Initializable {
         public void setAuthor(String value) { author.set(value); }
         public StringProperty authorProperty() { return author; }
 
-        // ✅ GETTER/SETTER CHO PUBLISHER
         public String getPublisher() { return publisher.get(); }
         public void setPublisher(String value) { publisher.set(value); }
         public StringProperty publisherProperty() { return publisher; }
