@@ -17,12 +17,9 @@ public class ReaderApprovalDetailController {
     @FXML private Label lblIssuedPlace;
     @FXML private Label lblMajor;
     @FXML private Label lblWorkPlace;
-    @FXML
-    private Button btnApprove;
 
     private Reader currentReader;
 
-    private ReaderService readerService;
 
     public void setReader(Reader reader) {
         this.currentReader = reader;

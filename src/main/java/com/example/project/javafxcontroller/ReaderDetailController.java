@@ -7,6 +7,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 
+import java.time.format.DateTimeFormatter;
+
 public class ReaderDetailController {
     @FXML private Label lblFullName;
     @FXML private Label lblUserId;
@@ -29,7 +31,6 @@ public class ReaderDetailController {
 
     private Reader currentReader;
 
-    private ReaderService readerService;
 
     public void setReader(Reader reader) {
         this.currentReader = reader;
@@ -45,9 +46,19 @@ public class ReaderDetailController {
         lblIssuedPlace.setText(reader.getIssuedPlace());
         lblMajor.setText(reader.getMajor());
         lblWorkPlace.setText(reader.getWorkPlace());
-        lblApprovedDate.setText(reader.getApprovedDate().toString());
-        lblExpirationDate.setText(reader.getExpirationDate().toString());
-//        lblApprovedBy.setText(reader.getApprovedBy().getFullName());
+        lblApprovedDate.setText(
+                reader.getApprovedDate() != null
+                        ? reader.getApprovedDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"))
+                        : "null"
+        );
+        lblExpirationDate.setText(
+                reader.getExpirationDate() != null
+                        ? reader.getExpirationDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                        : "null"
+        );
+        lblApprovedBy.setText(
+                reader.getApprovedBy() != null ? reader.getApprovedBy() : "null"
+        );
     }
 
     @FXML

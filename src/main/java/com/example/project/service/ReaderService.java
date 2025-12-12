@@ -7,11 +7,10 @@ import javafx.scene.control.*;
 import java.util.List;
 
 public class ReaderService {
-    private ReaderApiService readerApiService;
+    private final ReaderApiService readerApiService = new ReaderApiService();
 
     public List<Reader> getApprovedReaders() {
         try {
-            System.out.println(("IN SERVICE"));
             return readerApiService.filterReaders(null, null, "APPROVED", null);
         } catch (Exception e) {
             e.printStackTrace();

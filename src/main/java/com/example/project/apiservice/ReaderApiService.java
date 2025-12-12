@@ -37,7 +37,6 @@ public class ReaderApiService {
         }
 
         String token = TokenStorage.getToken();
-        System.out.println("Token: " + token);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .header("Authorization", "Bearer " + token)

@@ -55,14 +55,15 @@ public class ReaderListController implements Initializable {
     private final ObservableList<Reader> readerList = FXCollections.observableArrayList();
     private Timeline debounceTimeline;
 
-    private ObservableList<Reader> masterData;
-    private ObservableList<Reader> filteredData;
+    private ObservableList<Reader> masterData = FXCollections.observableArrayList();
+    private ObservableList<Reader> filteredData = FXCollections.observableArrayList();
 
     private final FXMLLoader fxmlLoader = new FXMLLoader();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         readerApiService = new ReaderApiService();
+        readerService = new ReaderService();
         setupTableColumns();
         tableView.setItems(readerList);
         setupComboBox();
@@ -209,10 +210,13 @@ public class ReaderListController implements Initializable {
 
     private void showDetailDialog(Reader reader) {
         try {
-            Parent root = fxmlLoader.load(getClass().getResource("/com/example/project/reader_detail_form.fxml"));
-            Stage stage = new Stage();
-            ReaderDetailController controller = (ReaderDetailController) root.getUserData();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/com/example/project/reader_detail_form.fxml"));
+            Parent root = loader.load();
+            ReaderDetailController controller = loader.getController();
+
             controller.setReader(reader);
+            Stage stage = new Stage();
             stage.setTitle("Chi tiết bạn đọc");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
