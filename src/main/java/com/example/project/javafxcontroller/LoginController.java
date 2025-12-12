@@ -60,8 +60,12 @@ public class LoginController {
             TokenStorage.setToken(response.token);
 
             switch (response.role) {
+                case "ADMIN":
+                    openMainForm("/com/example/project/admin_home_form.fxml");
+                    break;
+
                 case "LIBRARIAN":
-                    openMainForm("/com/example/project/home_form.fxml");
+                    openMainForm("/com/example/project/librarian_home_form.fxml");
                     break;
 
                 case "READER":
