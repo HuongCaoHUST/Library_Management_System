@@ -14,4 +14,7 @@ public interface ReaderRepository extends JpaRepository<Reader, Long>, JpaSpecif
     Optional<Reader> findByUsernameAndPassword(String username, String password);
     Optional<Reader> findByEmailAndPassword(String email, String password);
     List<Reader> findByStatus(String status);
+    boolean existsByEmail(String email);
+    boolean existsByIdCardNumber(String idCardNumber);
+    boolean existsByUsername(String username);
 }

@@ -1,5 +1,6 @@
 package com.example.project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -33,6 +34,7 @@ public class User {
     private String address;
 
     private String username;
+    @JsonIgnore
     private String password;
     private LocalDateTime registrationDate;
     private String status;
