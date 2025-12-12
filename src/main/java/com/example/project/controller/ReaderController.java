@@ -1,8 +1,9 @@
 package com.example.project.controller;
 
 import com.example.project.dto.ApiResponse;
+import com.example.project.dto.ReaderResponseForFilter;
 import com.example.project.model.Reader;
-import com.example.project.dto.ReaderResponse;
+import com.example.project.dto.ReaderResponseForSignUp;
 import com.example.project.service.ReaderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,17 +22,21 @@ public class ReaderController {
     }
 
     @GetMapping("/filter")
-    public List<Reader> filterReaders(
+    public ResponseEntity<List<ReaderResponseForFilter>> filterReaders(
             @RequestParam(required = false) String fullName,
             @RequestParam(required = false) String email,
             @RequestParam(required = false) String status,
             @RequestParam(required = false) String gender
     ) {
-        return readerService.filterReaders(fullName, email, status, gender);
+        List<ReaderResponseForFilter> result = readerService.filterReaders(fullName, email, status, gender)
+                .stream()
+                .map(ReaderResponseForFilter::new)
+                .toList();
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse<ReaderResponse>> register(@RequestBody Reader reader) {
+    public ResponseEntity<ApiResponse<ReaderResponseForSignUp>> register(@RequestBody Reader reader) {
         if (readerService.existsByUsername(reader.getUsername())) {
             return ResponseEntity.ok(new ApiResponse<>(false, "Username đã tồn tại", null));
         }
@@ -43,7 +48,7 @@ public class ReaderController {
         }
 
         Reader savedReader = readerService.registerReader(reader);
-        ReaderResponse responseDTO = new ReaderResponse(savedReader);
+        ReaderResponseForSignUp responseDTO = new ReaderResponseForSignUp(savedReader);
         return ResponseEntity.ok(new ApiResponse<>(true, "Đăng ký thành công", responseDTO));
     }
 
