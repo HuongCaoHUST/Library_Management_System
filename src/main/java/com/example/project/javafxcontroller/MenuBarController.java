@@ -1,9 +1,8 @@
 package com.example.project.javafxcontroller;
 
-import com.example.project.model.Librarian;
-import com.example.project.util.SessionManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
@@ -11,7 +10,6 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -34,45 +32,28 @@ public class MenuBarController {
         setupHoverEffect();
     }
 
-    @FXML
-    private void openApprovalForm(ActionEvent event) {
-//        try {
-//            Parent root = fxmlLoader.load("/com/example/project/reader_approval_list_form.fxml");
-//            Scene scene = new Scene(root);
-//            Stage stage = (Stage) ((MenuItem) event.getSource())
-//                    .getParentPopup().getOwnerWindow();
-//
-//            stage.setScene(scene);
-//            stage.setTitle("Duyệt tài khoản - Hệ thống quản lý thư viện");
-//            stage.centerOnScreen();
-//            stage.getIcons().add(new javafx.scene.image.Image(
-//                    getClass().getResourceAsStream("/com/example/project/images/logo_HUB.png")
-//            ));
-//            stage.show();
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-    }
 
     @FXML
     private void openReaderList(ActionEvent event) {
-//        try {
-//            Scene scene = new Scene(root);
-//            Stage stage = (Stage) ((MenuItem) event.getSource())
-//                    .getParentPopup().getOwnerWindow();
-//
-//            stage.setScene(scene);
-//            stage.setTitle("Danh sách tài khoản - Hệ thống quản lý thư viện");
-//            stage.centerOnScreen();
-//            stage.getIcons().add(new javafx.scene.image.Image(
-//                    getClass().getResourceAsStream("/com/example/project/images/logo_HUB.png")
-//            ));
-//            stage.show();
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/project/reader_list_form.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((MenuItem) event.getSource())
+                    .getParentPopup().getOwnerWindow();
+
+            stage.setScene(scene);
+            stage.setTitle("Danh sách tài khoản - Hệ thống quản lý thư viện");
+            stage.centerOnScreen();
+            stage.getIcons().add(new javafx.scene.image.Image(
+                    getClass().getResourceAsStream("/com/example/project/images/logo_HUB.png")
+            ));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

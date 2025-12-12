@@ -39,31 +39,6 @@ public class DocumentAddControllerOld {
         });
     }
 
-//    @FXML
-//    private void onSaveDocument() {
-//        try {
-//            Document doc = Document.builder()
-//                    .title(txtTitle.getText())
-//                    .author(txtAuthor.getText())
-//                    .publisher(txtPublisher.getText())
-//                    .publicationYear(Integer.parseInt(txtYear.getText()))
-//                    .classificationNumber(txtClassification.getText())
-//                    .category(txtCategory.getText())
-//                    .shelfLocation(txtShelf.getText())
-//                    .documentType(cbType.getValue())
-//                    .accessLink(txtAccessLink.getText())
-//                    .status(cbStatus.getValue())
-//                    .build();
-//
-//            documentService.save(doc);
-//            showAlert("Thành công", "Đã thêm tài liệu mới!");
-//            closeForm();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            showAlert("Lỗi", "Không thể thêm tài liệu: " + e.getMessage());
-//        }
-//    }
-
     @FXML
     private void onCancel() {
         closeForm();

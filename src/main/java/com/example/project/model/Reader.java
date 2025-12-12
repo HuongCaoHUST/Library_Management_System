@@ -1,5 +1,7 @@
 package com.example.project.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,6 +12,8 @@ public class Reader {
 
     private String fullName;
     private String gender;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
     private String phoneNumber;
     private String email;
@@ -22,13 +26,22 @@ public class Reader {
 
     private String username;
     private String password;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     private LocalDateTime registrationDate;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     private LocalDateTime approvedDate;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
     private LocalDateTime expirationDate;
+
     private String status;
     private BigDecimal depositAmount;
 
-    private Long approvedById;
+    private String approvedBy;
+
+    private String role;
 
     public Reader() {}
 
@@ -184,11 +197,19 @@ public class Reader {
         this.depositAmount = depositAmount;
     }
 
-    public Long getApprovedById() {
-        return approvedById;
+    public String getApprovedBy() {
+        return approvedBy;
     }
 
-    public void setApprovedById(Long approvedById) {
-        this.approvedById = approvedById;
+    public void setApprovedBy(String approvedBy) {
+        this.approvedBy = approvedBy;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

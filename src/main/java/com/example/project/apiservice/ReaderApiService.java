@@ -1,6 +1,7 @@
 package com.example.project.apiservice;
 
 import com.example.project.model.Reader;
+import com.example.project.util.TokenStorage;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
@@ -34,12 +35,17 @@ public class ReaderApiService {
             }
             url += "?" + query;
         }
+
+        String token = TokenStorage.getToken();
+        System.out.println("Token: " + token);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
+                .header("Authorization", "Bearer " + token)
                 .GET()
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         if (response.statusCode() == 200) {
+            System.out.println(response.body());
             return mapper.readValue(response.body(), new TypeReference<List<Reader>>() {});
         } else {
             throw new RuntimeException("Lỗi API: " + response.statusCode());

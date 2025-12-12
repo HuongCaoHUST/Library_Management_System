@@ -78,7 +78,6 @@
                   <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="238.0" styleClass="menu_button" stylesheets="@fullpackstyling.css" text="Quản lý tài khoản" GridPane.columnIndex="1">
                     <items>
                       <MenuItem fx:id="menuItemReaderList" onAction="#openReaderList" mnemonicParsing="false" styleClass="menu_item" text="Danh sách tài khoản" />
-                      <MenuItem fx:id="menuItemApproveAccount" onAction="#openApprovalForm" mnemonicParsing="false"  styleClass="menu_item" text="Duyệt tài khoản" />
                     </items>
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />

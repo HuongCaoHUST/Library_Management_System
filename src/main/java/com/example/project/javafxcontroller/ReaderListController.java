@@ -62,6 +62,7 @@ public class ReaderListController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        readerApiService = new ReaderApiService();
         setupTableColumns();
         tableView.setItems(readerList);
         setupComboBox();
@@ -165,6 +166,7 @@ public class ReaderListController implements Initializable {
         task.setOnFailed(e -> Platform.runLater(() -> {
             hideLoadingPopup();
             Throwable ex = task.getException();
+            System.out.println(ex.getMessage());
             Alert alert = new Alert(Alert.AlertType.ERROR,
                     "Không kết nối được server!\n" + ex.getMessage());
             alert.show();

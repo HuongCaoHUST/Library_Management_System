@@ -9,25 +9,13 @@ import java.util.List;
 public class ReaderService {
     private ReaderApiService readerApiService;
 
-    public Reader registerReader(Reader inputReader) {
-        String email = inputReader.getEmail().trim().toLowerCase();
-        return inputReader;
-    }
-
-    private boolean confirmAction(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(title);
-        alert.setContentText(message);
-        return alert.showAndWait().filter(ButtonType.OK::equals).isPresent();
-    }
-
-
     public List<Reader> getApprovedReaders() {
         try {
+            System.out.println(("IN SERVICE"));
             return readerApiService.filterReaders(null, null, "APPROVED", null);
         } catch (Exception e) {
             e.printStackTrace();
-            return List.of();  // tránh null gây lỗi TableView
+            return List.of();
         }
     }
 
