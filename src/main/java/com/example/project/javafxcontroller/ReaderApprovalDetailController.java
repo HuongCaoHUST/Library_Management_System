@@ -3,11 +3,7 @@ import com.example.project.model.Reader;
 import com.example.project.service.ReaderService;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import com.example.project.util.SendEmail;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-@Component
 public class ReaderApprovalDetailController {
     @FXML private Label lblFullName;
     @FXML private Label lblUserId;
@@ -25,10 +21,8 @@ public class ReaderApprovalDetailController {
     private Button btnApprove;
 
     private Reader currentReader;
-    @Autowired
+
     private ReaderService readerService;
-    @Autowired
-    private SendEmail sendEmail;
 
     public void setReader(Reader reader) {
         this.currentReader = reader;
@@ -47,25 +41,25 @@ public class ReaderApprovalDetailController {
         lblWorkPlace.setText(reader.getWorkPlace());
     }
 
-    @FXML
-    private void handleApprove() {
-        readerService.approveReader(currentReader,
-                () -> {
-                    showInfo("Đã phê duyệt thành công!");
-                },
-                () -> showError("Lỗi khi phê duyệt!")
-        );
-    }
-
-    @FXML
-    private void handleReject() {
-        readerService.rejectReader(currentReader,
-                () -> {
-                    showInfo("Đã từ chối thành công!");
-                },
-                () -> showError("Lỗi khi từ chối!")
-        );
-    }
+//    @FXML
+//    private void handleApprove() {
+//        readerService.approveReader(currentReader,
+//                () -> {
+//                    showInfo("Đã phê duyệt thành công!");
+//                },
+//                () -> showError("Lỗi khi phê duyệt!")
+//        );
+//    }
+//
+//    @FXML
+//    private void handleReject() {
+//        readerService.rejectReader(currentReader,
+//                () -> {
+//                    showInfo("Đã từ chối thành công!");
+//                },
+//                () -> showError("Lỗi khi từ chối!")
+//        );
+//    }
 
     private void showInfo(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

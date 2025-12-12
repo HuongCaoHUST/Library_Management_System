@@ -3,9 +3,7 @@ package com.example.project.javafxcontroller;
 import com.example.project.model.Librarian;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import org.springframework.stereotype.Component;
 
-@Component
 public class LibrarianDetailController {
     @FXML private Label lblFullName;
     @FXML private Label lblUserId;

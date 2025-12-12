@@ -1,24 +1,16 @@
 package com.example.project.javafxcontroller;
 
-import com.example.project.model.Librarian;
-import com.example.project.model.Reader;
-import com.example.project.repository.ReaderRepository;
-import com.example.project.repository.LibrarianRepository;
-import com.example.project.util.SessionManager;
-import com.example.project.util.SpringFxmlLoader;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Optional;
 
-@Component
 public class LoginController {
 
     @FXML
@@ -36,13 +28,7 @@ public class LoginController {
     @FXML
     private Button btnSignup;
 
-    @Autowired
-    private LibrarianRepository librarianRepository;
-    @Autowired
-    private ReaderRepository readerRepository;
-
-    @Autowired
-    private SpringFxmlLoader fxmlLoader;
+    private final FXMLLoader fxmlLoader = new FXMLLoader();
 
     @FXML
     public void initialize() {
@@ -59,40 +45,39 @@ public class LoginController {
             return;
         }
 
-        Optional<Librarian> librarianOpt = librarianRepository.findByUsernameAndPassword(usernameOrEmail, password);
-        if (librarianOpt.isEmpty()) {
-            librarianOpt = librarianRepository.findByEmailAndPassword(usernameOrEmail, password);
-        }
+//        Optional<Librarian> librarianOpt = librarianRepository.findByUsernameAndPassword(usernameOrEmail, password);
+//        if (librarianOpt.isEmpty()) {
+//            librarianOpt = librarianRepository.findByEmailAndPassword(usernameOrEmail, password);
+//        }
 
-        if (librarianOpt.isPresent()) {
-            Librarian librarian = librarianOpt.get();
-            SessionManager.setCurrentLibrarian(librarian);
-            lblErrors.setText("");
-            System.out.println("Đăng nhập thành công (Thủ thư): " + librarian.getFullName());
-            openHomePage();
-            return;
-        }
+//        if (librarianOpt.isPresent()) {
+//            Librarian librarian = librarianOpt.get();
+//            SessionManager.setCurrentLibrarian(librarian);
+//            lblErrors.setText("");
+//            System.out.println("Đăng nhập thành công (Thủ thư): " + librarian.getFullName());
+//            openHomePage();
+//            return;
+//        }
 
-        Optional<Reader> readerOpt = readerRepository.findByUsernameAndPassword(usernameOrEmail, password);
-        if (readerOpt.isEmpty()) {
-            readerOpt = readerRepository.findByEmailAndPassword(usernameOrEmail, password);
-        }
+//        Optional<Reader> readerOpt = readerRepository.findByUsernameAndPassword(usernameOrEmail, password);
+//        if (readerOpt.isEmpty()) {
+//            readerOpt = readerRepository.findByEmailAndPassword(usernameOrEmail, password);
+//        }
 
-        if (readerOpt.isPresent()) {
-            Reader reader = readerOpt.get();
-//            SessionManager.setCurrentReader(reader);
-            lblErrors.setText("");
-            System.out.println("Đăng nhập thành công (Bạn đọc): " + reader.getFullName());
-            openReaderHomePage();
-            return;
-        }
+//        if (readerOpt.isPresent()) {
+//            Reader reader = readerOpt.get();
+//            lblErrors.setText("");
+//            System.out.println("Đăng nhập thành công (Bạn đọc): " + reader.getFullName());
+//            openReaderHomePage();
+//            return;
+//        }
 
         lblErrors.setText("Tên đăng nhập hoặc mật khẩu không đúng");
     }
 
     private void openHomePage() {
         try {
-            Parent root = fxmlLoader.load("/com/example/project/home_form.fxml");
+            Parent root = fxmlLoader.load(getClass().getResource("/com/example/project/home_form.fxml"));
             Scene homeScene = new Scene(root);
 
             Stage stage = (Stage) btnSignin.getScene().getWindow();
@@ -110,7 +95,7 @@ public class LoginController {
 
     private void openReaderHomePage() {
         try {
-            Parent root = fxmlLoader.load("/com/example/project/reader_home_form.fxml");
+            Parent root = fxmlLoader.load(getClass().getResource("/com/example/project/reader_home_form.fxml"));
             Scene homeScene = new Scene(root);
 
             Stage stage = (Stage) btnSignin.getScene().getWindow();
@@ -128,7 +113,7 @@ public class LoginController {
 
     private void onSignup() {
         try {
-            Parent root = fxmlLoader.load("/com/example/project/signup_form.fxml");
+            Parent root = fxmlLoader.load(getClass().getResource("/com/example/project/signup_form.fxml"));
             Scene signupScene = new Scene(root);
 
             Stage stage = (Stage) btnSignup.getScene().getWindow();

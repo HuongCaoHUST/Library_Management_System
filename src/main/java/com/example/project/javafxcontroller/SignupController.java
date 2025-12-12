@@ -1,20 +1,11 @@
 package com.example.project.javafxcontroller;
 
-import com.example.project.util.SpringFxmlLoader;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
-import com.example.project.model.Reader;
 import com.example.project.service.ReaderService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import java.io.IOException;
 
-@Component
 public class SignupController {
 
     @FXML private TextField txtFullName;
@@ -30,11 +21,8 @@ public class SignupController {
     @FXML private TextField txtAddress;
     @FXML private Button btnSignup;
 
-    @Autowired
     private ReaderService readerService;
 
-    @Autowired
-    private SpringFxmlLoader springFxmlLoader;
 
     @FXML
     private void initialize() {
@@ -59,21 +47,21 @@ public class SignupController {
                 return;
             }
 
-            Reader reader = Reader.builder()
-                    .fullName(txtFullName.getText().trim())
-                    .gender(cbGender.getValue())
-                    .birthDate(dpBirthDate.getValue())
-                    .phoneNumber(txtPhoneNumber.getText().trim())
-                    .email(txtEmail.getText().trim())
-                    .idCardNumber(txtIdCardNumber.getText().trim())
-                    .placeOfBirth(txtPlaceOfBirth.getText().trim())
-                    .issuedPlace(txtIssuedPlace.getText().trim())
-                    .major(txtMajor.getText().trim())
-                    .workPlace(txtWorkPlace.getText().trim())
-                    .address(txtAddress.getText().trim())
-                    .build();
+//            Reader reader = Reader.builder()
+//                    .fullName(txtFullName.getText().trim())
+//                    .gender(cbGender.getValue())
+//                    .birthDate(dpBirthDate.getValue())
+//                    .phoneNumber(txtPhoneNumber.getText().trim())
+//                    .email(txtEmail.getText().trim())
+//                    .idCardNumber(txtIdCardNumber.getText().trim())
+//                    .placeOfBirth(txtPlaceOfBirth.getText().trim())
+//                    .issuedPlace(txtIssuedPlace.getText().trim())
+//                    .major(txtMajor.getText().trim())
+//                    .workPlace(txtWorkPlace.getText().trim())
+//                    .address(txtAddress.getText().trim())
+//                    .build();
 
-            readerService.registerReader(reader);
+//            readerService.registerReader(reader);
 
             showAlert(Alert.AlertType.INFORMATION, "Thành công",
                     "Đăng ký thành công!\n\n" +
@@ -91,12 +79,12 @@ public class SignupController {
 
     @FXML
     private void handleBackToLogin(MouseEvent event) throws IOException {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Parent root = springFxmlLoader.load("/com/example/project/login.fxml");
-
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+//        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//        Parent root = springFxmlLoader.load("/com/example/project/login.fxml");
+//
+//        Scene scene = new Scene(root);
+//        stage.setScene(scene);
+//        stage.show();
     }
 
     private void showAlert(Alert.AlertType type, String title, String msg) {

@@ -4,10 +4,7 @@ import com.example.project.model.Document;
 import com.example.project.service.ReaderService;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-@Component
 public class DocumentDetailController {
     public Label lblAccessUrl;
     @FXML private Label lblAuthor;
@@ -19,7 +16,7 @@ public class DocumentDetailController {
     @FXML private Label lblStatus;
 
     private Document currentDocument;
-    @Autowired
+
     private ReaderService readerService;
 
     public void setDocument(Document document) {

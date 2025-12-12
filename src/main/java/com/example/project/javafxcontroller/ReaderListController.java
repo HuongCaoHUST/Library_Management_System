@@ -2,7 +2,6 @@ package com.example.project.javafxcontroller;
 import com.example.project.model.Reader;
 import com.example.project.apiservice.ReaderApiService;
 import com.example.project.service.ReaderService;
-import com.example.project.util.SpringFxmlLoader;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -10,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -24,8 +24,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -33,7 +31,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-@Component
 public class ReaderListController implements Initializable {
 
     @FXML private TableView<Reader> tableView;
@@ -49,13 +46,8 @@ public class ReaderListController implements Initializable {
     @FXML private Button searchButton;
     @FXML private ComboBox<String> genderComboBox;
 
-    @Autowired
-    private SpringFxmlLoader fxmlLoader;
-
-    @Autowired
     private ReaderApiService readerApiService;
 
-    @Autowired
     private ReaderService readerService;
 
     private Stage loadingStage;
@@ -65,6 +57,8 @@ public class ReaderListController implements Initializable {
 
     private ObservableList<Reader> masterData;
     private ObservableList<Reader> filteredData;
+
+    private final FXMLLoader fxmlLoader = new FXMLLoader();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -213,7 +207,7 @@ public class ReaderListController implements Initializable {
 
     private void showDetailDialog(Reader reader) {
         try {
-            Parent root = fxmlLoader.load("/com/example/project/reader_detail_form.fxml");
+            Parent root = fxmlLoader.load(getClass().getResource("/com/example/project/reader_detail_form.fxml"));
             Stage stage = new Stage();
             ReaderDetailController controller = (ReaderDetailController) root.getUserData();
             controller.setReader(reader);

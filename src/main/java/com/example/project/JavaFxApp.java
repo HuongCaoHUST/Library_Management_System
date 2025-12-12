@@ -5,33 +5,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.context.ConfigurableApplicationContext;
+
+import java.io.IOException;
 
 public class JavaFxApp extends Application {
-
-    private ConfigurableApplicationContext context;
-
     @Override
-    public void init() {
-        context = new SpringApplicationBuilder(LibraryApplication.class)
-                .web(org.springframework.boot.WebApplicationType.SERVLET)
-                .run();
-    }
-
-    @Override
-    public void start(Stage stage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
-        loader.setControllerFactory(context::getBean);
-        Scene scene = new Scene(loader.load());
+    public void start(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(JavaFxApp.class.getResource("/com/example/project/login.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 900, 500);
+        stage.setTitle("HỆ THỐNG QUẢN LÝ THƯ VIỆN");
+        stage.getIcons().add(new Image(JavaFxApp.class.getResourceAsStream("/com/example/project/images/logo_HUB.png")));
         stage.setScene(scene);
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/images/logo_HUB.png")));
-        stage.setTitle("Đăng nhập - Hệ thống thư viện");
         stage.show();
-    }
-
-    @Override
-    public void stop() {
-        context.close();
     }
 }

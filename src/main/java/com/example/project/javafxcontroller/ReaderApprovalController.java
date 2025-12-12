@@ -1,14 +1,10 @@
 package com.example.project.javafxcontroller;
-import com.example.project.model.Librarian;
 import com.example.project.model.Reader;
 import com.example.project.service.ReaderService;
-import com.example.project.util.SendEmail;
-import com.example.project.util.SessionManager;
-import com.example.project.util.SpringFxmlLoader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -16,22 +12,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import java.security.SecureRandom;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
 
-@Component
 public class ReaderApprovalController implements Initializable {
 
     @FXML private TableView<Reader> tableView;
@@ -52,16 +41,13 @@ public class ReaderApprovalController implements Initializable {
     @FXML private TextField searchField;
     @FXML private Button searchButton;
 
-    @Autowired
     private ReaderService readerService;
-    @Autowired
-    private SendEmail sendEmail;
-    @Autowired
-    private SpringFxmlLoader fxmlLoader;
+
 
     private ObservableList<Reader> masterData;
     private ObservableList<Reader> filteredData;
     private final Set<Long> selectedIds = new HashSet<>();
+    private final FXMLLoader fxmlLoader = new FXMLLoader();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -164,19 +150,19 @@ public class ReaderApprovalController implements Initializable {
                 }
             }
 
-            {
-                approveBtn.setOnAction(e -> {
-                    Reader reader = getTableView().getItems().get(getIndex());
-                    readerService.approveReader(
-                            reader,
-                            () -> {
-                                refreshTable();
-                                showInfo("Đã phê duyệt thành công!");
-                            },
-                            () -> showError("Lỗi khi phê duyệt!")
-                    );
-                });
-            }
+//            {
+//                approveBtn.setOnAction(e -> {
+//                    Reader reader = getTableView().getItems().get(getIndex());
+//                    readerService.approveReader(
+//                            reader,
+//                            () -> {
+//                                refreshTable();
+//                                showInfo("Đã phê duyệt thành công!");
+//                            },
+//                            () -> showError("Lỗi khi phê duyệt!")
+//                    );
+//                });
+//            }
         });
 
         // Reject Col
@@ -200,19 +186,19 @@ public class ReaderApprovalController implements Initializable {
                 }
             }
 
-            {
-                rejectBtn.setOnAction(e -> {
-                    Reader reader = getTableView().getItems().get(getIndex());
-                    readerService.rejectReader(
-                            reader,
-                            () -> {
-                                refreshTable();
-                                showInfo("Đã từ chối thành công!");
-                            },
-                            () -> showError("Lỗi khi từ chối!")
-                    );
-                });
-            }
+//            {
+//                rejectBtn.setOnAction(e -> {
+//                    Reader reader = getTableView().getItems().get(getIndex());
+//                    readerService.rejectReader(
+//                            reader,
+//                            () -> {
+//                                refreshTable();
+//                                showInfo("Đã từ chối thành công!");
+//                            },
+//                            () -> showError("Lỗi khi từ chối!")
+//                    );
+//                });
+//            }
         });
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
         tableView.setRowFactory(tv -> new TableRow<>() {
@@ -259,7 +245,7 @@ public class ReaderApprovalController implements Initializable {
 
     private void showDetailDialog(Reader reader) {
         try {
-            Parent root = fxmlLoader.load("/com/example/project/reader_approval_detail_form.fxml");
+            Parent root = fxmlLoader.load(getClass().getResource("/com/example/project/reader_approval_detail_form.fxml"));
             Stage stage = new Stage();
             ReaderApprovalDetailController controller = (ReaderApprovalDetailController) root.getUserData();
             controller.setReader(reader);
@@ -317,10 +303,10 @@ public class ReaderApprovalController implements Initializable {
             return;
         }
 
-        readerService.approveMultipleByIds(new ArrayList<>(selectedIds),
-                () -> refreshTable(),
-                () -> {}
-        );
+//        readerService.approveMultipleByIds(new ArrayList<>(selectedIds),
+//                () -> refreshTable(),
+//                () -> {}
+//        );
     }
 
     @FXML
@@ -330,9 +316,9 @@ public class ReaderApprovalController implements Initializable {
             return;
         }
 
-        readerService.rejectMultipleByIds(new ArrayList<>(selectedIds),
-                () -> refreshTable(),
-                () -> {}
-        );
+//        readerService.rejectMultipleByIds(new ArrayList<>(selectedIds),
+//                () -> refreshTable(),
+//                () -> {}
+//        );
     }
 }

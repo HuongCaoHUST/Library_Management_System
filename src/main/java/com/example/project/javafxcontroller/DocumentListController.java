@@ -2,7 +2,6 @@ package com.example.project.javafxcontroller;
 import com.example.project.model.Document;
 import com.example.project.apiservice.DocumentApiService;
 import com.example.project.service.DocumentService;
-import com.example.project.util.SpringFxmlLoader;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -10,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -24,14 +24,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-@Component
 public class DocumentListController implements Initializable {
 
     @FXML private TableView<Document> tableView;
@@ -49,18 +46,13 @@ public class DocumentListController implements Initializable {
     @FXML private Button searchButton;
     @FXML private ComboBox<String> documentTypeComboBox;
 
-    @Autowired
-    private DocumentService documentService;
-
-    @Autowired
-    private SpringFxmlLoader fxmlLoader;
-
-    @Autowired
     private DocumentApiService documentApiService;
     private Stage loadingStage;
 
     private final ObservableList<Document> documentList = FXCollections.observableArrayList();
     private Timeline debounceTimeline;
+
+    private final FXMLLoader fxmlLoader = new FXMLLoader();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -138,7 +130,7 @@ public class DocumentListController implements Initializable {
 
     private void showDetailDialog(Document document) {
         try {
-            Parent root = fxmlLoader.load("/com/example/project/document_detail_form.fxml");
+            Parent root = fxmlLoader.load(getClass().getResource("/com/example/project/document_detail_form.fxml"));
             Stage stage = new Stage();
             DocumentDetailController controller = (DocumentDetailController) root.getUserData();
             controller.setDocument(document);

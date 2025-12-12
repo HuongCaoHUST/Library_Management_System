@@ -2,9 +2,9 @@ package com.example.project.javafxcontroller;
 
 import com.example.project.model.Librarian;
 import com.example.project.util.SessionManager;
-import com.example.project.util.SpringFxmlLoader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
@@ -14,12 +14,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-@Component
 public class ReaderMenuBarController {
 
     @FXML private ImageView avatarImage;
@@ -29,9 +26,8 @@ public class ReaderMenuBarController {
     @FXML private AnchorPane rootPane;
 
     private ContextMenu dropdownMenu;
+    private final FXMLLoader fxmlLoader = new FXMLLoader();
 
-    @Autowired
-    private SpringFxmlLoader fxmlLoader;
 
     @FXML
     private void initialize() {
@@ -45,7 +41,7 @@ public class ReaderMenuBarController {
     @FXML
     private void openDocumentListForm(ActionEvent event) {
         try {
-            Parent root = fxmlLoader.load("/com/example/project/reader_document_list_form.fxml");
+            Parent root = fxmlLoader.load(getClass().getResource("/com/example/project/reader_document_list_form.fxml"));
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((MenuItem) event.getSource())
                     .getParentPopup().getOwnerWindow();
@@ -88,8 +84,7 @@ public class ReaderMenuBarController {
 
     private void onViewProfile() {
         try {
-
-            Parent root = fxmlLoader.load("/com/example/project/librarian_detail_form.fxml");
+            Parent root = fxmlLoader.load(getClass().getResource("/com/example/project/librarian_detail_form.fxml"));
             Stage stage = new Stage();
 
             Librarian librarian = SessionManager.getCurrentLibrarian();
@@ -108,9 +103,8 @@ public class ReaderMenuBarController {
     private void onLogout() {
         System.out.println("Đăng xuất...");
         try {
-            Parent loginRoot = fxmlLoader.load("/com/example/project/login.fxml");
-            Scene loginScene = new Scene(loginRoot);
-
+            Parent root = fxmlLoader.load(getClass().getResource("/com/example/project/login.fxml"));
+            Scene loginScene = new Scene(root);
             Stage stage = (Stage) avatarImage.getScene().getWindow();
             stage.setScene(loginScene);
             stage.setTitle("Đăng nhập - Hệ thống quản lý thư viện");

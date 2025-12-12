@@ -11,7 +11,6 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.LongStringConverter;
-import org.springframework.stereotype.Component;
 
 import java.net.URL;
 import java.text.NumberFormat;
@@ -20,7 +19,6 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-@Component
 public class GrnAddController implements Initializable {
 
     // ========== FXML Components - Thông tin chung ==========

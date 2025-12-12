@@ -6,10 +6,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-@Component
 public class ReaderDetailController {
     @FXML private Label lblFullName;
     @FXML private Label lblUserId;
@@ -32,7 +29,6 @@ public class ReaderDetailController {
 
     private Reader currentReader;
 
-    @Autowired
     private ReaderService readerService;
 
     public void setReader(Reader reader) {
@@ -51,7 +47,7 @@ public class ReaderDetailController {
         lblWorkPlace.setText(reader.getWorkPlace());
         lblApprovedDate.setText(reader.getApprovedDate().toString());
         lblExpirationDate.setText(reader.getExpirationDate().toString());
-        lblApprovedBy.setText(reader.getApprovedBy().getFullName());
+//        lblApprovedBy.setText(reader.getApprovedBy().getFullName());
     }
 
     @FXML
@@ -63,7 +59,7 @@ public class ReaderDetailController {
 
         confirm.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
-                readerService.delete(currentReader.getUserId());
+//                readerService.delete(currentReader.getUserId());
                 showAlert(Alert.AlertType.INFORMATION, "Đã xóa", "Tài khoản đã được xóa thành công!");
             }
         });

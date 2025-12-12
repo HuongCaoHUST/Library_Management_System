@@ -5,10 +5,7 @@ import com.example.project.service.DocumentService;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-@Component
 public class DocumentAddControllerOld {
 
     @FXML private TextField txtTitle;
@@ -22,7 +19,6 @@ public class DocumentAddControllerOld {
     @FXML private TextField txtAccessLink;
     @FXML private ComboBox<String> cbStatus;
 
-    @Autowired
     private DocumentService documentService;
 
     @FXML
@@ -43,30 +39,30 @@ public class DocumentAddControllerOld {
         });
     }
 
-    @FXML
-    private void onSaveDocument() {
-        try {
-            Document doc = Document.builder()
-                    .title(txtTitle.getText())
-                    .author(txtAuthor.getText())
-                    .publisher(txtPublisher.getText())
-                    .publicationYear(Integer.parseInt(txtYear.getText()))
-                    .classificationNumber(txtClassification.getText())
-                    .category(txtCategory.getText())
-                    .shelfLocation(txtShelf.getText())
-                    .documentType(cbType.getValue())
-                    .accessLink(txtAccessLink.getText())
-                    .status(cbStatus.getValue())
-                    .build();
-
-            documentService.save(doc);
-            showAlert("Thành công", "Đã thêm tài liệu mới!");
-            closeForm();
-        } catch (Exception e) {
-            e.printStackTrace();
-            showAlert("Lỗi", "Không thể thêm tài liệu: " + e.getMessage());
-        }
-    }
+//    @FXML
+//    private void onSaveDocument() {
+//        try {
+//            Document doc = Document.builder()
+//                    .title(txtTitle.getText())
+//                    .author(txtAuthor.getText())
+//                    .publisher(txtPublisher.getText())
+//                    .publicationYear(Integer.parseInt(txtYear.getText()))
+//                    .classificationNumber(txtClassification.getText())
+//                    .category(txtCategory.getText())
+//                    .shelfLocation(txtShelf.getText())
+//                    .documentType(cbType.getValue())
+//                    .accessLink(txtAccessLink.getText())
+//                    .status(cbStatus.getValue())
+//                    .build();
+//
+//            documentService.save(doc);
+//            showAlert("Thành công", "Đã thêm tài liệu mới!");
+//            closeForm();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            showAlert("Lỗi", "Không thể thêm tài liệu: " + e.getMessage());
+//        }
+//    }
 
     @FXML
     private void onCancel() {
