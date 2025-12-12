@@ -44,6 +44,7 @@ public class LibrarianApiService {
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         if (response.statusCode() == 200) {
+            System.out.println(response.body());
             return mapper.readValue(response.body(), new TypeReference<List<Librarian>>() {});
         } else {
             throw new RuntimeException("Lỗi API: " + response.statusCode());
