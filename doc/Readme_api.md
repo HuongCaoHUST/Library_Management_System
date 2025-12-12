@@ -125,6 +125,18 @@ DELETE: http://localhost:8081/api/documents
   }
 ```
 
+# LOGIN API
+## 1. Post login API
+POST: http://localhost:8081/auth/login
+### Body Example
+```json
+  {
+  "username": "admin",
+  "password": "123"
+}
+```
+
+
 
 
 

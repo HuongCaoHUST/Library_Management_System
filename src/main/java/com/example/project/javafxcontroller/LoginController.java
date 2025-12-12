@@ -1,5 +1,7 @@
 package com.example.project.javafxcontroller;
 
+import com.example.project.apiservice.LoginApiService;
+import com.example.project.util.TokenStorage;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -7,9 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-import java.util.Optional;
 
 public class LoginController {
 
@@ -30,6 +30,8 @@ public class LoginController {
 
     private final FXMLLoader fxmlLoader = new FXMLLoader();
 
+    private final LoginApiService loginApi = new LoginApiService();
+
     @FXML
     public void initialize() {
         btnSignin.setOnAction(event -> handleLogin());
@@ -37,67 +39,42 @@ public class LoginController {
     }
 
     private void handleLogin() {
-        String usernameOrEmail = txtUsername.getText();
+        String username = txtUsername.getText();
         String password = txtPassword.getText();
 
-        if (usernameOrEmail.isEmpty() || password.isEmpty()) {
+        if (username.isEmpty() || password.isEmpty()) {
             lblErrors.setText("Vui lòng nhập đầy đủ thông tin");
             return;
         }
 
-//        Optional<Librarian> librarianOpt = librarianRepository.findByUsernameAndPassword(usernameOrEmail, password);
-//        if (librarianOpt.isEmpty()) {
-//            librarianOpt = librarianRepository.findByEmailAndPassword(usernameOrEmail, password);
-//        }
+        LoginApiService.LoginResponse response = loginApi.login(username, password);
 
-//        if (librarianOpt.isPresent()) {
-//            Librarian librarian = librarianOpt.get();
-//            SessionManager.setCurrentLibrarian(librarian);
-//            lblErrors.setText("");
-//            System.out.println("Đăng nhập thành công (Thủ thư): " + librarian.getFullName());
-//            openHomePage();
-//            return;
-//        }
+        if (response.success) {
+            lblErrors.setText("Đăng nhập thành công!");
 
-//        Optional<Reader> readerOpt = readerRepository.findByUsernameAndPassword(usernameOrEmail, password);
-//        if (readerOpt.isEmpty()) {
-//            readerOpt = readerRepository.findByEmailAndPassword(usernameOrEmail, password);
-//        }
+            System.out.println("TOKEN = " + response.token);
+            System.out.println("FULL NAME = " + response.fullName);
+            System.out.println("ROLE = " + response.role);
 
-//        if (readerOpt.isPresent()) {
-//            Reader reader = readerOpt.get();
-//            lblErrors.setText("");
-//            System.out.println("Đăng nhập thành công (Bạn đọc): " + reader.getFullName());
-//            openReaderHomePage();
-//            return;
-//        }
+            // Save token
+            TokenStorage.setToken(response.token);
 
-        lblErrors.setText("Tên đăng nhập hoặc mật khẩu không đúng");
-    }
+            switch (response.role) {
+                case "LIBRARIAN":
+                    openMainForm("/com/example/project/home_form.fxml");
+                    break;
 
-    private void openHomePage() {
-        try {
-            Parent root = fxmlLoader.load(getClass().getResource("/com/example/project/home_form.fxml"));
-            Scene homeScene = new Scene(root);
-
-            Stage stage = (Stage) btnSignin.getScene().getWindow();
-            stage.setScene(homeScene);
-            stage.centerOnScreen();
-            stage.setTitle("Trang chủ - Hệ thống quản lý thư viện");
-            stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/images/logo_HUB.png")));
-            stage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            lblErrors.setText("Lỗi khi mở trang chủ: " + e.getMessage());
+                case "READER":
+                    openMainForm("/com/example/project/reader_home_form.fxml");
+                    break;
+            }
         }
     }
 
-    private void openReaderHomePage() {
+    private void openMainForm(String fxml_path) {
         try {
-            Parent root = fxmlLoader.load(getClass().getResource("/com/example/project/reader_home_form.fxml"));
+            Parent root = fxmlLoader.load(getClass().getResource(fxml_path));
             Scene homeScene = new Scene(root);
-
             Stage stage = (Stage) btnSignin.getScene().getWindow();
             stage.setScene(homeScene);
             stage.centerOnScreen();
