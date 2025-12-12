@@ -70,7 +70,20 @@ public class ReaderService {
                 .depositAmount(BigDecimal.ZERO)
                 .role(Role.READER)
                 .build();
+        sendEmailSuccess(reader, rawPassword);
         return repository.save(reader);
+    }
+
+    public void sendEmailSuccess(Reader reader, String rawPassword) {
+        String subject = "Tài khoản thư viện của bạn đã được phê duyệt";
+        String body = "Xin chào " + reader.getFullName() + ",\n\n"
+                + "Tài khoản của bạn đã được phê duyệt thành công!\n"
+                + "Tên đăng nhập: " + reader.getUsername() + "\n"
+                + "Mật khẩu: " + rawPassword + "\n\n"
+                + "Vui lòng đăng nhập và đổi mật khẩu ngay sau khi sử dụng lần đầu.\n\n"
+                + "Thân mến,\nPhòng Thư viện";
+
+        sendEmail.sendMail("huongcao.seee@gmail.com", subject, body);
     }
 
     public List<Reader> getPendingReaders() {
