@@ -1,24 +1,19 @@
 package com.example.project.apiservice;
 
+import com.example.project.dto.LoginResponse;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashSet;
+import java.util.Set;
 
-public class LoginApiService {
+public class AuthApiService {
 
     private static final String LOGIN_URL = "http://localhost:8081/auth/login";
     private final ObjectMapper mapper = new ObjectMapper();
-
-    public static class LoginResponse {
-        public boolean success;
-        public String token;
-        public String fullName;
-        public String role;
-        public String errorMessage;
-    }
 
     public LoginResponse login(String username, String password) {
         LoginResponse result = new LoginResponse();
@@ -52,27 +47,35 @@ public class LoginApiService {
 
                 JsonNode node = mapper.readTree(jsonResp);
 
-                result.success = true;
-                result.token = node.get("token").asText();
-                result.fullName = node.get("fullName").asText();
-                result.role = node.get("role").asText();
+                result.setSuccess(true);
+                result.setToken(node.get("token").asText());
+                result.setFullName(node.get("fullName").asText());
+                result.setRole(node.get("role").asText());
+
+                Set<String> permissions = new HashSet<>();
+                if (node.has("permissions")) {
+                    for (JsonNode p : node.get("permissions")) {
+                        permissions.add(p.asText());
+                    }
+                }
+                result.setPermissions(permissions);
 
                 return result;
             }
 
             // Password incorrect
             if (status == 401) {
-                result.success = false;
-                result.errorMessage = "Sai username hoặc password!";
+                result.setSuccess(false);
+                result.setErrorMessage("Sai username hoặc password!");
                 return result;
             }
 
-            result.success = false;
-            result.errorMessage = "Lỗi server: HTTP " + status;
+            result.setSuccess(false);
+            result.setErrorMessage("Lỗi server: HTTP " + status);
 
         } catch (Exception e) {
-            result.success = false;
-            result.errorMessage = "Không kết nối được tới backend!";
+            result.setSuccess(false);
+            result.setErrorMessage("Không kết nối được tới backend!");
         } finally {
             if (conn != null) conn.disconnect();
         }

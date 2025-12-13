@@ -1,6 +1,7 @@
 package com.example.project.apiservice;
 
 import com.example.project.model.Librarian;
+import com.example.project.security.UserSession;
 import com.example.project.util.TokenStorage;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,7 +37,8 @@ public class LibrarianApiService {
             url += "?" + query;
         }
 
-        String token = TokenStorage.getToken();
+        String token = UserSession.getInstance().getToken();
+
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .header("Authorization", "Bearer " + token)

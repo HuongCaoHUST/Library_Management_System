@@ -1,6 +1,8 @@
 package com.example.project.javafxcontroller;
 
-import com.example.project.apiservice.LoginApiService;
+import com.example.project.apiservice.AuthApiService;
+import com.example.project.dto.LoginResponse;
+import com.example.project.security.UserSession;
 import com.example.project.util.TokenStorage;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,7 +32,7 @@ public class LoginController {
 
     private final FXMLLoader fxmlLoader = new FXMLLoader();
 
-    private final LoginApiService loginApi = new LoginApiService();
+    private final AuthApiService loginApi = new AuthApiService();
 
     @FXML
     public void initialize() {
@@ -47,19 +49,31 @@ public class LoginController {
             return;
         }
 
-        LoginApiService.LoginResponse response = loginApi.login(username, password);
+        AuthApiService authApi = new AuthApiService();
+        LoginResponse response = authApi.login(username, password);
 
-        if (response.success) {
+        if (response.isSuccess()) {
             lblErrors.setText("Đăng nhập thành công!");
 
-            System.out.println("TOKEN = " + response.token);
-            System.out.println("FULL NAME = " + response.fullName);
-            System.out.println("ROLE = " + response.role);
+//            System.out.println("TOKEN = " + response.token);
+//            System.out.println("FULL NAME = " + response.fullName);
+//            System.out.println("ROLE = " + response.role);
+//
+//            // Save token
+//            TokenStorage.setToken(response.token);
 
-            // Save token
-            TokenStorage.setToken(response.token);
+            UserSession session = UserSession.getInstance();
 
-            switch (response.role) {
+            session.setToken(response.getToken());
+            session.setRole(response.getRole());
+            session.setPermissions(response.getPermissions());
+
+            System.out.println("TOKEN = " + response.getToken());
+            System.out.println("FULL NAME = " + response.getFullName());
+            System.out.println("ROLE = " + response.getRole());
+            System.out.println("PERMISSION = " + response.getPermissions());
+
+            switch (response.getRole()) {
                 case "ADMIN":
                     openMainForm("/com/example/project/admin_home_form.fxml");
                     break;
