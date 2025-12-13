@@ -11,11 +11,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-public class LibrarianMenuBarController {
+public class MenuBarController {
 
     @FXML private ImageView avatarImage;
     @FXML private MenuItem menuItemLibrarianList;
@@ -160,22 +159,29 @@ public class LibrarianMenuBarController {
     }
 
     private void onLogout() {
-//        System.out.println("Đăng xuất...");
-//        try {
-//            Parent loginRoot = fxmlLoader.load("/com/example/project/login.fxml");
-//            Scene loginScene = new Scene(loginRoot);
-//
-//            Stage stage = (Stage) avatarImage.getScene().getWindow();
-//            stage.setScene(loginScene);
-//            stage.setTitle("Đăng nhập - Hệ thống quản lý thư viện");
-//            stage.centerOnScreen();
-//            stage.getIcons().add(new javafx.scene.image.Image(
-//                    getClass().getResourceAsStream("/com/example/project/images/logo_HUB.png")
-//            ));
-//            stage.show();
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        System.out.println("LOGOUT");
+        try {
+            clearUserSession();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/login.fxml"));
+            Parent loginRoot = loader.load();
+
+            Scene loginScene = new Scene(loginRoot);
+            Stage stage = (Stage) avatarImage.getScene().getWindow();
+            stage.setScene(loginScene);
+            stage.setTitle("Đăng nhập - Hệ thống quản lý thư viện");
+            stage.centerOnScreen();
+            stage.getIcons().add(new javafx.scene.image.Image(getClass().getResourceAsStream("/com/example/project/images/logo_HUB.png")));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+    private void clearUserSession() {
+        UserSession session = UserSession.getInstance();
+        session.setToken(null);
+        session.setRole(null);
+        session.setPermissions(null);
+    }
+
 }
