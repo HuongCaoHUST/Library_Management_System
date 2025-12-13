@@ -50,7 +50,6 @@ public class LoginController {
 
         AuthApiService authApi = new AuthApiService();
         LoginResponse response = authApi.login(username, password);
-
         if (response.isSuccess()) {
             lblErrors.setText("Đăng nhập thành công!");
 
@@ -74,6 +73,8 @@ public class LoginController {
                     openMainForm("/com/example/project/reader_home_form.fxml");
                     break;
             }
+        } else  {
+            lblErrors.setText("Tên đăng nhập hoặc mật khẩu không chính xác");
         }
     }
 

@@ -1,7 +1,9 @@
 package com.example.project.javafxcontroller;
+import com.example.project.apiservice.LibrarianApiService;
 import com.example.project.model.Document;
 import com.example.project.apiservice.DocumentApiService;
 import com.example.project.service.DocumentService;
+import com.example.project.service.LibrarianService;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -29,7 +31,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class DocumentListController implements Initializable {
+public class DocumentListController {
 
     @FXML private TableView<Document> tableView;
     @FXML private TableColumn<Document, String> colTitle;
@@ -47,6 +49,8 @@ public class DocumentListController implements Initializable {
     @FXML private ComboBox<String> documentTypeComboBox;
 
     private DocumentApiService documentApiService;
+    private DocumentService documentService;
+
     private Stage loadingStage;
 
     private final ObservableList<Document> documentList = FXCollections.observableArrayList();
@@ -54,8 +58,11 @@ public class DocumentListController implements Initializable {
 
     private final FXMLLoader fxmlLoader = new FXMLLoader();
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    @FXML
+    public void initialize() {
+        documentApiService = new DocumentApiService();
+        documentService = new DocumentService();
+
         setupTableColumns();
         tableView.setItems(documentList);
         setupComboBox();
@@ -130,11 +137,14 @@ public class DocumentListController implements Initializable {
 
     private void showDetailDialog(Document document) {
         try {
-            Parent root = fxmlLoader.load(getClass().getResource("/com/example/project/document_detail_form.fxml"));
-            Stage stage = new Stage();
-            DocumentDetailController controller = (DocumentDetailController) root.getUserData();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/com/example/project/document_detail_form.fxml"));
+            Parent root = loader.load();
+            DocumentDetailController controller = loader.getController();
+
             controller.setDocument(document);
-            stage.setTitle("Chi tiết bạn đọc");
+            Stage stage = new Stage();
+            stage.setTitle("Chi tiết tài liệu");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
             stage.showAndWait();
@@ -155,7 +165,7 @@ public class DocumentListController implements Initializable {
         String documentType = documentTypeComboBox.getValue();
         if ("Tất cả".equals(documentType)) documentType = null;
 
-        showLoadingPopup("Đang tải danh sách bạn đọc...");
+        showLoadingPopup("Đang tải danh sách tài liệu...");
 
         String finalDocumentType = documentType;
 
@@ -173,7 +183,7 @@ public class DocumentListController implements Initializable {
             hideLoadingPopup();
 
             if (result == null || result.isEmpty()) {
-                tableView.setPlaceholder(new Label("Không tìm thấy bạn đọc nào."));
+                tableView.setPlaceholder(new Label("Không tìm thấy tài liệu nào."));
             } else {
                 tableView.setPlaceholder(new Label(""));
             }

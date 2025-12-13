@@ -70,15 +70,12 @@ public class MenuBarController {
             Parent root = fxmlLoader.load();
 
             Scene scene = new Scene(root);
-            Stage stage = (Stage) ((MenuItem) event.getSource())
-                    .getParentPopup().getOwnerWindow();
+            Stage stage = (Stage) ((MenuItem) event.getSource()).getParentPopup().getOwnerWindow();
 
             stage.setScene(scene);
             stage.setTitle("Danh sách tài khoản - Hệ thống quản lý thư viện");
             stage.centerOnScreen();
-            stage.getIcons().add(new javafx.scene.image.Image(
-                    getClass().getResourceAsStream("/com/example/project/images/logo_HUB.png")
-            ));
+            stage.getIcons().add(new javafx.scene.image.Image(getClass().getResourceAsStream("/com/example/project/images/logo_HUB.png")));
             stage.show();
 
         } catch (IOException e) {
@@ -88,22 +85,22 @@ public class MenuBarController {
 
     @FXML
     private void openDocumentListForm(ActionEvent event) {
-//        try {
-//            Parent root = fxmlLoader.load("/com/example/project/document_list_form.fxml");
-//            Scene scene = new Scene(root);
-//            Stage stage = (Stage) ((MenuItem) event.getSource())
-//                    .getParentPopup().getOwnerWindow();
-//
-//            stage.setScene(scene);
-//            stage.setTitle("Danh sách tài liệu - Hệ thống quản lý thư viện");
-//            stage.centerOnScreen();
-//            stage.getIcons().add(new javafx.scene.image.Image(
-//                    getClass().getResourceAsStream("/com/example/project/images/logo_HUB.png")
-//            ));
-//            stage.show();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/project/document_list_form.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((MenuItem) event.getSource()).getParentPopup().getOwnerWindow();
+
+            stage.setScene(scene);
+            stage.setTitle("Danh sách tài liệu");
+            stage.centerOnScreen();
+            stage.getIcons().add(new javafx.scene.image.Image(getClass().getResourceAsStream("/com/example/project/images/logo_HUB.png")));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

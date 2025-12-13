@@ -1,6 +1,7 @@
 package com.example.project.apiservice;
 
 import com.example.project.model.Document;
+import com.example.project.security.UserSession;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -35,11 +36,15 @@ public class DocumentApiService {
             }
             url += "?" + query;
         }
+
+        String token = UserSession.getInstance().getToken();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
+                .header("Authorization", "Bearer " + token)
                 .GET()
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println("Response: " + response.body());
         if (response.statusCode() == 200) {
             return mapper.readValue(response.body(), new TypeReference<List<Document>>() {});
         } else {
