@@ -54,6 +54,34 @@ public class LibrarianController {
         return ResponseEntity.ok(new ApiResponse<>(true, "Đăng ký thành công", responseDTO));
     }
 
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('LIBRARIAN')")
+    public ResponseEntity<ApiResponse<LibrarianResponseForFilter>> getLibrarianById(@PathVariable Long id) {
+        return librarianService.findById(id)
+                .map(librarian -> {
+                    LibrarianResponseForFilter responseDTO = new LibrarianResponseForFilter(librarian);
+                    return ResponseEntity.ok(new ApiResponse<>(true, "Librarian found", responseDTO));
+                })
+                .orElseGet(() -> ResponseEntity.ok(new ApiResponse<>(false, "Librarian not found", null)));
+    }
+
+//    @PostMapping("/{id}/change-password")
+//    public ResponseEntity<ApiResponse<String>> changePassword(
+//            @PathVariable Long id,
+//            @RequestBody ChangePasswordRequest request
+//    ) {
+//        return librarianService.findById(id)
+//                .map(librarian -> {
+//                    if (!passwordEncoder.matches(request.getOldPassword(), librarian.getPassword())) {
+//                        return ResponseEntity.ok(new ApiResponse<>(false, "Mật khẩu cũ không đúng", null));
+//                    }
+//                    librarian.setPassword(passwordEncoder.encode(request.getNewPassword()));
+//                    librarianService.save(librarian);
+//                    return ResponseEntity.ok(new ApiResponse<>(true, "Đổi mật khẩu thành công", null));
+//                })
+//                .orElseGet(() -> ResponseEntity.ok(new ApiResponse<>(false, "Librarian không tồn tại", null)));
+//    }
+
     @GetMapping("/test")
     public String testEndpoint() {
         return "LibrarianController is working!";
