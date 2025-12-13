@@ -1,5 +1,7 @@
 package com.example.project.javafxcontroller;
 
+import com.example.project.security.Permission;
+import com.example.project.security.UserSession;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,11 +18,17 @@ import java.io.IOException;
 public class LibrarianMenuBarController {
 
     @FXML private ImageView avatarImage;
-
+    @FXML private MenuItem menuItemLibrarianList;
+    @FXML private MenuItem menuItemReaderList;
     private ContextMenu dropdownMenu;
 
     @FXML
     private void initialize() {
+
+        UserSession session = UserSession.getInstance();
+        menuItemLibrarianList.setVisible(session.hasPermission(Permission.LIBRARIAN_VIEW));
+        menuItemReaderList.setVisible(session.hasPermission(Permission.READER_VIEW));
+
         if (avatarImage == null) {
             return;
         }

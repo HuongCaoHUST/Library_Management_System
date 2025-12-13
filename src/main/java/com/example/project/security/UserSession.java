@@ -24,7 +24,7 @@ public class UserSession {
         return instance;
     }
 
-    public boolean hasPermission(String permission) {
+    public boolean hasPermission(Permission permission) {
         return permissions != null && permissions.contains(permission);
     }
 }

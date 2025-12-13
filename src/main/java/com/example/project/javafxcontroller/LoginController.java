@@ -63,11 +63,11 @@ public class LoginController {
 
             switch (response.getRole()) {
                 case "ADMIN":
-                    openMainForm("/com/example/project/admin_home_form.fxml");
+                    openMainForm("/com/example/project/home_form.fxml");
                     break;
 
                 case "LIBRARIAN":
-                    openMainForm("/com/example/project/librarian_home_form.fxml");
+                    openMainForm("/com/example/project/home_form.fxml");
                     break;
 
                 case "READER":

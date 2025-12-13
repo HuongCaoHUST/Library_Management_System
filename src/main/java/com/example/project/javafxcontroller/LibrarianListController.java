@@ -3,6 +3,8 @@ package com.example.project.javafxcontroller;
 import com.example.project.apiservice.LibrarianApiService;
 import com.example.project.model.Librarian;
 import com.example.project.model.Reader;
+import com.example.project.security.Permission;
+import com.example.project.security.UserSession;
 import com.example.project.service.LibrarianService;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -10,10 +12,12 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -27,13 +31,12 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
-import java.net.URL;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-public class LibrarianListController implements Initializable {
+public class LibrarianListController {
 
     @FXML private TableView<Librarian> tableView;
     @FXML private TableColumn<Librarian, String> colName;
@@ -47,6 +50,7 @@ public class LibrarianListController implements Initializable {
     @FXML private TextField searchField;
     @FXML private Button searchButton;
     @FXML private ComboBox<String> genderComboBox;
+    @FXML private Button addLibrarianButton;
 
     private LibrarianApiService librarianApiService;
 
@@ -62,10 +66,13 @@ public class LibrarianListController implements Initializable {
 
     private final FXMLLoader fxmlLoader = new FXMLLoader();
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    @FXML
+    public void initialize() {
         librarianApiService = new LibrarianApiService();
         librarianService = new LibrarianService();
+
+        UserSession session = UserSession.getInstance();
+        addLibrarianButton.setVisible(session.hasPermission(Permission.LIBRARIAN_CREATE));
         setupTableColumns();
         tableView.setItems(librarianList);
         setupComboBox();
@@ -272,5 +279,21 @@ public class LibrarianListController implements Initializable {
         masterData = FXCollections.observableArrayList(approvedList);
         filteredData = FXCollections.observableArrayList(masterData);
         tableView.setItems(filteredData);
+    }
+
+    @FXML
+    protected void addLibrarian(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/add_librarian_form.fxml"));
+            Parent root = loader.load();
+
+            Stage stage = new Stage();
+            stage.setTitle("Thêm chuyên viên");
+            stage.setScene(new Scene(root));
+            stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
