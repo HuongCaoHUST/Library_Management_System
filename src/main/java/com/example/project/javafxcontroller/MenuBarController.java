@@ -194,18 +194,8 @@ public class MenuBarController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/change_password_form.fxml"));
             Parent root = loader.load();
-
-            LibrarianApiService api = new LibrarianApiService();
-            ApiResponse<Void> response = api.changeMyPassword("123", "12345");
-
-            if (response.isSuccess() && response.getData() != null) {
-                System.out.println("Thành công: " + response.getMessage());
-            } else {
-                System.out.println("Không lấy được thông tin librarian: " + response.getMessage());
-            }
-
             Stage stage = new Stage();
-            stage.setTitle("Thông tin tài khoản");
+            stage.setTitle("Đổi mật khẩu");
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {

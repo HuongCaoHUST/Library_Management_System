@@ -110,8 +110,8 @@ public class LibrarianApiService {
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
                 .build();
-
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
         return mapper.readValue(
                 response.body(),
                 new TypeReference<ApiResponse<Void>>() {}
