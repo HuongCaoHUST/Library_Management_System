@@ -3,7 +3,6 @@ package com.example.project.javafxcontroller;
 import com.example.project.apiservice.AuthApiService;
 import com.example.project.dto.LoginResponse;
 import com.example.project.security.UserSession;
-import com.example.project.util.TokenStorage;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -55,23 +54,12 @@ public class LoginController {
         if (response.isSuccess()) {
             lblErrors.setText("Đăng nhập thành công!");
 
-//            System.out.println("TOKEN = " + response.token);
-//            System.out.println("FULL NAME = " + response.fullName);
-//            System.out.println("ROLE = " + response.role);
-//
-//            // Save token
-//            TokenStorage.setToken(response.token);
 
             UserSession session = UserSession.getInstance();
 
             session.setToken(response.getToken());
             session.setRole(response.getRole());
             session.setPermissions(response.getPermissions());
-
-            System.out.println("TOKEN = " + response.getToken());
-            System.out.println("FULL NAME = " + response.getFullName());
-            System.out.println("ROLE = " + response.getRole());
-            System.out.println("PERMISSION = " + response.getPermissions());
 
             switch (response.getRole()) {
                 case "ADMIN":

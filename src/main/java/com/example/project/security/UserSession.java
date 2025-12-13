@@ -2,6 +2,7 @@ package com.example.project.security;
 
 import lombok.Getter;
 import lombok.Setter;
+import com.example.project.security.Permission;
 import java.util.Set;
 
 @Getter
@@ -12,7 +13,7 @@ public class UserSession {
 
     private String token;
     private String role;
-    private Set<String> permissions;
+    private Set<Permission> permissions;
 
     private UserSession() {}
 
