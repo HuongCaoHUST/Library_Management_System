@@ -1,11 +1,13 @@
 package com.example.project.service;
 
+import com.example.project.model.Librarian;
 import com.example.project.model.Reader;
 import com.example.project.security.Role;
 import com.example.project.repository.ReaderRepository;
 import com.example.project.specification.ReaderSpecification;
 import com.example.project.util.PasswordUtils;
 import com.example.project.util.SendEmail;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -16,12 +18,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ReaderService {
-    private final ReaderRepository repository;
-
-    public ReaderService(ReaderRepository repository) {
-        this.repository = repository;
-    }
 
     public List<Reader> findAll() {
         return repository.findAll();
@@ -39,17 +37,20 @@ public class ReaderService {
         repository.deleteById(id);
     }
 
-    @Autowired
-    private ReaderRepository readerRepository;
-
-    @Autowired
-    private SendEmail sendEmail;
+    private final ReaderRepository repository;
+    private final LibrarianService librarianService;
+    private final SendEmail sendEmail;
 
     public Reader registerReader(Reader inputReader) {
         String email = inputReader.getEmail().trim().toLowerCase();
         String username = email;
         String rawPassword = PasswordUtils.generateRandomPassword(8);
         String encryptedPassword = PasswordUtils.encryptPassword(rawPassword);
+
+        Optional<Librarian> librarian = librarianService.findById(2L);
+        Librarian approvingLibrarian = librarian.get();
+        System.out.println("Found librarian ID: " + approvingLibrarian.getUserId());
+        System.out.println("Librarian name: " + approvingLibrarian.getFullName());
 
         Reader reader = Reader.builder()
                 .fullName(inputReader.getFullName())
@@ -67,7 +68,7 @@ public class ReaderService {
                 .password(encryptedPassword)
                 .registrationDate(LocalDateTime.now())
                 .status("APPROVED")
-//                .approvedBy()
+                .approvedBy(approvingLibrarian)
                 .depositAmount(BigDecimal.ZERO)
                 .role(Role.READER)
                 .build();
