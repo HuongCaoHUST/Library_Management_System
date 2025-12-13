@@ -75,4 +75,22 @@ public class LibrarianApiService {
                 new TypeReference<ApiResponse<Librarian>>() {}
         );
     }
+
+    public ApiResponse<Librarian> getMyLibrarianInfo() throws Exception {
+        String url = "http://localhost:8081/api/librarians/me";
+
+        String token = UserSession.getInstance().getToken();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("Authorization", "Bearer " + token)
+                .GET()
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println("TRẢ VỀ" + response.body());
+        return mapper.readValue(
+                response.body(),
+                new TypeReference<ApiResponse<Librarian>>() {}
+        );
+    }
 }
