@@ -1,6 +1,7 @@
 package com.example.project.javafxcontroller;
 
 import com.example.project.apiservice.ReaderApiService;
+import com.example.project.dto.ApiResponse;
 import com.example.project.dto.ReaderRegisterRequest;
 import com.example.project.model.Reader;
 import javafx.fxml.FXML;
@@ -36,52 +37,25 @@ public class SignupController {
 
     @FXML
     private void onSignup() {
+        if (!validateForm()) {
+            return;
+        }
+
+        ReaderRegisterRequest dto = buildRegisterDto();
+
+        ReaderApiService api = new ReaderApiService();
         try {
-            if (txtFullName.getText().trim().isEmpty()) {
-                showAlert(Alert.AlertType.ERROR, "Lỗi", "Vui lòng nhập họ và tên!");
-                return;
+            ApiResponse<Reader> response = api.registerReader(dto);
+
+            if (response.isSuccess()) {
+                showAlert(Alert.AlertType.INFORMATION, "Thành công", response.getMessage());
+                clearForm();
+            } else {
+                showAlert(Alert.AlertType.WARNING, "Không thành công", response.getMessage());
             }
-            if (txtEmail.getText().trim().isEmpty() || !txtEmail.getText().matches("^[\\w.-]+@[\\w.-]+\\.\\w+$")) {
-                showAlert(Alert.AlertType.ERROR, "Lỗi", "Email không hợp lệ!");
-                return;
-            }
-            if (!txtIdCardNumber.getText().matches("\\d{12}")) {
-                showAlert(Alert.AlertType.ERROR, "Lỗi", "Số CCCD phải có đúng 12 chữ số!");
-                return;
-            }
-
-            ReaderRegisterRequest dto = new ReaderRegisterRequest();
-            dto.setFullName(txtFullName.getText().trim());
-
-            String genderDisplay = cbGender.getValue();
-            dto.setGender(GENDER_MAP.get(genderDisplay));
-
-            dto.setBirthDate(dpBirthDate.getValue());
-            dto.setPhoneNumber(txtPhoneNumber.getText().trim());
-            dto.setEmail(txtEmail.getText().trim());
-            dto.setIdCardNumber(txtIdCardNumber.getText().trim());
-            dto.setPlaceOfBirth(txtPlaceOfBirth.getText().trim());
-            dto.setIssuedPlace(txtIssuedPlace.getText().trim());
-            dto.setRole("READER");
-            dto.setMajor(txtMajor.getText().trim());
-            dto.setWorkPlace(txtWorkPlace.getText().trim());
-            dto.setAddress(txtAddress.getText().trim());
-
-            ReaderApiService api = new ReaderApiService();
-            Reader reader = api.registerReader(dto);
-
-
-            showAlert(Alert.AlertType.INFORMATION, "Thành công",
-                    "Đăng ký thành công!\n\n" +
-                            "Tài khoản của bạn đang chờ duyệt.\n" +
-                            "Mật khẩu sẽ được gửi qua email sau khi được duyệt.");
-
-            clearForm();
-
-        } catch (IllegalArgumentException e) {
-            showAlert(Alert.AlertType.ERROR, "Lỗi", e.getMessage());
         } catch (Exception e) {
-            showAlert(Alert.AlertType.ERROR, "Lỗi hệ thống", "Lỗi: " + e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Lỗi hệ thống", "Không thể kết nối tới server"
+            );
         }
     }
 
@@ -89,6 +63,56 @@ public class SignupController {
             "Nam", "MALE",
             "Nữ", "FEMALE"
     );
+
+    private ReaderRegisterRequest buildRegisterDto() {
+
+        ReaderRegisterRequest dto = new ReaderRegisterRequest();
+
+        dto.setFullName(txtFullName.getText().trim());
+        dto.setGender(GENDER_MAP.get(cbGender.getValue()));
+        dto.setBirthDate(dpBirthDate.getValue());
+        dto.setPhoneNumber(txtPhoneNumber.getText().trim());
+        dto.setEmail(txtEmail.getText().trim());
+        dto.setIdCardNumber(txtIdCardNumber.getText().trim());
+        dto.setPlaceOfBirth(txtPlaceOfBirth.getText().trim());
+        dto.setIssuedPlace(txtIssuedPlace.getText().trim());
+        dto.setRole("READER");
+        dto.setMajor(txtMajor.getText().trim());
+        dto.setWorkPlace(txtWorkPlace.getText().trim());
+        dto.setAddress(txtAddress.getText().trim());
+
+        return dto;
+    }
+
+    private boolean validateForm() {
+
+        if (txtFullName.getText().trim().isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Lỗi", "Vui lòng nhập họ và tên!");
+            return false;
+        }
+
+        if (txtEmail.getText().trim().isEmpty()
+                || !txtEmail.getText().matches("^[\\w.-]+@[\\w.-]+\\.\\w+$")) {
+            showAlert(Alert.AlertType.ERROR, "Lỗi", "Email không hợp lệ!");
+            return false;
+        }
+
+        if (!txtIdCardNumber.getText().matches("\\d{12}")) {
+            showAlert(Alert.AlertType.ERROR, "Lỗi", "Số CCCD phải có đúng 12 chữ số!");
+            return false;
+        }
+
+        if (cbGender.getValue() == null) {
+            showAlert(Alert.AlertType.ERROR, "Lỗi", "Vui lòng chọn giới tính!");
+            return false;
+        }
+
+        if (dpBirthDate.getValue() == null) {
+            showAlert(Alert.AlertType.ERROR, "Lỗi", "Vui lòng chọn ngày sinh!");
+            return false;
+        }
+        return true;
+    }
 
     @FXML
     private void handleBackToLogin(MouseEvent event) throws IOException {

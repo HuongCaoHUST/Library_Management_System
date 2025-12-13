@@ -1,5 +1,6 @@
 package com.example.project.apiservice;
 
+import com.example.project.dto.ApiResponse;
 import com.example.project.dto.ReaderRegisterRequest;
 import com.example.project.model.Reader;
 import com.example.project.security.UserSession;
@@ -53,7 +54,7 @@ public class ReaderApiService {
         }
     }
 
-    public Reader registerReader(ReaderRegisterRequest requestDto) throws Exception {
+    public ApiResponse<Reader> registerReader(ReaderRegisterRequest requestDto) throws Exception {
         String url = "http://localhost:8081/api/readers/register";
 
         String jsonBody = mapper.writeValueAsString(requestDto);
@@ -67,13 +68,9 @@ public class ReaderApiService {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        if (response.statusCode() == 200 || response.statusCode() == 201) {
-            System.out.println(response.body());
-            return mapper.readValue(response.body(), Reader.class);
-        } else {
-            throw new RuntimeException(
-                    "Lỗi đăng ký reader: " + response.statusCode() + " - " + response.body()
-            );
-        }
+        return mapper.readValue(
+                response.body(),
+                new TypeReference<ApiResponse<Reader>>() {}
+        );
     }
 }
