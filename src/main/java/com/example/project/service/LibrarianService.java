@@ -1,6 +1,7 @@
 package com.example.project.service;
 
 import com.example.project.model.Librarian;
+import com.example.project.model.Reader;
 import com.example.project.repository.LibrarianRepository;
 import com.example.project.security.Role;
 import com.example.project.specification.LibrarianSpecification;
@@ -78,8 +79,20 @@ public class LibrarianService {
                 .depositAmount(BigDecimal.ZERO)
                 .role(Role.LIBRARIAN)
                 .build();
-//        sendEmailSuccess(reader, rawPassword);
+        sendEmailSuccess(librarian, rawPassword);
         return repository.save(librarian);
+    }
+
+    public void sendEmailSuccess(Librarian librarian, String rawPassword) {
+        String subject = "[THỦ THƯ] Tài khoản thư viện của bạn đã được phê duyệt";
+        String body = "Xin chào " + librarian.getFullName() + ",\n\n"
+                + "Tài khoản của bạn đã được phê duyệt thành công!\n"
+                + "Tên đăng nhập: " + librarian.getUsername() + "\n"
+                + "Mật khẩu: " + rawPassword + "\n\n"
+                + "Vui lòng đăng nhập và đổi mật khẩu ngay sau khi sử dụng lần đầu.\n\n"
+                + "Thân mến,\nPhòng Thư viện";
+
+        sendEmail.sendMail("huongcao.seee@gmail.com", subject, body);
     }
 
     public boolean existsByUsername(String username) {
