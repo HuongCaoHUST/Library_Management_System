@@ -2,7 +2,7 @@ package com.example.project.dto;
 
 import com.example.project.model.User;
 
-public class ReaderResponseForSignUp {
+public class UserResponse {
     private Long userId;
     private String fullName;
     private String username;
@@ -10,7 +10,7 @@ public class ReaderResponseForSignUp {
     private String role;
     private String status;
 
-    public ReaderResponseForSignUp(User user) {
+    public UserResponse(User user) {
         this.userId = user.getUserId();
         this.fullName = user.getFullName();
         this.username = user.getUsername();

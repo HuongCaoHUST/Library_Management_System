@@ -1,6 +1,9 @@
 package com.example.project.controller;
 
+import com.example.project.dto.ApiResponse;
 import com.example.project.dto.LibrarianResponseForFilter;
+import com.example.project.dto.UserResponse;
+import com.example.project.model.Librarian;
 import com.example.project.service.LibrarianService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,6 +35,23 @@ public class LibrarianController {
                 .map(LibrarianResponseForFilter::new)
                 .toList();
         return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<ApiResponse<UserResponse>> register(@RequestBody Librarian librarian) {
+        if (librarianService.existsByUsername(librarian.getUsername())) {
+            return ResponseEntity.ok(new ApiResponse<>(false, "Username đã tồn tại", null));
+        }
+        if (librarianService.existsByEmail(librarian.getEmail())) {
+            return ResponseEntity.ok(new ApiResponse<>(false, "Email đã tồn tại", null));
+        }
+        if (librarianService.existsByIdCardNumber(librarian.getIdCardNumber())) {
+            return ResponseEntity.ok(new ApiResponse<>(false, "CCCD đã tồn tại", null));
+        }
+
+        Librarian savedLibrarian = librarianService.registerLibrarian(librarian);
+        UserResponse responseDTO = new UserResponse(savedLibrarian);
+        return ResponseEntity.ok(new ApiResponse<>(true, "Đăng ký thành công", responseDTO));
     }
 
     @GetMapping("/test")

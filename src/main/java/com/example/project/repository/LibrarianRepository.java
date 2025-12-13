@@ -13,4 +13,7 @@ public interface LibrarianRepository extends JpaRepository<Librarian, Long>, Jpa
     Optional<Librarian> findByUsernameAndPassword(String username, String password);
     Optional<Librarian> findByEmailAndPassword(String email, String password);
     Optional<Librarian> findById(Long id);
+    boolean existsByEmail(String email);
+    boolean existsByIdCardNumber(String idCardNumber);
+    boolean existsByUsername(String username);
 }

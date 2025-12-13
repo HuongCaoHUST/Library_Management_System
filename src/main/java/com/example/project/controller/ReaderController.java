@@ -3,7 +3,7 @@ package com.example.project.controller;
 import com.example.project.dto.ApiResponse;
 import com.example.project.dto.ReaderResponseForFilter;
 import com.example.project.model.Reader;
-import com.example.project.dto.ReaderResponseForSignUp;
+import com.example.project.dto.UserResponse;
 import com.example.project.service.ReaderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-    @RequestMapping("/api/readers")
+@RequestMapping("/api/readers")
 @CrossOrigin(origins = "*")
 public class ReaderController {
 
@@ -36,7 +36,7 @@ public class ReaderController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse<ReaderResponseForSignUp>> register(@RequestBody Reader reader) {
+    public ResponseEntity<ApiResponse<UserResponse>> register(@RequestBody Reader reader) {
         if (readerService.existsByUsername(reader.getUsername())) {
             return ResponseEntity.ok(new ApiResponse<>(false, "Username đã tồn tại", null));
         }
@@ -48,7 +48,7 @@ public class ReaderController {
         }
 
         Reader savedReader = readerService.registerReader(reader);
-        ReaderResponseForSignUp responseDTO = new ReaderResponseForSignUp(savedReader);
+        UserResponse responseDTO = new UserResponse(savedReader);
         return ResponseEntity.ok(new ApiResponse<>(true, "Đăng ký thành công", responseDTO));
     }
 
