@@ -1,5 +1,6 @@
 package com.example.project.apiservice;
 
+import com.example.project.dto.ReaderRegisterRequest;
 import com.example.project.model.Reader;
 import com.example.project.security.UserSession;
 import com.example.project.util.TokenStorage;
@@ -49,6 +50,30 @@ public class ReaderApiService {
             return mapper.readValue(response.body(), new TypeReference<List<Reader>>() {});
         } else {
             throw new RuntimeException("Lỗi API: " + response.statusCode());
+        }
+    }
+
+    public Reader registerReader(ReaderRegisterRequest requestDto) throws Exception {
+        String url = "http://localhost:8081/api/readers/register";
+
+        String jsonBody = mapper.writeValueAsString(requestDto);
+        System.out.println(jsonBody);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() == 200 || response.statusCode() == 201) {
+            System.out.println(response.body());
+            return mapper.readValue(response.body(), Reader.class);
+        } else {
+            throw new RuntimeException(
+                    "Lỗi đăng ký reader: " + response.statusCode() + " - " + response.body()
+            );
         }
     }
 }

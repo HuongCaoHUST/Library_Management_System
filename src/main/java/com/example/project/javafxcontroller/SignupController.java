@@ -1,10 +1,14 @@
 package com.example.project.javafxcontroller;
 
+import com.example.project.apiservice.ReaderApiService;
+import com.example.project.dto.ReaderRegisterRequest;
+import com.example.project.model.Reader;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import com.example.project.service.ReaderService;
 import java.io.IOException;
+import java.util.Map;
 
 public class SignupController {
 
@@ -33,7 +37,6 @@ public class SignupController {
     @FXML
     private void onSignup() {
         try {
-            // Validate bắt buộc
             if (txtFullName.getText().trim().isEmpty()) {
                 showAlert(Alert.AlertType.ERROR, "Lỗi", "Vui lòng nhập họ và tên!");
                 return;
@@ -47,21 +50,26 @@ public class SignupController {
                 return;
             }
 
-//            Reader reader = Reader.builder()
-//                    .fullName(txtFullName.getText().trim())
-//                    .gender(cbGender.getValue())
-//                    .birthDate(dpBirthDate.getValue())
-//                    .phoneNumber(txtPhoneNumber.getText().trim())
-//                    .email(txtEmail.getText().trim())
-//                    .idCardNumber(txtIdCardNumber.getText().trim())
-//                    .placeOfBirth(txtPlaceOfBirth.getText().trim())
-//                    .issuedPlace(txtIssuedPlace.getText().trim())
-//                    .major(txtMajor.getText().trim())
-//                    .workPlace(txtWorkPlace.getText().trim())
-//                    .address(txtAddress.getText().trim())
-//                    .build();
+            ReaderRegisterRequest dto = new ReaderRegisterRequest();
+            dto.setFullName(txtFullName.getText().trim());
 
-//            readerService.registerReader(reader);
+            String genderDisplay = cbGender.getValue();
+            dto.setGender(GENDER_MAP.get(genderDisplay));
+
+            dto.setBirthDate(dpBirthDate.getValue());
+            dto.setPhoneNumber(txtPhoneNumber.getText().trim());
+            dto.setEmail(txtEmail.getText().trim());
+            dto.setIdCardNumber(txtIdCardNumber.getText().trim());
+            dto.setPlaceOfBirth(txtPlaceOfBirth.getText().trim());
+            dto.setIssuedPlace(txtIssuedPlace.getText().trim());
+            dto.setRole("READER");
+            dto.setMajor(txtMajor.getText().trim());
+            dto.setWorkPlace(txtWorkPlace.getText().trim());
+            dto.setAddress(txtAddress.getText().trim());
+
+            ReaderApiService api = new ReaderApiService();
+            Reader reader = api.registerReader(dto);
+
 
             showAlert(Alert.AlertType.INFORMATION, "Thành công",
                     "Đăng ký thành công!\n\n" +
@@ -76,6 +84,11 @@ public class SignupController {
             showAlert(Alert.AlertType.ERROR, "Lỗi hệ thống", "Lỗi: " + e.getMessage());
         }
     }
+
+    private static final Map<String, String> GENDER_MAP = Map.of(
+            "Nam", "MALE",
+            "Nữ", "FEMALE"
+    );
 
     @FXML
     private void handleBackToLogin(MouseEvent event) throws IOException {

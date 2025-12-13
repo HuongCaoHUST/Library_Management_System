@@ -1,7 +1,5 @@
 package com.example.project.javafxcontroller;
 
-import com.example.project.model.Librarian;
-import com.example.project.util.SessionManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -87,9 +85,9 @@ public class ReaderMenuBarController {
             Parent root = fxmlLoader.load(getClass().getResource("/com/example/project/librarian_detail_form.fxml"));
             Stage stage = new Stage();
 
-            Librarian librarian = SessionManager.getCurrentLibrarian();
+//            Librarian librarian = SessionManager.getCurrentLibrarian();
             LibrarianDetailController controller = (LibrarianDetailController) root.getUserData();
-            controller.setLibrarian(librarian);
+//            controller.setLibrarian(librarian);
 
             stage.setTitle("Thông tin tài khoản");
             stage.initModality(Modality.APPLICATION_MODAL);
