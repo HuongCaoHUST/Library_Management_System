@@ -2,7 +2,7 @@ package com.example.project.javafxcontroller;
 
 import com.example.project.apiservice.ReaderApiService;
 import com.example.project.dto.ApiResponse;
-import com.example.project.dto.ReaderRegisterRequest;
+import com.example.project.dto.RegisterRequest;
 import com.example.project.model.Reader;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,7 +36,7 @@ public class SignupController {
 
 
     @FXML
-    private void initialize() {
+    public void initialize() {
         cbGender.getItems().addAll("Nam", "Nữ", "Khác");
         cbGender.setValue("Nam");
     }
@@ -47,7 +47,7 @@ public class SignupController {
             return;
         }
 
-        ReaderRegisterRequest dto = buildRegisterDto();
+        RegisterRequest dto = buildRegisterDto();
 
         ReaderApiService api = new ReaderApiService();
         try {
@@ -70,9 +70,9 @@ public class SignupController {
             "Nữ", "FEMALE"
     );
 
-    private ReaderRegisterRequest buildRegisterDto() {
+    protected RegisterRequest buildRegisterDto() {
 
-        ReaderRegisterRequest dto = new ReaderRegisterRequest();
+        RegisterRequest dto = new RegisterRequest();
 
         dto.setFullName(txtFullName.getText().trim());
         dto.setGender(GENDER_MAP.get(cbGender.getValue()));
@@ -90,7 +90,7 @@ public class SignupController {
         return dto;
     }
 
-    private boolean validateForm() {
+    protected boolean validateForm() {
 
         if (txtFullName.getText().trim().isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Lỗi", "Vui lòng nhập họ và tên!");
@@ -134,7 +134,7 @@ public class SignupController {
         stage.show();
     }
 
-    private void showAlert(Alert.AlertType type, String title, String msg) {
+    protected void showAlert(Alert.AlertType type, String title, String msg) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(null);
@@ -142,7 +142,7 @@ public class SignupController {
         alert.showAndWait();
     }
 
-    private void clearForm() {
+    protected void clearForm() {
         txtFullName.clear();
         cbGender.setValue("Nam");
         dpBirthDate.setValue(null);

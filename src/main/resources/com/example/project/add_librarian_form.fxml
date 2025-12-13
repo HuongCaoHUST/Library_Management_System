@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="683.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.javafxcontroller.ReaderDetailController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="683.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.javafxcontroller.AddLibrarianController">
     <children>
         <Pane layoutX="57.0" layoutY="48.0" prefHeight="408.0" prefWidth="569.0" AnchorPane.bottomAnchor="47.0" AnchorPane.topAnchor="48.0">
             <children>
@@ -79,7 +79,7 @@
                     </children>
                 </GridPane>
 
-                <Button fx:id="btnOpenAddLibrarian" defaultButton="true" layoutX="17.0" layoutY="327.0" mnemonicParsing="false"  prefHeight="34.0" prefWidth="535.0" stylesheets="@fullpackstyling.css" text="Thêm chuyên viên" />
+                <Button fx:id="btnOpenAddLibrarian" onAction="#onAddLibrarian" defaultButton="true" layoutX="17.0" layoutY="327.0" mnemonicParsing="false"  prefHeight="34.0" prefWidth="535.0" stylesheets="@fullpackstyling.css" text="Thêm chuyên viên" />
             </children>
         </Pane>
     </children>

@@ -1,7 +1,7 @@
 package com.example.project.apiservice;
 
 import com.example.project.dto.ApiResponse;
-import com.example.project.dto.ReaderRegisterRequest;
+import com.example.project.dto.RegisterRequest;
 import com.example.project.model.Reader;
 import com.example.project.security.UserSession;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -53,7 +53,7 @@ public class ReaderApiService {
         }
     }
 
-    public ApiResponse<Reader> registerReader(ReaderRegisterRequest requestDto) throws Exception {
+    public ApiResponse<Reader> registerReader(RegisterRequest requestDto) throws Exception {
         String url = "http://localhost:8081/api/readers/register";
 
         String jsonBody = mapper.writeValueAsString(requestDto);
