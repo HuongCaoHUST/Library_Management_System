@@ -1,6 +1,7 @@
 package com.example.project.apiservice;
 
 import com.example.project.dto.ApiResponse;
+import com.example.project.dto.ChangePasswordRequest;
 import com.example.project.dto.RegisterRequest;
 import com.example.project.model.Librarian;
 import com.example.project.security.UserSession;
@@ -90,6 +91,30 @@ public class LibrarianApiService {
         return mapper.readValue(
                 response.body(),
                 new TypeReference<ApiResponse<Librarian>>() {}
+        );
+    }
+
+    public ApiResponse<Void> changeMyPassword(String oldPassword, String newPassword) throws Exception {
+        String url = "http://localhost:8081/api/librarians/me/change-password";
+
+        ChangePasswordRequest requestDto = new ChangePasswordRequest();
+        requestDto.setOldPassword(oldPassword);
+        requestDto.setNewPassword(newPassword);
+
+        String jsonBody = mapper.writeValueAsString(requestDto);
+        String token = UserSession.getInstance().getToken();
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("Authorization", "Bearer " + token)
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        return mapper.readValue(
+                response.body(),
+                new TypeReference<ApiResponse<Void>>() {}
         );
     }
 }
