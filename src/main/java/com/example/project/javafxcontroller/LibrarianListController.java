@@ -219,7 +219,7 @@ public class LibrarianListController implements Initializable {
 
             controller.setLibrarian(librarian);
             Stage stage = new Stage();
-            stage.setTitle("Chi tiết bạn đọc");
+            stage.setTitle("Chi tiết chuyên viên");
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
             stage.showAndWait();

@@ -45,7 +45,7 @@ public class AdminMenuBarController {
                     .getParentPopup().getOwnerWindow();
 
             stage.setScene(scene);
-            stage.setTitle("Danh sách tài khoản - Hệ thống quản lý thư viện");
+            stage.setTitle("Danh sách bạn đọc - Hệ thống quản lý thư viện");
             stage.centerOnScreen();
             stage.getIcons().add(new javafx.scene.image.Image(
                     getClass().getResourceAsStream("/com/example/project/images/logo_HUB.png")
