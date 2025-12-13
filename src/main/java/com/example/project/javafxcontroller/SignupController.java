@@ -5,9 +5,15 @@ import com.example.project.dto.ApiResponse;
 import com.example.project.dto.ReaderRegisterRequest;
 import com.example.project.model.Reader;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import com.example.project.service.ReaderService;
+import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.util.Map;
 
@@ -116,12 +122,16 @@ public class SignupController {
 
     @FXML
     private void handleBackToLogin(MouseEvent event) throws IOException {
-//        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//        Parent root = springFxmlLoader.load("/com/example/project/login.fxml");
-//
-//        Scene scene = new Scene(root);
-//        stage.setScene(scene);
-//        stage.show();
+
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/com/example/project/login.fxml")
+        );
+        Parent root = loader.load();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Đăng nhập");
+        stage.centerOnScreen();
+        stage.show();
     }
 
     private void showAlert(Alert.AlertType type, String title, String msg) {
