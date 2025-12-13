@@ -67,6 +67,7 @@ public class ReaderService {
                 .password(encryptedPassword)
                 .registrationDate(LocalDateTime.now())
                 .status("APPROVED")
+//                .approvedBy()
                 .depositAmount(BigDecimal.ZERO)
                 .role(Role.READER)
                 .build();
@@ -86,13 +87,13 @@ public class ReaderService {
         sendEmail.sendMail("huongcao.seee@gmail.com", subject, body);
     }
 
-    public List<Reader> getPendingReaders() {
-        return readerRepository.findByStatus("PENDING");
-    }
-
-    public List<Reader> getApprovedReaders() {
-        return readerRepository.findByStatus("APPROVED");
-    }
+//    public List<Reader> getPendingReaders() {
+//        return readerRepository.findByStatus("PENDING");
+//    }
+//
+//    public List<Reader> getApprovedReaders() {
+//        return readerRepository.findByStatus("APPROVED");
+//    }
 
     public List<Reader> filterReaders(String fullName, String email, String status, String gender) {
         Specification<Reader> spec = Specification
