@@ -1,6 +1,7 @@
 package com.example.project.controller;
 
 import com.example.project.dto.ApiResponse;
+import com.example.project.dto.ChangePasswordRequest;
 import com.example.project.dto.LibrarianResponseForFilter;
 import com.example.project.dto.UserResponse;
 import com.example.project.model.Librarian;
@@ -8,6 +9,7 @@ import com.example.project.service.LibrarianService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,9 +22,11 @@ import java.util.Optional;
 public class LibrarianController {
 
     private final LibrarianService librarianService;
+    private final PasswordEncoder passwordEncoder;
 
-    public LibrarianController(LibrarianService librarianService) {
+    public LibrarianController(LibrarianService librarianService, PasswordEncoder passwordEncoder) {
         this.librarianService = librarianService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/filter")
@@ -70,22 +74,25 @@ public class LibrarianController {
                 .orElseGet(() -> ResponseEntity.ok(new ApiResponse<>(false, "Librarian not found", null)));
     }
 
-//    @PostMapping("/{id}/change-password")
-//    public ResponseEntity<ApiResponse<String>> changePassword(
-//            @PathVariable Long id,
-//            @RequestBody ChangePasswordRequest request
-//    ) {
-//        return librarianService.findById(id)
-//                .map(librarian -> {
-//                    if (!passwordEncoder.matches(request.getOldPassword(), librarian.getPassword())) {
-//                        return ResponseEntity.ok(new ApiResponse<>(false, "Mật khẩu cũ không đúng", null));
-//                    }
-//                    librarian.setPassword(passwordEncoder.encode(request.getNewPassword()));
-//                    librarianService.save(librarian);
-//                    return ResponseEntity.ok(new ApiResponse<>(true, "Đổi mật khẩu thành công", null));
-//                })
-//                .orElseGet(() -> ResponseEntity.ok(new ApiResponse<>(false, "Librarian không tồn tại", null)));
-//    }
+    @PostMapping("/me/change-password")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('LIBRARIAN')")
+    public ResponseEntity<ApiResponse<Void>> changeMyPassword(
+            Authentication authentication,
+            @RequestBody ChangePasswordRequest request) {
+        String username = authentication.getName();
+        Optional<Librarian> optionalLibrarian = librarianService.findByUsername(username);
+        if (optionalLibrarian.isEmpty()) {
+            return ResponseEntity.ok(new ApiResponse<>(false, "Librarian not found", null));
+        }
+        Librarian librarian = optionalLibrarian.get();
+        if (!passwordEncoder.matches(request.getOldPassword(), librarian.getPassword())) {
+            return ResponseEntity.ok(new ApiResponse<>(false, "Old password is incorrect", null));
+        }
+        librarian.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        librarianService.save(librarian);
+        return ResponseEntity.ok(new ApiResponse<>(true, "Password changed successfully", null));
+    }
+
 
     @GetMapping("/test")
     public String testEndpoint() {
