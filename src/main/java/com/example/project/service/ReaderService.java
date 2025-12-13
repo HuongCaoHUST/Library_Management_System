@@ -1,7 +1,7 @@
 package com.example.project.service;
 
 import com.example.project.model.Reader;
-import com.example.project.model.Role;
+import com.example.project.security.Role;
 import com.example.project.repository.ReaderRepository;
 import com.example.project.specification.ReaderSpecification;
 import com.example.project.util.PasswordUtils;

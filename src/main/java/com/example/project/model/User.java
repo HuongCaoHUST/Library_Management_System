@@ -1,5 +1,6 @@
 package com.example.project.model;
 
+import com.example.project.security.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;

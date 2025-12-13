@@ -1,4 +1,4 @@
-package com.example.project.model;
+package com.example.project.security;
 
 public enum Role {
     ADMIN,
