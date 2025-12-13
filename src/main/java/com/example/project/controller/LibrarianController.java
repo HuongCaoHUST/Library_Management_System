@@ -55,7 +55,7 @@ public class LibrarianController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('LIBRARIAN')")
+    @PreAuthorize("hasRole('ADMIN') or #id == principal.id")
     public ResponseEntity<ApiResponse<LibrarianResponseForFilter>> getLibrarianById(@PathVariable Long id) {
         return librarianService.findById(id)
                 .map(librarian -> {
