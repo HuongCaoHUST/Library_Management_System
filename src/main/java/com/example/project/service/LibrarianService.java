@@ -29,6 +29,9 @@ public class LibrarianService {
     public Optional<Librarian> findById(Long id) {
         return repository.findById(id);
     }
+    public Optional<Librarian> findByUsername(String username) {
+        return repository.findByUsername(username);
+    }
 
     public Librarian save(Librarian librarian) {
         return repository.save(librarian);

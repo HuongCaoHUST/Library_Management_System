@@ -7,9 +7,11 @@ import com.example.project.model.Librarian;
 import com.example.project.service.LibrarianService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/librarians")
@@ -54,10 +56,13 @@ public class LibrarianController {
         return ResponseEntity.ok(new ApiResponse<>(true, "Đăng ký thành công", responseDTO));
     }
 
-    @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN') or #id == principal.id")
-    public ResponseEntity<ApiResponse<LibrarianResponseForFilter>> getLibrarianById(@PathVariable Long id) {
-        return librarianService.findById(id)
+    @GetMapping("/me")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('LIBRARIAN')")
+    public ResponseEntity<ApiResponse<LibrarianResponseForFilter>> getMyLibrarianInfo(Authentication authentication) {
+        String username = authentication.getName();
+        Optional<Librarian> optionalLibrarian = librarianService.findByUsername(username);
+
+        return optionalLibrarian
                 .map(librarian -> {
                     LibrarianResponseForFilter responseDTO = new LibrarianResponseForFilter(librarian);
                     return ResponseEntity.ok(new ApiResponse<>(true, "Librarian found", responseDTO));
