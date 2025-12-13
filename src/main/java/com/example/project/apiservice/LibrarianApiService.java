@@ -87,7 +87,6 @@ public class LibrarianApiService {
                 .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println("TRẢ VỀ" + response.body());
         return mapper.readValue(
                 response.body(),
                 new TypeReference<ApiResponse<Librarian>>() {}
