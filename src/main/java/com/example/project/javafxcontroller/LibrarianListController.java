@@ -286,7 +286,6 @@ public class LibrarianListController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/add_librarian_form.fxml"));
             Parent root = loader.load();
-
             Stage stage = new Stage();
             stage.setTitle("Thêm chuyên viên");
             stage.setScene(new Scene(root));
