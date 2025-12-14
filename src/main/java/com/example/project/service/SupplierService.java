@@ -2,9 +2,15 @@ package com.example.project.service;
 
 import com.example.project.dto.request.SupplierRequest;
 import com.example.project.mapper.SupplierMapper;
+import com.example.project.model.Document;
 import com.example.project.model.Supplier;
 import com.example.project.repository.SupplierRepository;
+import com.example.project.specification.DocumentSpecification;
+import com.example.project.specification.SupplierSpecification;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class SupplierService {
@@ -36,6 +42,14 @@ public class SupplierService {
 
         mapper.updateEntity(supplier, request);
         return repository.save(supplier);
+    }
+
+    public List<Supplier> filterSuppliers(String supplierName, String phoneNumber) {
+        Specification<Supplier> spec = Specification
+                .where(SupplierSpecification.hasSupplierName(supplierName))
+                .and(SupplierSpecification.hasPhoneNumber(phoneNumber));
+
+        return repository.findAll(spec);
     }
 }
 
