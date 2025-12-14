@@ -79,7 +79,7 @@
                     <items>
                         <MenuItem fx:id="menuItemLibrarianList" onAction="#openLibrarianList" mnemonicParsing="false" styleClass="menu_item" text="Danh sách chuyên viên" />
                       <MenuItem fx:id="menuItemReaderList" onAction="#openReaderList" mnemonicParsing="false" styleClass="menu_item" text="Danh sách bạn đọc" />
-                        <MenuItem fx:id="menuItemSupplierList" mnemonicParsing="false" styleClass="menu_item" text="Danh sách nhà cung cấp" />
+                        <MenuItem fx:id="menuItemSupplierList" onAction="#openSupplierList" mnemonicParsing="false" styleClass="menu_item" text="Danh sách nhà cung cấp" />
                     </items>
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />

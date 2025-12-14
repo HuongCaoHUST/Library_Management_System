@@ -1,10 +1,10 @@
 package com.example.project.javafxcontroller;
 
-import com.example.project.apiservice.LibrarianApiService;
-import com.example.project.model.Librarian;
+import com.example.project.apiservice.SupplierApiService;
+import com.example.project.model.Supplier;
 import com.example.project.security.Permission;
 import com.example.project.security.UserSession;
-import com.example.project.service.LibrarianService;
+import com.example.project.service.SupplierService;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -30,102 +30,97 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class LibrarianListController {
+public class SupplierListController {
 
-    @FXML private TableView<Librarian> tableView;
-    @FXML private TableColumn<Librarian, String> colName;
-    @FXML private TableColumn<Librarian, String> colMSSV;
-    @FXML private TableColumn<Librarian, LocalDate> colDOB;
-    @FXML private TableColumn<Librarian, String> colCCCD;
-    @FXML private TableColumn<Librarian, String> colMajor;
-    @FXML private TableColumn<Librarian, String> colWorkplace;
-    @FXML private TableColumn<Librarian, Void> colDetail;
+    @FXML private TableView<Supplier> tableView;
+    @FXML private TableColumn<Supplier, String> colSupplierName;
+    @FXML private TableColumn<Supplier, String> colContactPerson;
+    @FXML private TableColumn<Supplier, String> colPhoneNumber;
+    @FXML private TableColumn<Supplier, String> colEmail;
+    @FXML private TableColumn<Supplier, String> colAddress;
+    @FXML private TableColumn<Supplier, Void> colDetail;
 
     @FXML private TextField searchField;
     @FXML private Button searchButton;
     @FXML private ComboBox<String> genderComboBox;
-    @FXML private Button addLibrarianButton;
+    @FXML private Button addSupplierButton;
 
-    private LibrarianApiService librarianApiService;
+    private SupplierApiService supplierApiService;
 
-    private LibrarianService librarianService;
+    private SupplierService supplierService;
 
     private Stage loadingStage;
 
-    private final ObservableList<Librarian> librarianList = FXCollections.observableArrayList();
+    private final ObservableList<Supplier> supplierList = FXCollections.observableArrayList();
     private Timeline debounceTimeline;
 
-    private ObservableList<Librarian> masterData = FXCollections.observableArrayList();
-    private ObservableList<Librarian> filteredData = FXCollections.observableArrayList();
+    private ObservableList<Supplier> masterData = FXCollections.observableArrayList();
+    private ObservableList<Supplier> filteredData = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-        librarianApiService = new LibrarianApiService();
-        librarianService = new LibrarianService();
+        supplierApiService = new SupplierApiService();
 
         UserSession session = UserSession.getInstance();
-        addLibrarianButton.setVisible(session.hasPermission(Permission.LIBRARIAN_CREATE));
+        addSupplierButton.setVisible(session.hasPermission(Permission.LIBRARIAN_CREATE));
         setupTableColumns();
-        tableView.setItems(librarianList);
+        tableView.setItems(supplierList);
         setupComboBox();
         searchLibrarians();
         setupSearch();
     }
 
     private void setupTableColumns() {
-        colName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
-        colMSSV.setCellValueFactory(new PropertyValueFactory<>("userId"));
-        colDOB.setCellValueFactory(new PropertyValueFactory<>("birthDate"));
-        colCCCD.setCellValueFactory(new PropertyValueFactory<>("idCardNumber"));
-        colMajor.setCellValueFactory(new PropertyValueFactory<>("major"));
-        colWorkplace.setCellValueFactory(new PropertyValueFactory<>("workPlace"));
+        colSupplierName.setCellValueFactory(new PropertyValueFactory<>("supplierName"));
+        colContactPerson.setCellValueFactory(new PropertyValueFactory<>("contactPerson"));
+        colPhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
 
         String cellStyle = "-fx-alignment: CENTER;-fx-font-family: 'Segoe UI Regular'; -fx-font-size: 15px;";
-        colName.setStyle(cellStyle);
-        colMSSV.setStyle(cellStyle);
-        colDOB.setStyle(cellStyle);
-        colCCCD.setStyle(cellStyle);
-        colMajor.setStyle(cellStyle);
-        colWorkplace.setStyle(cellStyle);
+        colSupplierName.setStyle(cellStyle);
+        colContactPerson.setStyle(cellStyle);
+        colPhoneNumber.setStyle(cellStyle);
+        colEmail.setStyle(cellStyle);
+        colAddress.setStyle(cellStyle);
 
-        // Detail Col
-        colDetail.setCellFactory(tc -> new TableCell<>() {
-            private final Button detailBtn = createButton("Xem", "#4CAF50");
-            private final HBox container = new HBox(detailBtn);
-            {
-                container.setAlignment(Pos.CENTER);
-                detailBtn.setOnAction(e -> {
-                    Librarian librarian = getTableView().getItems().get(getIndex());
-                    showDetailDialog(librarian);
-                });
-            }
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || getTableRow() == null || getTableRow().getItem() == null) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(container);
-                }
-            }
-
-            {
-                detailBtn.setOnAction(e -> {
-                    Librarian librarian = getTableView().getItems().get(getIndex());
-                    showDetailDialog(librarian);
-                });
-            }
-        });
-        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
-        tableView.setRowFactory(tv -> new TableRow<>() {
-            {
-                setPrefHeight(50);
-            }
-        });
+//        // Detail Col
+//        colDetail.setCellFactory(tc -> new TableCell<>() {
+//            private final Button detailBtn = createButton("Xem", "#4CAF50");
+//            private final HBox container = new HBox(detailBtn);
+//            {
+//                container.setAlignment(Pos.CENTER);
+//                detailBtn.setOnAction(e -> {
+//                    Supplier supplier = getTableView().getItems().get(getIndex());
+////                    showDetailDialog(supplier);
+//                });
+//            }
+//            @Override
+//            protected void updateItem(Void item, boolean empty) {
+//                super.updateItem(item, empty);
+//                if (empty || getTableRow() == null || getTableRow().getItem() == null) {
+//                    setGraphic(null);
+//                } else {
+//                    setGraphic(container);
+//                }
+//            }
+//
+//            {
+//                detailBtn.setOnAction(e -> {
+//                    Supplier supplier = getTableView().getItems().get(getIndex());
+////                    showDetailDialog(supplier);
+//                });
+//            }
+//        });
+//        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+//        tableView.setRowFactory(tv -> new TableRow<>() {
+//            {
+//                setPrefHeight(50);
+//            }
+//        });
     }
 
     private Button createButton(String text, String color) {
@@ -140,7 +135,7 @@ public class LibrarianListController {
 
     private void searchLibrarians() {
         String keyword = searchField.getText().trim();
-        String fullName = keyword.isEmpty() ? null : keyword;
+        String supplierName = keyword.isEmpty() ? null : keyword;
 
         String gender = genderComboBox.getValue();
         if ("Tất cả".equals(gender)) gender = null;
@@ -149,15 +144,15 @@ public class LibrarianListController {
 
         String finalGender = gender;
 
-        Task<List<Librarian>> task = new Task<>() {
+        Task<List<Supplier>> task = new Task<>() {
             @Override
-            protected List<Librarian> call() throws Exception {
-                return librarianApiService.filterLibrarians(fullName, null, "APPROVED", finalGender);
+            protected List<Supplier> call() throws Exception {
+                return supplierApiService.filterSuppliers(supplierName, null);
             }
         };
         task.setOnSucceeded(e -> Platform.runLater(() -> {
-            List<Librarian> result = task.getValue();
-            librarianList.setAll(result != null ? result : List.of());
+            List<Supplier> result = task.getValue();
+            supplierList.setAll(result != null ? result : List.of());
             tableView.refresh();
 
             hideLoadingPopup();
@@ -193,9 +188,9 @@ public class LibrarianListController {
             filteredData.setAll(masterData);
         } else {
             String lowerCaseKeyword = keyword.toLowerCase();
-            List<Librarian> filtered = masterData.stream()
+            List<Supplier> filtered = masterData.stream()
                     .filter(r ->
-                            r.getFullName().toLowerCase().contains(lowerCaseKeyword)
+                            r.getSupplierName().toLowerCase().contains(lowerCaseKeyword)
                     )
                     .collect(Collectors.toList());
             filteredData.setAll(filtered);
@@ -213,24 +208,24 @@ public class LibrarianListController {
         debounceTimeline.play();
     }
 
-    private void showDetailDialog(Librarian librarian) {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/com/example/project/librarian_detail_form.fxml"));
-            Parent root = loader.load();
-            LibrarianDetailController controller = loader.getController();
-
-            controller.setLibrarian(librarian);
-            Stage stage = new Stage();
-            stage.setTitle("Chi tiết chuyên viên");
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
-            refreshTable();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    private void showDetailDialog(Supplier supplier) {
+//        try {
+//            FXMLLoader loader = new FXMLLoader();
+//            loader.setLocation(getClass().getResource("/com/example/project/supplier_detail_form.fxml"));
+//            Parent root = loader.load();
+//            SupplierDetailController controller = loader.getController();
+//
+//            controller.setSupplier(supplier);
+//            Stage stage = new Stage();
+//            stage.setTitle("Chi tiết chuyên viên");
+//            stage.initModality(Modality.APPLICATION_MODAL);
+//            stage.setScene(new Scene(root));
+//            stage.showAndWait();
+//            refreshTable();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     private void showLoadingPopup(String message) {
         ProgressIndicator progress = new ProgressIndicator();
@@ -271,19 +266,19 @@ public class LibrarianListController {
     }
 
     private void loadApprovalReaders() {
-        List<Librarian> approvedList = librarianService.getApprovedLibrarians();
+        List<Supplier> approvedList = supplierService.getSupplier();
         masterData = FXCollections.observableArrayList(approvedList);
         filteredData = FXCollections.observableArrayList(masterData);
         tableView.setItems(filteredData);
     }
 
     @FXML
-    protected void addLibrarian(ActionEvent event) {
+    protected void addSupplier(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/librarian_add_form.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
-            stage.setTitle("Thêm chuyên viên");
+            stage.setTitle("Thêm nhà cung cấp");
             stage.setScene(new Scene(root));
             stage.initOwner(((Node) event.getSource()).getScene().getWindow());
             stage.show();

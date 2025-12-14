@@ -10,7 +10,7 @@ import lombok.*;
 public class Supplier {
     private Long supplierId;
     private String supplierName;
-    private String contactName;
+    private String contactPerson;
     private String phoneNumber;
     private String email;
     private String address;

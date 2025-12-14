@@ -81,6 +81,29 @@ public class MenuBarController {
     }
 
     @FXML
+    private void openSupplierList(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/project/supplier_list_form.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((MenuItem) event.getSource())
+                    .getParentPopup().getOwnerWindow();
+
+            stage.setScene(scene);
+            stage.setTitle("Danh sách nhà cung cấp - Hệ thống quản lý thư viện");
+            stage.centerOnScreen();
+            stage.getIcons().add(new javafx.scene.image.Image(
+                    getClass().getResourceAsStream("/com/example/project/images/logo_HUB.png")
+            ));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     private void openDocumentListForm(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/project/document_list_form.fxml"));

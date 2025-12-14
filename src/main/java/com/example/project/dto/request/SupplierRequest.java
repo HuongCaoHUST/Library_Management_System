@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class SupplierRequest {
     private String supplierName;
-    private String contactName;
+    private String contactPerson;
     private String phoneNumber;
     private String email;
     private String address;
