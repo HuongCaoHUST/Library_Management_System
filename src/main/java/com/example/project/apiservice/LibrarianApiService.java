@@ -1,8 +1,8 @@
 package com.example.project.apiservice;
 
 import com.example.project.dto.ApiResponse;
-import com.example.project.dto.ChangePasswordRequest;
-import com.example.project.dto.RegisterRequest;
+import com.example.project.dto.request.ChangePasswordRequest;
+import com.example.project.dto.request.RegisterRequest;
 import com.example.project.model.Librarian;
 import com.example.project.security.UserSession;
 import com.fasterxml.jackson.core.type.TypeReference;

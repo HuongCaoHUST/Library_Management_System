@@ -2,7 +2,7 @@ package com.example.project.javafxcontroller;
 
 import com.example.project.apiservice.ReaderApiService;
 import com.example.project.dto.ApiResponse;
-import com.example.project.dto.RegisterRequest;
+import com.example.project.dto.request.RegisterRequest;
 import com.example.project.model.Reader;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,7 +11,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import com.example.project.service.ReaderService;
 import javafx.stage.Stage;
 
 import java.io.IOException;

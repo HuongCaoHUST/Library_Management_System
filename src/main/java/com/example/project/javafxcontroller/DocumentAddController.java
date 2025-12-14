@@ -2,8 +2,7 @@ package com.example.project.javafxcontroller;
 
 import com.example.project.apiservice.DocumentApiService;
 import com.example.project.dto.ApiResponse;
-import com.example.project.dto.DocumentRequest;
-import com.example.project.dto.RegisterRequest;
+import com.example.project.dto.request.DocumentRequest;
 import com.example.project.model.Document;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;

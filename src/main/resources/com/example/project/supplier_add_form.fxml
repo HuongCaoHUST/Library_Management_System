@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="683.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.javafxcontroller.LibrarianAddController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="302.0" prefWidth="683.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.javafxcontroller.LibrarianAddController">
     <children>
-        <Pane layoutX="57.0" layoutY="48.0" prefHeight="408.0" prefWidth="569.0" AnchorPane.bottomAnchor="47.0" AnchorPane.topAnchor="48.0">
+        <Pane layoutX="57.0" layoutY="36.0" prefHeight="230.0" prefWidth="569.0" AnchorPane.bottomAnchor="36.0" AnchorPane.topAnchor="36.0">
             <children>
-                <GridPane layoutX="13.0" layoutY="19.0" prefHeight="282.0" prefWidth="546.0">
+                <GridPane layoutX="13.0" layoutY="19.0" prefHeight="144.0" prefWidth="546.0">
                     <columnConstraints>
                         <ColumnConstraints percentWidth="20.0" prefWidth="76.0" />
                         <ColumnConstraints percentWidth="28.0" prefWidth="118.0" />
@@ -17,9 +23,6 @@
                         <ColumnConstraints percentWidth="28.0" prefWidth="212.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints prefHeight="47.0" />
-                        <RowConstraints prefHeight="47.0" />
-                        <RowConstraints prefHeight="47.0" />
                         <RowConstraints prefHeight="47.0" />
                         <RowConstraints prefHeight="47.0" />
                         <RowConstraints prefHeight="47.0" />
@@ -33,7 +36,7 @@
                         <TextField fx:id="txtSupplierName" prefHeight="28.0" GridPane.columnIndex="1" />
 
                         <Label text="Người đại diện:" textFill="#5383ff" GridPane.columnIndex="3" />
-                        <TextField fx:id="txContactPerson"  GridPane.columnIndex="4" />
+                        <TextField fx:id="txContactPerson" GridPane.columnIndex="4" />
 
                         <!-- Hàng 2 -->
                         <Label text="Số điện thoại:" textFill="#5383ff" GridPane.rowIndex="1" />
@@ -51,7 +54,7 @@
                     </children>
                 </GridPane>
 
-                <Button fx:id="btnOnAddLibrarian" onAction="#onAddLibrarian" defaultButton="true" layoutX="17.0" layoutY="327.0" mnemonicParsing="false"  prefHeight="34.0" prefWidth="535.0" stylesheets="@fullpackstyling.css" text="Thêm chuyên viên" />
+                      <Button fx:id="btnOnAddLibrarian" defaultButton="true" layoutX="19.0" layoutY="184.0" mnemonicParsing="false" onAction="#onAddLibrarian" prefHeight="34.0" prefWidth="535.0" stylesheets="@fullpackstyling.css" text="Thêm nhà cung cấp" />
             </children>
         </Pane>
     </children>

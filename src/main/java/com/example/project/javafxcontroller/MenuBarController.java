@@ -2,20 +2,17 @@ package com.example.project.javafxcontroller;
 
 import com.example.project.apiservice.LibrarianApiService;
 import com.example.project.dto.ApiResponse;
-import com.example.project.dto.RegisterRequest;
 import com.example.project.model.Librarian;
 import com.example.project.security.Permission;
 import com.example.project.security.UserSession;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
 import javafx.stage.Stage;
 import java.io.IOException;
 

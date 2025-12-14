@@ -1,10 +1,8 @@
 package com.example.project.apiservice;
 
 import com.example.project.dto.ApiResponse;
-import com.example.project.dto.DocumentRequest;
-import com.example.project.dto.RegisterRequest;
+import com.example.project.dto.request.DocumentRequest;
 import com.example.project.model.Document;
-import com.example.project.model.Librarian;
 import com.example.project.security.UserSession;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

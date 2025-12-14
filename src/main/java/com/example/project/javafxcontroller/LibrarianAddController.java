@@ -2,7 +2,7 @@ package com.example.project.javafxcontroller;
 
 import com.example.project.apiservice.LibrarianApiService;
 import com.example.project.dto.ApiResponse;
-import com.example.project.dto.RegisterRequest;
+import com.example.project.dto.request.RegisterRequest;
 import com.example.project.model.Librarian;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
