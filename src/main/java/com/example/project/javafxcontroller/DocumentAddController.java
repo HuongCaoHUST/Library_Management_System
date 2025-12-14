@@ -65,6 +65,7 @@ public class DocumentAddController {
         dto.setDocumentType(cbDocumentType.getValue());
         dto.setAccessLink(txtAccessLink.getText().trim());
         dto.setStatus(cbStatus.getValue());
+        dto.setAvailableCopies(0);
         return dto;
     }
 
