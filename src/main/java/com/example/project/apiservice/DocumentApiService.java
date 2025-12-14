@@ -70,7 +70,6 @@ public class DocumentApiService {
                 .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println(response);
         return mapper.readValue(
                 response.body(),
                 new TypeReference<ApiResponse<Document>>() {}
