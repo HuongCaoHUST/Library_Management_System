@@ -1,14 +1,17 @@
 package com.example.project.dto;
 
 import com.example.project.model.User;
+import lombok.Getter;
 
+@Getter
 public class UserResponse {
-    private Long userId;
-    private String fullName;
-    private String username;
-    private String email;
-    private String role;
-    private String status;
+
+    private final Long userId;
+    private final String fullName;
+    private final String username;
+    private final String email;
+    private final String role;
+    private final String status;
 
     public UserResponse(User user) {
         this.userId = user.getUserId();
@@ -18,12 +21,5 @@ public class UserResponse {
         this.role = user.getRole().name();
         this.status = user.getStatus();
     }
-
-    public Long getUserId() { return userId; }
-    public String getFullName() { return fullName; }
-    public String getUsername() { return username; }
-    public String getEmail() { return email; }
-    public String getRole() { return role; }
-    public String getStatus() { return status; }
 }
 

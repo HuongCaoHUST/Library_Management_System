@@ -43,14 +43,14 @@ public class DocumentController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<ApiResponse<DocumentResponse>> createDocument(
+    public ResponseEntity<ApiResponse<DocumentResponseForAdd>> createDocument(
             @Valid @RequestBody DocumentRequest request) {
 
         Document entity = documentMapper.toEntity(request);
         Document saved = documentService.save(entity);
-        DocumentResponse response = documentMapper.toResponse(saved);
 
-        return ResponseEntity.ok(new ApiResponse<>(true, "Đăng ký thành công", response));
+        DocumentResponseForAdd responseDTO = new DocumentResponseForAdd(saved);
+        return ResponseEntity.ok(new ApiResponse<>(true, "Đăng ký thành công", responseDTO));
     }
 
     @PostMapping("/bulk")
