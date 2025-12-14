@@ -22,7 +22,7 @@ public class SupplierService {
             throw new IllegalArgumentException("Email nhà cung cấp đã tồn tại");
         }
 
-        if (repository.existsByPhone(request.getPhone())) {
+        if (repository.existsByPhoneNumber(request.getPhoneNumber())) {
             throw new IllegalArgumentException("Số điện thoại đã tồn tại");
         }
         Supplier supplier = mapper.toEntity(request);
