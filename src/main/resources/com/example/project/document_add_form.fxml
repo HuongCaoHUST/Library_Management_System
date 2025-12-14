@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="683.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.javafxcontroller.DocumentAddController">
+    <children>
+        <Pane layoutX="57.0" layoutY="48.0" prefHeight="408.0" prefWidth="569.0" AnchorPane.bottomAnchor="47.0" AnchorPane.topAnchor="48.0">
+            <children>
+                <GridPane layoutX="13.0" layoutY="19.0" prefHeight="282.0" prefWidth="546.0">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="20.0" prefWidth="76.0" />
+                        <ColumnConstraints percentWidth="28.0" prefWidth="118.0" />
+                        <ColumnConstraints percentWidth="3.0" prefWidth="118.0" />
+                        <ColumnConstraints percentWidth="20.0" prefWidth="151.0" />
+                        <ColumnConstraints percentWidth="28.0" prefWidth="212.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints prefHeight="47.0" />
+                        <RowConstraints prefHeight="47.0" />
+                        <RowConstraints prefHeight="47.0" />
+                        <RowConstraints prefHeight="47.0" />
+                        <RowConstraints prefHeight="47.0" />
+                        <RowConstraints prefHeight="47.0" />
+                    </rowConstraints>
+
+                    <children>
+                        <!-- Hàng 1 -->
+                        <Label text="Tên tài liệu:" textFill="#5383ff">
+                            <font><Font name="Segoe UI" size="12.0" /></font>
+                        </Label>
+                        <TextField fx:id="txtTitle" prefHeight="28.0" GridPane.columnIndex="1" />
+
+                        <Label text="Tác giả:" textFill="#5383ff" GridPane.columnIndex="3" />
+                        <TextField fx:id="txtAuthor" prefWidth="150.0" GridPane.columnIndex="4" />
+
+                        <!-- Hàng 2 -->
+                        <Label text="Nhà xuất bản:" textFill="#5383ff" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="cbPublisher" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                        <Label text="Năm xuất bản:" textFill="#5383ff" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtPublicationYear" prefHeight="28.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+
+                        <!-- Hàng 3 -->
+                        <Label text="Số hiệu phân loại:" textFill="#5383ff" GridPane.rowIndex="2">
+                            <font><Font name="Segoe UI" size="12.0" /></font>
+                        </Label>
+                        <TextField fx:id="txtClassificationNumber" prefHeight="28.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                        <Label text="Thể loại:" textFill="#5383ff" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                            <font><Font name="Segoe UI" size="12.0" /></font>
+                        </Label>
+                        <TextField fx:id="txtCategory" prefHeight="28.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+
+                        <!-- Hàng 4 -->
+                        <Label text="Vị trí trên kệ:" textFill="#5383ff" GridPane.rowIndex="3">
+                            <font><Font name="Segoe UI" size="12.0" /></font>
+                        </Label>
+                        <TextField fx:id="txtShelfLocation" prefHeight="28.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                        <Label text="Loại tài liệu (in/số):" textFill="#5383ff" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                            <font><Font name="Segoe UI" size="12.0" /></font>
+                        </Label>
+                        <ComboBox fx:id="cbDocumentType" prefHeight="28.0" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+
+                        <!-- Hàng 5 -->
+                        <Label text="Liên kết truy cập:" textFill="#5383ff" GridPane.rowIndex="4">
+                            <font><Font name="Segoe UI" size="12.0" /></font>
+                        </Label>
+                        <TextField fx:id="txtAccessLink" prefHeight="28.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+                        <Label text="Trạng thái:" textFill="#5383ff" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                            <font><Font name="Segoe UI" size="12.0" /></font>
+                        </Label>
+                        <ComboBox fx:id="cbStatus" prefHeight="28.0" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                    </children>
+                </GridPane>
+
+                <Button fx:id="btnOnAddDocument" defaultButton="true" layoutX="17.0" layoutY="327.0" mnemonicParsing="false" onAction="#onAddDocument" prefHeight="34.0" prefWidth="535.0" stylesheets="@fullpackstyling.css" text="Thêm tài liệu" />
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

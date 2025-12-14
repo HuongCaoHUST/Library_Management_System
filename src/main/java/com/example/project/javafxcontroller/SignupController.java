@@ -32,9 +32,6 @@ public class SignupController {
     @FXML private TextField txtAddress;
     @FXML private Button btnSignup;
 
-    private ReaderService readerService;
-
-
     @FXML
     public void initialize() {
         cbGender.getItems().addAll("Nam", "Nữ", "Khác");

@@ -1,15 +1,13 @@
 package com.example.project.javafxcontroller;
 
 import com.example.project.apiservice.LibrarianApiService;
-import com.example.project.apiservice.ReaderApiService;
 import com.example.project.dto.ApiResponse;
 import com.example.project.dto.RegisterRequest;
 import com.example.project.model.Librarian;
-import com.example.project.model.Reader;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 
-public class AddLibrarianController extends SignupController {
+public class LibrarianAddController extends SignupController {
 
     @FXML
     public void initialize() {
@@ -17,7 +15,7 @@ public class AddLibrarianController extends SignupController {
     }
 
     @FXML
-    private void onAddLibrarian() {
+    private void onAddDocument() {
         if (!validateForm()) {
             return;
         }

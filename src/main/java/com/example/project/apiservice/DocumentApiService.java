@@ -1,6 +1,10 @@
 package com.example.project.apiservice;
 
+import com.example.project.dto.ApiResponse;
+import com.example.project.dto.DocumentRequest;
+import com.example.project.dto.RegisterRequest;
 import com.example.project.model.Document;
+import com.example.project.model.Librarian;
 import com.example.project.security.UserSession;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -50,5 +54,28 @@ public class DocumentApiService {
         } else {
             throw new RuntimeException("Lỗi API: " + response.statusCode());
         }
+    }
+
+    public ApiResponse<Document> addDocument(DocumentRequest requestDto) throws Exception {
+        String url = "http://localhost:8081/api/documents";
+
+        String jsonBody = mapper.writeValueAsString(requestDto);
+        System.out.println(jsonBody);
+
+        String token = UserSession.getInstance().getToken();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + token)
+                .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println("Response: " + response.body());
+
+        return mapper.readValue(
+                response.body(),
+                new TypeReference<ApiResponse<Document>>() {}
+        );
     }
 }
