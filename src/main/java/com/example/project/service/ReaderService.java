@@ -1,5 +1,8 @@
 package com.example.project.service;
 
+import com.example.project.dto.request.ReaderRequest;
+import com.example.project.mapper.LibrarianMapper;
+import com.example.project.mapper.ReaderMapper;
 import com.example.project.model.Librarian;
 import com.example.project.model.Reader;
 import com.example.project.security.Role;
@@ -7,8 +10,8 @@ import com.example.project.repository.ReaderRepository;
 import com.example.project.specification.ReaderSpecification;
 import com.example.project.util.PasswordUtils;
 import com.example.project.util.SendEmail;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -25,21 +28,18 @@ public class ReaderService {
         return repository.findAll();
     }
 
-    public Optional<Reader> findById(Long id) {
-        return repository.findById(id);
-    }
-
     public Reader save(Reader reader) {
         return repository.save(reader);
     }
 
-    public void delete(Long id) {
-        repository.deleteById(id);
-    }
+//    public void delete(Long id) {
+//        repository.deleteById(id);
+//    }
 
     private final ReaderRepository repository;
     private final LibrarianService librarianService;
     private final SendEmail sendEmail;
+    private final ReaderMapper mapper;
 
     public Reader registerReader(Reader inputReader) {
         String email = inputReader.getEmail().trim().toLowerCase();
@@ -104,6 +104,20 @@ public class ReaderService {
                 .and(ReaderSpecification.hasGender(gender));
 
         return repository.findAll(spec);
+    }
+
+    public Reader updatePatch(Long id, ReaderRequest request) {
+        Reader reader = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy bạn đọc"));
+        mapper.patch(reader, request);
+        return repository.save(reader);
+    }
+
+    public void delete(Long id) {
+        if (!repository.existsById(id)) {
+            throw new IllegalArgumentException("Không tìm thấy bạn đọc");
+        }
+        repository.deleteById(id);
     }
 
     public boolean existsByUsername(String username) {

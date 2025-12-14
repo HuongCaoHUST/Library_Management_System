@@ -1,10 +1,18 @@
 package com.example.project.controller;
 
 import com.example.project.dto.ApiResponse;
+import com.example.project.dto.request.LibrarianRequest;
+import com.example.project.dto.request.ReaderRequest;
+import com.example.project.dto.response.LibrarianResponse;
+import com.example.project.dto.response.ReaderResponse;
 import com.example.project.dto.response.ReaderResponseForFilter;
+import com.example.project.mapper.LibrarianMapper;
+import com.example.project.mapper.ReaderMapper;
+import com.example.project.model.Librarian;
 import com.example.project.model.Reader;
 import com.example.project.dto.response.UserResponse;
 import com.example.project.service.ReaderService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,9 +24,16 @@ import java.util.List;
 public class ReaderController {
 
     private final ReaderService readerService;
+    private final ReaderMapper mapper;
 
-    public ReaderController(ReaderService readerService) {
+    public ReaderController(ReaderService readerService, ReaderMapper mapper) {
         this.readerService = readerService;
+        this.mapper = mapper;
+    }
+
+    @GetMapping("/test")
+    public String testEndpoint() {
+        return "ReaderController is working!";
     }
 
     @GetMapping("/filter")
@@ -52,8 +67,18 @@ public class ReaderController {
         return ResponseEntity.ok(new ApiResponse<>(true, "Đăng ký thành công", responseDTO));
     }
 
-    @GetMapping("/test")
-    public String testEndpoint() {
-        return "ReaderController is working!";
+    @PatchMapping("/{id}")
+    public ResponseEntity<ApiResponse<ReaderResponse>> patchLibrarian(
+            @PathVariable Long id,
+            @Valid @RequestBody ReaderRequest request) {
+        Reader updated = readerService.updatePatch(id, request);
+        return ResponseEntity.ok(new ApiResponse<>(true, "Cập nhật thành công!", mapper.toResponse(updated)));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<Void>> deleteLibrarian(@PathVariable Long id) {
+
+        readerService.delete(id);
+        return ResponseEntity.ok(new ApiResponse<>(true, "Xóa librarian thành công!", null));
     }
 }

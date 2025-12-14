@@ -22,7 +22,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/librarians")
 @CrossOrigin(origins = "*")
-//@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasRole('ADMIN')")
 public class LibrarianController {
 
     private final LibrarianService librarianService;
@@ -109,7 +109,6 @@ public class LibrarianController {
     public ResponseEntity<ApiResponse<LibrarianResponse>> patchLibrarian(
             @PathVariable Long id,
             @Valid @RequestBody LibrarianRequest request) {
-        System.out.println("CHECK");
         Librarian updated = librarianService.updatePatch(id, request);
         return ResponseEntity.ok(new ApiResponse<>(true, "Cập nhật thành công!", mapper.toResponse(updated)));
     }

@@ -1,5 +1,6 @@
 package com.example.project.repository;
 
+import com.example.project.model.Librarian;
 import com.example.project.model.Reader;
 import com.example.project.model.Reader;
 import org.springframework.data.jpa.repository.JpaRepository;
