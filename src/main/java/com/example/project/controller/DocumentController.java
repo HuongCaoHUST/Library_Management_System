@@ -50,7 +50,7 @@ public class DocumentController {
         Document saved = documentService.save(entity);
 
         DocumentResponseForAdd responseDTO = new DocumentResponseForAdd(saved);
-        return ResponseEntity.ok(new ApiResponse<>(true, "Đăng ký thành công", responseDTO));
+        return ResponseEntity.ok(new ApiResponse<>(true, "Thêm tài liệu thành công", responseDTO));
     }
 
     @PostMapping("/bulk")
