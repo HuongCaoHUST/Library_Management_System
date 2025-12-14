@@ -1,9 +1,9 @@
 package com.example.project.controller;
 
 import com.example.project.dto.ApiResponse;
-import com.example.project.dto.ReaderResponseForFilter;
+import com.example.project.dto.response.ReaderResponseForFilter;
 import com.example.project.model.Reader;
-import com.example.project.dto.UserResponse;
+import com.example.project.dto.response.UserResponse;
 import com.example.project.service.ReaderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

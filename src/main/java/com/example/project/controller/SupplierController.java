@@ -1,12 +1,9 @@
 package com.example.project.controller;
 
 import com.example.project.dto.ApiResponse;
-import com.example.project.dto.DocumentResponseForAdd;
-import com.example.project.dto.UserResponse;
 import com.example.project.dto.request.SupplierRequest;
 import com.example.project.dto.response.SupplierResponse;
 import com.example.project.mapper.SupplierMapper;
-import com.example.project.model.Document;
 import com.example.project.model.Supplier;
 import com.example.project.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;

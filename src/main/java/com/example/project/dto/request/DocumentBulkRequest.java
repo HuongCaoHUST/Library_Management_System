@@ -1,6 +1,5 @@
 package com.example.project.dto.request;
 
-import com.example.project.dto.DocumentRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;

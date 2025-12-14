@@ -2,8 +2,8 @@ package com.example.project.controller;
 
 import com.example.project.dto.ApiResponse;
 import com.example.project.dto.request.ChangePasswordRequest;
-import com.example.project.dto.LibrarianResponseForFilter;
-import com.example.project.dto.UserResponse;
+import com.example.project.dto.response.LibrarianResponseForFilter;
+import com.example.project.dto.response.UserResponse;
 import com.example.project.model.Librarian;
 import com.example.project.service.LibrarianService;
 import org.springframework.http.ResponseEntity;

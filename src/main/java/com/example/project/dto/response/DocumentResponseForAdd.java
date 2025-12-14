@@ -1,7 +1,6 @@
-package com.example.project.dto;
+package com.example.project.dto.response;
 
 import com.example.project.model.Document;
-import com.example.project.model.User;
 import lombok.Getter;
 
 @Getter
