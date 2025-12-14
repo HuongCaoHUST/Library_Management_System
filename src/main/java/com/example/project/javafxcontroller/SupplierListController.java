@@ -63,13 +63,14 @@ public class SupplierListController {
     @FXML
     public void initialize() {
         supplierApiService = new SupplierApiService();
+        supplierService = new SupplierService();
 
         UserSession session = UserSession.getInstance();
         addSupplierButton.setVisible(session.hasPermission(Permission.LIBRARIAN_CREATE));
         setupTableColumns();
         tableView.setItems(supplierList);
         setupComboBox();
-        searchLibrarians();
+        searchSuppliers();
         setupSearch();
     }
 
@@ -87,40 +88,40 @@ public class SupplierListController {
         colEmail.setStyle(cellStyle);
         colAddress.setStyle(cellStyle);
 
-//        // Detail Col
-//        colDetail.setCellFactory(tc -> new TableCell<>() {
-//            private final Button detailBtn = createButton("Xem", "#4CAF50");
-//            private final HBox container = new HBox(detailBtn);
-//            {
-//                container.setAlignment(Pos.CENTER);
-//                detailBtn.setOnAction(e -> {
-//                    Supplier supplier = getTableView().getItems().get(getIndex());
-////                    showDetailDialog(supplier);
-//                });
-//            }
-//            @Override
-//            protected void updateItem(Void item, boolean empty) {
-//                super.updateItem(item, empty);
-//                if (empty || getTableRow() == null || getTableRow().getItem() == null) {
-//                    setGraphic(null);
-//                } else {
-//                    setGraphic(container);
-//                }
-//            }
-//
-//            {
-//                detailBtn.setOnAction(e -> {
-//                    Supplier supplier = getTableView().getItems().get(getIndex());
-////                    showDetailDialog(supplier);
-//                });
-//            }
-//        });
-//        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
-//        tableView.setRowFactory(tv -> new TableRow<>() {
-//            {
-//                setPrefHeight(50);
-//            }
-//        });
+        // Detail Col
+        colDetail.setCellFactory(tc -> new TableCell<>() {
+            private final Button detailBtn = createButton("Xem", "#4CAF50");
+            private final HBox container = new HBox(detailBtn);
+            {
+                container.setAlignment(Pos.CENTER);
+                detailBtn.setOnAction(e -> {
+                    Supplier supplier = getTableView().getItems().get(getIndex());
+                    showDetailDialog(supplier);
+                });
+            }
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || getTableRow() == null || getTableRow().getItem() == null) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(container);
+                }
+            }
+
+            {
+                detailBtn.setOnAction(e -> {
+                    Supplier supplier = getTableView().getItems().get(getIndex());
+                    showDetailDialog(supplier);
+                });
+            }
+        });
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+        tableView.setRowFactory(tv -> new TableRow<>() {
+            {
+                setPrefHeight(50);
+            }
+        });
     }
 
     private Button createButton(String text, String color) {
@@ -133,7 +134,7 @@ public class SupplierListController {
     }
 
 
-    private void searchLibrarians() {
+    private void searchSuppliers() {
         String keyword = searchField.getText().trim();
         String supplierName = keyword.isEmpty() ? null : keyword;
 
@@ -199,33 +200,33 @@ public class SupplierListController {
 
     private void setupComboBox() {
         genderComboBox.setItems(FXCollections.observableArrayList("Tất cả", "Nam", "Nữ"));
-        genderComboBox.setOnAction(e -> searchLibrarians());
+        genderComboBox.setOnAction(e -> searchSuppliers());
     }
 
     private void debounceSearch() {
         if (debounceTimeline != null) debounceTimeline.stop();
-        debounceTimeline = new Timeline(new KeyFrame(Duration.millis(400), e -> searchLibrarians()));
+        debounceTimeline = new Timeline(new KeyFrame(Duration.millis(400), e -> searchSuppliers()));
         debounceTimeline.play();
     }
 
-//    private void showDetailDialog(Supplier supplier) {
-//        try {
-//            FXMLLoader loader = new FXMLLoader();
-//            loader.setLocation(getClass().getResource("/com/example/project/supplier_detail_form.fxml"));
-//            Parent root = loader.load();
-//            SupplierDetailController controller = loader.getController();
-//
-//            controller.setSupplier(supplier);
-//            Stage stage = new Stage();
-//            stage.setTitle("Chi tiết chuyên viên");
-//            stage.initModality(Modality.APPLICATION_MODAL);
-//            stage.setScene(new Scene(root));
-//            stage.showAndWait();
-//            refreshTable();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    private void showDetailDialog(Supplier supplier) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/com/example/project/supplier_detail_form.fxml"));
+            Parent root = loader.load();
+            SupplierDetailController controller = loader.getController();
+
+            controller.setSupplier(supplier);
+            Stage stage = new Stage();
+            stage.setTitle("Chi tiết chuyên viên");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+            refreshTable();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private void showLoadingPopup(String message) {
         ProgressIndicator progress = new ProgressIndicator();

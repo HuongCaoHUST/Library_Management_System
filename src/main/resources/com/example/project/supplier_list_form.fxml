@@ -24,10 +24,11 @@
                 <TableView fx:id="tableView" prefHeight="571.0" prefWidth="1220.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
                         <TableColumn fx:id="colSupplierName" prefWidth="200.0" text="Tên nhà cung cấp" />
-                        <TableColumn fx:id="colContactPerson" prefWidth="100" text="Người liên hệ" />
+                        <TableColumn fx:id="colContactPerson" prefWidth="100" text="Người đại diện" />
                         <TableColumn fx:id="colPhoneNumber" prefWidth="150.0" text="SĐT" />
                         <TableColumn fx:id="colEmail" prefWidth="200.0" text="EMAIL" />
                         <TableColumn fx:id="colAddress" prefWidth="200.0" text="Địa chỉ" />
+                        <TableColumn fx:id="colDetail" prefWidth="100.0" text="Chi tiết" />
                     </columns>
                 </TableView>
             </children>

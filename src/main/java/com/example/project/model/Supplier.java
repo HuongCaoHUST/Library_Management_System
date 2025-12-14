@@ -14,4 +14,5 @@ public class Supplier {
     private String phoneNumber;
     private String email;
     private String address;
+    private Boolean active;
 }
