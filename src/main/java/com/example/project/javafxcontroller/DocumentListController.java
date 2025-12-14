@@ -3,7 +3,6 @@ import com.example.project.model.Document;
 import com.example.project.apiservice.DocumentApiService;
 import com.example.project.security.Permission;
 import com.example.project.security.UserSession;
-import com.example.project.service.DocumentService;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -50,7 +49,6 @@ public class DocumentListController {
     @FXML private Button addDocumentButton;
 
     private DocumentApiService documentApiService;
-    private DocumentService documentService;
 
     private Stage loadingStage;
 
@@ -62,7 +60,6 @@ public class DocumentListController {
     @FXML
     public void initialize() {
         documentApiService = new DocumentApiService();
-        documentService = new DocumentService();
 
         UserSession session = UserSession.getInstance();
         addDocumentButton.setVisible(session.hasPermission(Permission.DOCUMENT_CREATE));
