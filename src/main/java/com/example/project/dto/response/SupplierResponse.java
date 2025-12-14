@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class SupplierResponse {
     private Long supplierId;
     private String supplierName;
-    private String phone;
+    private String phoneNumber;
     private String email;
     private String contactPerson;
     private String address;

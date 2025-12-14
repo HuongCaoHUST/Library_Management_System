@@ -22,7 +22,7 @@ public class Supplier {
     private String supplierName;
 
     @Column(unique = true)
-    private String phone;
+    private String phoneNumber;
 
     @Column(unique = true)
     private String email;
