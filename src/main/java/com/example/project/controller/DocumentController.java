@@ -43,7 +43,7 @@ public class DocumentController {
         return "DocumentsController is working!";
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<DocumentResponse> createDocument(
             @Valid @RequestBody DocumentRequest request) {
 
