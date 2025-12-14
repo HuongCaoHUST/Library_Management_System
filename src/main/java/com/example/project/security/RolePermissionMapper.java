@@ -19,7 +19,10 @@ public class RolePermissionMapper {
                     Permission.DOCUMENT_VIEW,
                     Permission.DOCUMENT_CREATE,
                     Permission.DOCUMENT_UPDATE,
-                    Permission.DOCUMENT_DELETE
+                    Permission.DOCUMENT_DELETE,
+
+                    Permission.SUPPLIER_VIEW,
+                    Permission.SUPPLIER_CREATE
             );
 
             case "READER" -> EnumSet.of(
