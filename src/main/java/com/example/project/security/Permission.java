@@ -1,10 +1,10 @@
 package com.example.project.security;
 
 public enum Permission {
-    BOOK_VIEW,
-    BOOK_CREATE,
-    BOOK_UPDATE,
-    BOOK_DELETE,
+    DOCUMENT_VIEW,
+    DOCUMENT_CREATE,
+    DOCUMENT_UPDATE,
+    DOCUMENT_DELETE,
 
     READER_VIEW,
     READER_CREATE,

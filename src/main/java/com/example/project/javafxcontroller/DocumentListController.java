@@ -2,6 +2,8 @@ package com.example.project.javafxcontroller;
 import com.example.project.apiservice.LibrarianApiService;
 import com.example.project.model.Document;
 import com.example.project.apiservice.DocumentApiService;
+import com.example.project.security.Permission;
+import com.example.project.security.UserSession;
 import com.example.project.service.DocumentService;
 import com.example.project.service.LibrarianService;
 import javafx.animation.KeyFrame;
@@ -10,10 +12,12 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -27,6 +31,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -47,6 +52,7 @@ public class DocumentListController {
     @FXML private TextField searchField;
     @FXML private Button searchButton;
     @FXML private ComboBox<String> documentTypeComboBox;
+    @FXML private Button addDocumentButton;
 
     private DocumentApiService documentApiService;
     private DocumentService documentService;
@@ -62,6 +68,9 @@ public class DocumentListController {
     public void initialize() {
         documentApiService = new DocumentApiService();
         documentService = new DocumentService();
+
+        UserSession session = UserSession.getInstance();
+        addDocumentButton.setVisible(session.hasPermission(Permission.DOCUMENT_CREATE));
 
         setupTableColumns();
         tableView.setItems(documentList);
@@ -242,6 +251,21 @@ public class DocumentListController {
         if (loadingStage != null && loadingStage.isShowing()) {
             loadingStage.close();
             loadingStage = null;
+        }
+    }
+
+    @FXML
+    protected void addDocument(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/add_librarian_form.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Thêm tài liệu");
+            stage.setScene(new Scene(root));
+            stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
