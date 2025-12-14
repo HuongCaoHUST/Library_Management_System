@@ -21,7 +21,7 @@ LibraryManagementSystem/
 │  │  │       │   ├─ Member.java
 │  │  │       │   └─ Loan.java
 │  │  │       │
-│  │  │       ├─ repository/
+│  │  │       ├─ supplierRepository/
 │  │  │       │   ├─ BookRepository.java
 │  │  │       │   ├─ AuthorRepository.java
 │  │  │       │   ├─ CategoryRepository.java
@@ -76,7 +76,7 @@ LibraryManagementSystem/
 | ------------------------- | ------------------------------------------------------------ |
 | **HelloApplication.java** | Điểm khởi đầu ứng dụng (Spring Boot + JavaFX).               |
 | **model/**                | Các lớp thực thể (Book, Member, Loan, Author, Category).     |
-| **repository/**           | Các interface giao tiếp DB dùng Spring Data JPA.             |
+| **supplierRepository/**           | Các interface giao tiếp DB dùng Spring Data JPA.             |
 | **service/**              | Chứa logic nghiệp vụ chính (mượn/trả, kiểm tra quá hạn,...). |
 | **controller/**           | REST API endpoints cho backend.                              |
 | **javafx/**               | Mã giao diện JavaFX (FXML + controller + gọi API).           |
