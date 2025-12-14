@@ -19,7 +19,7 @@ public class DocumentRequest {
     private String ddcNumber;
     private String cutterCode;
 
-    @NotNull @Min(0)
+    @NotNull
     private Integer availableCopies;
 
     @Min(0)
