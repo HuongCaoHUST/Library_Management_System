@@ -1,5 +1,7 @@
 package com.example.project.service;
 
+import com.example.project.dto.request.LibrarianRequest;
+import com.example.project.mapper.LibrarianMapper;
 import com.example.project.model.Librarian;
 import com.example.project.model.Reader;
 import com.example.project.repository.LibrarianRepository;
@@ -7,6 +9,7 @@ import com.example.project.security.Role;
 import com.example.project.specification.LibrarianSpecification;
 import com.example.project.util.PasswordUtils;
 import com.example.project.util.SendEmail;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -21,6 +24,7 @@ import java.util.Optional;
 public class LibrarianService {
     private final LibrarianRepository repository;
     private final SendEmail sendEmail;
+    private final LibrarianMapper mapper;
 
     public List<Librarian> findAll() {
         return repository.findAll();
@@ -37,9 +41,9 @@ public class LibrarianService {
         return repository.save(librarian);
     }
 
-    public void delete(Long id) {
-        repository.deleteById(id);
-    }
+//    public void delete(Long id) {
+//        repository.deleteById(id);
+//    }
 
     public List<Librarian> filterLibrarians(String fullName, String email, String status, String gender) {
         Specification<Librarian> spec = Specification
@@ -96,6 +100,20 @@ public class LibrarianService {
                 + "Thân mến,\nPhòng Thư viện";
 
         sendEmail.sendMail("huongcao.seee@gmail.com", subject, body);
+    }
+
+    public Librarian updatePatch(Long id, LibrarianRequest request) {
+        Librarian librarian = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy thủ thư"));
+        mapper.patch(librarian, request);
+        return repository.save(librarian);
+    }
+
+    public void delete(Long id) {
+        if (!repository.existsById(id)) {
+            throw new IllegalArgumentException("Không tìm thấy thủ thư");
+        }
+        repository.deleteById(id);
     }
 
     public boolean existsByUsername(String username) {

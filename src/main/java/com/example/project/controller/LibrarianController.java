@@ -2,10 +2,14 @@ package com.example.project.controller;
 
 import com.example.project.dto.ApiResponse;
 import com.example.project.dto.request.ChangePasswordRequest;
+import com.example.project.dto.request.LibrarianRequest;
+import com.example.project.dto.response.LibrarianResponse;
 import com.example.project.dto.response.LibrarianResponseForFilter;
 import com.example.project.dto.response.UserResponse;
+import com.example.project.mapper.LibrarianMapper;
 import com.example.project.model.Librarian;
 import com.example.project.service.LibrarianService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -18,15 +22,23 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/librarians")
 @CrossOrigin(origins = "*")
-@PreAuthorize("hasRole('ADMIN')")
+//@PreAuthorize("hasRole('ADMIN')")
 public class LibrarianController {
 
     private final LibrarianService librarianService;
     private final PasswordEncoder passwordEncoder;
 
-    public LibrarianController(LibrarianService librarianService, PasswordEncoder passwordEncoder) {
+    private final LibrarianMapper mapper;
+
+    public LibrarianController(LibrarianService librarianService, PasswordEncoder passwordEncoder, LibrarianMapper mapper) {
         this.librarianService = librarianService;
         this.passwordEncoder = passwordEncoder;
+        this.mapper = mapper;
+    }
+
+    @GetMapping("/test")
+    public String testEndpoint() {
+        return "Librarian Controller is working!";
     }
 
     @GetMapping("/filter")
@@ -93,9 +105,19 @@ public class LibrarianController {
         return ResponseEntity.ok(new ApiResponse<>(true, "Password changed successfully", null));
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<ApiResponse<LibrarianResponse>> patchLibrarian(
+            @PathVariable Long id,
+            @Valid @RequestBody LibrarianRequest request) {
+        System.out.println("CHECK");
+        Librarian updated = librarianService.updatePatch(id, request);
+        return ResponseEntity.ok(new ApiResponse<>(true, "Cập nhật thành công!", mapper.toResponse(updated)));
+    }
 
-    @GetMapping("/test")
-    public String testEndpoint() {
-        return "LibrarianController is working!";
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<Void>> deleteLibrarian(@PathVariable Long id) {
+
+        librarianService.delete(id);
+        return ResponseEntity.ok(new ApiResponse<>(true, "Xóa librarian thành công!", null));
     }
 }
