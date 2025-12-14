@@ -33,6 +33,6 @@
                 </TableView>
             </children>
         </AnchorPane>
-      <Button fx:id="addSupplierButton" onAction="#addSupplier" layoutX="1183.0" layoutY="180.0" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Thêm chuyên viên" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="180.0" />
+      <Button fx:id="addSupplierButton" onAction="#addSupplier" layoutX="1183.0" layoutY="180.0" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Thêm nhà cung cấp" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="180.0" />
         </children>
 </AnchorPane>

@@ -276,7 +276,7 @@ public class SupplierListController {
     @FXML
     protected void addSupplier(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/librarian_add_form.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/supplier_add_form.fxml"));
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Thêm nhà cung cấp");
