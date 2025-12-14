@@ -66,7 +66,7 @@ public class SupplierListController {
         supplierService = new SupplierService();
 
         UserSession session = UserSession.getInstance();
-        addSupplierButton.setVisible(session.hasPermission(Permission.LIBRARIAN_CREATE));
+        addSupplierButton.setVisible(session.hasPermission(Permission.SUPPLIER_CREATE));
         setupTableColumns();
         tableView.setItems(supplierList);
         setupComboBox();
