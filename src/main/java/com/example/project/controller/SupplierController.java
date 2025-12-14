@@ -1,12 +1,16 @@
 package com.example.project.controller;
 
 import com.example.project.dto.ApiResponse;
+import com.example.project.dto.request.ReaderRequest;
 import com.example.project.dto.request.SupplierRequest;
+import com.example.project.dto.response.ReaderResponse;
 import com.example.project.dto.response.SupplierResponse;
 import com.example.project.mapper.SupplierMapper;
 import com.example.project.model.Document;
+import com.example.project.model.Reader;
 import com.example.project.model.Supplier;
 import com.example.project.service.SupplierService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +23,11 @@ public class SupplierController {
 
     private final SupplierService supplierService;
 
-    @Autowired
     private SupplierMapper mapper;
 
-    public SupplierController(SupplierService supplierService) {
+    public SupplierController(SupplierService supplierService,  SupplierMapper mapper) {
         this.supplierService = supplierService;
+        this.mapper = mapper;
     }
 
     @GetMapping("/test")
@@ -48,5 +52,20 @@ public class SupplierController {
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.ok(new ApiResponse<>(false, ex.getMessage(), null));
         }
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ApiResponse<SupplierResponse>> patchLibrarian(
+            @PathVariable Long id,
+            @Valid @RequestBody SupplierRequest request) {
+        Supplier updated = supplierService.updatePatch(id, request);
+        return ResponseEntity.ok(new ApiResponse<>(true, "Cập nhật thành công!", mapper.toResponse(updated)));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<Void>> deleteLibrarian(@PathVariable Long id) {
+
+        supplierService.delete(id);
+        return ResponseEntity.ok(new ApiResponse<>(true, "Xóa nhà cung cấp thành công!", null));
     }
 }

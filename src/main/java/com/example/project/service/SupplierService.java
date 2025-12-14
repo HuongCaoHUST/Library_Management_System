@@ -2,11 +2,10 @@ package com.example.project.service;
 
 import com.example.project.dto.request.SupplierRequest;
 import com.example.project.mapper.SupplierMapper;
-import com.example.project.model.Document;
 import com.example.project.model.Supplier;
 import com.example.project.repository.SupplierRepository;
-import com.example.project.specification.DocumentSpecification;
 import com.example.project.specification.SupplierSpecification;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -36,20 +35,26 @@ public class SupplierService {
         return repository.save(supplier);
     }
 
-    public Supplier update(Long id, SupplierRequest request) {
-        Supplier supplier = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy nhà cung cấp"));
-
-        mapper.updateEntity(supplier, request);
-        return repository.save(supplier);
-    }
-
     public List<Supplier> filterSuppliers(String supplierName, String phoneNumber) {
         Specification<Supplier> spec = Specification
                 .where(SupplierSpecification.hasSupplierName(supplierName))
                 .and(SupplierSpecification.hasPhoneNumber(phoneNumber));
 
         return repository.findAll(spec);
+    }
+
+    public Supplier updatePatch(Long id, SupplierRequest request) {
+        Supplier supplier = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy nhà cung cấp"));
+        mapper.patch(supplier, request);
+        return repository.save(supplier);
+    }
+
+    public void delete(Long id) {
+        if (!repository.existsById(id)) {
+            throw new IllegalArgumentException("Không tìm nhà cung cấp");
+        }
+        repository.deleteById(id);
     }
 }
 

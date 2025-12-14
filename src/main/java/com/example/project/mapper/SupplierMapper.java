@@ -1,11 +1,11 @@
 package com.example.project.mapper;
 
+import com.example.project.dto.request.ReaderRequest;
 import com.example.project.dto.request.SupplierRequest;
 import com.example.project.dto.response.SupplierResponse;
+import com.example.project.model.Reader;
 import com.example.project.model.Supplier;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface SupplierMapper {
@@ -18,8 +18,12 @@ public interface SupplierMapper {
     // Entity -> Response
     SupplierResponse toResponse(Supplier supplier);
 
-    // Update entity from request
+    // UPDATE (PUT)
     @Mapping(target = "supplierId", ignore = true)
-    @Mapping(target = "active", ignore = true)
-    void updateEntity(@MappingTarget Supplier supplier, SupplierRequest request);
+    void update(@MappingTarget Supplier entity, SupplierRequest request);
+
+    // PATCH
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "supplierId", ignore = true)
+    void patch(@MappingTarget Supplier entity, SupplierRequest request);
 }
