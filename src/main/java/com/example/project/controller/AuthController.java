@@ -1,8 +1,8 @@
 package com.example.project.controller;
 
 import com.example.project.config.JwtService;
-import com.example.project.dto.LoginRequest;
-import com.example.project.dto.LoginResponse;
+import com.example.project.dto.request.LoginRequest;
+import com.example.project.dto.response.LoginResponse;
 import com.example.project.model.User;
 import com.example.project.repository.UserRepository;
 import com.example.project.security.Permission;

@@ -1,7 +1,7 @@
 package com.example.project.controller;
 
 import com.example.project.dto.ApiResponse;
-import com.example.project.dto.ChangePasswordRequest;
+import com.example.project.dto.request.ChangePasswordRequest;
 import com.example.project.dto.LibrarianResponseForFilter;
 import com.example.project.dto.UserResponse;
 import com.example.project.model.Librarian;

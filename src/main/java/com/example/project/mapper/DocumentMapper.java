@@ -1,6 +1,6 @@
 package com.example.project.mapper;
 
-import com.example.project.dto.DocumentPatchRequest;
+import com.example.project.dto.request.DocumentPatchRequest;
 import com.example.project.dto.DocumentRequest;
 import com.example.project.dto.DocumentResponse;
 import com.example.project.model.Document;

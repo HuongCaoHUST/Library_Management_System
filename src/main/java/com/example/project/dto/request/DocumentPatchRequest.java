@@ -1,5 +1,5 @@
 // src/main/java/com/example/project/dto/DocumentPatchRequest.java
-package com.example.project.dto;
+package com.example.project.dto.request;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.PositiveOrZero;

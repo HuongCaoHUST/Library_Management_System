@@ -1,6 +1,9 @@
 package com.example.project.controller;
 
 import com.example.project.dto.*;
+import com.example.project.dto.request.DocumentBulkRequest;
+import com.example.project.dto.request.DocumentDeleteRequest;
+import com.example.project.dto.request.DocumentPatchRequest;
 import com.example.project.model.Document;
 import com.example.project.service.DocumentService;
 import jakarta.validation.Valid;
