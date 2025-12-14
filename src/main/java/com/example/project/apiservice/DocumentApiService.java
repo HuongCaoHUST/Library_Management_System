@@ -48,7 +48,6 @@ public class DocumentApiService {
                 .GET()
                 .build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println("Response: " + response.body());
         if (response.statusCode() == 200) {
             return mapper.readValue(response.body(), new TypeReference<List<Document>>() {});
         } else {
@@ -57,7 +56,7 @@ public class DocumentApiService {
     }
 
     public ApiResponse<Document> addDocument(DocumentRequest requestDto) throws Exception {
-        String url = "http://localhost:8081/api/documents";
+        String url = "http://localhost:8081/api/documents/add";
 
         String jsonBody = mapper.writeValueAsString(requestDto);
         System.out.println(jsonBody);
@@ -71,8 +70,7 @@ public class DocumentApiService {
                 .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        System.out.println("Response: " + response.body());
-
+        System.out.println(response);
         return mapper.readValue(
                 response.body(),
                 new TypeReference<ApiResponse<Document>>() {}

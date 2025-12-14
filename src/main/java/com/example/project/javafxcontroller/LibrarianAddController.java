@@ -15,7 +15,7 @@ public class LibrarianAddController extends SignupController {
     }
 
     @FXML
-    private void onAddDocument() {
+    private void onAddLibrarian() {
         if (!validateForm()) {
             return;
         }
