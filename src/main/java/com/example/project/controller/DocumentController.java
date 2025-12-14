@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/documents")
@@ -44,14 +43,14 @@ public class DocumentController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<DocumentResponse> createDocument(
+    public ResponseEntity<ApiResponse<DocumentResponse>> createDocument(
             @Valid @RequestBody DocumentRequest request) {
 
         Document entity = documentMapper.toEntity(request);
         Document saved = documentService.save(entity);
         DocumentResponse response = documentMapper.toResponse(saved);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.ok(new ApiResponse<>(true, "Đăng ký thành công", response));
     }
 
     @PostMapping("/bulk")
