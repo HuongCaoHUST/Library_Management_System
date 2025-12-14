@@ -16,14 +16,14 @@ public class RolePermissionMapper {
                     Permission.READER_UPDATE,
                     Permission.READER_DELETE,
 
-                    Permission.BOOK_VIEW,
-                    Permission.BOOK_CREATE,
-                    Permission.BOOK_UPDATE,
-                    Permission.BOOK_DELETE
+                    Permission.DOCUMENT_VIEW,
+                    Permission.DOCUMENT_CREATE,
+                    Permission.DOCUMENT_UPDATE,
+                    Permission.DOCUMENT_DELETE
             );
 
             case "READER" -> EnumSet.of(
-                    Permission.BOOK_VIEW
+                    Permission.DOCUMENT_VIEW
             );
 
             default -> Set.of();
