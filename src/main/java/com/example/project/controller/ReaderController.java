@@ -64,7 +64,6 @@ public class ReaderController {
     }
 
     @PostMapping("/me/change-password")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('LIBRARIAN')")
     public ResponseEntity<ApiResponse<Void>> changeMyPassword(
             Authentication authentication,
             @RequestBody ChangePasswordRequest request) {
