@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/borrows_lips")
+@RequestMapping("/api/borrow_slips")
 public class BorrowSlipController {
 
     private final BorrowSlipService borrowSlipService;

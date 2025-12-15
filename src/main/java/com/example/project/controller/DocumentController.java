@@ -33,7 +33,7 @@ public class DocumentController {
     }
 
     @GetMapping("/filter")
-    public List<Document> filterReaders(
+    public List<Document> filterDocuments(
             @RequestParam(required = false) String title,
             @RequestParam(required = false) String author,
             @RequestParam(required = false) String publisher,
@@ -49,7 +49,7 @@ public class DocumentController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<ApiResponse<DocumentResponseForAdd>> createDocument(
+    public ResponseEntity<ApiResponse<DocumentResponseForAdd>> addDocument(
             @Valid @RequestBody DocumentRequest request) {
 
         Document entity = documentMapper.toEntity(request);

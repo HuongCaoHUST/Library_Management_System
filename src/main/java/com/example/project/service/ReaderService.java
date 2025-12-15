@@ -41,6 +41,10 @@ public class ReaderService {
     private final SendEmail sendEmail;
     private final ReaderMapper mapper;
 
+    public Optional<Reader> findByUsername(String username) {
+        return repository.findByUsername(username);
+    }
+
     public Reader registerReader(Reader inputReader) {
         String email = inputReader.getEmail().trim().toLowerCase();
         String username = email;

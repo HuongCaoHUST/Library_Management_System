@@ -1,22 +1,21 @@
 package com.example.project.controller;
 
 import com.example.project.dto.ApiResponse;
-import com.example.project.dto.request.LibrarianRequest;
+import com.example.project.dto.request.ChangePasswordRequest;
 import com.example.project.dto.request.ReaderRequest;
-import com.example.project.dto.response.LibrarianResponse;
-import com.example.project.dto.response.ReaderResponse;
-import com.example.project.dto.response.ReaderResponseForFilter;
-import com.example.project.mapper.LibrarianMapper;
+import com.example.project.dto.response.*;
 import com.example.project.mapper.ReaderMapper;
-import com.example.project.model.Librarian;
 import com.example.project.model.Reader;
-import com.example.project.dto.response.UserResponse;
 import com.example.project.service.ReaderService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/readers")
@@ -24,10 +23,12 @@ import java.util.List;
 public class ReaderController {
 
     private final ReaderService readerService;
+    private final PasswordEncoder passwordEncoder;
     private final ReaderMapper mapper;
 
-    public ReaderController(ReaderService readerService, ReaderMapper mapper) {
+    public ReaderController(ReaderService readerService, PasswordEncoder passwordEncoder, ReaderMapper mapper) {
         this.readerService = readerService;
+        this.passwordEncoder = passwordEncoder;
         this.mapper = mapper;
     }
 
@@ -48,6 +49,37 @@ public class ReaderController {
                 .map(ReaderResponseForFilter::new)
                 .toList();
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<ApiResponse<ReaderResponse>> getMyReaderInfo(Authentication authentication) {
+        String username = authentication.getName();
+        Optional<Reader> optionalReader = readerService.findByUsername(username);
+
+        return optionalReader.map(reader -> {
+                    ReaderResponse responseDTO = new ReaderResponse(reader);
+                    return ResponseEntity.ok(new ApiResponse<>(true, "Reader found", responseDTO));
+                })
+                .orElseGet(() -> ResponseEntity.ok(new ApiResponse<>(false, "Reader not found", null)));
+    }
+
+    @PostMapping("/me/change-password")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('LIBRARIAN')")
+    public ResponseEntity<ApiResponse<Void>> changeMyPassword(
+            Authentication authentication,
+            @RequestBody ChangePasswordRequest request) {
+        String username = authentication.getName();
+        Optional<Reader> optionalLibrarian = readerService.findByUsername(username);
+        if (optionalLibrarian.isEmpty()) {
+            return ResponseEntity.ok(new ApiResponse<>(false, "Librarian not found", null));
+        }
+        Reader reader = optionalLibrarian.get();
+        if (!passwordEncoder.matches(request.getOldPassword(), reader.getPassword())) {
+            return ResponseEntity.ok(new ApiResponse<>(false, "Old password is incorrect", null));
+        }
+        reader.setPassword(passwordEncoder.encode(request.getNewPassword()));
+        readerService.save(reader);
+        return ResponseEntity.ok(new ApiResponse<>(true, "Password changed successfully", null));
     }
 
     @PostMapping("/register")
