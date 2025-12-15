@@ -10,10 +10,14 @@ import com.example.project.dto.response.DocumentResponseForAdd;
 import com.example.project.model.Document;
 import com.example.project.service.DocumentService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 import com.example.project.mapper.DocumentMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.MediaType;
 
 import java.util.List;
 import java.util.Map;
@@ -137,5 +141,27 @@ public class DocumentController {
                 .toList());
 
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/import_template")
+    public ResponseEntity<Resource> downloadImportTemplate() {
+
+        Resource resource = new ClassPathResource("templates/document_import_template.xlsx");
+
+        if (!resource.exists()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok()
+                .header(
+                        HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=document_import_template.xlsx"
+                )
+                .contentType(
+                        MediaType.parseMediaType(
+                                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                        )
+                )
+                .body(resource);
     }
 }
