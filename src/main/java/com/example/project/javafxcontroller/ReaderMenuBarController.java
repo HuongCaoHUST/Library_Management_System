@@ -1,5 +1,8 @@
 package com.example.project.javafxcontroller;
 
+import com.example.project.apiservice.ReaderApiService;
+import com.example.project.dto.ApiResponse;
+import com.example.project.model.Reader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,10 +10,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -85,19 +86,26 @@ public class ReaderMenuBarController {
 
     private void onViewProfile() {
         try {
-            Parent root = fxmlLoader.load(getClass().getResource("/com/example/project/librarian_detail_form.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/reader_detail_form.fxml"));
+            Parent root = loader.load();
+
+            ReaderDetailController controller = loader.getController();
+            ReaderApiService api = new ReaderApiService();
+            ApiResponse<Reader> response = api.getMyReaderInfo();
+            if (response.isSuccess() && response.getData() != null) {
+                controller.setReader(response.getData());
+            } else {
+                System.out.println("Không lấy được thông tin librarian: " + response.getMessage());
+            }
+
             Stage stage = new Stage();
-
-//            Librarian librarian = SessionManager.getCurrentLibrarian();
-            LibrarianDetailController controller = (LibrarianDetailController) root.getUserData();
-//            controller.setLibrarian(librarian);
-
             stage.setTitle("Thông tin tài khoản");
-            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root));
-            stage.showAndWait();
-        } catch (Exception e) {
+            stage.show();
+        } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
