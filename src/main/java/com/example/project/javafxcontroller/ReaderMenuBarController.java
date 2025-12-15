@@ -95,7 +95,7 @@ public class ReaderMenuBarController {
             if (response.isSuccess() && response.getData() != null) {
                 controller.setReader(response.getData());
             } else {
-                System.out.println("Không lấy được thông tin librarian: " + response.getMessage());
+                System.out.println("Không lấy được thông tin bạn đọc: " + response.getMessage());
             }
 
             Stage stage = new Stage();

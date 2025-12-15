@@ -59,39 +59,28 @@ public class LoginController {
             session.setToken(response.getToken());
             session.setRole(response.getRole());
             session.setPermissions(response.getPermissions());
-
-            switch (response.getRole()) {
-                case "ADMIN":
-                    openMainForm("/com/example/project/home_form.fxml");
-                    break;
-
-                case "LIBRARIAN":
-                    openMainForm("/com/example/project/home_form.fxml");
-                    break;
-
-                case "READER":
-                    openMainForm("/com/example/project/reader_home_form.fxml");
-                    break;
-            }
+            openMainForm(response.getRole());
         } else  {
             lblErrors.setText("Tên đăng nhập hoặc mật khẩu không chính xác");
         }
     }
 
-    private void openMainForm(String fxml_path) {
+    private void openMainForm(String role) {
         try {
-            Parent root = fxmlLoader.load(getClass().getResource(fxml_path));
-            Scene homeScene = new Scene(root);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/home_form.fxml"));
+            Parent root = loader.load();
+            HomeController controller = loader.getController();
+            controller.loadMenuByRole(role);
+
+            Scene scene = new Scene(root);
             Stage stage = (Stage) btnSignin.getScene().getWindow();
-            stage.setScene(homeScene);
+            stage.setScene(scene);
             stage.centerOnScreen();
             stage.setTitle("Trang chủ - Hệ thống quản lý thư viện");
-            stage.getIcons().add(new Image(getClass().getResourceAsStream("/com/example/project/images/logo_HUB.png")));
             stage.show();
 
         } catch (IOException e) {
             e.printStackTrace();
-            lblErrors.setText("Lỗi khi mở trang chủ: " + e.getMessage());
         }
     }
 
