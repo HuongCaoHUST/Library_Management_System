@@ -74,7 +74,7 @@
                                         </Text>
                                     </content>
                                 </CustomMenuItem>
-                                <MenuItem fx:id="menuItemSearchAllDoc" mnemonicParsing="false" onAction="#openDocumentListForm" text="Tất cả" />
+                                <MenuItem mnemonicParsing="false" onAction="#openDocumentListForm" text="Tất cả" />
                                 <MenuItem mnemonicParsing="false" text="Tài liệu môn học" />
                                 <MenuItem mnemonicParsing="false" text="Tạp chí điện tử" />
                             </items>

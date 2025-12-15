@@ -62,8 +62,10 @@ public class DocumentListController {
         documentApiService = new DocumentApiService();
 
         UserSession session = UserSession.getInstance();
-        addDocumentButton.setVisible(session.hasPermission(Permission.DOCUMENT_CREATE));
 
+        if (addDocumentButton != null) {
+            addDocumentButton.setVisible(session.hasPermission(Permission.DOCUMENT_CREATE));
+        }
         setupTableColumns();
         tableView.setItems(documentList);
         setupComboBox();

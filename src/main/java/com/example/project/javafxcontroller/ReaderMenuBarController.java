@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
@@ -19,15 +20,8 @@ import java.io.IOException;
 public class ReaderMenuBarController {
 
     @FXML private ImageView avatarImage;
-    @FXML private MenuItem menuItemApproveAccount;
-    @FXML private MenuItem menuItemReaderList;
-    @FXML private MenuItem menuItemAddDocument;
-    @FXML private AnchorPane rootPane;
 
     private ContextMenu dropdownMenu;
-    private final FXMLLoader fxmlLoader = new FXMLLoader();
-
-
     @FXML
     private void initialize() {
         if (avatarImage == null) {
@@ -40,7 +34,11 @@ public class ReaderMenuBarController {
     @FXML
     private void openDocumentListForm(ActionEvent event) {
         try {
-            Parent root = fxmlLoader.load(getClass().getResource("/com/example/project/reader_document_list_form.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/project/reader_document_list_form.fxml")
+            );
+
+            Parent root = loader.load();
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((MenuItem) event.getSource())
                     .getParentPopup().getOwnerWindow();
@@ -112,7 +110,9 @@ public class ReaderMenuBarController {
     private void onLogout() {
         System.out.println("Đăng xuất...");
         try {
-            Parent root = fxmlLoader.load(getClass().getResource("/com/example/project/login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/login.fxml"));
+            Parent root = loader.load();
+
             Scene loginScene = new Scene(root);
             Stage stage = (Stage) avatarImage.getScene().getWindow();
             stage.setScene(loginScene);
