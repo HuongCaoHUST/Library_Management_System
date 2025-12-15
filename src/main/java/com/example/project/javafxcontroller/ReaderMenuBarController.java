@@ -62,10 +62,13 @@ public class ReaderMenuBarController {
         MenuItem profileItem = new MenuItem("Thông tin cá nhân");
         profileItem.setOnAction(e -> onViewProfile());
 
+        MenuItem changePasswordItem = new MenuItem("Đổi mật khẩu");
+        changePasswordItem.setOnAction(e -> onChangePassword());
+
         MenuItem logoutItem = new MenuItem("Đăng xuất");
         logoutItem.setOnAction(e -> onLogout());
 
-        dropdownMenu.getItems().addAll(profileItem, new SeparatorMenuItem(), logoutItem);
+        dropdownMenu.getItems().addAll(profileItem, changePasswordItem, logoutItem);
     }
 
     private void setupHoverEffect() {
@@ -114,6 +117,21 @@ public class ReaderMenuBarController {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void onChangePassword() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/change_password_form.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Đổi mật khẩu");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

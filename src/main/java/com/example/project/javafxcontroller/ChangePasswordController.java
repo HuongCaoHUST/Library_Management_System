@@ -1,6 +1,6 @@
 package com.example.project.javafxcontroller;
 
-import com.example.project.apiservice.LibrarianApiService;
+import com.example.project.apiservice.ChangePasswordApiService;
 import com.example.project.dto.ApiResponse;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -33,7 +33,7 @@ public class ChangePasswordController {
             return;
         }
 
-        LibrarianApiService api = new LibrarianApiService();
+        ChangePasswordApiService api = new ChangePasswordApiService();
         ApiResponse<Void> response = api.changeMyPassword(oldPassword, newPassword);
         if (response.isSuccess()) {
             showAlert("Thành công", "Đổi mật khẩu thành công!");
