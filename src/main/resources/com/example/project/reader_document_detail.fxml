@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefWidth="850.0" styleClass="reader-doc-detail-container" stylesheets="@fpackstyling2.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+   <bottom>
+        <ScrollPane fitToWidth="true" styleClass="content-scroll-pane" BorderPane.alignment="CENTER">
+            <content>
+                <VBox spacing="20" styleClass="main-content-vbox">
+
+                    <!-- ROW 1: Header Section (Image + Details) -->
+                    <HBox fillHeight="false" spacing="20" styleClass="header-section">
+                        <StackPane maxWidth="200.0" prefHeight="290.0" prefWidth="200.0" styleClass="doc-cover-image-container">
+                            <!-- Left: Document Cover Image -->
+                            <ImageView fx:id="docImage" fitHeight="240.0" fitWidth="180.0" preserveRatio="true" styleClass="doc-cover-image" StackPane.alignment="CENTER">
+                                <Image url="@images/book_cover_placeholder.png" />
+                            </ImageView>
+                        </StackPane>
+
+                        <!-- Right: Details Grid -->
+                        <GridPane hgap="15" styleClass="details-grid" vgap="10">
+                            <columnConstraints>
+                                <ColumnConstraints minWidth="120.0" prefWidth="130.0" />
+                                <ColumnConstraints hgrow="ALWAYS" minWidth="200.0" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints />
+                                <RowConstraints prefHeight="10.0" />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                            </rowConstraints>
+
+                            <!-- Title (spanning 2 columns for prominence) -->
+                            <Label fx:id="lblTitle" style="-fx-font-size: 20px; -fx-font-weight: bold;" styleClass="meta-value, doc-title" text="[Tiêu đề tài liệu]" wrapText="true" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" />
+
+                            <!-- Separator below title -->
+                            <Separator styleClass="title-separator" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+
+                            <!-- Author -->
+                            <Label styleClass="meta-label" text="Tác giả:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                            <Label fx:id="lblAuthor" styleClass="meta-value" text="[Tên tác giả]" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                            <!-- Publisher -->
+                            <Label styleClass="meta-label" text="Nhà xuất bản:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                            <Label fx:id="lblPublisher" styleClass="meta-value" text="[Nhà xuất bản]" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                            <!-- Year -->
+                            <Label styleClass="meta-label" text="Năm xuất bản:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                            <Label fx:id="lblYear" styleClass="meta-value" text="[Năm]" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+                            <!-- Category -->
+                            <Label styleClass="meta-label" text="Thể loại:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                            <Label fx:id="lblCategory" styleClass="meta-value" text="[Thể loại]" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+
+                            <!-- Shelf Location -->
+                            <Label styleClass="meta-label" text="Vị trí kệ:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                            <Label fx:id="lblShelfLocation" styleClass="meta-value" text="[Vị trí]" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+
+                            <!-- Type -->
+                            <Label styleClass="meta-label" text="Loại tài liệu:" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+                            <Label fx:id="lblType" styleClass="meta-value" text="[Loại]" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+
+                            <!-- Available Copies -->
+                            <Label styleClass="meta-label" text="Số bản có sẵn:" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+                            <Label fx:id="lblAvailableCopies" styleClass="meta-value" text="[Số lượng]" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+
+                            <!-- Price -->
+                            <Label styleClass="meta-label" text="Giá:" GridPane.columnIndex="0" GridPane.rowIndex="9" />
+                            <Label fx:id="lblPrice" styleClass="meta-value" text="[Giá]" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                        </GridPane>
+                    </HBox>
+
+                    <!-- ROW 2: Description Section -->
+                    <VBox spacing="10" styleClass="description-section">
+                        <Label styleClass="section-header" text="Mô tả tài liệu" />
+                        <TextArea fx:id="docDescription" editable="false" prefRowCount="5" styleClass="description-text" wrapText="true" />
+                    </VBox>
+
+                    <!-- ROW 3: Action Buttons -->
+                    <HBox alignment="CENTER" spacing="40.0" styleClass="actions-container">
+                        <Button fx:id="btnBorrow" styleClass="btn-action, btn-borrow" text="Mượn sách" />
+                        <Button fx:id="btnDownload" styleClass="btn-action, btn-download" text="Tải xuống" />
+                        <Button fx:id="btnFavorite" styleClass="btn-action, btn-favorite" text="Yêu thích" />
+                    </HBox>
+
+                    <!-- ROW 4: Similar Documents -->
+                    <VBox prefWidth="766.0" spacing="10" styleClass="similar-section">
+                        <Label styleClass="section-header" text="Tài liệu tương tự" />
+                        <HBox spacing="20.0" styleClass="similar-items-row">
+
+                            <!-- Similar Item 1 -->
+                            <VBox styleClass="similar-item-card">
+                        <StackPane styleClass="similar-item-image-container">
+                           <children>
+                                      <ImageView fitHeight="140.0" fitWidth="110.0" preserveRatio="true" styleClass="similar-item-image">
+                                 <image>
+                                    <Image url="@images/book_cover_placeholder.png" />
+                                 </image></ImageView>
+                           </children>
+                        </StackPane>
+                                <Label styleClass="similar-item-title" text="[Tiêu đề tài liệu 1]" wrapText="true" />
+                            </VBox>
+
+                            <!-- Similar Item 2 -->
+                            <VBox styleClass="similar-item-card">
+                        <StackPane styleClass="similar-item-image-container">
+                           <children>
+                              <ImageView fitHeight="140.0" fitWidth="110.0" preserveRatio="true" styleClass="similar-item-image">
+                                 <image>
+                                    <Image url="@images/book_cover_placeholder.png" />
+                                 </image></ImageView>
+                           </children>
+                        </StackPane>
+                                <Label styleClass="similar-item-title" text="[Tiêu đề tài liệu 2]" wrapText="true" />
+                            </VBox>
+
+                            <!-- Similar Item 3 -->
+                            <VBox styleClass="similar-item-card">
+                        <StackPane styleClass="similar-item-image-container">
+                           <children>
+                              <ImageView fitHeight="140.0" fitWidth="110.0" preserveRatio="true" styleClass="similar-item-image">
+                                 <image>
+                                    <Image url="@images/book_cover_placeholder.png" />
+                                 </image></ImageView>
+                           </children>
+                        </StackPane>
+                                <Label styleClass="similar-item-title" text="[Tiêu đề tài liệu 3]" wrapText="true" />
+                            </VBox>
+
+                            <!-- Similar Item 4 -->
+                            <VBox styleClass="similar-item-card">
+                        <StackPane styleClass="similar-item-image-container">
+                           <children>
+                              <ImageView fitHeight="140.0" fitWidth="110.0" preserveRatio="true" styleClass="similar-item-image">
+                                 <image>
+                                    <Image url="@images/book_cover_placeholder.png" />
+                                 </image></ImageView>
+                           </children>
+                        </StackPane>
+                                <Label styleClass="similar-item-title" text="[Tiêu đề tài liệu 4]" wrapText="true" />
+                            </VBox>
+
+                        </HBox>
+                    </VBox>
+
+                </VBox>
+            </content>
+        </ScrollPane>
+   </bottom>
+</BorderPane>

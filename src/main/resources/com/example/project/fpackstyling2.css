@@ -330,3 +330,284 @@
 .grn-btn-delete-row:pressed {
     -fx-background-color: #a82d38;
 }
+
+/* ============================================
+   Document Detail View - Modern CSS Stylesheet
+   ============================================ */
+
+/* Root Container - Scoped to avoid conflicts */
+.reader-doc-detail-container {
+    -fx-background-color: #f8f9fa;
+    -fx-padding: 0;
+    -fx-pref-height: 700px;
+    -fx-max-height: 700px;
+    -fx-min-height: 700px;
+}
+
+/* ScrollPane */
+.reader-doc-detail-container .content-scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.reader-doc-detail-container .content-scroll-pane > .viewport {
+    -fx-background-color: #f8f9fa;
+}
+
+.reader-doc-detail-container .content-scroll-pane .scroll-bar:horizontal {
+    -fx-opacity: 0;
+    -fx-pref-height: 0;
+}
+
+/* Main Content VBox */
+.reader-doc-detail-container .main-content-vbox {
+    -fx-padding: 30 40 30 40;
+    -fx-background-color: rgba(16, 22, 95, 0.9);
+}
+
+/* ============================================
+   HEADER SECTION
+   ============================================ */
+.reader-doc-detail-container .header-section {
+    -fx-background-color: #ffffff;
+    -fx-padding: 25;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 15, 0, 0, 2);
+}
+
+/* Document Cover Image */
+.reader-doc-detail-container .doc-cover-image-container {
+    -fx-background-color: rgba(16, 22, 95, 0.1);
+    -fx-padding: 10 10 10 10;
+}
+
+.reader-doc-detail-container .doc-cover-image {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 12, 0, 0, 3);
+    -fx-cursor: hand;
+    -fx-max-width: 100%;
+    -fx-max-height: 100%;
+}
+
+/* Details Grid */
+.reader-doc-detail-container .details-grid {
+    -fx-padding: 0 0 0 10;
+}
+
+/* Document Title */
+.reader-doc-detail-container .doc-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1a1a1a;
+    -fx-wrap-text: true;
+    -fx-padding: 0 0 0 0;
+}
+
+/* Title Separator */
+.reader-doc-detail-container .title-separator {
+    -fx-padding: 3 0 8 0;
+}
+
+.reader-doc-detail-container .title-separator .line {
+    -fx-background-color: #3b82f6;
+    -fx-border-color: #3b82f6;
+    -fx-pref-height: 1.5;
+}
+
+/* Metadata Labels (keys) */
+.reader-doc-detail-container .meta-label {
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #6b7280;
+}
+
+/* Metadata Values */
+.reader-doc-detail-container .meta-value {
+    -fx-font-size: 14px;
+    -fx-text-fill: #374151;
+}
+
+/* ============================================
+   DESCRIPTION SECTION
+   ============================================ */
+.reader-doc-detail-container .description-section {
+    -fx-background-color: #ffffff;
+    -fx-padding: 25;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 15, 0, 0, 2);
+}
+
+.reader-doc-detail-container .section-header {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f2937;
+    -fx-padding: 0 0 5 0;
+}
+
+.reader-doc-detail-container .description-text {
+    -fx-background-color: #f9fafb;
+    -fx-text-fill: #374151;
+    -fx-font-size: 14px;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 15;
+    -fx-border-width: 1;
+}
+
+.reader-doc-detail-container .description-text:focused {
+    -fx-border-color: #3b82f6;
+    -fx-background-color: #ffffff;
+}
+
+/* ============================================
+   ACTION BUTTONS
+   ============================================ */
+.reader-doc-detail-container .actions-container {
+    -fx-background-color: #ffffff;
+    -fx-padding: 15 25 15 25;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 15, 0, 0, 2);
+}
+
+.reader-doc-detail-container .btn-action {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 12 28 12 28;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-border-width: 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 8, 0, 0, 2);
+}
+
+/* Borrow Button */
+.reader-doc-detail-container .btn-borrow {
+    -fx-background-color: #3b82f6;
+    -fx-text-fill: #ffffff;
+}
+
+.reader-doc-detail-container .btn-borrow:hover {
+    -fx-background-color: #2563eb;
+    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.4), 12, 0, 0, 3);
+}
+
+.reader-doc-detail-container .btn-borrow:pressed {
+    -fx-background-color: #1d4ed8;
+    -fx-translate-y: 1;
+}
+
+/* Download Button */
+.reader-doc-detail-container .btn-download {
+    -fx-background-color: #10b981;
+    -fx-text-fill: #ffffff;
+}
+
+.reader-doc-detail-container .btn-download:hover {
+    -fx-background-color: #059669;
+    -fx-effect: dropshadow(gaussian, rgba(16, 185, 129, 0.4), 12, 0, 0, 3);
+}
+
+.reader-doc-detail-container .btn-download:pressed {
+    -fx-background-color: #047857;
+    -fx-translate-y: 1;
+}
+
+/* Favorite Button */
+.reader-doc-detail-container .btn-favorite {
+    -fx-background-color: #f59e0b;
+    -fx-text-fill: #ffffff;
+}
+
+.reader-doc-detail-container .btn-favorite:hover {
+    -fx-background-color: #d97706;
+    -fx-effect: dropshadow(gaussian, rgba(245, 158, 11, 0.4), 12, 0, 0, 3);
+}
+
+.reader-doc-detail-container .btn-favorite:pressed {
+    -fx-background-color: #b45309;
+    -fx-translate-y: 1;
+}
+
+/* ============================================
+   SIMILAR DOCUMENTS SECTION
+   ============================================ */
+.reader-doc-detail-container .similar-section {
+    -fx-background-color: #ffffff;
+    -fx-padding: 25;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.08), 15, 0, 0, 2);
+}
+
+.reader-doc-detail-container .similar-items-row {
+    -fx-padding: 10 0 0 0;
+}
+
+/* Similar Item Card */
+.reader-doc-detail-container .similar-item-card {
+    -fx-background-color: #f9fafb;
+    -fx-padding: 15;
+    -fx-spacing: 10;
+    -fx-background-radius: 10;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 10;
+    -fx-border-width: 1;
+    -fx-cursor: hand;
+    -fx-alignment: top-center;
+    -fx-max-width: 160;
+    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.34), 12, 0, 0, 3);
+}
+
+.reader-doc-detail-container .similar-item-card:hover {
+    -fx-border-color: #3b82f6;
+    -fx-translate-y: -3;
+}
+
+/* Similar Item Image */
+.reader-doc-detail-container .similar-item-image-container {
+    -fx-background-color: rgba(16, 22, 95, 0.05);
+    -fx-pref-height: 150px;
+    -fx-max-height: 150px;
+    -fx-pref-width: 120px;
+    -fx-max-width: 120px;
+    -fx-padding: 10 15 10 15;
+}
+
+.reader-doc-detail-container .similar-item-image {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 8, 0, 0, 2);
+}
+
+/* Similar Item Title */
+.reader-doc-detail-container .similar-item-title {
+    -fx-font-size: 12px;
+    -fx-text-fill: #374151;
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+    -fx-max-width: 100;
+}
+
+.reader-doc-detail-container .similar-item-card:hover .similar-item-title {
+    -fx-text-fill: #1f2937;
+    -fx-font-weight: 600;
+}
+
+/* ============================================
+   SCROLLBAR STYLING
+   ============================================ */
+.reader-doc-detail-container .scroll-bar:vertical .thumb {
+    -fx-background-color: #d1d5db;
+    -fx-background-radius: 5;
+}
+
+.reader-doc-detail-container .scroll-bar:vertical .thumb:hover {
+    -fx-background-color: #9ca3af;
+}
+
+.reader-doc-detail-container .scroll-bar:vertical .track {
+    -fx-background-color: #f3f4f6;
+    -fx-background-radius: 5;
+}
+
+.reader-doc-detail-container .scroll-bar .increment-button,
+.reader-doc-detail-container .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
