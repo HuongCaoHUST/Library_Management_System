@@ -4,7 +4,11 @@ import com.example.project.dto.ApiResponse;
 import com.example.project.dto.request.RegisterRequest;
 import com.example.project.model.Reader;
 import com.fasterxml.jackson.core.type.TypeReference;
+
+import java.net.URI;
 import java.net.URLEncoder;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.List;
 
 public class ReaderApiService extends BaseApiService {
@@ -43,12 +47,20 @@ public class ReaderApiService extends BaseApiService {
         return get(url.toString(), new TypeReference<List<Reader>>() {});
     }
 
-    public ApiResponse<Reader> registerReader(RegisterRequest request)
-            throws Exception {
+    public ApiResponse<Reader> registerReader(RegisterRequest requestDto) throws Exception {
+        String url = "http://14.225.254.18/api/readers/register";
 
-        return post(
-                REGISTER_URL,
-                request,
+        String jsonBody = mapper.writeValueAsString(requestDto);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        return mapper.readValue(
+                response.body(),
                 new TypeReference<ApiResponse<Reader>>() {}
         );
     }
