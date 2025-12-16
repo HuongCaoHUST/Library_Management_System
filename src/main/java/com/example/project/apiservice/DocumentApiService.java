@@ -17,7 +17,7 @@ import java.net.http.HttpResponse;
 import java.util.List;
 
 public class DocumentApiService {
-    private static final String BASE_URL = "http://localhost:8081/api/documents/filter";
+    private static final String BASE_URL = "http://14.225.254.18/api/documents/filter";
     private final HttpClient client = HttpClient.newHttpClient();
     private final ObjectMapper mapper = new ObjectMapper()
             .registerModule(new JavaTimeModule())
@@ -54,7 +54,7 @@ public class DocumentApiService {
     }
 
     public ApiResponse<Document> addDocument(DocumentRequest requestDto) throws Exception {
-        String url = "http://localhost:8081/api/documents/add";
+        String url = "http://14.225.254.18/api/documents/add";
 
         String jsonBody = mapper.writeValueAsString(requestDto);
         System.out.println(jsonBody);

@@ -11,16 +11,16 @@ import java.util.List;
 public class LibrarianApiService extends BaseApiService {
 
     private static final String BASE_FILTER_URL =
-            "http://localhost:8081/api/librarians/filter";
+            "http://14.225.254.18/api/librarians/filter";
 
     private static final String REGISTER_URL =
-            "http://localhost:8081/api/librarians/register";
+            "http://14.225.254.18/api/librarians/register";
 
     private static final String ME_URL =
-            "http://localhost:8081/api/librarians/me";
+            "http://14.225.254.18/api/librarians/me";
 
     private static final String CHANGE_PASSWORD_URL =
-            "http://localhost:8081/api/librarians/me/change-password";
+            "http://14.225.254.18/api/librarians/me/change-password";
 
     public List<Librarian> filterLibrarians(
             String fullName, String email, String status, String gender) throws Exception {

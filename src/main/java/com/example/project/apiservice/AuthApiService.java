@@ -13,7 +13,7 @@ import java.util.Set;
 
 public class AuthApiService {
 
-    private static final String LOGIN_URL = "http://localhost:8081/auth/login";
+    private static final String LOGIN_URL = "http://14.225.254.18/auth/login";
     private final ObjectMapper mapper = new ObjectMapper();
 
     public LoginResponse login(String username, String password) {

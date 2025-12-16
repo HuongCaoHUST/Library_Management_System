@@ -24,7 +24,7 @@ public class SupplierApiService {
             .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
     public List<Supplier> filterSuppliers(String supplierName, String phoneNumber) throws Exception {
-        String url = "http://localhost:8081/api/suppliers/filter";
+        String url = "http://14.225.254.18/api/suppliers/filter";
         StringBuilder query = new StringBuilder();
         if (supplierName != null && !supplierName.isEmpty()) query.append("title=").append(URLEncoder.encode(supplierName, "UTF-8")).append("&");
         if (phoneNumber != null && !phoneNumber.isEmpty()) query.append("author=").append(URLEncoder.encode(phoneNumber, "UTF-8")).append("&");
@@ -51,7 +51,7 @@ public class SupplierApiService {
     }
 
     public ApiResponse<Supplier> addSupplier (SupplierRequest requestDto) throws Exception {
-        String url = "http://localhost:8081/api/suppliers/add";
+        String url = "http://14.225.254.18/api/suppliers/add";
 
         String jsonBody = mapper.writeValueAsString(requestDto);
         System.out.println(jsonBody);

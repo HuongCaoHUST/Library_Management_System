@@ -9,16 +9,16 @@ import java.util.List;
 
 public class ReaderApiService extends BaseApiService {
     private static final String BASE_FILTER_URL =
-            "http://localhost:8081/api/readers/filter";
+            "http://14.225.254.18/api/readers/filter";
 
     private static final String REGISTER_URL =
-            "http://localhost:8081/api/readers/register";
+            "http://14.225.254.18/api/readers/register";
 
     private static final String ME_URL =
-            "http://localhost:8081/api/readers/me";
+            "http://14.225.254.18/api/readers/me";
 
     private static final String CHANGE_PASSWORD_URL =
-            "http://localhost:8081/api/readers/me/change-password";
+            "http://14.225.254.18/api/readers/me/change-password";
 
     public List<Reader> filterReaders(
             String fullName,
