@@ -18,6 +18,8 @@ public class HomeController {
 
             if ("ADMIN".equals(role)) {
                 loader.setLocation(getClass().getResource("/com/example/project/menu_bar.fxml"));
+            } else if ("LIBRARIAN".equals(role)) {
+                loader.setLocation(getClass().getResource("/com/example/project/menu_bar.fxml"));
             } else if ("READER".equals(role)) {
                 loader.setLocation(getClass().getResource("/com/example/project/reader_menu_bar.fxml"));
             }
