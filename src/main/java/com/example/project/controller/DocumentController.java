@@ -10,6 +10,7 @@ import com.example.project.dto.response.DocumentResponseForAdd;
 import com.example.project.model.Document;
 import com.example.project.service.DocumentService;
 import jakarta.validation.Valid;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 import com.example.project.mapper.DocumentMapper;
@@ -146,7 +147,9 @@ public class DocumentController {
     @GetMapping("/import_template")
     public ResponseEntity<Resource> downloadImportTemplate() {
 
-        Resource resource = new ClassPathResource("templates/document_import_template.xlsx");
+        InputStreamResource resource = new InputStreamResource(
+                getClass().getResourceAsStream("/templates/document_import_template.xlsx")
+        );
 
         if (!resource.exists()) {
             return ResponseEntity.notFound().build();
