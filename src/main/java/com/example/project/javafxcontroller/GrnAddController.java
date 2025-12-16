@@ -3,8 +3,13 @@ package com.example.project.javafxcontroller;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -12,6 +17,7 @@ import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.LongStringConverter;
 
+import java.io.IOException;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.time.LocalDate;
@@ -27,6 +33,8 @@ public class GrnAddController implements Initializable {
     @FXML private TextField txtBenNhan;
     @FXML private TextField txtBenGiao;
     @FXML private DatePicker dpNgayNhan;
+    @FXML private Button addSupplierButton;
+    @FXML private ComboBox<String> grnSupplierComboBox;
 
     // ========== FXML Components - Bảng tài liệu ==========
     @FXML private TableView<TaiLieuNhap> tableTaiLieu;
@@ -370,6 +378,24 @@ public class GrnAddController implements Initializable {
 
         // Xoá danh sách tài liệu
         danhSachTaiLieu.clear();
+    }
+
+    /**
+     * Handle sự kiện chuyển sang trang thêm nhà cung cấp
+     */
+    @FXML
+    protected void addSupplier(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/supplier_add_form.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Thêm nhà cung cấp");
+            stage.setScene(new Scene(root));
+            stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // ==================== GETTER METHODS (cho việc test/debug) ====================

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--Form nhập thông tin phiếu nhập kho (GRN-goods receipt note)-->
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -38,13 +40,14 @@
                 </padding>
 
                 <HBox alignment="CENTER_LEFT" spacing="20">
-                    <HBox alignment="CENTER_LEFT" spacing="10" HBox.hgrow="ALWAYS">
+                    <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="275.0" spacing="10" HBox.hgrow="ALWAYS">
                         <Label minWidth="110" styleClass="grn-field-label" text="Theo hoá đơn:" />
-                        <TextField fx:id="txtMaHoaDon" promptText="Nhập mã hoá đơn..." styleClass="grn-text-field" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="txtMaHoaDon" prefWidth="439.0" promptText="Nhập mã hoá đơn..." styleClass="grn-text-field" HBox.hgrow="ALWAYS" />
                     </HBox>
-                    <HBox alignment="CENTER_LEFT" spacing="10" HBox.hgrow="ALWAYS">
-                        <Label minWidth="110" styleClass="grn-field-label" text="Đơn vị cung cấp:" />
-                        <TextField fx:id="txtDonViCungCap" promptText="Nhập tên đơn vị cung cấp..." styleClass="grn-text-field" HBox.hgrow="ALWAYS" />
+                    <HBox alignment="CENTER_LEFT" prefHeight="26.0" prefWidth="271.0" spacing="10" HBox.hgrow="ALWAYS">
+                        <Label minWidth="110.0" prefHeight="18.0" prefWidth="22.0" styleClass="grn-field-label" text="Đơn vị cung cấp:" />
+                  <ComboBox fx:id="grnSupplierComboBox" prefHeight="38.0" prefWidth="397.0" styleClass="grn-supplier-picker"/>
+                  <Button fx:id="addSupplierButton" onAction="#addSupplier" mnemonicParsing="false" styleClass="grn-suppplier-add-button" text="+" />
                     </HBox>
                 </HBox>
 
@@ -55,7 +58,7 @@
                     </HBox>
                     <HBox alignment="CENTER_LEFT" spacing="10" HBox.hgrow="ALWAYS">
                         <Label minWidth="110" styleClass="grn-field-label" text="Bên giao:" />
-                        <TextField fx:id="txtBenGiao" promptText="Nhập tên người giao..." styleClass="grn-text-field" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="txtBenGiao" prefHeight="38.0" prefWidth="165.0" promptText="Nhập tên người giao..." styleClass="grn-text-field" HBox.hgrow="ALWAYS" />
                     </HBox>
                 </HBox>
 
