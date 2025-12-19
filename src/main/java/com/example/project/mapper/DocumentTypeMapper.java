@@ -17,6 +17,6 @@ public interface DocumentTypeMapper {
     DocumentType toEntity(DocumentTypeRequest request);
 
     // Entity → Response
-    @Mapping(target = "categoryName", source = "name")
+    @Mapping(target = "documentTypeName", source = "name")
     DocumentTypeResponse toResponse(DocumentType documentType);
 }
