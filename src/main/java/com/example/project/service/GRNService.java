@@ -13,11 +13,13 @@ import com.example.project.repository.GRNRepository;
 import com.example.project.repository.LibrarianRepository;
 import com.example.project.repository.SupplierRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class GRNService {
 
     private final GRNRepository grnRepository;
@@ -25,18 +27,6 @@ public class GRNService {
     private final LibrarianRepository librarianRepository;
     private final DocumentRepository documentRepository;
     private final GRNMapper mapper;
-
-    public GRNService(GRNRepository grnRepository,
-                      SupplierRepository supplierRepository,
-                      LibrarianRepository librarianRepository,
-                      DocumentRepository documentRepository,
-                      GRNMapper mapper) {
-        this.grnRepository = grnRepository;
-        this.supplierRepository = supplierRepository;
-        this.librarianRepository = librarianRepository;
-        this.documentRepository = documentRepository;
-        this.mapper = mapper;
-    }
 
     @Transactional
     public GRN create(GRNRequest request) {

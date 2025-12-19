@@ -35,7 +35,7 @@ public class DocumentResponseForAdd {
         this.borrowedCopies = document.getBorrowedCopies();
         this.coverPrice = document.getCoverPrice();
         this.classificationNumber = document.getClassificationNumber();
-        this.category = document.getCategory();
+        this.category = document.getCategory().getName();
         this.shelfLocation = document.getShelfLocation();
         this.documentType = document.getDocumentType().getName();
         this.accessLink = document.getAccessLink();

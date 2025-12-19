@@ -61,8 +61,7 @@ public class DocumentController {
     public ResponseEntity<ApiResponse<DocumentResponseForAdd>> addDocument(
             @Valid @RequestBody DocumentRequest request) {
 
-        Document entity = documentMapper.toEntity(request);
-        Document saved = documentService.save(entity);
+        Document saved = documentService.create(request);
 
         DocumentResponseForAdd responseDTO = new DocumentResponseForAdd(saved);
         return ResponseEntity.ok(new ApiResponse<>(true, "Thêm tài liệu thành công", responseDTO));

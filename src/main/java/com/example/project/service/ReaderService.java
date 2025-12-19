@@ -33,10 +33,6 @@ public class ReaderService {
         return repository.save(reader);
     }
 
-//    public void delete(Long id) {
-//        repository.deleteById(id);
-//    }
-
     private final ReaderRepository repository;
     private final RoleRepository roleRepository;
 

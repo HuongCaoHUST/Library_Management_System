@@ -28,12 +28,17 @@ public class Document {
     private Integer borrowedCopies;
     private Double coverPrice;
     private String classificationNumber;
-    private String category;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
+
     private String shelfLocation;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "document_type_id", nullable = false)
     private DocumentType documentType;
+
     private String accessLink;
     private String status;
 }

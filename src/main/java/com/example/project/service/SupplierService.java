@@ -6,21 +6,18 @@ import com.example.project.model.Supplier;
 import com.example.project.repository.SupplierRepository;
 import com.example.project.specification.SupplierSpecification;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class SupplierService {
 
     private final SupplierRepository repository;
     private final SupplierMapper mapper;
-
-    public SupplierService(SupplierRepository repository, SupplierMapper mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
-    }
 
     public Supplier create(SupplierRequest request) {
         if (repository.existsByEmail(request.getEmail())) {

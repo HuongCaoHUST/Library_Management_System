@@ -5,27 +5,19 @@ import com.example.project.mapper.BorrowSlipMapper;
 import com.example.project.model.*;
 import com.example.project.repository.*;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class BorrowSlipService {
 
     private final BorrowSlipRepository borrowSlipRepository;
     private final ReaderRepository readerRepository;
     private final DocumentRepository documentRepository;
     private final BorrowSlipMapper mapper;
-
-    public BorrowSlipService(BorrowSlipRepository borrowSlipRepository,
-                             ReaderRepository readerRepository,
-                             DocumentRepository documentRepository,
-                             BorrowSlipMapper mapper) {
-        this.borrowSlipRepository = borrowSlipRepository;
-        this.readerRepository = readerRepository;
-        this.documentRepository = documentRepository;
-        this.mapper = mapper;
-    }
 
     @Transactional
     public BorrowSlip create(BorrowSlipRequest request) {
