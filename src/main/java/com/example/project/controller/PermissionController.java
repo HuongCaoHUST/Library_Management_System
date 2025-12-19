@@ -1,14 +1,15 @@
 package com.example.project.controller;
 
+import com.example.project.dto.ApiResponse;
+import com.example.project.dto.request.PermissionRequest;
+import com.example.project.dto.request.RoleRequest;
 import com.example.project.dto.response.PermissionResponse;
+import com.example.project.dto.response.RoleResponse;
 import com.example.project.mapper.LibrarianMapper;
 import com.example.project.service.PermissionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,5 +34,15 @@ public class PermissionController {
                 .map(PermissionResponse::new)
                 .toList();
         return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<ApiResponse<PermissionResponse>> create(@RequestBody PermissionRequest request) {
+        try {
+            PermissionResponse response = permissionService.add(request);
+            return ResponseEntity.ok(new ApiResponse<>(true, "Thêm permission thành công", response));
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.ok(new ApiResponse<>(false, ex.getMessage(), null));
+        }
     }
 }
