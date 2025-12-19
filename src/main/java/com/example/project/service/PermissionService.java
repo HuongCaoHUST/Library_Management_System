@@ -1,8 +1,7 @@
 package com.example.project.service;
 
-import com.example.project.mapper.LibrarianMapper;
-import com.example.project.model.Role;
-import com.example.project.repository.RoleRepository;
+import com.example.project.model.Permission;
+import com.example.project.repository.PermissionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,22 +10,20 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class PermissionService {
-    private final RoleRepository roleRepository;
-    private final LibrarianMapper mapper;
+    private final PermissionRepository permissionRepository;
 
-    public List<Role> findAll() {
-        return roleRepository.findAll();
+    public List<Permission> findAll() {
+        return permissionRepository.findAll();
     }
 
     public void delete(Long id) {
-        if (!roleRepository.existsById(id)) {
-            throw new IllegalArgumentException("Không tìm thấy role");
+        if (!permissionRepository.existsById(id)) {
+            throw new IllegalArgumentException("Không tìm thấy permission");
         }
-        roleRepository.deleteById(id);
+        permissionRepository.deleteById(id);
     }
 
-    public boolean existsByUsername(String name) {
-        return roleRepository.existsByName(name);
+    public boolean existsByName(String name) {
+        return permissionRepository.existsByName(name);
     }
-
 }
