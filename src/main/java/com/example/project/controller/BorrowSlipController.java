@@ -6,21 +6,18 @@ import com.example.project.dto.response.BorrowSlipResponse;
 import com.example.project.mapper.BorrowSlipMapper;
 import com.example.project.model.BorrowSlip;
 import com.example.project.service.BorrowSlipService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/borrow_slips")
 public class BorrowSlipController {
 
     private final BorrowSlipService borrowSlipService;
 
     private BorrowSlipMapper mapper;
-
-    public BorrowSlipController(BorrowSlipService borrowSlipService, BorrowSlipMapper mapper) {
-        this.borrowSlipService = borrowSlipService;
-        this.mapper = mapper;
-    }
 
     @GetMapping("/test")
     public String testEndpoint() {

@@ -11,6 +11,7 @@ import com.example.project.model.Reader;
 import com.example.project.model.Supplier;
 import com.example.project.service.SupplierService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -24,17 +25,13 @@ import java.io.InputStream;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/suppliers")
 public class SupplierController {
 
     private final SupplierService supplierService;
 
     private SupplierMapper mapper;
-
-    public SupplierController(SupplierService supplierService,  SupplierMapper mapper) {
-        this.supplierService = supplierService;
-        this.mapper = mapper;
-    }
 
     @GetMapping("/test")
     public String testEndpoint() {

@@ -10,6 +10,7 @@ import com.example.project.dto.response.DocumentResponseForAdd;
 import com.example.project.model.Document;
 import com.example.project.service.DocumentService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
@@ -27,17 +28,13 @@ import java.util.Map;
 import java.util.HashMap;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/documents")
 @CrossOrigin(origins = "*")
 public class DocumentController {
 
     private final DocumentService documentService;
     private final DocumentMapper documentMapper;
-
-    public DocumentController(DocumentService documentService, DocumentMapper documentMapper) {
-        this.documentService = documentService;
-        this.documentMapper = documentMapper;
-    }
 
     @GetMapping("/filter")
     public List<DocumentResponse> filterDocuments(

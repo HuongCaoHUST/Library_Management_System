@@ -14,6 +14,7 @@ import com.example.project.model.Role;
 import com.example.project.service.LibrarianService;
 import com.example.project.service.RoleService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/roles")
 @CrossOrigin(origins = "*")
 //@PreAuthorize("hasRole('ADMIN')")
@@ -31,11 +33,6 @@ public class RoleController {
 
     private final RoleService roleService;
     private final RoleMapper mapper;
-
-    public RoleController(RoleService roleService, RoleMapper mapper) {
-        this.roleService = roleService;
-        this.mapper = mapper;
-    }
 
     @GetMapping("/test")
     public String testEndpoint() {

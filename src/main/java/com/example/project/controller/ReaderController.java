@@ -8,6 +8,7 @@ import com.example.project.mapper.ReaderMapper;
 import com.example.project.model.Reader;
 import com.example.project.service.ReaderService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/readers")
 @CrossOrigin(origins = "*")
 public class ReaderController {
@@ -25,12 +27,6 @@ public class ReaderController {
     private final ReaderService readerService;
     private final PasswordEncoder passwordEncoder;
     private final ReaderMapper mapper;
-
-    public ReaderController(ReaderService readerService, PasswordEncoder passwordEncoder, ReaderMapper mapper) {
-        this.readerService = readerService;
-        this.passwordEncoder = passwordEncoder;
-        this.mapper = mapper;
-    }
 
     @GetMapping("/test")
     public String testEndpoint() {

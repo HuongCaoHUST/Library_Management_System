@@ -7,21 +7,18 @@ import com.example.project.dto.response.SupplierResponse;
 import com.example.project.mapper.GRNMapper;
 import com.example.project.model.GRN;
 import com.example.project.service.GRNService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/grns")
 public class GRNController {
 
     private final GRNService grnService;
 
     private GRNMapper mapper;
-
-    public GRNController(GRNService grnService, GRNMapper mapper) {
-        this.grnService = grnService;
-        this.mapper = mapper;
-    }
 
     @GetMapping("/test")
     public String testEndpoint() {
