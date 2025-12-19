@@ -42,7 +42,7 @@ public class ReaderResponseForFilter {
         this.workPlace = reader.getWorkPlace();
         this.address = reader.getAddress();
         this.status = reader.getStatus();
-        this.role = reader.getRole().name();
+        this.role = reader.getRole().getName();
         this.approvedDate = reader.getApprovedDate();
         this.expirationDate = reader.getExpirationDate();
         this.depositAmount = reader.getDepositAmount();

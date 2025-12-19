@@ -24,7 +24,7 @@ public class MyUserDetailsService implements UserDetailsService {
                 .builder()
                 .username(u.getUsername())
                 .password(u.getPassword())
-                .roles(u.getRole().name())
+                .roles(u.getRole().getName())
                 .build();
     }
 }

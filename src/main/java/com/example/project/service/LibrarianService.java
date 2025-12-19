@@ -5,7 +5,8 @@ import com.example.project.mapper.LibrarianMapper;
 import com.example.project.model.Librarian;
 import com.example.project.model.Reader;
 import com.example.project.repository.LibrarianRepository;
-import com.example.project.security.Role;
+import com.example.project.repository.RoleRepository;
+import com.example.project.model.Role;
 import com.example.project.specification.LibrarianSpecification;
 import com.example.project.util.PasswordUtils;
 import com.example.project.util.SendEmail;
@@ -23,6 +24,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class LibrarianService {
     private final LibrarianRepository repository;
+    private final RoleRepository roleRepository;
+
     private final SendEmail sendEmail;
     private final LibrarianMapper mapper;
 
@@ -66,6 +69,8 @@ public class LibrarianService {
         System.out.println("Found librarian ID: " + approvingLibrarian.getUserId());
         System.out.println("Librarian name: " + approvingLibrarian.getFullName());
 
+        Role librarianRole = roleRepository.findByName("LIBRARIAN").orElseThrow(() -> new RuntimeException("Role not found"));
+
         Librarian librarian = Librarian.builder()
                 .fullName(inputLibrarian.getFullName())
                 .gender(inputLibrarian.getGender())
@@ -84,7 +89,7 @@ public class LibrarianService {
                 .status("APPROVED")
                 .approvedBy(approvingLibrarian)
                 .depositAmount(BigDecimal.ZERO)
-                .role(Role.LIBRARIAN)
+                .role(librarianRole)
                 .build();
         sendEmailSuccess(librarian, rawPassword);
         return repository.save(librarian);

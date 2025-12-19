@@ -5,8 +5,7 @@ import com.example.project.dto.request.LoginRequest;
 import com.example.project.dto.response.LoginResponse;
 import com.example.project.model.User;
 import com.example.project.repository.UserRepository;
-import com.example.project.security.Permission;
-import com.example.project.security.RolePermissionMapper;
+import com.example.project.model.Permission;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -40,13 +39,12 @@ public class AuthController {
         User user = repo.findByUsername(request.getUsername()).orElseThrow();
 
         String token = jwtService.generateToken(user);
-        Set<Permission> permissions =
-                RolePermissionMapper.getPermissions(user.getRole().name());
 
-        Set<String> permissionNames = permissions.stream()
-                .map(Enum::name)
+        Set<String> permissionNames = user.getRole().getPermissions()
+                .stream()
+                .map(Permission::getName)
                 .collect(Collectors.toSet());
 
-        return new LoginResponse(token, user.getFullName(), user.getRole().name(), permissionNames);
+        return new LoginResponse(token, user.getFullName(), user.getRole().getName(), permissionNames);
     }
 }

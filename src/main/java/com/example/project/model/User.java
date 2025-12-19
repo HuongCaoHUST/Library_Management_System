@@ -1,6 +1,6 @@
 package com.example.project.model;
 
-import com.example.project.security.Role;
+import com.example.project.model.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -40,6 +40,7 @@ public class User {
     private LocalDateTime registrationDate;
     private String status;
 
-    @Enumerated(EnumType.STRING)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
     private Role role;
 }

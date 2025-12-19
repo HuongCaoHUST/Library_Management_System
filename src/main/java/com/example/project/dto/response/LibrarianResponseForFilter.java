@@ -36,7 +36,7 @@ public class LibrarianResponseForFilter {
         this.workPlace = librarian.getWorkPlace();
         this.address = librarian.getAddress();
         this.status = librarian.getStatus();
-        this.role = librarian.getRole().name();
+        this.role = librarian.getRole().getName();
         this.approvedBy = librarian.getApprovedBy().getFullName();
     }
 }
