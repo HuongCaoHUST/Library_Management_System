@@ -2,6 +2,7 @@ package com.example.project.service;
 
 import com.example.project.dto.request.GRNRequest;
 import com.example.project.dto.request.RoleRequest;
+import com.example.project.dto.response.RoleResponse;
 import com.example.project.mapper.GRNMapper;
 import com.example.project.mapper.RoleMapper;
 import com.example.project.model.*;
@@ -39,7 +40,7 @@ public class RoleService {
     }
 
     @Transactional
-    public Role add (RoleRequest roleRequest) {
+    public RoleResponse add (RoleRequest roleRequest) {
 
         if (roleRepository.existsByName(roleRequest.getName())) {
             throw new IllegalArgumentException("Role đã tồn tại");
@@ -54,6 +55,8 @@ public class RoleService {
                 .collect(Collectors.toSet());
 
         role.setPermissions(permissions);
-        return roleRepository.save(role);
+        Role saved = roleRepository.save(role);
+
+        return mapper.toResponse(saved);
     }
 }

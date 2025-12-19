@@ -55,12 +55,11 @@ public class DocumentController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<ApiResponse<DocumentResponseForAdd>> addDocument(
+    public ResponseEntity<ApiResponse<DocumentResponse>> addDocument(
             @Valid @RequestBody DocumentRequest request) {
 
-        Document saved = documentService.create(request);
+        DocumentResponse responseDTO = documentService.create(request);
 
-        DocumentResponseForAdd responseDTO = new DocumentResponseForAdd(saved);
         return ResponseEntity.ok(new ApiResponse<>(true, "Thêm tài liệu thành công", responseDTO));
     }
 

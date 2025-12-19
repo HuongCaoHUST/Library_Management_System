@@ -20,7 +20,6 @@ import java.util.List;
 public class PermissionController {
 
     private final PermissionService permissionService;
-    private final LibrarianMapper mapper;
 
     @GetMapping("/test")
     public String testEndpoint() {

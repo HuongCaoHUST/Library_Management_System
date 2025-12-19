@@ -1,7 +1,10 @@
 package com.example.project.service;
 
 import com.example.project.dto.request.DocumentRequest;
+import com.example.project.dto.response.DocumentResponse;
+import com.example.project.dto.response.DocumentResponseForAdd;
 import com.example.project.mapper.DocumentMapper;
+import com.example.project.model.BorrowSlip;
 import com.example.project.model.Category;
 import com.example.project.model.Document;
 import com.example.project.model.DocumentType;
@@ -24,7 +27,6 @@ public class DocumentService {
     private final CategoryRepository categoryRepository;
     private final DocumentTypeRepository documentTypeRepository;
     private final DocumentMapper documentMapper;
-
 
     public List<Document> findAll() {
         return documentRepository.findAll();
@@ -54,7 +56,7 @@ public class DocumentService {
     }
 
     @Transactional
-    public Document create(DocumentRequest request) {
+    public DocumentResponse create(DocumentRequest request) {
 
         Document document = documentMapper.toEntity(request);
 
@@ -69,8 +71,9 @@ public class DocumentService {
 
         document.setCategory(category);
         document.setDocumentType(documentType);
+        Document saved = documentRepository.save(document);
 
-        return save(document);
+        return documentMapper.toResponse(saved);
     }
 
     public List<Document> findAllById(List<Long> ids) {

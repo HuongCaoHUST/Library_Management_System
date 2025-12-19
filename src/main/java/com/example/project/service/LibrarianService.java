@@ -66,9 +66,6 @@ public class LibrarianService {
 
         Optional<Librarian> admin = findById(1L);
         Librarian approvingLibrarian = admin.get();
-        System.out.println("Found librarian ID: " + approvingLibrarian.getUserId());
-        System.out.println("Librarian name: " + approvingLibrarian.getFullName());
-
         Role librarianRole = roleRepository.findByName("LIBRARIAN").orElseThrow(() -> new RuntimeException("Role not found"));
 
         Librarian librarian = Librarian.builder()

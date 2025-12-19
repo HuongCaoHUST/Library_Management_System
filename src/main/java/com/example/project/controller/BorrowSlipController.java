@@ -17,8 +17,6 @@ public class BorrowSlipController {
 
     private final BorrowSlipService borrowSlipService;
 
-    private BorrowSlipMapper mapper;
-
     @GetMapping("/test")
     public String testEndpoint() {
         return "Borrow Slip Controller is working!";
@@ -27,8 +25,7 @@ public class BorrowSlipController {
     @PostMapping("/add")
     public ResponseEntity<ApiResponse<BorrowSlipResponse>> create(@RequestBody BorrowSlipRequest request) {
         try {
-            BorrowSlip borrowSlip = borrowSlipService.create(request);
-            BorrowSlipResponse response = mapper.toResponse(borrowSlip);
+            BorrowSlipResponse response = borrowSlipService.create(request);
             return ResponseEntity.ok(new ApiResponse<>(true, "Thêm phiếu mượn thành công", response));
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.ok(new ApiResponse<>(false, ex.getMessage(), null));

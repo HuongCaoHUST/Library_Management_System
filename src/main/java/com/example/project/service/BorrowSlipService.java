@@ -1,6 +1,7 @@
 package com.example.project.service;
 
 import com.example.project.dto.request.BorrowSlipRequest;
+import com.example.project.dto.response.BorrowSlipResponse;
 import com.example.project.mapper.BorrowSlipMapper;
 import com.example.project.model.*;
 import com.example.project.repository.*;
@@ -20,12 +21,12 @@ public class BorrowSlipService {
     private final BorrowSlipMapper mapper;
 
     @Transactional
-    public BorrowSlip create(BorrowSlipRequest request) {
+    public BorrowSlipResponse create(BorrowSlipRequest request) {
 
         BorrowSlip borrowSlip = mapper.toEntity(request);
 
         Reader reader = readerRepository.findById(request.getReaderId())
-                .orElseThrow();
+                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy bạn đọc"));
 
         borrowSlip.setReader(reader);
 
@@ -39,7 +40,9 @@ public class BorrowSlipService {
                 }).toList();
 
         borrowSlip.setDetails(details);
-        return borrowSlipRepository.save(borrowSlip);
+        BorrowSlip saved = borrowSlipRepository.save(borrowSlip);
+
+        return mapper.toResponse(saved);
     }
 
 }

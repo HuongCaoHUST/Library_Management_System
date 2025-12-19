@@ -10,6 +10,7 @@ import com.example.project.mapper.LibrarianMapper;
 import com.example.project.model.Librarian;
 import com.example.project.service.LibrarianService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/librarians")
 @CrossOrigin(origins = "*")
 @PreAuthorize("hasRole('ADMIN')")
@@ -29,12 +31,6 @@ public class LibrarianController {
     private final PasswordEncoder passwordEncoder;
 
     private final LibrarianMapper mapper;
-
-    public LibrarianController(LibrarianService librarianService, PasswordEncoder passwordEncoder, LibrarianMapper mapper) {
-        this.librarianService = librarianService;
-        this.passwordEncoder = passwordEncoder;
-        this.mapper = mapper;
-    }
 
     @GetMapping("/test")
     public String testEndpoint() {
