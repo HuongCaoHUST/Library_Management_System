@@ -30,7 +30,10 @@ public class Document {
     private String classificationNumber;
     private String category;
     private String shelfLocation;
-    private String documentType;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "document_type_id", nullable = false)
+    private DocumentType documentType;
     private String accessLink;
     private String status;
 }

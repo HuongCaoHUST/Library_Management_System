@@ -11,14 +11,19 @@ public interface DocumentMapper {
 
     @Mapping(target = "documentId", ignore = true)
     @Mapping(target = "borrowedCopies", constant = "0")
+    @Mapping(target = "documentType", ignore = true)
     Document toEntity(DocumentRequest request);
 
     @Mapping(target = "totalCopies",
             expression = "java(entity.getAvailableCopies() + entity.getBorrowedCopies())")
+    @Mapping(target = "documentType", source = "documentType.name"
+    )
     DocumentResponse toResponse(Document entity);
 
+    @Mapping(target = "documentType", ignore = true)
     void updateEntityFromRequest(DocumentRequest request, @MappingTarget Document entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "documentType", ignore = true)
     void updateFromPatch(DocumentPatchRequest request, @MappingTarget Document entity);
 }

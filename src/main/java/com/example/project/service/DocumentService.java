@@ -1,10 +1,8 @@
 package com.example.project.service;
 
 import com.example.project.model.Document;
-import com.example.project.model.Reader;
 import com.example.project.repository.DocumentRepository;
 import com.example.project.specification.DocumentSpecification;
-import com.example.project.specification.ReaderSpecification;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -35,12 +33,12 @@ public class DocumentService {
         repository.deleteById(id);
     }
 
-    public List<Document> filterDocuments(String title, String author, String publisher, String documentType, Integer publicationYear) {
+    public List<Document> filterDocuments(String title, String author, String publisher, Long documentTypeId, Integer publicationYear) {
         Specification<Document> spec = Specification
                 .where(DocumentSpecification.hasTitle(title))
                 .and(DocumentSpecification.hasAuthor(author))
                 .and(DocumentSpecification.hasPublisher(publisher))
-                .and(DocumentSpecification.hasDocumentType(documentType))
+                .and(DocumentSpecification.hasDocumentTypeId(documentTypeId))
                 .and(DocumentSpecification.hasPublicationYear(publicationYear));
 
         return repository.findAll(spec);

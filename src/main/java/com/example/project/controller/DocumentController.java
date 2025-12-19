@@ -19,7 +19,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -38,14 +40,16 @@ public class DocumentController {
     }
 
     @GetMapping("/filter")
-    public List<Document> filterDocuments(
+    public List<DocumentResponse> filterDocuments(
             @RequestParam(required = false) String title,
             @RequestParam(required = false) String author,
             @RequestParam(required = false) String publisher,
-            @RequestParam(required = false) String documentType,
+            @RequestParam(required = false) Long documentType,
             @RequestParam(required = false) Integer publicationYear
     ) {
-        return documentService.filterDocuments(title, author, publisher, documentType, publicationYear);
+        return documentService.filterDocuments(title, author, publisher, documentType, publicationYear).stream()
+                .map(documentMapper::toResponse)
+                .toList();
     }
 
     @GetMapping("/test")
@@ -166,5 +170,29 @@ public class DocumentController {
                         )
                 )
                 .body(resource);
+    }
+
+    @PostMapping("/import")
+    public ResponseEntity<?> importSuppliers(@RequestParam("file") MultipartFile file) {
+        if (file.isEmpty()) {
+            return ResponseEntity.badRequest().body("File upload rỗng");
+        }
+
+        String contentType = file.getContentType();
+        if (!"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet".equals(contentType)) {
+            return ResponseEntity.badRequest().body("Chỉ hỗ trợ file .xlsx");
+        }
+
+        try {
+            InputStream inputStream = file.getInputStream();
+            System.out.println("Upload thành công");
+//             TODO: xử lý đọc Excel (Apache POI)
+//             importService.importSupplierFromExcel(inputStream);
+
+            return ResponseEntity.ok("Upload và import thành công");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError()
+                    .body("Lỗi khi xử lý file: " + e.getMessage());
+        }
     }
 }

@@ -26,11 +26,14 @@ public class DocumentSpecification {
                         : cb.like(cb.lower(root.get("publisher")), "%" + publisher.toLowerCase() + "%");
     }
 
-    public static Specification<Document> hasDocumentType(String documentType) {
-        return (root, query, cb) ->
-                documentType == null || documentType.isEmpty()
-                        ? cb.conjunction()
-                        : cb.like(cb.lower(root.get("documentType")), "%" + documentType.toLowerCase() + "%");
+    public static Specification<Document> hasDocumentTypeId(Long documentTypeId) {
+        return (root, query, cb) -> {
+            if (documentTypeId == null) return null;
+            return cb.equal(
+                    root.get("documentType").get("documentTypeId"),
+                    documentTypeId
+            );
+        };
     }
 
     public static Specification<Document> hasPublicationYear(Integer publicationYear) {

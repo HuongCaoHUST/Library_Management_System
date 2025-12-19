@@ -37,7 +37,7 @@ public class DocumentResponseForAdd {
         this.classificationNumber = document.getClassificationNumber();
         this.category = document.getCategory();
         this.shelfLocation = document.getShelfLocation();
-        this.documentType = document.getDocumentType();
+        this.documentType = document.getDocumentType().getName();
         this.accessLink = document.getAccessLink();
         this.status = document.getStatus();
     }
