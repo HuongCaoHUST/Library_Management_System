@@ -1,6 +1,7 @@
 package com.example.project.dto.response;
 
 import com.example.project.model.Category;
+import com.example.project.model.DocumentType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,8 +14,9 @@ import lombok.NoArgsConstructor;
 public class DocumentTypeResponse {
     private String documentTypeName;
     private String description;
-    public DocumentTypeResponse(Category category) {
-        this.documentTypeName = category.getName();
-        this.description = category.getDescription();
+
+    public DocumentTypeResponse(DocumentType documentType) {
+        this.documentTypeName = documentType.getName();
+        this.description = documentType.getDescription();
     }
 }
