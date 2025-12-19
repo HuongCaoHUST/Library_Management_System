@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ReaderResponse {
     private String fullName;
-
     public ReaderResponse(Reader reader) {
         this.fullName = reader.getFullName();
     }
