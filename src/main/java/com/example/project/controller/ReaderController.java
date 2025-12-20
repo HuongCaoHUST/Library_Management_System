@@ -7,6 +7,7 @@ import com.example.project.dto.response.*;
 import com.example.project.mapper.ReaderMapper;
 import com.example.project.model.Reader;
 import com.example.project.service.FileStorageService;
+import com.example.project.service.ReaderCardPdfService;
 import com.example.project.service.ReaderService;
 import com.example.project.service.ReaderService2;
 import com.example.project.service.impl.ReaderFileStorageServiceImpl;
@@ -37,18 +38,20 @@ public class ReaderController {
     private final PasswordEncoder passwordEncoder;
     private final ReaderMapper mapper;
     private final FileStorageService fileStorageService;
+    private final ReaderCardPdfService pdfService;
 
     public ReaderController(
             ReaderService readerService,
             ReaderService2 readerService2,
             PasswordEncoder passwordEncoder,
             ReaderMapper mapper,
-            @Qualifier("readerStorage") FileStorageService fileStorageService) {
+            @Qualifier("readerStorage") FileStorageService fileStorageService, ReaderCardPdfService pdfService) {
         this.readerService = readerService;
         this.readerService2 = readerService2;
         this.passwordEncoder = passwordEncoder;
         this.fileStorageService = fileStorageService;
         this.mapper = mapper;
+        this.pdfService = pdfService;
     }
 
     @GetMapping("/test")
@@ -154,5 +157,19 @@ public class ReaderController {
                         )
                 )
                 .body(resource);
+    }
+
+    @GetMapping("/{id}/card-pdf")
+    public ResponseEntity<byte[]> exportReaderCard(@PathVariable Long id) {
+
+        Reader reader = readerService.findById(id);
+
+        byte[] pdf = pdfService.exportReaderCard(reader);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=reader-card-" + id + ".pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdf);
     }
 }

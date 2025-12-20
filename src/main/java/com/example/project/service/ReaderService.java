@@ -41,6 +41,10 @@ public class ReaderService {
         return readerRepository.save(reader);
     }
 
+    public Reader findById(Long userId) {
+        return readerRepository.findByUserId((userId));
+    }
+
     private final ReaderRepository readerRepository;
     private final RoleRepository roleRepository;
 
