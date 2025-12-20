@@ -54,7 +54,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/readers/test").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/roles/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/readers/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/readers/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/permissions/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/document_types/**").permitAll()

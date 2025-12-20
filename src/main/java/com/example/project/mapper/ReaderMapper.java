@@ -2,6 +2,7 @@ package com.example.project.mapper;
 
 import com.example.project.dto.request.ReaderRequest;
 import com.example.project.dto.response.ReaderResponse;
+import com.example.project.dto.response.UserResponse;
 import com.example.project.model.Reader;
 import org.mapstruct.*;
 
@@ -13,7 +14,7 @@ public interface ReaderMapper {
     Reader toEntity(ReaderRequest request);
 
     // Entity -> Response
-    ReaderResponse toResponse(Reader reader);
+    UserResponse toResponse(Reader reader);
 
     // UPDATE (PUT)
     @Mapping(target = "userId", ignore = true)

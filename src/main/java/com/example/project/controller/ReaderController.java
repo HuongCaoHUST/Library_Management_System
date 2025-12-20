@@ -6,7 +6,9 @@ import com.example.project.dto.request.ReaderRequest;
 import com.example.project.dto.response.*;
 import com.example.project.mapper.ReaderMapper;
 import com.example.project.model.Reader;
+import com.example.project.service.FileStorageService;
 import com.example.project.service.ReaderService;
+import com.example.project.service.ReaderService2;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
@@ -17,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.util.List;
@@ -29,8 +32,10 @@ import java.util.Optional;
 public class ReaderController {
 
     private final ReaderService readerService;
+    private final ReaderService2 readerService2;
     private final PasswordEncoder passwordEncoder;
     private final ReaderMapper mapper;
+    private final FileStorageService fileStorageService;
 
     @GetMapping("/test")
     public String testEndpoint() {
@@ -82,24 +87,28 @@ public class ReaderController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse<UserResponse>> register(@RequestBody Reader reader) {
-        if (readerService.existsByUsername(reader.getUsername())) {
-            return ResponseEntity.ok(new ApiResponse<>(false, "Username đã tồn tại", null));
-        }
-        if (readerService.existsByEmail(reader.getEmail())) {
-            return ResponseEntity.ok(new ApiResponse<>(false, "Email đã tồn tại", null));
-        }
-        if (readerService.existsByIdCardNumber(reader.getIdCardNumber())) {
-            return ResponseEntity.ok(new ApiResponse<>(false, "CCCD đã tồn tại", null));
-        }
+    public ResponseEntity<ApiResponse<UserResponse>> register(@RequestBody ReaderRequest request) {
 
-        Reader savedReader = readerService.registerReader(reader);
-        UserResponse responseDTO = new UserResponse(savedReader);
-        return ResponseEntity.ok(new ApiResponse<>(true, "Đăng ký thành công", responseDTO));
+        try {
+            UserResponse response = readerService.registerReader(request);
+            return ResponseEntity.ok(new ApiResponse<>(true, "Thêm reader thành công", response));
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.ok(new ApiResponse<>(false, ex.getMessage(), null));
+        }
     }
 
+    @PostMapping(value = "/{id}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ApiResponse<String>> uploadAvatar(
+            @PathVariable Long id, @RequestParam("file") MultipartFile file) {
+        String avatarUrl = fileStorageService.store(file, id);
+        readerService2.updateAvatar(id, avatarUrl);
+
+        return ResponseEntity.ok(new ApiResponse<>(true, "Upload avatar thành công", avatarUrl));
+    }
+
+
     @PatchMapping("/{id}")
-    public ResponseEntity<ApiResponse<ReaderResponse>> patchLibrarian(
+    public ResponseEntity<ApiResponse<UserResponse>> patchLibrarian(
             @PathVariable Long id,
             @Valid @RequestBody ReaderRequest request) {
         Reader updated = readerService.updatePatch(id, request);

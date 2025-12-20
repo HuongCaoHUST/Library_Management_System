@@ -1,11 +1,11 @@
 package com.example.project.service;
 
+import com.example.project.dto.ApiResponse;
 import com.example.project.dto.request.ReaderRequest;
+import com.example.project.dto.response.ReaderResponse;
+import com.example.project.dto.response.UserResponse;
 import com.example.project.mapper.ReaderMapper;
-import com.example.project.model.Document;
-import com.example.project.model.Librarian;
-import com.example.project.model.Reader;
-import com.example.project.model.Role;
+import com.example.project.model.*;
 import com.example.project.repository.ReaderRepository;
 import com.example.project.repository.RoleRepository;
 import com.example.project.specification.ReaderSpecification;
@@ -18,6 +18,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
@@ -61,8 +62,15 @@ public class ReaderService {
 
     public boolean existsByIdCardNumber(String idCardNumber) { return readerRepository.existsByIdCardNumber(idCardNumber);}
 
-    public Reader registerReader(Reader inputReader) {
-        String email = inputReader.getEmail().trim().toLowerCase();
+    public UserResponse registerReader(ReaderRequest request) {
+
+        if (readerRepository.existsByEmail(request.getEmail())) {
+            throw new IllegalArgumentException("Username đã tồn tại");
+        } else if (readerRepository.existsByIdCardNumber(request.getIdCardNumber())) {
+            throw new IllegalArgumentException("Email đã tồn tại");
+        }
+
+        String email = request.getEmail().trim().toLowerCase();
         String username = email;
         String rawPassword = PasswordUtils.generateRandomPassword(8);
         String encryptedPassword = PasswordUtils.encryptPassword(rawPassword);
@@ -76,17 +84,17 @@ public class ReaderService {
 
 
         Reader reader = Reader.builder()
-                .fullName(inputReader.getFullName())
-                .gender(inputReader.getGender())
-                .birthDate(inputReader.getBirthDate())
-                .phoneNumber(inputReader.getPhoneNumber())
-                .email(inputReader.getEmail())
-                .idCardNumber(inputReader.getIdCardNumber())
-                .placeOfBirth(inputReader.getPlaceOfBirth())
-                .issuedPlace(inputReader.getIssuedPlace())
-                .major(inputReader.getMajor())
-                .workPlace(inputReader.getWorkPlace())
-                .address(inputReader.getAddress())
+                .fullName(request.getFullName())
+                .gender(request.getGender())
+                .birthDate(request.getBirthDate())
+                .phoneNumber(request.getPhoneNumber())
+                .email(request.getEmail())
+                .idCardNumber(request.getIdCardNumber())
+                .placeOfBirth(request.getPlaceOfBirth())
+                .issuedPlace(request.getIssuedPlace())
+                .major(request.getMajor())
+                .workPlace(request.getWorkPlace())
+                .address(request.getAddress())
                 .username(username)
                 .password(encryptedPassword)
                 .registrationDate(LocalDateTime.now())
@@ -96,7 +104,9 @@ public class ReaderService {
                 .role(readerRole)
                 .build();
         sendEmailSuccess(reader, rawPassword);
-        return readerRepository.save(reader);
+
+        Reader saved = readerRepository.save(reader);
+        return mapper.toResponse(saved);
     }
 
     public void sendEmailSuccess(Reader reader, String rawPassword) {
