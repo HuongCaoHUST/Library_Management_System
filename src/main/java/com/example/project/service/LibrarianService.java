@@ -3,7 +3,6 @@ package com.example.project.service;
 import com.example.project.dto.request.LibrarianRequest;
 import com.example.project.mapper.LibrarianMapper;
 import com.example.project.model.Librarian;
-import com.example.project.model.Reader;
 import com.example.project.repository.LibrarianRepository;
 import com.example.project.repository.RoleRepository;
 import com.example.project.model.Role;
@@ -12,9 +11,16 @@ import com.example.project.util.PasswordUtils;
 import com.example.project.util.SendEmail;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,29 +29,41 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class LibrarianService {
-    private final LibrarianRepository repository;
+    private final LibrarianRepository librarianRepository;
     private final RoleRepository roleRepository;
 
     private final SendEmail sendEmail;
     private final LibrarianMapper mapper;
 
     public List<Librarian> findAll() {
-        return repository.findAll();
+        return librarianRepository.findAll();
     }
 
     public Optional<Librarian> findById(Long id) {
-        return repository.findById(id);
+        return librarianRepository.findById(id);
     }
     public Optional<Librarian> findByUsername(String username) {
-        return repository.findByUsername(username);
+        return librarianRepository.findByUsername(username);
     }
 
     public Librarian save(Librarian librarian) {
-        return repository.save(librarian);
+        return librarianRepository.save(librarian);
+    }
+
+    public boolean existsByUsername(String username) {
+        return librarianRepository.existsByUsername(username);
+    }
+
+    public boolean existsByEmail(String email) {
+        return librarianRepository.existsByEmail(email);
+    }
+
+    public boolean existsByIdCardNumber(String idCardNumber) {
+        return librarianRepository.existsByIdCardNumber(idCardNumber);
     }
 
 //    public void delete(Long id) {
-//        repository.deleteById(id);
+//        librarianRepository.deleteById(id);
 //    }
 
     public List<Librarian> filterLibrarians(String fullName, String email, String status, String gender) {
@@ -55,7 +73,7 @@ public class LibrarianService {
                 .and(LibrarianSpecification.hasStatus(status))
                 .and(LibrarianSpecification.hasGender(gender));
 
-        return repository.findAll(spec);
+        return librarianRepository.findAll(spec);
     }
 
     public Librarian registerLibrarian(Librarian inputLibrarian) {
@@ -89,7 +107,7 @@ public class LibrarianService {
                 .role(librarianRole)
                 .build();
         sendEmailSuccess(librarian, rawPassword);
-        return repository.save(librarian);
+        return librarianRepository.save(librarian);
     }
 
     public void sendEmailSuccess(Librarian librarian, String rawPassword) {
@@ -105,28 +123,51 @@ public class LibrarianService {
     }
 
     public Librarian updatePatch(Long id, LibrarianRequest request) {
-        Librarian librarian = repository.findById(id)
+        Librarian librarian = librarianRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy thủ thư"));
         mapper.patch(librarian, request);
-        return repository.save(librarian);
+        return librarianRepository.save(librarian);
     }
 
     public void delete(Long id) {
-        if (!repository.existsById(id)) {
+        if (!librarianRepository.existsById(id)) {
             throw new IllegalArgumentException("Không tìm thấy thủ thư");
         }
-        repository.deleteById(id);
+        librarianRepository.deleteById(id);
     }
 
-    public boolean existsByUsername(String username) {
-        return repository.existsByUsername(username);
-    }
+    public ByteArrayInputStream exportLibrarianListToExcel() {
+        try (
+                InputStream templateStream =
+                        getClass().getResourceAsStream("/templates/librarian_export_template.xlsx");
+                Workbook workbook = new XSSFWorkbook(templateStream);
+                ByteArrayOutputStream out = new ByteArrayOutputStream()
+        ) {
 
-    public boolean existsByEmail(String email) {
-        return repository.existsByEmail(email);
-    }
+            Sheet sheet = workbook.getSheetAt(0);
+            List<Librarian> librarians = librarianRepository.findAll();
 
-    public boolean existsByIdCardNumber(String idCardNumber) {
-        return repository.existsByIdCardNumber(idCardNumber);
+            int rowIndex = 1;
+            for (Librarian librarian : librarians) {
+                Row row = sheet.createRow(rowIndex++);
+                row.createCell(0).setCellValue(librarian.getFullName());
+                row.createCell(1).setCellValue(librarian.getGender());
+                row.createCell(2).setCellValue(librarian.getBirthDate());
+                row.createCell(3).setCellValue(librarian.getPlaceOfBirth());
+                row.createCell(4).setCellValue(librarian.getIdCardNumber());
+                row.createCell(5).setCellValue(librarian.getIssuedPlace());
+                row.createCell(6).setCellValue(librarian.getMajor());
+                row.createCell(7).setCellValue(librarian.getWorkPlace());
+                row.createCell(8).setCellValue(librarian.getAddress());
+                row.createCell(9).setCellValue(librarian.getPhoneNumber());
+                row.createCell(10).setCellValue(librarian.getEmail());
+            }
+
+            workbook.write(out);
+            return new ByteArrayInputStream(out.toByteArray());
+
+        } catch (Exception e) {
+            throw new RuntimeException("Xuất Excel thất bại", e);
+        }
     }
 }

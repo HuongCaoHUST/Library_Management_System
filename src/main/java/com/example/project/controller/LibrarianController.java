@@ -11,12 +11,17 @@ import com.example.project.model.Librarian;
 import com.example.project.service.LibrarianService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -114,5 +119,25 @@ public class LibrarianController {
 
         librarianService.delete(id);
         return ResponseEntity.ok(new ApiResponse<>(true, "Xóa librarian thành công!", null));
+    }
+
+    @GetMapping("/export")
+    public ResponseEntity<Resource> exportReaderList() {
+
+        ByteArrayInputStream excelStream = librarianService.exportLibrarianListToExcel();
+
+        InputStreamResource resource = new InputStreamResource(excelStream);
+
+        return ResponseEntity.ok()
+                .header(
+                        HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=librarian_list_export.xlsx"
+                )
+                .contentType(
+                        MediaType.parseMediaType(
+                                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                        )
+                )
+                .body(resource);
     }
 }
