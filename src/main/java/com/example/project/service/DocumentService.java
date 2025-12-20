@@ -2,9 +2,7 @@ package com.example.project.service;
 
 import com.example.project.dto.request.DocumentRequest;
 import com.example.project.dto.response.DocumentResponse;
-import com.example.project.dto.response.DocumentResponseForAdd;
 import com.example.project.mapper.DocumentMapper;
-import com.example.project.model.BorrowSlip;
 import com.example.project.model.Category;
 import com.example.project.model.Document;
 import com.example.project.model.DocumentType;
@@ -14,6 +12,7 @@ import com.example.project.repository.DocumentTypeRepository;
 import com.example.project.specification.DocumentSpecification;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -24,6 +23,7 @@ import org.springframework.stereotype.Service;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -93,6 +93,71 @@ public class DocumentService {
         Document saved = documentRepository.save(document);
 
         return documentMapper.toResponse(saved);
+    }
+
+    @Transactional
+    public void importDocumentFromExcel(InputStream inputStream) throws Exception {
+
+        Workbook workbook = new XSSFWorkbook(inputStream);
+        Sheet sheet = workbook.getSheetAt(0);
+
+        List<Document> documents = new ArrayList<>();
+
+        for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+            Row row = sheet.getRow(i);
+            if (row == null) continue;
+
+            Document document = new Document();
+            document.setTitle(getCellString(row.getCell(0)));
+            document.setAuthor(getCellString(row.getCell(1)));
+            document.setPublisher(getCellString(row.getCell(2)));
+            document.setPublicationYear(Integer.valueOf(getCellString(row.getCell(3))));
+            document.setClassificationNumber(getCellString(row.getCell(4)));
+
+            String categoryName = getCellString(row.getCell(5));
+            if (categoryName != null && !categoryName.isBlank()) {
+                Category category = categoryRepository
+                        .findByName(categoryName.trim())
+                        .orElseThrow(() ->
+                                new RuntimeException("Không tìm thấy category: " + categoryName)
+                        );
+                document.setCategory(category);
+            }
+
+            document.setShelfLocation(getCellString(row.getCell(6)));
+
+            String documentTypeName = getCellString(row.getCell(7));
+            if (documentTypeName != null && !documentTypeName.isBlank()) {
+                DocumentType documentType = documentTypeRepository
+                        .findByName(documentTypeName.trim())
+                        .orElseThrow(() ->
+                                new RuntimeException("Không tìm thấy Document type: " + documentTypeName)
+                        );
+                document.setDocumentType(documentType);
+            }
+
+            document.setAccessLink(getCellString(row.getCell(8)));
+            document.setStatus(getCellString(row.getCell(9)));
+
+            document.setAvailableCopies(0);
+            document.setBorrowedCopies(0);
+
+            documents.add(document);
+        }
+
+        documentRepository.saveAll(documents);
+        workbook.close();
+    }
+
+    private String getCellString(Cell cell) {
+        if (cell == null) return null;
+
+        return switch (cell.getCellType()) {
+            case STRING -> cell.getStringCellValue();
+            case NUMERIC -> String.valueOf((long) cell.getNumericCellValue());
+            case BOOLEAN -> String.valueOf(cell.getBooleanCellValue());
+            default -> null;
+        };
     }
 
     public ByteArrayInputStream exportDocumentsToExcel() {

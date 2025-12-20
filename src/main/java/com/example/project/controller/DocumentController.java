@@ -202,9 +202,7 @@ public class DocumentController {
 
         try {
             InputStream inputStream = file.getInputStream();
-            System.out.println("Upload thành công");
-//             TODO: xử lý đọc Excel (Apache POI)
-//             importService.importSupplierFromExcel(inputStream);
+            documentService.importDocumentFromExcel(inputStream);
 
             return ResponseEntity.ok("Upload và import thành công");
         } catch (Exception e) {
