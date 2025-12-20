@@ -79,9 +79,7 @@ public class SupplierController {
                 getClass().getResourceAsStream("/templates/supplier_import_template.xlsx")
         );
 
-        if (!resource.exists()) {
-            return ResponseEntity.notFound().build();
-        }
+        if (!resource.exists()) { return ResponseEntity.notFound().build();}
 
         return ResponseEntity.ok()
                 .header(

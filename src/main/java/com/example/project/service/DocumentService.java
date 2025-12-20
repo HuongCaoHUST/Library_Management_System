@@ -14,9 +14,16 @@ import com.example.project.repository.DocumentTypeRepository;
 import com.example.project.specification.DocumentSpecification;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,6 +49,18 @@ public class DocumentService {
 
     public void delete(Long id) {
         documentRepository.deleteById(id);
+    }
+
+    public List<Document> findAllById(List<Long> ids) {
+        return documentRepository.findAllById(ids);
+    }
+
+    public List<Document> saveAll(List<Document> documents) {
+        return documentRepository.saveAll(documents);
+    }
+
+    public void deleteAllById(List<Long> ids) {
+        documentRepository.deleteAllById(ids);
     }
 
     public List<Document> filterDocuments(String title, String author, String publisher, Long documentTypeId, Integer publicationYear) {
@@ -76,15 +95,40 @@ public class DocumentService {
         return documentMapper.toResponse(saved);
     }
 
-    public List<Document> findAllById(List<Long> ids) {
-        return documentRepository.findAllById(ids);
-    }
+    public ByteArrayInputStream exportDocumentsToExcel() {
+        try (
+                InputStream templateStream =
+                        getClass().getResourceAsStream("/templates/document_export_template.xlsx");
+                Workbook workbook = new XSSFWorkbook(templateStream);
+                ByteArrayOutputStream out = new ByteArrayOutputStream()
+        ) {
 
-    public List<Document> saveAll(List<Document> documents) {
-        return documentRepository.saveAll(documents);
-    }
+            Sheet sheet = workbook.getSheetAt(0);
+            List<Document> documents = documentRepository.findAll();
 
-    public void deleteAllById(List<Long> ids) {
-        documentRepository.deleteAllById(ids);
+            int rowIndex = 1;
+
+            for (Document doc : documents) {
+                Row row = sheet.createRow(rowIndex++);
+
+                row.createCell(0).setCellValue(doc.getTitle());
+                row.createCell(1).setCellValue(doc.getAuthor());
+                row.createCell(2).setCellValue(
+                        doc.getPublisher() != null ? doc.getPublisher() : ""
+                );
+
+                if (doc.getPublicationYear() != null) {
+                    row.createCell(3).setCellValue(doc.getPublicationYear());
+                } else {
+                    row.createCell(3).setCellValue("");
+                }
+            }
+
+            workbook.write(out);
+            return new ByteArrayInputStream(out.toByteArray());
+
+        } catch (Exception e) {
+            throw new RuntimeException("Xuất Excel thất bại", e);
+        }
     }
 }

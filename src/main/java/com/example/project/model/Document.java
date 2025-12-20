@@ -41,4 +41,10 @@ public class Document {
 
     private String accessLink;
     private String status;
+
+    @Lob
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
+    private String coverImageUrl;
 }

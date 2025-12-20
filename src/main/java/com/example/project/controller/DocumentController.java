@@ -6,7 +6,6 @@ import com.example.project.dto.request.DocumentDeleteRequest;
 import com.example.project.dto.request.DocumentPatchRequest;
 import com.example.project.dto.request.DocumentRequest;
 import com.example.project.dto.response.DocumentResponse;
-import com.example.project.dto.response.DocumentResponseForAdd;
 import com.example.project.model.Document;
 import com.example.project.service.DocumentService;
 import jakarta.validation.Valid;
@@ -22,6 +21,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
@@ -189,5 +189,25 @@ public class DocumentController {
             return ResponseEntity.internalServerError()
                     .body("Lỗi khi xử lý file: " + e.getMessage());
         }
+    }
+
+    @GetMapping("/export")
+    public ResponseEntity<Resource> exportDocuments() {
+
+        ByteArrayInputStream excelStream = documentService.exportDocumentsToExcel();
+
+        InputStreamResource resource = new InputStreamResource(excelStream);
+
+        return ResponseEntity.ok()
+                .header(
+                        HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=document_export.xlsx"
+                )
+                .contentType(
+                        MediaType.parseMediaType(
+                                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                        )
+                )
+                .body(resource);
     }
 }

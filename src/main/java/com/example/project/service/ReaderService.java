@@ -1,8 +1,8 @@
 package com.example.project.service;
 
 import com.example.project.dto.request.ReaderRequest;
-import com.example.project.mapper.LibrarianMapper;
 import com.example.project.mapper.ReaderMapper;
+import com.example.project.model.Document;
 import com.example.project.model.Librarian;
 import com.example.project.model.Reader;
 import com.example.project.model.Role;
@@ -13,9 +13,16 @@ import com.example.project.util.PasswordUtils;
 import com.example.project.util.SendEmail;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,14 +33,14 @@ import java.util.Optional;
 public class ReaderService {
 
     public List<Reader> findAll() {
-        return repository.findAll();
+        return readerRepository.findAll();
     }
 
     public Reader save(Reader reader) {
-        return repository.save(reader);
+        return readerRepository.save(reader);
     }
 
-    private final ReaderRepository repository;
+    private final ReaderRepository readerRepository;
     private final RoleRepository roleRepository;
 
     private final LibrarianService librarianService;
@@ -41,8 +48,18 @@ public class ReaderService {
     private final ReaderMapper mapper;
 
     public Optional<Reader> findByUsername(String username) {
-        return repository.findByUsername(username);
+        return readerRepository.findByUsername(username);
     }
+
+    public boolean existsByUsername(String username) {
+        return readerRepository.existsByUsername(username);
+    }
+
+    public boolean existsByEmail(String email) {
+        return readerRepository.existsByEmail(email);
+    }
+
+    public boolean existsByIdCardNumber(String idCardNumber) { return readerRepository.existsByIdCardNumber(idCardNumber);}
 
     public Reader registerReader(Reader inputReader) {
         String email = inputReader.getEmail().trim().toLowerCase();
@@ -79,7 +96,7 @@ public class ReaderService {
                 .role(readerRole)
                 .build();
         sendEmailSuccess(reader, rawPassword);
-        return repository.save(reader);
+        return readerRepository.save(reader);
     }
 
     public void sendEmailSuccess(Reader reader, String rawPassword) {
@@ -109,32 +126,55 @@ public class ReaderService {
                 .and(ReaderSpecification.hasStatus(status))
                 .and(ReaderSpecification.hasGender(gender));
 
-        return repository.findAll(spec);
+        return readerRepository.findAll(spec);
     }
 
     public Reader updatePatch(Long id, ReaderRequest request) {
-        Reader reader = repository.findById(id)
+        Reader reader = readerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy bạn đọc"));
         mapper.patch(reader, request);
-        return repository.save(reader);
+        return readerRepository.save(reader);
     }
 
     public void delete(Long id) {
-        if (!repository.existsById(id)) {
+        if (!readerRepository.existsById(id)) {
             throw new IllegalArgumentException("Không tìm thấy bạn đọc");
         }
-        repository.deleteById(id);
+        readerRepository.deleteById(id);
     }
 
-    public boolean existsByUsername(String username) {
-        return repository.existsByUsername(username);
-    }
+    public ByteArrayInputStream exportReaderListToExcel() {
+        try (
+                InputStream templateStream =
+                        getClass().getResourceAsStream("/templates/reader_export_template.xlsx");
+                Workbook workbook = new XSSFWorkbook(templateStream);
+                ByteArrayOutputStream out = new ByteArrayOutputStream()
+        ) {
 
-    public boolean existsByEmail(String email) {
-        return repository.existsByEmail(email);
-    }
+            Sheet sheet = workbook.getSheetAt(0);
+            List<Reader> readers = readerRepository.findAll();
 
-    public boolean existsByIdCardNumber(String idCardNumber) {
-        return repository.existsByIdCardNumber(idCardNumber);
+            int rowIndex = 1;
+            for (Reader reader : readers) {
+                Row row = sheet.createRow(rowIndex++);
+                row.createCell(0).setCellValue(reader.getFullName());
+                row.createCell(1).setCellValue(reader.getGender());
+                row.createCell(2).setCellValue(reader.getBirthDate());
+                row.createCell(3).setCellValue(reader.getPlaceOfBirth());
+                row.createCell(4).setCellValue(reader.getIdCardNumber());
+                row.createCell(5).setCellValue(reader.getIssuedPlace());
+                row.createCell(6).setCellValue(reader.getMajor());
+                row.createCell(7).setCellValue(reader.getWorkPlace());
+                row.createCell(8).setCellValue(reader.getAddress());
+                row.createCell(9).setCellValue(reader.getPhoneNumber());
+                row.createCell(10).setCellValue(reader.getEmail());
+            }
+
+            workbook.write(out);
+            return new ByteArrayInputStream(out.toByteArray());
+
+        } catch (Exception e) {
+            throw new RuntimeException("Xuất Excel thất bại", e);
+        }
     }
 }
