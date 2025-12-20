@@ -9,8 +9,10 @@ import com.example.project.model.Reader;
 import com.example.project.service.FileStorageService;
 import com.example.project.service.ReaderService;
 import com.example.project.service.ReaderService2;
+import com.example.project.service.impl.ReaderFileStorageServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -26,7 +28,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/api/readers")
 @CrossOrigin(origins = "*")
 public class ReaderController {
@@ -36,6 +37,19 @@ public class ReaderController {
     private final PasswordEncoder passwordEncoder;
     private final ReaderMapper mapper;
     private final FileStorageService fileStorageService;
+
+    public ReaderController(
+            ReaderService readerService,
+            ReaderService2 readerService2,
+            PasswordEncoder passwordEncoder,
+            ReaderMapper mapper,
+            @Qualifier("readerStorage") FileStorageService fileStorageService) {
+        this.readerService = readerService;
+        this.readerService2 = readerService2;
+        this.passwordEncoder = passwordEncoder;
+        this.fileStorageService = fileStorageService;
+        this.mapper = mapper;
+    }
 
     @GetMapping("/test")
     public String testEndpoint() {

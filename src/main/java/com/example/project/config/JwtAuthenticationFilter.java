@@ -35,7 +35,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 || uri.startsWith("/api/permissions/**")
                 || uri.startsWith("/api/categories/**")
                 || uri.startsWith("/api/document_types/**")
-                || uri.startsWith("/api/librarians/test")) {
+                || uri.startsWith("/api/librarians/**")) {
             filterChain.doFilter(request, response);
             return;
         }

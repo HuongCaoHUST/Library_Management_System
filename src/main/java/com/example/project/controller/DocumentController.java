@@ -8,8 +8,10 @@ import com.example.project.dto.request.DocumentRequest;
 import com.example.project.dto.response.DocumentResponse;
 import com.example.project.model.Document;
 import com.example.project.service.DocumentService;
+import com.example.project.service.DocumentService2;
+import com.example.project.service.FileStorageService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +19,6 @@ import com.example.project.mapper.DocumentMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,13 +29,25 @@ import java.util.Map;
 import java.util.HashMap;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/api/documents")
 @CrossOrigin(origins = "*")
 public class DocumentController {
 
     private final DocumentService documentService;
+    private final DocumentService2 documentService2;
     private final DocumentMapper documentMapper;
+    private final FileStorageService fileStorageService;
+
+    public DocumentController(
+            DocumentService documentService,
+            DocumentMapper documentMapper,
+            DocumentService2 documentService2,
+            @Qualifier("documentStorage") FileStorageService fileStorageService) {
+        this.documentService = documentService;
+        this.documentMapper = documentMapper;
+        this.documentService2 = documentService2;
+        this.fileStorageService = fileStorageService;
+    }
 
     @GetMapping("/filter")
     public List<DocumentResponse> filterDocuments(
@@ -61,6 +74,15 @@ public class DocumentController {
         DocumentResponse responseDTO = documentService.create(request);
 
         return ResponseEntity.ok(new ApiResponse<>(true, "Thêm tài liệu thành công", responseDTO));
+    }
+
+    @PostMapping(value = "/{id}/cover", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ApiResponse<String>> uploadAvatar(
+            @PathVariable Long id, @RequestParam("file") MultipartFile file) {
+        String coverUrl = fileStorageService.store(file, id);
+        documentService2.updateCover(id, coverUrl);
+
+        return ResponseEntity.ok(new ApiResponse<>(true, "Upload avatar thành công", coverUrl));
     }
 
     @PostMapping("/bulk")

@@ -46,5 +46,5 @@ public class Document {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    private String coverImageUrl;
+    private String coverUrl;
 }

@@ -8,9 +8,13 @@ import com.example.project.dto.response.LibrarianResponseForFilter;
 import com.example.project.dto.response.UserResponse;
 import com.example.project.mapper.LibrarianMapper;
 import com.example.project.model.Librarian;
+import com.example.project.service.FileStorageService;
 import com.example.project.service.LibrarianService;
+import com.example.project.service.LibrarianService2;
+import com.example.project.service.impl.LibrarianFileStorageServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -20,22 +24,36 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/api/librarians")
 @CrossOrigin(origins = "*")
-@PreAuthorize("hasRole('ADMIN')")
+//@PreAuthorize("hasRole('ADMIN')")
 public class LibrarianController {
 
     private final LibrarianService librarianService;
+    private final LibrarianService2 librarianService2;
     private final PasswordEncoder passwordEncoder;
-
     private final LibrarianMapper mapper;
+    private final FileStorageService fileStorageService;
+
+    public LibrarianController(
+            LibrarianService librarianService,
+            LibrarianService2 librarianService2,
+            PasswordEncoder passwordEncoder,
+            @Qualifier("librarianStorage") FileStorageService fileStorageService,
+            LibrarianMapper mapper) {
+        this.librarianService = librarianService;
+        this.librarianService2 = librarianService2;
+        this.passwordEncoder = passwordEncoder;
+        this.fileStorageService = fileStorageService;
+        this.mapper = mapper;
+    }
 
     @GetMapping("/test")
     public String testEndpoint() {
@@ -71,6 +89,15 @@ public class LibrarianController {
         Librarian savedLibrarian = librarianService.registerLibrarian(librarian);
         UserResponse responseDTO = new UserResponse(savedLibrarian);
         return ResponseEntity.ok(new ApiResponse<>(true, "Đăng ký thành công", responseDTO));
+    }
+
+    @PostMapping(value = "/{id}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ApiResponse<String>> uploadAvatar(
+            @PathVariable Long id, @RequestParam("file") MultipartFile file) {
+        String avatarUrl = fileStorageService.store(file, id);
+        librarianService2.updateAvatar(id, avatarUrl);
+
+        return ResponseEntity.ok(new ApiResponse<>(true, "Upload avatar thành công", avatarUrl));
     }
 
     @GetMapping("/me")

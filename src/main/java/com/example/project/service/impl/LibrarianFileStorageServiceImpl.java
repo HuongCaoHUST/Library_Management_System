@@ -7,11 +7,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.*;
-import java.util.UUID;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-@Service
-public class FileStorageServiceImpl implements FileStorageService {
+@Service("librarianStorage")
+public class LibrarianFileStorageServiceImpl implements FileStorageService {
 
     @Value("${file.upload-dir}")
     private String uploadDir;
@@ -32,12 +33,12 @@ public class FileStorageServiceImpl implements FileStorageService {
         }
 
         try {
-            Path uploadPath = Paths.get(uploadDir,"avatars");
+            Path uploadPath = Paths.get(uploadDir,"avatars/librarian");
             if (!Files.exists(uploadPath)) {
                 Files.createDirectories(uploadPath);
             }
 
-            String filename = "reader_" + id + ".png";
+            String filename = "librarian_" + id + ".png";
             Path filePath = uploadPath.resolve(filename);
             Thumbnails.of(file.getInputStream())
                     .height(512)
