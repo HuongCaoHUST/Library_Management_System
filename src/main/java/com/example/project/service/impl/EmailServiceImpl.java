@@ -56,7 +56,7 @@ public class EmailServiceImpl implements EmailService {
                 Tên đăng nhập: %s
                 Mật khẩu: %s
 
-                Vui lòng đăng nhập và đổi mật khẩu ngay sau khi sử dụng lần đầu.\n\n.
+                Vui lòng đăng nhập và đổi mật khẩu ngay sau khi sử dụng lần đầu.\n\n
 
                 Thân mến,\nPhòng Thư viện
                 """.formatted(

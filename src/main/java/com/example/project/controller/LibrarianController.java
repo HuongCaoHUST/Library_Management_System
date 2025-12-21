@@ -11,9 +11,7 @@ import com.example.project.model.Librarian;
 import com.example.project.service.FileStorageService;
 import com.example.project.service.LibrarianService;
 import com.example.project.service.LibrarianService2;
-import com.example.project.service.impl.LibrarianFileStorageServiceImpl;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -150,7 +148,7 @@ public class LibrarianController {
     }
 
     @PostMapping("/import")
-    public ResponseEntity<?> importSuppliers(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<?> importLibrarians(@RequestParam("file") MultipartFile file) {
         if (file.isEmpty()) {
             return ResponseEntity.ok(new ApiResponse<>(false, "File upload rỗng", ""));
         }
