@@ -6,10 +6,15 @@ import com.example.project.dto.response.GRNResponse;
 import com.example.project.dto.response.SupplierResponse;
 import com.example.project.mapper.GRNMapper;
 import com.example.project.model.GRN;
+import com.example.project.model.Librarian;
 import com.example.project.service.GRNService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,5 +39,16 @@ public class GRNController {
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.ok(new ApiResponse<>(false, ex.getMessage(), null));
         }
+    }
+
+    @GetMapping("/{id}/pdf")
+    public ResponseEntity<byte[]> exportGRNPdf(@PathVariable Long id) {
+
+        byte[] pdf = grnService.exportGRNPdf(id);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=phieu-nhap-kho.pdf")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(pdf);
     }
 }
