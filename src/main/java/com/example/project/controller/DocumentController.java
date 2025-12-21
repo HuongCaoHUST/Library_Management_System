@@ -190,24 +190,23 @@ public class DocumentController {
     }
 
     @PostMapping("/import")
-    public ResponseEntity<?> importSuppliers(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<ApiResponse<String>> importDocuments(@RequestParam("file") MultipartFile file) {
         if (file.isEmpty()) {
-            return ResponseEntity.badRequest().body("File upload rỗng");
+            return ResponseEntity.ok(new ApiResponse<>(false, "File upload rỗng", ""));
         }
 
         String contentType = file.getContentType();
         if (!"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet".equals(contentType)) {
-            return ResponseEntity.badRequest().body("Chỉ hỗ trợ file .xlsx");
+            return ResponseEntity.ok(new ApiResponse<>(false, "Chỉ hỗ trợ file .xlsx", ""));
         }
 
         try {
             InputStream inputStream = file.getInputStream();
             documentService.importDocumentFromExcel(inputStream);
 
-            return ResponseEntity.ok("Upload và import thành công");
+            return ResponseEntity.ok(new ApiResponse<>(true, "Upload thành công", ""));
         } catch (Exception e) {
-            return ResponseEntity.internalServerError()
-                    .body("Lỗi khi xử lý file: " + e.getMessage());
+            return ResponseEntity.ok(new ApiResponse<>(false, "Lỗi khi xử lý file: "+ e.getMessage(), ""));
         }
     }
 

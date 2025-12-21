@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -146,6 +147,27 @@ public class LibrarianController {
 
         librarianService.delete(id);
         return ResponseEntity.ok(new ApiResponse<>(true, "Xóa librarian thành công!", null));
+    }
+
+    @PostMapping("/import")
+    public ResponseEntity<?> importSuppliers(@RequestParam("file") MultipartFile file) {
+        if (file.isEmpty()) {
+            return ResponseEntity.ok(new ApiResponse<>(false, "File upload rỗng", ""));
+        }
+
+        String contentType = file.getContentType();
+        if (!"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet".equals(contentType)) {
+            return ResponseEntity.ok(new ApiResponse<>(false, "Chỉ hỗ trợ file .xlsx", ""));
+        }
+
+        try {
+            InputStream inputStream = file.getInputStream();
+            librarianService.importLibrarianFromExcel(inputStream);
+
+            return ResponseEntity.ok(new ApiResponse<>(true, "Upload thành công", ""));
+        } catch (Exception e) {
+            return ResponseEntity.ok(new ApiResponse<>(false, "Lỗi khi xử lý file: "+ e.getMessage(), ""));
+        }
     }
 
     @GetMapping("/export")
