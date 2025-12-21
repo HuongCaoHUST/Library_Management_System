@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/readers/test").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/readers/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/roles/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/librarians/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll()

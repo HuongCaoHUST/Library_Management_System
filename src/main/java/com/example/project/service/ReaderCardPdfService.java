@@ -26,7 +26,7 @@ public class ReaderCardPdfService {
     public byte[] exportReaderCard(Reader reader) {
         try (
                 InputStream template =
-                    new ClassPathResource("/templates/id_card.pdf").getInputStream();
+                    new ClassPathResource("/templates/reader_id_card.pdf").getInputStream();
                 PDDocument document = PDDocument.load(template);
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream()
         ) {
