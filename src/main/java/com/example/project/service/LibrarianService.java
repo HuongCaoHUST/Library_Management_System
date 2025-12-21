@@ -37,6 +37,7 @@ import java.util.Optional;
 public class LibrarianService {
     private final LibrarianRepository librarianRepository;
     private final RoleRepository roleRepository;
+    private final EmailService emailService;
 
     private final SendEmail sendEmail;
     private final LibrarianMapper mapper;
@@ -112,20 +113,8 @@ public class LibrarianService {
                 .depositAmount(BigDecimal.ZERO)
                 .role(librarianRole)
                 .build();
-        sendEmailSuccess(librarian, rawPassword);
+        emailService.sendLibrarianAccountApproved(librarian, rawPassword);
         return librarianRepository.save(librarian);
-    }
-
-    public void sendEmailSuccess(Librarian librarian, String rawPassword) {
-        String subject = "[THỦ THƯ] Tài khoản thư viện của bạn đã được phê duyệt";
-        String body = "Xin chào " + librarian.getFullName() + ",\n\n"
-                + "Tài khoản của bạn đã được phê duyệt thành công!\n"
-                + "Tên đăng nhập: " + librarian.getUsername() + "\n"
-                + "Mật khẩu: " + rawPassword + "\n\n"
-                + "Vui lòng đăng nhập và đổi mật khẩu ngay sau khi sử dụng lần đầu.\n\n"
-                + "Thân mến,\nPhòng Thư viện";
-
-        sendEmail.sendMail("huongcao.seee@gmail.com", subject, body);
     }
 
     public Librarian updatePatch(Long id, LibrarianRequest request) {
@@ -156,15 +145,6 @@ public class LibrarianService {
 
             Librarian librarian = new Librarian();
 
-            if (existsByUsername(librarian.getUsername())) {
-                throw new RuntimeException("Username đã tồn tại");
-            }
-            if (existsByEmail(librarian.getEmail())) {
-                throw new RuntimeException("Email đã tồn tại");
-            }
-            if (existsByIdCardNumber(librarian.getIdCardNumber())) {
-                throw new RuntimeException("CCCD đã tồn tại");
-            }
 
             librarian.setFullName(getCellString(row.getCell(0)));
             librarian.setGender(getCellString(row.getCell(1)));
@@ -187,8 +167,18 @@ public class LibrarianService {
 
             String email = librarian.getEmail().trim().toLowerCase();
             String username = email;
-
             librarian.setUsername(username);
+
+            if (existsByUsername(librarian.getUsername())) {
+                throw new RuntimeException("Username đã tồn tại");
+            }
+            if (existsByEmail(librarian.getEmail())) {
+                throw new RuntimeException("Email đã tồn tại");
+            }
+            if (existsByIdCardNumber(librarian.getIdCardNumber())) {
+                throw new RuntimeException("CCCD đã tồn tại");
+            }
+
 
             String rawPassword = PasswordUtils.generateRandomPassword(8);
             String encryptedPassword = PasswordUtils.encryptPassword(rawPassword);
@@ -201,7 +191,7 @@ public class LibrarianService {
             Role librarianRole = roleRepository.findByName("LIBRARIAN").orElseThrow(() -> new RuntimeException("Role LIBRARIAN not found"));
             librarian.setRole(librarianRole);
 
-            sendEmailSuccess(librarian, rawPassword);
+            emailService.sendLibrarianAccountApproved(librarian, rawPassword);
 
             librarians.add(librarian);
         }

@@ -49,7 +49,7 @@ public class ReaderService {
     private final RoleRepository roleRepository;
 
     private final LibrarianService librarianService;
-    private final SendEmail sendEmail;
+    private final EmailService emailService;
     private final ReaderMapper mapper;
 
     public Optional<Reader> findByUsername(String username) {
@@ -107,31 +107,11 @@ public class ReaderService {
                 .depositAmount(BigDecimal.ZERO)
                 .role(readerRole)
                 .build();
-        sendEmailSuccess(reader, rawPassword);
+        emailService.sendReaderAccountApproved(reader, rawPassword);
 
         Reader saved = readerRepository.save(reader);
         return mapper.toResponse(saved);
     }
-
-    public void sendEmailSuccess(Reader reader, String rawPassword) {
-        String subject = "Tài khoản thư viện của bạn đã được phê duyệt";
-        String body = "Xin chào " + reader.getFullName() + ",\n\n"
-                + "Tài khoản của bạn đã được phê duyệt thành công!\n"
-                + "Tên đăng nhập: " + reader.getUsername() + "\n"
-                + "Mật khẩu: " + rawPassword + "\n\n"
-                + "Vui lòng đăng nhập và đổi mật khẩu ngay sau khi sử dụng lần đầu.\n\n"
-                + "Thân mến,\nPhòng Thư viện";
-
-        sendEmail.sendMail("huongcao.seee@gmail.com", subject, body);
-    }
-
-//    public List<Reader> getPendingReaders() {
-//        return readerRepository.findByStatus("PENDING");
-//    }
-//
-//    public List<Reader> getApprovedReaders() {
-//        return readerRepository.findByStatus("APPROVED");
-//    }
 
     public List<Reader> filterReaders(String fullName, String email, String status, String gender) {
         Specification<Reader> spec = Specification
