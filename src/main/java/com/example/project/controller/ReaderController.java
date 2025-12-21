@@ -6,10 +6,7 @@ import com.example.project.dto.request.ReaderRequest;
 import com.example.project.dto.response.*;
 import com.example.project.mapper.ReaderMapper;
 import com.example.project.model.Reader;
-import com.example.project.service.FileStorageService;
-import com.example.project.service.ReaderCardPdfService;
-import com.example.project.service.ReaderService;
-import com.example.project.service.ReaderService2;
+import com.example.project.service.*;
 import com.example.project.service.impl.ReaderFileStorageServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -40,19 +37,21 @@ public class ReaderController {
     private final ReaderMapper mapper;
     private final FileStorageService fileStorageService;
     private final ReaderCardPdfService pdfService;
+    private final ExportService exportService;
 
     public ReaderController(
             ReaderService readerService,
             ReaderService2 readerService2,
             PasswordEncoder passwordEncoder,
             ReaderMapper mapper,
-            @Qualifier("readerStorage") FileStorageService fileStorageService, ReaderCardPdfService pdfService) {
+            @Qualifier("readerStorage") FileStorageService fileStorageService, ReaderCardPdfService pdfService, ExportService exportService) {
         this.readerService = readerService;
         this.readerService2 = readerService2;
         this.passwordEncoder = passwordEncoder;
         this.fileStorageService = fileStorageService;
         this.mapper = mapper;
         this.pdfService = pdfService;
+        this.exportService = exportService;
     }
 
     @GetMapping("/test")
@@ -143,7 +142,7 @@ public class ReaderController {
     @GetMapping("/export")
     public ResponseEntity<Resource> exportReaderList() {
 
-        ByteArrayInputStream excelStream = readerService.exportReaderListToExcel();
+        ByteArrayInputStream excelStream = exportService.exportReaderListToExcel();
 
         InputStreamResource resource = new InputStreamResource(excelStream);
 

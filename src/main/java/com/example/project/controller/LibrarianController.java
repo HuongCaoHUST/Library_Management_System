@@ -8,6 +8,7 @@ import com.example.project.dto.response.LibrarianResponseForFilter;
 import com.example.project.dto.response.UserResponse;
 import com.example.project.mapper.LibrarianMapper;
 import com.example.project.model.Librarian;
+import com.example.project.service.ExportService;
 import com.example.project.service.FileStorageService;
 import com.example.project.service.LibrarianService;
 import com.example.project.service.LibrarianService2;
@@ -40,18 +41,20 @@ public class LibrarianController {
     private final PasswordEncoder passwordEncoder;
     private final LibrarianMapper mapper;
     private final FileStorageService fileStorageService;
+    private final ExportService exportService;
 
     public LibrarianController(
             LibrarianService librarianService,
             LibrarianService2 librarianService2,
             PasswordEncoder passwordEncoder,
             @Qualifier("librarianStorage") FileStorageService fileStorageService,
-            LibrarianMapper mapper) {
+            LibrarianMapper mapper, ExportService exportService) {
         this.librarianService = librarianService;
         this.librarianService2 = librarianService2;
         this.passwordEncoder = passwordEncoder;
         this.fileStorageService = fileStorageService;
         this.mapper = mapper;
+        this.exportService = exportService;
     }
 
     @GetMapping("/test")
@@ -171,7 +174,7 @@ public class LibrarianController {
     @GetMapping("/export")
     public ResponseEntity<Resource> exportReaderList() {
 
-        ByteArrayInputStream excelStream = librarianService.exportLibrarianListToExcel();
+        ByteArrayInputStream excelStream = exportService.exportLibrarianListToExcel();
 
         InputStreamResource resource = new InputStreamResource(excelStream);
 

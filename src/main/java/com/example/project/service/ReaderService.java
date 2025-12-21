@@ -217,38 +217,4 @@ public class ReaderService {
         };
     }
 
-    public ByteArrayInputStream exportReaderListToExcel() {
-        try (
-                InputStream templateStream =
-                        getClass().getResourceAsStream("/templates/reader_export_template.xlsx");
-                Workbook workbook = new XSSFWorkbook(templateStream);
-                ByteArrayOutputStream out = new ByteArrayOutputStream()
-        ) {
-
-            Sheet sheet = workbook.getSheetAt(0);
-            List<Reader> readers = readerRepository.findAll();
-
-            int rowIndex = 1;
-            for (Reader reader : readers) {
-                Row row = sheet.createRow(rowIndex++);
-                row.createCell(0).setCellValue(reader.getFullName());
-                row.createCell(1).setCellValue(reader.getGender());
-                row.createCell(2).setCellValue(reader.getBirthDate());
-                row.createCell(3).setCellValue(reader.getPlaceOfBirth());
-                row.createCell(4).setCellValue(reader.getIdCardNumber());
-                row.createCell(5).setCellValue(reader.getIssuedPlace());
-                row.createCell(6).setCellValue(reader.getMajor());
-                row.createCell(7).setCellValue(reader.getWorkPlace());
-                row.createCell(8).setCellValue(reader.getAddress());
-                row.createCell(9).setCellValue(reader.getPhoneNumber());
-                row.createCell(10).setCellValue(reader.getEmail());
-            }
-
-            workbook.write(out);
-            return new ByteArrayInputStream(out.toByteArray());
-
-        } catch (Exception e) {
-            throw new RuntimeException("Xuất Excel thất bại", e);
-        }
-    }
 }

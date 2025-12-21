@@ -209,39 +209,4 @@ public class LibrarianService {
             default -> null;
         };
     }
-
-    public ByteArrayInputStream exportLibrarianListToExcel() {
-        try (
-                InputStream templateStream =
-                        getClass().getResourceAsStream("/templates/librarian_export_template.xlsx");
-                Workbook workbook = new XSSFWorkbook(templateStream);
-                ByteArrayOutputStream out = new ByteArrayOutputStream()
-        ) {
-
-            Sheet sheet = workbook.getSheetAt(0);
-            List<Librarian> librarians = librarianRepository.findAll();
-
-            int rowIndex = 1;
-            for (Librarian librarian : librarians) {
-                Row row = sheet.createRow(rowIndex++);
-                row.createCell(0).setCellValue(librarian.getFullName());
-                row.createCell(1).setCellValue(librarian.getGender());
-                row.createCell(2).setCellValue(librarian.getBirthDate());
-                row.createCell(3).setCellValue(librarian.getPlaceOfBirth());
-                row.createCell(4).setCellValue(librarian.getIdCardNumber());
-                row.createCell(5).setCellValue(librarian.getIssuedPlace());
-                row.createCell(6).setCellValue(librarian.getMajor());
-                row.createCell(7).setCellValue(librarian.getWorkPlace());
-                row.createCell(8).setCellValue(librarian.getAddress());
-                row.createCell(9).setCellValue(librarian.getPhoneNumber());
-                row.createCell(10).setCellValue(librarian.getEmail());
-            }
-
-            workbook.write(out);
-            return new ByteArrayInputStream(out.toByteArray());
-
-        } catch (Exception e) {
-            throw new RuntimeException("Xuất Excel thất bại", e);
-        }
-    }
 }
