@@ -85,8 +85,7 @@ public class ReaderService {
         System.out.println("Found librarian ID: " + approvingLibrarian.getUserId());
         System.out.println("Librarian name: " + approvingLibrarian.getFullName());
 
-        Role readerRole = roleRepository.findByName("LIBRARIAN").orElseThrow(() -> new RuntimeException("Role not found"));
-
+        Role readerRole = roleRepository.findByName("READER").orElseThrow(() -> new RuntimeException("Role not found"));
 
         Reader reader = Reader.builder()
                 .fullName(request.getFullName())

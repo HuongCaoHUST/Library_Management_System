@@ -3,6 +3,7 @@ package com.example.project.controller;
 import com.example.project.dto.ApiResponse;
 import com.example.project.dto.request.ChangePasswordRequest;
 import com.example.project.dto.request.LibrarianRequest;
+import com.example.project.dto.request.ReaderRequest;
 import com.example.project.dto.response.LibrarianResponse;
 import com.example.project.dto.response.LibrarianResponseForFilter;
 import com.example.project.dto.response.UserResponse;
@@ -33,7 +34,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/librarians")
 @CrossOrigin(origins = "*")
-//@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasRole('ADMIN')")
 public class LibrarianController {
 
     private final LibrarianService librarianService;
@@ -77,20 +78,14 @@ public class LibrarianController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse<UserResponse>> register(@RequestBody Librarian librarian) {
-        if (librarianService.existsByUsername(librarian.getUsername())) {
-            return ResponseEntity.ok(new ApiResponse<>(false, "Username đã tồn tại", null));
-        }
-        if (librarianService.existsByEmail(librarian.getEmail())) {
-            return ResponseEntity.ok(new ApiResponse<>(false, "Email đã tồn tại", null));
-        }
-        if (librarianService.existsByIdCardNumber(librarian.getIdCardNumber())) {
-            return ResponseEntity.ok(new ApiResponse<>(false, "CCCD đã tồn tại", null));
-        }
+    public ResponseEntity<ApiResponse<UserResponse>> register(@RequestBody LibrarianRequest request) {
 
-        Librarian savedLibrarian = librarianService.registerLibrarian(librarian);
-        UserResponse responseDTO = new UserResponse(savedLibrarian);
-        return ResponseEntity.ok(new ApiResponse<>(true, "Đăng ký thành công", responseDTO));
+        try {
+            UserResponse response = librarianService.registerReader(request);
+            return ResponseEntity.ok(new ApiResponse<>(true, "Thêm chuyên viên thành công", response));
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.ok(new ApiResponse<>(false, ex.getMessage(), null));
+        }
     }
 
     @PostMapping(value = "/{id}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -172,7 +167,7 @@ public class LibrarianController {
     }
 
     @GetMapping("/export")
-    public ResponseEntity<Resource> exportReaderList() {
+    public ResponseEntity<Resource> exportLibrariansList() {
 
         ByteArrayInputStream excelStream = exportService.exportLibrarianListToExcel();
 

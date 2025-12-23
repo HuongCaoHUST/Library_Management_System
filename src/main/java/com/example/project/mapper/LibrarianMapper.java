@@ -2,6 +2,7 @@ package com.example.project.mapper;
 
 import com.example.project.dto.request.LibrarianRequest;
 import com.example.project.dto.response.LibrarianResponse;
+import com.example.project.dto.response.UserResponse;
 import com.example.project.model.Librarian;
 import org.mapstruct.*;
 
@@ -13,7 +14,7 @@ public interface LibrarianMapper {
     Librarian toEntity(LibrarianRequest request);
 
     // Entity -> Response
-    LibrarianResponse toResponse(Librarian librarian);
+    UserResponse toResponse(Librarian librarian);
 
     // UPDATE (PUT)
     @Mapping(target = "userId", ignore = true)

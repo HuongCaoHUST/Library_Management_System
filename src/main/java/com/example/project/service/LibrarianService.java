@@ -1,7 +1,7 @@
 package com.example.project.service;
 
-import com.example.project.dto.ApiResponse;
 import com.example.project.dto.request.LibrarianRequest;
+import com.example.project.dto.response.UserResponse;
 import com.example.project.mapper.LibrarianMapper;
 import com.example.project.model.*;
 import com.example.project.repository.LibrarianRepository;
@@ -18,11 +18,8 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -115,6 +112,49 @@ public class LibrarianService {
                 .build();
         emailService.sendLibrarianAccountApproved(librarian, rawPassword);
         return librarianRepository.save(librarian);
+    }
+
+    public UserResponse registerLibrarian(LibrarianRequest request) {
+
+        if (existsByEmail(request.getEmail())) {
+            throw new IllegalArgumentException("Username đã tồn tại");
+        } else if (existsByIdCardNumber(request.getIdCardNumber())) {
+            throw new IllegalArgumentException("Email đã tồn tại");
+        }
+
+        String email = request.getEmail().trim().toLowerCase();
+        String username = email;
+        String rawPassword = PasswordUtils.generateRandomPassword(8);
+        String encryptedPassword = PasswordUtils.encryptPassword(rawPassword);
+
+        Optional<Librarian> librarianAdmin = findById(1L);
+        Librarian approvingLibrarian = librarianAdmin.get();
+
+        Role librarianRole = roleRepository.findByName("LIBRARIAN").orElseThrow(() -> new RuntimeException("Role not found"));
+        Librarian librarian = Librarian.builder()
+                .fullName(request.getFullName())
+                .gender(request.getGender())
+                .birthDate(request.getBirthDate())
+                .phoneNumber(request.getPhoneNumber())
+                .email(request.getEmail())
+                .idCardNumber(request.getIdCardNumber())
+                .placeOfBirth(request.getPlaceOfBirth())
+                .issuedPlace(request.getIssuedPlace())
+                .major(request.getMajor())
+                .workPlace(request.getWorkPlace())
+                .address(request.getAddress())
+                .username(username)
+                .password(encryptedPassword)
+                .registrationDate(LocalDateTime.now())
+                .status("APPROVED")
+                .approvedBy(approvingLibrarian)
+                .depositAmount(BigDecimal.ZERO)
+                .role(librarianRole)
+                .build();
+        emailService.sendLibrarianAccountApproved(librarian, rawPassword);
+
+        Librarian saved = save(librarian);
+        return mapper.toResponse(saved);
     }
 
     public Librarian updatePatch(Long id, LibrarianRequest request) {
