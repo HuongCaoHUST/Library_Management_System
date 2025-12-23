@@ -81,7 +81,7 @@ public class LibrarianController {
     public ResponseEntity<ApiResponse<UserResponse>> register(@RequestBody LibrarianRequest request) {
 
         try {
-            UserResponse response = librarianService.registerReader(request);
+            UserResponse response = librarianService.registerLibrarian(request);
             return ResponseEntity.ok(new ApiResponse<>(true, "Thêm chuyên viên thành công", response));
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.ok(new ApiResponse<>(false, ex.getMessage(), null));

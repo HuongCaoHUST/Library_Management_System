@@ -80,40 +80,6 @@ public class LibrarianService {
         return librarianRepository.findAll(spec);
     }
 
-    public Librarian registerLibrarian(Librarian inputLibrarian) {
-        String email = inputLibrarian.getEmail().trim().toLowerCase();
-        String username = email;
-        String rawPassword = PasswordUtils.generateRandomPassword(8);
-        String encryptedPassword = PasswordUtils.encryptPassword(rawPassword);
-
-        Optional<Librarian> admin = findById(1L);
-        Librarian approvingLibrarian = admin.get();
-        Role librarianRole = roleRepository.findByName("LIBRARIAN").orElseThrow(() -> new RuntimeException("Role not found"));
-
-        Librarian librarian = Librarian.builder()
-                .fullName(inputLibrarian.getFullName())
-                .gender(inputLibrarian.getGender())
-                .birthDate(inputLibrarian.getBirthDate())
-                .phoneNumber(inputLibrarian.getPhoneNumber())
-                .email(inputLibrarian.getEmail())
-                .idCardNumber(inputLibrarian.getIdCardNumber())
-                .placeOfBirth(inputLibrarian.getPlaceOfBirth())
-                .issuedPlace(inputLibrarian.getIssuedPlace())
-                .major(inputLibrarian.getMajor())
-                .workPlace(inputLibrarian.getWorkPlace())
-                .address(inputLibrarian.getAddress())
-                .username(username)
-                .password(encryptedPassword)
-                .registrationDate(LocalDateTime.now())
-                .status("APPROVED")
-                .approvedBy(approvingLibrarian)
-                .depositAmount(BigDecimal.ZERO)
-                .role(librarianRole)
-                .build();
-        emailService.sendLibrarianAccountApproved(librarian, rawPassword);
-        return librarianRepository.save(librarian);
-    }
-
     public UserResponse registerLibrarian(LibrarianRequest request) {
 
         if (existsByEmail(request.getEmail())) {
