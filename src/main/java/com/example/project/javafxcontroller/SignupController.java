@@ -78,7 +78,7 @@ public class SignupController {
         dto.setIdCardNumber(txtIdCardNumber.getText().trim());
         dto.setPlaceOfBirth(txtPlaceOfBirth.getText().trim());
         dto.setIssuedPlace(txtIssuedPlace.getText().trim());
-        dto.setRole("READER");
+//        dto.setRole("READER");
         dto.setMajor(txtMajor.getText().trim());
         dto.setWorkPlace(txtWorkPlace.getText().trim());
         dto.setAddress(txtAddress.getText().trim());

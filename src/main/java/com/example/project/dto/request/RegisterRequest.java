@@ -16,7 +16,6 @@ public class RegisterRequest {
     private String idCardNumber;
     private String placeOfBirth;
     private String issuedPlace;
-    private String role;
     private String major;
     private String workPlace;
     private String address;
