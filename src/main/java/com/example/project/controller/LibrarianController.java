@@ -131,7 +131,7 @@ public class LibrarianController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ApiResponse<LibrarianResponse>> patchLibrarian(
+    public ResponseEntity<ApiResponse<UserResponse>> patchLibrarian(
             @PathVariable Long id,
             @Valid @RequestBody LibrarianRequest request) {
         Librarian updated = librarianService.updatePatch(id, request);
