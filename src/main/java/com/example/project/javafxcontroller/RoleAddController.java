@@ -87,8 +87,6 @@ public class RoleAddController{
 
         RoleRequest dto = buildRoleDto();
 
-        System.out.println(("DTO: " + dto));
-
         RoleApiService api = new RoleApiService();
         try {
             ApiResponse<RoleRequest> response = api.addRole(dto);
