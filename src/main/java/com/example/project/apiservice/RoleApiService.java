@@ -3,6 +3,7 @@ package com.example.project.apiservice;
 import com.example.project.dto.ApiResponse;
 import com.example.project.dto.request.RegisterRequest;
 import com.example.project.dto.request.RoleRequest;
+import com.example.project.dto.request.RoleRequest2;
 import com.example.project.model.Librarian;
 import com.example.project.security.UserSession;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -44,12 +45,12 @@ public class RoleApiService extends BaseApiService {
         );
     }
 
-    public ApiResponse<RoleRequest> addRole (RoleRequest request)
+    public ApiResponse<RoleRequest2> addRole (RoleRequest2 request)
             throws Exception {
         return post(
                 ADD_URL,
                 request,
-                new TypeReference<ApiResponse<RoleRequest>>() {}
+                new TypeReference<ApiResponse<RoleRequest2>>() {}
         );
     }
 }

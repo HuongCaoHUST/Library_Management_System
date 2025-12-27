@@ -4,6 +4,7 @@ import com.example.project.apiservice.RoleApiService;
 import com.example.project.dto.ApiResponse;
 import com.example.project.dto.request.PermissionRequest;
 import com.example.project.dto.request.RoleRequest;
+import com.example.project.dto.request.RoleRequest2;
 import com.example.project.service.PermissionService;
 import com.example.project.service.RoleService;
 import javafx.beans.property.SimpleStringProperty;
@@ -85,11 +86,11 @@ public class RoleAddController{
             return;
         }
 
-        RoleRequest dto = buildRoleDto();
+        RoleRequest2 dto = buildRoleDto();
 
         RoleApiService api = new RoleApiService();
         try {
-            ApiResponse<RoleRequest> response = api.addRole(dto);
+            ApiResponse<RoleRequest2> response = api.addRole(dto);
 
             if (response.isSuccess()) {
                 showAlert(Alert.AlertType.INFORMATION, "Thành công", response.getMessage());
@@ -103,10 +104,10 @@ public class RoleAddController{
         }
     }
 
-    private RoleRequest buildRoleDto() {
+    private RoleRequest2 buildRoleDto() {
 
-        RoleRequest dto = new RoleRequest();
-        dto.setRoleName(txtRoleName.getText().trim());
+        RoleRequest2 dto = new RoleRequest2();
+        dto.setName(txtRoleName.getText().trim());
         dto.setDescription(txtRoleDescription.getText().trim());
 
         List<PermissionRequest> selectedPermissions = selectedMap.entrySet().stream()
