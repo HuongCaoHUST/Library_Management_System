@@ -83,7 +83,7 @@ public class MenuBarController {
     @FXML
     private void openRoleList(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/project/role_permission_list.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/project/rolo_permission_form.fxml"));
             Parent root = fxmlLoader.load();
 
             Scene scene = new Scene(root);

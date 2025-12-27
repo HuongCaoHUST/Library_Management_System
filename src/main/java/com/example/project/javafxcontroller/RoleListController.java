@@ -1,5 +1,8 @@
 package com.example.project.javafxcontroller;
 
+import com.example.project.dto.request.PermissionRequest;
+import com.example.project.dto.request.RoleRequest;
+import com.example.project.service.RoleService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,23 +11,74 @@ import javafx.scene.control.*;
 
 public class RoleListController {
 
-    @FXML
-    private TableView<String> roleTable;
+    @FXML private TableView<RoleRequest> roleTable;
+    @FXML private TableColumn<RoleRequest, String> roleNameCol;
 
-    @FXML
-    private TableColumn<String, String> roleNameCol;
+    @FXML private TableView<PermissionRequest> permissionTable;
+    @FXML private TableColumn<PermissionRequest, String> permissionNameCol;
+    @FXML private TableColumn<PermissionRequest, String> permissionDescriptionCol;
+
+    private final RoleService roleService = new RoleService();
 
     @FXML
     public void initialize() {
         roleTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        roleNameCol.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()));
-
-        ObservableList<String> roles = FXCollections.observableArrayList(
-                "ADMIN",
-                "USER",
-                "GUEST"
+        roleNameCol.setCellValueFactory(
+                data -> new SimpleStringProperty(data.getValue().getRoleName())
         );
-        roleTable.setItems(roles);
+
+        permissionTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        permissionNameCol.setCellValueFactory(
+                data -> new SimpleStringProperty(data.getValue().getPermissionName())
+        );
+
+        permissionDescriptionCol.setCellValueFactory(
+                data -> new SimpleStringProperty(data.getValue().getDescription() == null
+                        ? "chưa có mô tả"
+                        : data.getValue().getDescription()
+                )
+        );
+
+        roleTable.getSelectionModel()
+                .selectedItemProperty()
+                .addListener((obs, oldRole, newRole) -> {
+                    if (newRole != null) {
+                        loadPermissions(newRole);
+                    } else {
+                        permissionTable.getItems().clear();
+                    }
+                });
+
+        loadRoles();
+    }
+
+    private void loadRoles() {
+        try {
+            ObservableList<RoleRequest> roles =
+                    FXCollections.observableArrayList(roleService.getRoles());
+
+            roleTable.setItems(roles);
+
+            if (!roles.isEmpty()) {
+                roleTable.getSelectionModel().selectFirst();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void loadPermissions(RoleRequest role) {
+        if (role.getPermissions() == null) {
+            permissionTable.getItems().clear();
+            role.getPermissions().forEach(p ->
+                    System.out.println("Permission: " + p.getPermissionName() + " | Desc: " + p.getDescription())
+            );
+            return;
+        }
+        ObservableList<PermissionRequest> permissions = FXCollections.observableArrayList(role.getPermissions());
+        permissionTable.setItems(permissions);
     }
 }
 

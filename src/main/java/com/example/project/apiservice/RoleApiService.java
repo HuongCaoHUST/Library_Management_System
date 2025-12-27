@@ -1,6 +1,6 @@
 package com.example.project.apiservice;
 
-import com.example.project.dto.ApiResponse;
+import com.example.project.dto.request.RoleRequest;
 import com.example.project.security.UserSession;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,9 +18,8 @@ public class RoleApiService {
             .registerModule(new JavaTimeModule())
             .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
-    public ApiResponse<List<String>> getRoleList() throws Exception {
-
-        String url = "http://localhost:8081/api/roles/list";
+    public List<RoleRequest> getRoleList() throws Exception {
+        String url = "http://14.225.254.18/api/roles/list";
         String token = UserSession.getInstance().getToken();
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -35,8 +34,7 @@ public class RoleApiService {
 
         return mapper.readValue(
                 response.body(),
-                new TypeReference<ApiResponse<List<String>>>() {}
+                new TypeReference<List<RoleRequest>>() {}
         );
     }
-
 }
