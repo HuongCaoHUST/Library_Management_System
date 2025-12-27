@@ -56,7 +56,7 @@ public class ReaderController {
 
     @GetMapping("/test")
     public String testEndpoint() {
-        return "ReaderController is working!";
+        return "ReaderController is working! (Check workflow)";
     }
 
     @GetMapping("/filter")
