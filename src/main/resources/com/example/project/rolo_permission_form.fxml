@@ -30,8 +30,8 @@
         </SplitPane>
       <HBox layoutX="271.0" layoutY="180.0" prefHeight="27.0" prefWidth="552.0" spacing="10.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="180.0">
          <children>
-            <Button fx:id="searchButton" defaultButton="true" prefWidth="150.0" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Thêm vai trò" />
-            <Button fx:id="searchButton1" defaultButton="true" prefWidth="150.0" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Thêm quyền" />
+            <Button onAction="#openRoleAddForm" defaultButton="true" prefWidth="150.0" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Thêm vai trò" />
+            <Button defaultButton="true" prefWidth="150.0" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Thêm quyền" />
          </children>
       </HBox>
     </children>
