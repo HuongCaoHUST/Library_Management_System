@@ -8,5 +8,5 @@ import java.util.List;
 public class RoleRequest2 {
     private String name;
     private String description;
-    private List<PermissionRequest> permissions;
+    private List<PermissionRequest2> permissions;
 }

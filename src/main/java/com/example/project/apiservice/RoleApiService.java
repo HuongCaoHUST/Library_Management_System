@@ -45,12 +45,12 @@ public class RoleApiService extends BaseApiService {
         );
     }
 
-    public ApiResponse<RoleRequest2> addRole (RoleRequest2 request)
+    public ApiResponse<RoleRequest> addRole (RoleRequest2 request)
             throws Exception {
         return post(
                 ADD_URL,
                 request,
-                new TypeReference<ApiResponse<RoleRequest2>>() {}
+                new TypeReference<ApiResponse<RoleRequest>>() {}
         );
     }
 }

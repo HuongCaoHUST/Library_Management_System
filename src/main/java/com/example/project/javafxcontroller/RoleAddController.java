@@ -3,6 +3,7 @@ package com.example.project.javafxcontroller;
 import com.example.project.apiservice.RoleApiService;
 import com.example.project.dto.ApiResponse;
 import com.example.project.dto.request.PermissionRequest;
+import com.example.project.dto.request.PermissionRequest2;
 import com.example.project.dto.request.RoleRequest;
 import com.example.project.dto.request.RoleRequest2;
 import com.example.project.service.PermissionService;
@@ -90,7 +91,7 @@ public class RoleAddController{
 
         RoleApiService api = new RoleApiService();
         try {
-            ApiResponse<RoleRequest2> response = api.addRole(dto);
+            ApiResponse<RoleRequest> response = api.addRole(dto);
 
             if (response.isSuccess()) {
                 showAlert(Alert.AlertType.INFORMATION, "Thành công", response.getMessage());
@@ -110,12 +111,12 @@ public class RoleAddController{
         dto.setName(txtRoleName.getText().trim());
         dto.setDescription(txtRoleDescription.getText().trim());
 
-        List<PermissionRequest> selectedPermissions = selectedMap.entrySet().stream()
+        List<PermissionRequest2> selectedPermissions = selectedMap.entrySet().stream()
                 .filter(Map.Entry::getValue)
                 .map(Map.Entry::getKey)
                 .map(p -> {
-                    PermissionRequest pr = new PermissionRequest();
-                    pr.setPermissionName(p.getPermissionName());
+                    PermissionRequest2 pr = new PermissionRequest2();
+                    pr.setName(p.getPermissionName());
                     return pr;
                 })
                 .toList();
