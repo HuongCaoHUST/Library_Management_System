@@ -77,7 +77,7 @@ public class RoleListController {
     }
 
 
-    private void loadPermissions(RoleRequest role) {
+    private void loadPermissions (RoleRequest role) {
         if (role.getPermissions() == null) {
             permissionTable.getItems().clear();
             role.getPermissions().forEach(p ->

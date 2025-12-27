@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RoleAddController{
@@ -53,8 +54,10 @@ public class RoleAddController{
                 } else {
                     CheckBox checkBox = new CheckBox();
                     PermissionRequest permission = getTableView().getItems().get(getIndex());
-                    // Lưu trạng thái checkbox vào Map
                     checkBox.setOnAction(e -> selectedMap.put(permission, checkBox.isSelected()));
+                    if (selectedMap.containsKey(permission)) {
+                        checkBox.setSelected(selectedMap.get(permission));
+                    }
                     setGraphic(checkBox);
                     setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
                 }
@@ -65,6 +68,15 @@ public class RoleAddController{
 
         loadRolesToComboBox();
         loadPermissions();
+
+        cbRoleList.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null && !newVal.equals("Không")) {
+                handleRoleSelected(newVal, selectedMap);
+            } else {
+                selectedMap.clear();
+                permissionTable.refresh();
+            }
+        });
     }
 
     @FXML
@@ -150,6 +162,23 @@ public class RoleAddController{
             if (!permissions.isEmpty()) {
                 permissionTable.getSelectionModel().selectFirst();
             }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleRoleSelected(String roleName, Map<PermissionRequest, Boolean> selectedMap) {
+        try {
+            List<PermissionRequest> rolePermissions = roleService.getPermissionsByRoleName(roleName);
+
+            for (PermissionRequest permission : permissionTable.getItems()) {
+                boolean isAssigned = rolePermissions.stream()
+                        .anyMatch(p -> p.getPermissionName().equals(permission.getPermissionName()));
+                selectedMap.put(permission, isAssigned);
+            }
+
+            permissionTable.refresh();
 
         } catch (Exception e) {
             e.printStackTrace();
