@@ -13,11 +13,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RoleResponse {
+    private Long roleId;
     private String roleName;
     private String description;
     private List<PermissionResponse> permissions;
 
     public RoleResponse (Role role) {
+        this.roleId = role.getId();
         this.roleName = role.getName();
         this.description = role.getDescription();
         this.permissions = role.getPermissions().stream().map(PermissionResponse::new).toList();;
