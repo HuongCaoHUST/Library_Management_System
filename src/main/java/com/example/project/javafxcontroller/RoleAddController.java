@@ -85,13 +85,9 @@ public class RoleAddController{
             return;
         }
 
-        selectedMap.forEach((permission, isSelected) -> {
-            if (isSelected) {
-                System.out.println("Selected: " + permission.getPermissionName());
-            }
-        });
-
         RoleRequest dto = buildRoleDto();
+
+        System.out.println(("DTO: " + dto));
 
         RoleApiService api = new RoleApiService();
         try {
@@ -115,6 +111,17 @@ public class RoleAddController{
         dto.setRoleName(txtRoleName.getText().trim());
         dto.setDescription(txtRoleDescription.getText().trim());
 
+        List<PermissionRequest> selectedPermissions = selectedMap.entrySet().stream()
+                .filter(Map.Entry::getValue)
+                .map(Map.Entry::getKey)
+                .map(p -> {
+                    PermissionRequest pr = new PermissionRequest();
+                    pr.setPermissionName(p.getPermissionName());
+                    return pr;
+                })
+                .toList();
+
+        dto.setPermissions(selectedPermissions);
         return dto;
     }
 
