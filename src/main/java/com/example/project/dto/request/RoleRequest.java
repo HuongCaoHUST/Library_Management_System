@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 public class RoleRequest {
 
-    private String name;
+    private String roleName;
     private String description;
     private List<PermissionRequest> permissions;
 }

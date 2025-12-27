@@ -13,7 +13,7 @@ import org.mapstruct.Mapping;
 public interface PermissionMapper {
 
     // Request → Entity
-    @Mapping(target = "name", source = "name")
+    @Mapping(target = "name", source = "permissionName")
     Permission toEntity(PermissionRequest request);
 
     // Entity → Response
