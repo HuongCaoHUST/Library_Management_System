@@ -13,7 +13,7 @@ import org.mapstruct.Mapping;
 public interface RoleMapper {
 
     // Request → Entity
-    @Mapping(target = "name", source = "roleName")
+    @Mapping(target = "name", source = "name")
     Role toEntity(RoleRequest request);
 
     // Entity → Response
