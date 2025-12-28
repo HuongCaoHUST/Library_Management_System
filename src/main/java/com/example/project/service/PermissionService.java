@@ -2,6 +2,7 @@ package com.example.project.service;
 
 import com.example.project.dto.request.PermissionAddToRoleRequest;
 import com.example.project.dto.request.PermissionRequest;
+import com.example.project.dto.request.RolePermissionRequest;
 import com.example.project.dto.response.PermissionResponse;
 import com.example.project.mapper.PermissionMapper;
 import com.example.project.model.Permission;
@@ -12,9 +13,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +21,7 @@ public class PermissionService {
     private final PermissionRepository permissionRepository;
     private final RoleRepository roleRepository;
     private final PermissionMapper mapper;
+    private final RoleService roleService;
 
     public List<Permission> findAll() {
         return permissionRepository.findAll();
@@ -54,21 +54,19 @@ public class PermissionService {
         Permission permission = mapper.toEntity(request);
         Permission savedPermission = permissionRepository.save(permission);
 
-        if (request.getRoles() != null && !request.getRoles().isEmpty()) {
+        if (request.getRoles() == null || request.getRoles().isEmpty()) {
+            return mapper.toResponse(savedPermission);
+        }
 
-            List<Role> roles = roleRepository.findAllByIdIn(request.getRoles());
+        List<RolePermissionRequest> rolePermissionRequests = new ArrayList<>();
 
-            if (roles.size() != request.getRoles().size()) {
-                throw new IllegalArgumentException("Một số Role không tồn tại");
-            }
 
-            for (Role role : roles) {
-                Set<Permission> permissions = new HashSet<>(role.getPermissions());
-
-                permissions.add(savedPermission);
-                role.setPermissions(permissions);
-            }
-            roleRepository.saveAll(roles);
+        for (Long roleId : request.getRoles()) {
+            RolePermissionRequest dto = new RolePermissionRequest();
+            dto.setRoleId(roleId);
+            dto.setPermissionIds(Collections.singletonList(savedPermission.getId()));
+            rolePermissionRequests.add(dto);
+            roleService.addPermissionsToRole(dto);
         }
 
         return mapper.toResponse(savedPermission);
