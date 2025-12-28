@@ -45,15 +45,6 @@ public class PermissionApiService extends BaseApiService {
         );
     }
 
-    public ApiResponse<PermissionRequest> addPermission (PermissionRequest request)
-            throws Exception {
-        return post(
-                ADD_URL,
-                request,
-                new TypeReference<ApiResponse<PermissionRequest>>() {}
-        );
-    }
-
     public ApiResponse<PermissionRequest> addPermissionToRole (PermissionAddToRoleRequest request)
             throws Exception {
         return post(

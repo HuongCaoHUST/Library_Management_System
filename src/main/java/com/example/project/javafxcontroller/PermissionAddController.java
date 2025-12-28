@@ -67,8 +67,6 @@ public class PermissionAddController {
         }
 
         PermissionAddToRoleRequest dto = buildRoleDto();
-        System.out.println("DTO: " + dto);
-
         PermissionApiService api = new PermissionApiService();
         try {
             ApiResponse<PermissionRequest> response = api.addPermissionToRole(dto);
