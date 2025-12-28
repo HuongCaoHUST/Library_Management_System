@@ -1,7 +1,6 @@
 package com.example.project.javafxcontroller;
 import com.example.project.model.Document;
 import com.example.project.apiservice.DocumentApiService;
-import com.example.project.security.Permission;
 import com.example.project.security.UserSession;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -64,7 +63,7 @@ public class DocumentListController {
         UserSession session = UserSession.getInstance();
 
         if (addDocumentButton != null) {
-            addDocumentButton.setVisible(session.hasPermission(Permission.DOCUMENT_CREATE));
+            addDocumentButton.setVisible(session.hasPermission("DOCUMENT_CREATE"));
         }
         setupTableColumns();
         tableView.setItems(documentList);

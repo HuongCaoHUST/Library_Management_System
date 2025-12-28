@@ -2,7 +2,6 @@ package com.example.project.javafxcontroller;
 
 import com.example.project.apiservice.SupplierApiService;
 import com.example.project.model.Supplier;
-import com.example.project.security.Permission;
 import com.example.project.security.UserSession;
 import com.example.project.service.SupplierService;
 import javafx.animation.KeyFrame;
@@ -66,7 +65,7 @@ public class SupplierListController {
         supplierService = new SupplierService();
 
         UserSession session = UserSession.getInstance();
-        addSupplierButton.setVisible(session.hasPermission(Permission.SUPPLIER_CREATE));
+        addSupplierButton.setVisible(session.hasPermission("SUPPLIER_CREATE"));
         setupTableColumns();
         tableView.setItems(supplierList);
         setupComboBox();

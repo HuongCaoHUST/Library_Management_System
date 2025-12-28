@@ -2,7 +2,6 @@ package com.example.project.javafxcontroller;
 
 import com.example.project.apiservice.LibrarianApiService;
 import com.example.project.model.Librarian;
-import com.example.project.security.Permission;
 import com.example.project.security.UserSession;
 import com.example.project.service.LibrarianService;
 import javafx.animation.KeyFrame;
@@ -68,7 +67,7 @@ public class LibrarianListController {
         librarianService = new LibrarianService();
 
         UserSession session = UserSession.getInstance();
-        addLibrarianButton.setVisible(session.hasPermission(Permission.LIBRARIAN_CREATE));
+        addLibrarianButton.setVisible(session.hasPermission("LIBRARIAN_CREATE"));
         setupTableColumns();
         tableView.setItems(librarianList);
         setupComboBox();

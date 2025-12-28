@@ -1,7 +1,6 @@
 package com.example.project.apiservice;
 
 import com.example.project.dto.LoginResponse;
-import com.example.project.security.Permission;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -55,12 +54,13 @@ public class AuthApiService {
 
                 JsonNode permNode = node.get("permissions");
 
-                Set<Permission> permissions = new HashSet<>();
+                Set<String> permissions = new HashSet<>();
                 if (permNode != null && permNode.isArray()) {
                     for (JsonNode p : permNode) {
-                        permissions.add(Permission.valueOf(p.asText()));
+                        permissions.add(p.asText());
                     }
                 }
+
                 result.setPermissions(permissions);
 
                 return result;

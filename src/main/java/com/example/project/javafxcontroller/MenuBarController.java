@@ -3,7 +3,6 @@ package com.example.project.javafxcontroller;
 import com.example.project.apiservice.LibrarianApiService;
 import com.example.project.dto.ApiResponse;
 import com.example.project.model.Librarian;
-import com.example.project.security.Permission;
 import com.example.project.security.UserSession;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,8 +26,8 @@ public class MenuBarController {
     private void initialize() {
 
         UserSession session = UserSession.getInstance();
-        menuItemLibrarianList.setVisible(session.hasPermission(Permission.LIBRARIAN_VIEW));
-        menuItemReaderList.setVisible(session.hasPermission(Permission.READER_VIEW));
+        menuItemLibrarianList.setVisible(session.hasPermission("LIBRARIAN_VIEW"));
+        menuItemReaderList.setVisible(session.hasPermission("READER_VIEW"));
 
         if (avatarImage == null) {
             return;
