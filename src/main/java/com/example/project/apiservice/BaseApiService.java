@@ -69,6 +69,22 @@ public abstract class BaseApiService {
         return mapper.readValue(response.body(), type);
     }
 
+    protected <T> T put(String url, Object body, TypeReference<T> type) throws Exception {
+        String json = mapper.writeValueAsString(body);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + getToken())
+                .PUT(HttpRequest.BodyPublishers.ofString(json))
+                .build();
+
+        HttpResponse<String> response =
+                client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        return mapper.readValue(response.body(), type);
+    }
+
     protected ApiResponse<Void> changeMyPassword(
             String url,
             String oldPassword,

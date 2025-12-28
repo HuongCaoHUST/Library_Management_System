@@ -2,6 +2,7 @@ package com.example.project.apiservice;
 
 import com.example.project.dto.ApiResponse;
 import com.example.project.dto.request.RegisterRequest;
+import com.example.project.dto.request.RolePermissionRequest;
 import com.example.project.dto.request.RoleRequest;
 import com.example.project.dto.request.RoleRequest2;
 import com.example.project.model.Librarian;
@@ -23,7 +24,8 @@ public class RoleApiService extends BaseApiService {
             .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
     private static final String ADD_URL = "http://14.225.254.18/api/roles/add";
-    private static final String UPDATE_URL = "http://14.225.254.18/api/roles/update";
+    private static final String UPDATE_URL = "http://14.225.254.18/api/roles/";
+    private static final String BASE_URL = "http://14.225.254.18/api";
 
     public List<RoleRequest> getRoleList() throws Exception {
         String url = "http://14.225.254.18/api/roles/list";
@@ -54,11 +56,12 @@ public class RoleApiService extends BaseApiService {
         );
     }
 
-    public ApiResponse<RoleRequest> updateRole (RoleRequest2 request)
+    public ApiResponse<RoleRequest> updateRole (Long roleId, List<Long> permissionIds)
             throws Exception {
-        return post(
-                UPDATE_URL,
-                request,
+        String url = BASE_URL + "/roles/" + roleId + "/permissions";
+        return put(
+                url,
+                permissionIds,
                 new TypeReference<ApiResponse<RoleRequest>>() {}
         );
     }

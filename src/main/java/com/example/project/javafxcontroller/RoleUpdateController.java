@@ -2,11 +2,7 @@ package com.example.project.javafxcontroller;
 
 import com.example.project.apiservice.RoleApiService;
 import com.example.project.dto.ApiResponse;
-import com.example.project.dto.request.PermissionRequest;
-import com.example.project.dto.request.PermissionRequest2;
-import com.example.project.dto.request.RoleRequest;
-import com.example.project.dto.request.RoleRequest2;
-import com.example.project.service.LibrarianService;
+import com.example.project.dto.request.*;
 import com.example.project.service.PermissionService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -15,7 +11,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class RoleUpdateController {
 
@@ -30,6 +27,7 @@ public class RoleUpdateController {
     @FXML private Button revokePermissionBtn;
 
     private PermissionService permissionService;
+    private Long thisRoleId;
 
     @FXML
     private void initialize() {
@@ -39,6 +37,7 @@ public class RoleUpdateController {
     }
 
     public void setRole(RoleRequest role) {
+        thisRoleId = role.getRoleId();
         txtRoleName.setText(role.getRoleName());
         txtRoleDescription.setText(role.getDescription());
 
@@ -110,11 +109,15 @@ public class RoleUpdateController {
 
     @FXML
     private void onUpdateRole() {
-        RoleRequest2 dto = buildRoleDto();
+        List<Long> permissionIds = assignedPermissionTable.getItems().stream()
+                .map(PermissionRequest::getPermissionId)
+                .filter(Objects::nonNull)
+                .sorted()
+                .toList();
 
         RoleApiService api = new RoleApiService();
         try {
-            ApiResponse<RoleRequest> response = api.updateRole(dto);
+            ApiResponse<RoleRequest> response = api.updateRole(thisRoleId, permissionIds);
 
             if (response.isSuccess()) {
                 showAlert(Alert.AlertType.INFORMATION, "Thành công", response.getMessage());
@@ -125,24 +128,6 @@ public class RoleUpdateController {
             showAlert(Alert.AlertType.ERROR, "Lỗi hệ thống", "Không thể kết nối tới server"
             );
         }
-    }
-
-    private RoleRequest2 buildRoleDto() {
-
-        RoleRequest2 dto = new RoleRequest2();
-        dto.setName(txtRoleName.getText().trim());
-        dto.setDescription(txtRoleDescription.getText().trim());
-
-        List<PermissionRequest2> selectedPermissions = assignedPermissionTable.getItems().stream()
-                .map(permissionRequest -> {
-                    PermissionRequest2 perm = new PermissionRequest2();
-                    perm.setName(permissionRequest.getPermissionName());
-                    return perm;
-                })
-                .toList();
-
-        dto.setPermissions(selectedPermissions);
-        return dto;
     }
 
     private void showAlert(Alert.AlertType type, String title, String msg) {
