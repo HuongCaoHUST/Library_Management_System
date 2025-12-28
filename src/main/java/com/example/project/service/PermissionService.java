@@ -54,11 +54,11 @@ public class PermissionService {
         Permission permission = mapper.toEntity(request);
         Permission savedPermission = permissionRepository.save(permission);
 
-        if (request.getRoles() == null || request.getRoles().isEmpty()) {
+        if (request.getRoleIds() == null || request.getRoleIds().isEmpty()) {
             return mapper.toResponse(savedPermission);
         }
 
-        List<Role> roles = roleRepository.findAllById(request.getRoles());
+        List<Role> roles = roleRepository.findAllById(request.getRoleIds());
 
         for (Role role : roles) {
             if (role.getPermissions() == null) {
@@ -66,7 +66,6 @@ public class PermissionService {
             }
             role.getPermissions().add(savedPermission);
         }
-        roleRepository.saveAll(roles);
 
         return mapper.toResponse(savedPermission);
     }
