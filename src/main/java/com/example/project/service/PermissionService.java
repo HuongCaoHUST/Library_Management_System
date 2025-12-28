@@ -58,13 +58,16 @@ public class PermissionService {
             return mapper.toResponse(savedPermission);
         }
 
-        for (Long roleId : request.getRoles()) {
-            System.out.println(("[CHECK] Role id: " +  roleId));
-            RolePermissionRequest dto = new RolePermissionRequest();
-            dto.setRoleId(roleId);
-            dto.setPermissionIds(Collections.singletonList(savedPermission.getId()));
-            roleService.addPermissionsToRole(dto);
+        List<Role> roles = roleRepository.findAllById(request.getRoles());
+
+        for (Role role : roles) {
+            if (role.getPermissions() == null) {
+                role.setPermissions(new HashSet<>());
+            }
+            role.getPermissions().add(savedPermission);
         }
+        roleRepository.saveAll(roles);
+
         return mapper.toResponse(savedPermission);
     }
 
