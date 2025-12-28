@@ -12,7 +12,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -50,7 +52,7 @@ public class PermissionService {
             throw new IllegalArgumentException("Permission đã tồn tại");
         }
         Permission permission = mapper.toEntity(request);
-        Permission saved = permissionRepository.save(permission);
+        Permission savedPermission = permissionRepository.save(permission);
 
         if (request.getRoles() != null && !request.getRoles().isEmpty()) {
 
@@ -60,11 +62,16 @@ public class PermissionService {
                 throw new IllegalArgumentException("Một số Role không tồn tại");
             }
 
-            roles.forEach(role -> role.getPermissions().add(saved));
+            for (Role role : roles) {
+                Set<Permission> permissions = new HashSet<>(role.getPermissions());
+
+                permissions.add(savedPermission);
+                role.setPermissions(permissions);
+            }
             roleRepository.saveAll(roles);
         }
 
-        return mapper.toResponse(saved);
+        return mapper.toResponse(savedPermission);
     }
 
     public boolean existsByName(String name) {
