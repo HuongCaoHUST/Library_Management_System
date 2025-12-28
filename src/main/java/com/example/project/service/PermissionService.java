@@ -58,17 +58,13 @@ public class PermissionService {
             return mapper.toResponse(savedPermission);
         }
 
-        List<RolePermissionRequest> rolePermissionRequests = new ArrayList<>();
-
-
         for (Long roleId : request.getRoles()) {
+            System.out.println(("[CHECK] Role id: " +  roleId));
             RolePermissionRequest dto = new RolePermissionRequest();
             dto.setRoleId(roleId);
             dto.setPermissionIds(Collections.singletonList(savedPermission.getId()));
-            rolePermissionRequests.add(dto);
             roleService.addPermissionsToRole(dto);
         }
-
         return mapper.toResponse(savedPermission);
     }
 
