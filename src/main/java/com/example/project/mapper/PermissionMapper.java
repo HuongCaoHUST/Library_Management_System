@@ -17,7 +17,7 @@ public interface PermissionMapper {
     @Mapping(target = "name", source = "name")
     Permission toEntity(PermissionRequest request);
 
-    @Mapping(target = "roles", ignore = true)
+    @Mapping(target = "name", source = "name")
     Permission toEntity(PermissionAddToRoleRequest request);
 
     // Entity → Response
