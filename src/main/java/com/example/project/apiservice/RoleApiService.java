@@ -22,8 +22,8 @@ public class RoleApiService extends BaseApiService {
             .registerModule(new JavaTimeModule())
             .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
-    private static final String ADD_URL =
-            "http://14.225.254.18/api/roles/add";
+    private static final String ADD_URL = "http://14.225.254.18/api/roles/add";
+    private static final String UPDATE_URL = "http://14.225.254.18/api/roles/update";
 
     public List<RoleRequest> getRoleList() throws Exception {
         String url = "http://14.225.254.18/api/roles/list";
@@ -49,6 +49,15 @@ public class RoleApiService extends BaseApiService {
             throws Exception {
         return post(
                 ADD_URL,
+                request,
+                new TypeReference<ApiResponse<RoleRequest>>() {}
+        );
+    }
+
+    public ApiResponse<RoleRequest> updateRole (RoleRequest2 request)
+            throws Exception {
+        return post(
+                UPDATE_URL,
                 request,
                 new TypeReference<ApiResponse<RoleRequest>>() {}
         );

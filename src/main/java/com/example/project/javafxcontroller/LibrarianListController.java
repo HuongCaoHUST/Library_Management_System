@@ -218,9 +218,10 @@ public class LibrarianListController {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/com/example/project/librarian_detail_form.fxml"));
             Parent root = loader.load();
-            LibrarianDetailController controller = loader.getController();
 
+            LibrarianDetailController controller = loader.getController();
             controller.setLibrarian(librarian);
+
             Stage stage = new Stage();
             stage.setTitle("Chi tiết chuyên viên");
             stage.initModality(Modality.APPLICATION_MODAL);

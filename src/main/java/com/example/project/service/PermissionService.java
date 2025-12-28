@@ -9,6 +9,7 @@ import java.util.List;
 
 public class PermissionService {
     private final PermissionApiService permissionApiService = new PermissionApiService();
+
     public List<PermissionRequest> getPermissions() {
         try {
             return permissionApiService.getPermissionList();

@@ -2,6 +2,7 @@ package com.example.project.javafxcontroller;
 
 import com.example.project.dto.request.PermissionRequest;
 import com.example.project.dto.request.RoleRequest;
+import com.example.project.model.Role;
 import com.example.project.service.RoleService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -107,13 +108,23 @@ public class RoleListController {
     @FXML
     protected void openRoleUpdateForm(ActionEvent event) {
         try {
+            RoleRequest selectedRole = roleTable.getSelectionModel().getSelectedItem();
+            if (selectedRole == null) {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Vui lòng chọn một vai trò để cập nhật!");
+                alert.showAndWait();
+                return;
+            }
+
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/role_update_form.fxml"));
             Parent root = loader.load();
+
+            RoleUpdateController controller = loader.getController();
+            controller.setRole(selectedRole);
+
             Stage stage = new Stage();
             stage.setTitle("Cập nhật vai trò");
             stage.setScene(new Scene(root));
-            stage.initOwner(((Node) event.getSource()).getScene().getWindow());
-            stage.show();
+            stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
         }
