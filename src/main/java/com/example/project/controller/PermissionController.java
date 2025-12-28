@@ -1,6 +1,7 @@
 package com.example.project.controller;
 
 import com.example.project.dto.ApiResponse;
+import com.example.project.dto.request.PermissionAddToRoleRequest;
 import com.example.project.dto.request.PermissionRequest;
 import com.example.project.dto.response.PermissionResponse;
 import com.example.project.service.PermissionService;
@@ -37,6 +38,16 @@ public class PermissionController {
     public ResponseEntity<ApiResponse<PermissionResponse>> create(@RequestBody PermissionRequest request) {
         try {
             PermissionResponse response = permissionService.add(request);
+            return ResponseEntity.ok(new ApiResponse<>(true, "Thêm permission thành công", response));
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.ok(new ApiResponse<>(false, ex.getMessage(), null));
+        }
+    }
+
+    @PostMapping("/add/add_to_role")
+    public ResponseEntity<ApiResponse<PermissionResponse>> create(@RequestBody PermissionAddToRoleRequest request) {
+        try {
+            PermissionResponse response = permissionService.add_to_role(request);
             return ResponseEntity.ok(new ApiResponse<>(true, "Thêm permission thành công", response));
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.ok(new ApiResponse<>(false, ex.getMessage(), null));

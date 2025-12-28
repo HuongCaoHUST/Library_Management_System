@@ -1,5 +1,6 @@
 package com.example.project.mapper;
 
+import com.example.project.dto.request.PermissionAddToRoleRequest;
 import com.example.project.dto.request.PermissionRequest;
 import com.example.project.dto.request.RoleRequest;
 import com.example.project.dto.response.PermissionResponse;
@@ -15,6 +16,9 @@ public interface PermissionMapper {
     // Request → Entity
     @Mapping(target = "name", source = "name")
     Permission toEntity(PermissionRequest request);
+
+    @Mapping(target = "roles", ignore = true)
+    Permission toEntity(PermissionAddToRoleRequest request);
 
     // Entity → Response
     @Mapping(target = "permissionName", source = "name")
