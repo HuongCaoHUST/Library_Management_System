@@ -106,6 +106,21 @@ public class RoleListController {
     }
 
     @FXML
+    protected void openPermissionAddForm(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/permission_add_form.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Thêm quyền");
+            stage.setScene(new Scene(root));
+            stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     protected void openRoleUpdateForm(ActionEvent event) {
         try {
             RoleRequest selectedRole = roleTable.getSelectionModel().getSelectedItem();

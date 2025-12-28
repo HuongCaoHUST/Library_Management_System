@@ -28,11 +28,16 @@
                 </TableView>
             </items>
         </SplitPane>
-      <HBox layoutX="271.0" layoutY="180.0" prefHeight="27.0" prefWidth="552.0" spacing="10.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="180.0">
+      <HBox layoutX="271.0" layoutY="180.0" prefHeight="27.0" prefWidth="488.0" spacing="10.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="180.0">
          <children>
             <Button defaultButton="true" onAction="#openRoleAddForm" prefWidth="150.0" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Thêm vai trò" />
             <Button defaultButton="true" onAction="#openRoleUpdateForm" prefWidth="150.0" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Cập nhật quyền" />
             <Button defaultButton="true" prefWidth="150.0" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Xóa vai trò" />
+         </children>
+      </HBox>
+      <HBox alignment="TOP_RIGHT" layoutX="1067.0" layoutY="180.0" prefHeight="27.0" prefWidth="183.0" spacing="10.0">
+         <children>
+            <Button onAction="#openPermissionAddForm" contentDisplay="RIGHT" defaultButton="true" prefWidth="150.0" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Thêm quyền" />
          </children>
       </HBox>
     </children>

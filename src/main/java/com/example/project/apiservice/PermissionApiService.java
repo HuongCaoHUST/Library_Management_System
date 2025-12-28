@@ -1,6 +1,7 @@
 package com.example.project.apiservice;
 
 import com.example.project.dto.ApiResponse;
+import com.example.project.dto.request.PermissionAddToRoleRequest;
 import com.example.project.dto.request.PermissionRequest;
 import com.example.project.dto.request.RoleRequest;
 import com.example.project.security.UserSession;
@@ -22,7 +23,7 @@ public class PermissionApiService extends BaseApiService {
             .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
     private static final String ADD_URL =
-            "http://14.225.254.18/api/permissions/add";
+            "http://14.225.254.18/api/permissions/add/add_to_role";
 
     public List<PermissionRequest> getPermissionList() throws Exception {
         String url = "http://14.225.254.18/api/permissions/list";
@@ -45,6 +46,15 @@ public class PermissionApiService extends BaseApiService {
     }
 
     public ApiResponse<PermissionRequest> addPermission (PermissionRequest request)
+            throws Exception {
+        return post(
+                ADD_URL,
+                request,
+                new TypeReference<ApiResponse<PermissionRequest>>() {}
+        );
+    }
+
+    public ApiResponse<PermissionRequest> addPermissionToRole (PermissionAddToRoleRequest request)
             throws Exception {
         return post(
                 ADD_URL,
