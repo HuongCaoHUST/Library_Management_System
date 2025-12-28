@@ -38,7 +38,7 @@
                     </children>
                 </GridPane>
 
-                <Button fx:id="btnOnAddPermission" defaultButton="true" layoutX="12.0" layoutY="448.0" mnemonicParsing="false" onAction="#onAddRole" prefHeight="34.0" prefWidth="546.0" stylesheets="@fullpackstyling.css" text="Thêm quyền" />
+                <Button fx:id="btnOnAddPermission" defaultButton="true" layoutX="12.0" layoutY="448.0" mnemonicParsing="false" onAction="#onAddPermission" prefHeight="34.0" prefWidth="546.0" stylesheets="@fullpackstyling.css" text="Thêm quyền" />
                 <Label layoutX="14.0" layoutY="127.0" text="Thêm ngay quyền này cho:" textFill="#5383ff">
                     <font>
                         <Font name="Segoe UI" size="15.0" />

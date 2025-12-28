@@ -61,12 +61,13 @@ public class PermissionAddController {
     }
 
     @FXML
-    private void onAddRole() {
+    private void onAddPermission() {
         if (!validateForm()) {
             return;
         }
 
         PermissionAddToRoleRequest dto = buildRoleDto();
+        System.out.println("DTO: " + dto);
         PermissionApiService api = new PermissionApiService();
         try {
             ApiResponse<PermissionRequest> response = api.addPermissionToRole(dto);
