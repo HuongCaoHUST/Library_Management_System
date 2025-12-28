@@ -105,8 +105,7 @@ public class RoleController {
             @RequestBody List<Long> permissionIds
     ) {
         try {
-            RoleResponse response =
-                    roleService.replacePermissions(roleId, permissionIds);
+            RoleResponse response = roleService.replacePermissions(roleId, permissionIds);
 
             return ResponseEntity.ok(
                     new ApiResponse<>(true, "Cập nhật permission cho role thành công", response)
