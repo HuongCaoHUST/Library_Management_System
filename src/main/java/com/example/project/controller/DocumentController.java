@@ -13,6 +13,7 @@ import com.example.project.service.FileStorageService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 import com.example.project.mapper.DocumentMapper;
@@ -24,6 +25,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -74,6 +78,27 @@ public class DocumentController {
         DocumentResponse responseDTO = documentService.create(request);
 
         return ResponseEntity.ok(new ApiResponse<>(true, "Thêm tài liệu thành công", responseDTO));
+    }
+
+    @GetMapping("/{id}/cover")
+    public ResponseEntity<Resource> getCover(@PathVariable Long id) {
+
+        try {
+            Path filePath = Paths.get("/uploads/cover", "document_" + id + ".png");
+
+            if (!Files.exists(filePath)) {
+                return ResponseEntity.notFound().build();
+            }
+
+            Resource resource = new UrlResource(filePath.toUri());
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.IMAGE_PNG)
+                    .body(resource);
+
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @PostMapping(value = "/{id}/cover", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
