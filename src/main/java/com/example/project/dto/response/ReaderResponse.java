@@ -12,8 +12,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReaderResponse {
+    private Long readerId;
     private String fullName;
     public ReaderResponse(Reader reader) {
+        this.readerId = reader.getUserId();
         this.fullName = reader.getFullName();
     }
 }

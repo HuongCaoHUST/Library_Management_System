@@ -123,6 +123,53 @@ public class ReaderController {
         return ResponseEntity.ok(new ApiResponse<>(true, "Upload avatar thành công", avatarUrl));
     }
 
+    @PostMapping(value = "/register-with-avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ApiResponse<ReaderResponse>> registerWithAvatar(
+            @RequestBody ReaderRequest request,
+            @RequestPart(value = "file", required = false) MultipartFile file
+    ) {
+
+        try {
+            ReaderResponse response = readerService.registerReader(request);
+            Long readerId = response.getReaderId();
+
+            if (file != null && !file.isEmpty()) {
+                String avatarUrl = fileStorageService.store(file, readerId);
+                readerService2.updateAvatar(readerId, avatarUrl);
+            }
+            return ResponseEntity.ok(new ApiResponse<>(true, "Thêm reader thành công", response));
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.ok(new ApiResponse<>(false, ex.getMessage(), null));
+        }
+    }
+
+//    @PostMapping(value = "/register-with-avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+//    public ResponseEntity<ApiResponse<ReaderResponse>> registerWithAvatar(
+//            @RequestPart("data") ReaderRequest request,  // JSON data
+//            @RequestPart(value = "file", required = false) MultipartFile file // file avatar (optional)
+//    ) {
+//        try {
+//            // 1. Đăng ký reader
+//            ReaderResponse readerResponse = readerService.registerReader(request);
+//            Long readerId = readerResponse.get;
+//
+//            // 2. Nếu có file avatar, lưu và cập nhật
+//            if (file != null && !file.isEmpty()) {
+//                String avatarUrl = fileStorageService.store(file, readerId);
+//                readerService2.updateAvatar(readerId, avatarUrl);
+//            }
+//
+//            return ResponseEntity.ok(new ApiResponse<>(true, "Thêm reader và upload avatar thành công", readerResponse));
+//
+//        } catch (IllegalArgumentException ex) {
+//            return ResponseEntity.ok(new ApiResponse<>(false, ex.getMessage(), null));
+//        } catch (Exception ex) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body(new ApiResponse<>(false, "Lỗi server: " + ex.getMessage(), null));
+//        }
+//    }
+
+
 
     @PatchMapping("/{id}")
     public ResponseEntity<ApiResponse<ReaderResponse>> patchLibrarian(
