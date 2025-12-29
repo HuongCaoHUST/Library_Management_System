@@ -48,6 +48,14 @@ public class DocumentAddController {
             ApiResponse<Document> response = api.addDocument(dto);
 
             if (response.isSuccess()) {
+                Document document = response.getData();
+                Long documentId = document.getDocumentId();
+                System.out.println("Document ID: " + documentId);
+
+//                if (coverImageFile != null) {
+//                    api.uploadDocumentCover(documentId, coverImageFile);
+//                }
+
                 showAlert(Alert.AlertType.INFORMATION, "Thành công", response.getMessage());
                 clearForm();
             } else {
