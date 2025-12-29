@@ -1,8 +1,10 @@
 package com.example.project.javafxcontroller;
 
+import com.example.project.apiservice.CategoryApiService;
 import com.example.project.apiservice.DocumentApiService;
 import com.example.project.dto.ApiResponse;
 import com.example.project.dto.request.DocumentRequest;
+import com.example.project.model.Category;
 import com.example.project.model.Document;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -11,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.util.List;
 
 public class DocumentAddController {
 
@@ -19,7 +22,7 @@ public class DocumentAddController {
     @FXML private ComboBox<String> cbPublisher;
     @FXML private TextField txtPublicationYear;
     @FXML private TextField txtClassificationNumber;
-    @FXML private TextField txtCategory;
+    @FXML private ComboBox<String> cbCategory;
     @FXML private TextField txtShelfLocation;
     @FXML private ComboBox<String> cbDocumentType;
     @FXML private TextField txtAccessLink;
@@ -29,12 +32,31 @@ public class DocumentAddController {
     private ImageView imgCover;
     private File coverImageFile;
 
+    private CategoryApiService categoryApiService;
+
     @FXML
     public void initialize() {
         cbPublisher.getItems().addAll("NXB A", "NXB B", "NXB C", "NXB D");
         cbDocumentType.getItems().addAll("Tài liệu in", "Tài liệu số");
         cbStatus.getItems().addAll("Được mượn", "Không được mượn");
+        loadCategories();
     }
+
+    public void loadCategories() {
+        try {
+            List<Category> categories = categoryApiService.getCategoriesList();
+
+            cbCategory.getItems().setAll(
+                    categories.stream()
+                            .map(Category::getCategoryName)
+                            .toList()
+            );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @FXML
     private void onAddDocument() {
@@ -76,7 +98,7 @@ public class DocumentAddController {
         dto.setPublisher(cbPublisher.getValue());
         dto.setPublicationYear(txtPublicationYear.getText().trim());
         dto.setClassificationNumber(txtClassificationNumber.getText().trim());
-        dto.setCategory(txtCategory.getText().trim());
+        dto.setCategory(cbCategory.getValue());
         dto.setShelfLocation(txtShelfLocation.getText().trim());
         dto.setDocumentType(cbDocumentType.getValue());
         dto.setAccessLink(txtAccessLink.getText().trim());
@@ -133,7 +155,7 @@ public class DocumentAddController {
         cbPublisher.setValue(null);
         txtPublicationYear.clear();
         txtClassificationNumber.clear();
-        txtCategory.clear();
+        cbCategory.setValue(null);
         txtShelfLocation.clear();
         cbDocumentType.setValue(null);
         txtAccessLink.clear();
