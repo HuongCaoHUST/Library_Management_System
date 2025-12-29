@@ -79,12 +79,12 @@ public class DocumentService {
 
         Document document = documentMapper.toEntity(request);
 
-        Category category = categoryRepository.findById(request.getCategoryId())
+        Category category = categoryRepository.findByName(request.getCategoryName())
                 .orElseThrow(() ->
                         new IllegalArgumentException("Category không tồn tại"));
 
-        DocumentType documentType = documentTypeRepository.findById(
-                        request.getDocumentTypeId())
+        DocumentType documentType = documentTypeRepository.findByName(
+                        request.getDocumentTypeName())
                 .orElseThrow(() ->
                         new IllegalArgumentException("DocumentType không tồn tại"));
 
