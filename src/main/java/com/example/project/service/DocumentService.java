@@ -79,17 +79,17 @@ public class DocumentService {
 
         Document document = documentMapper.toEntity(request);
 
-        Category category = categoryRepository.findById(request.getCategoryId())
-                .orElseThrow(() ->
-                        new IllegalArgumentException("Category không tồn tại"));
+//        Category category = categoryRepository.findById(request.getCategoryId())
+//                .orElseThrow(() ->
+//                        new IllegalArgumentException("Category không tồn tại"));
+//
+//        DocumentType documentType = documentTypeRepository.findById(
+//                        request.getDocumentTypeId())
+//                .orElseThrow(() ->
+//                        new IllegalArgumentException("DocumentType không tồn tại"));
 
-        DocumentType documentType = documentTypeRepository.findById(
-                        request.getDocumentTypeId())
-                .orElseThrow(() ->
-                        new IllegalArgumentException("DocumentType không tồn tại"));
-
-        document.setCategory(category);
-        document.setDocumentType(documentType);
+//        document.setCategory(category);
+//        document.setDocumentType(documentType);
         Document saved = documentRepository.save(document);
 
         return documentMapper.toResponse(saved);

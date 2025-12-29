@@ -11,8 +11,8 @@ public interface DocumentMapper {
 
     @Mapping(target = "documentId", ignore = true)
     @Mapping(target = "borrowedCopies", constant = "0")
-    @Mapping(target = "documentType", ignore = true)
-    @Mapping(target = "category", ignore = true)
+//    @Mapping(target = "documentType", ignore = true)
+//    @Mapping(target = "category", ignore = true)
     Document toEntity(DocumentRequest request);
 
     @Mapping(target = "totalCopies",

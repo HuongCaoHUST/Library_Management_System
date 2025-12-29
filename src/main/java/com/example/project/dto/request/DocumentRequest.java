@@ -29,9 +29,9 @@ public class DocumentRequest {
     private Double coverPrice;
 
     private String classificationNumber;
-    private Long categoryId;
+    private String categoryId;
     private String shelfLocation;
-    private Long documentTypeId;
+    private String documentTypeId;
     private String accessLink;
     private String status;
 }
