@@ -3,8 +3,17 @@ package com.example.project.apiservice;
 import com.example.project.dto.ApiResponse;
 import com.example.project.dto.request.RegisterRequest;
 import com.example.project.model.Reader;
+import com.example.project.security.UserSession;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.*;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
+import java.io.File;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.net.http.HttpRequest;
@@ -63,6 +72,40 @@ public class ReaderApiService extends BaseApiService {
                 response.body(),
                 new TypeReference<ApiResponse<Reader>>() {}
         );
+    }
+
+    public ApiResponse<Reader> registerReaderWithAvatar(RegisterRequest requestDto, File avatarFile) throws Exception {
+        String url = "http://14.225.254.18/api/readers/register-with-avatar"; // server cần hỗ trợ endpoint multipart
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+
+        if (avatarFile != null) {
+            body.add("file", new FileSystemResource(avatarFile));
+        }
+
+        ObjectMapper mapper = new ObjectMapper();
+        String json = mapper.writeValueAsString(requestDto);
+        HttpHeaders jsonHeaders = new HttpHeaders();
+        jsonHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> jsonPart = new HttpEntity<>(json, jsonHeaders);
+        body.add("data", jsonPart);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        headers.setBearerAuth(UserSession.getInstance().getToken());
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+
+        ResponseEntity<ApiResponse<Reader>> response = restTemplate.exchange(
+                url,
+                HttpMethod.POST,
+                requestEntity,
+                new ParameterizedTypeReference<ApiResponse<Reader>>() {}
+        );
+
+        return response.getBody();
     }
 
     public ApiResponse<Reader> getMyReaderInfo() throws Exception {

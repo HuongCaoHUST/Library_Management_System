@@ -21,7 +21,7 @@
             <children>
                 <ImageView fitHeight="503.0" fitWidth="384.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="/com/example/project/images/welcome_image.png" />
+                        <Image url="@images/welcome_image.png" />
                     </image>
                     <viewport>
                         <Rectangle2D height="503.0" minX="15.0" width="383.0" />
@@ -100,10 +100,12 @@
 
                         <Label text="Email:" textFill="#5383ff" GridPane.rowIndex="5" />
                         <TextField fx:id="txtEmail" prefHeight="28.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Label text="Ảnh thẻ:" textFill="#5383ff" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                        <Button fx:id="btnUploadAvatar" onAction="#onUploadAvatar" text="Upload" textAlignment="CENTER" GridPane.columnIndex="4" GridPane.rowIndex="5" />
                     </children>
                 </GridPane>
 
-                <Button fx:id="btnSignup" defaultButton="true" layoutX="17.0" layoutY="327.0" mnemonicParsing="false"  prefHeight="34.0" prefWidth="535.0" stylesheets="@fullpackstyling.css" text="Gửi đăng ký" onAction="#onSignup"/>
+                <Button fx:id="btnSignup" defaultButton="true" layoutX="17.0" layoutY="327.0" mnemonicParsing="false" onAction="#onSignup" prefHeight="34.0" prefWidth="535.0" stylesheets="@fullpackstyling.css" text="Gửi đăng ký" />
 
                 <Label fx:id="btnBack" alignment="CENTER" layoutX="175.0" layoutY="371.0" onMouseClicked="#handleBackToLogin" prefHeight="23.0" prefWidth="211.0" stylesheets="@fullpackstyling.css" text="Quay lại trang đăng nhập" textAlignment="CENTER" textFill="#5383ff">
                     <font><Font name="Segoe UI" size="14.0" /></font>

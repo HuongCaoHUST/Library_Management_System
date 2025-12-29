@@ -3,6 +3,7 @@ package com.example.project.javafxcontroller;
 import com.example.project.apiservice.ReaderApiService;
 import com.example.project.dto.ApiResponse;
 import com.example.project.dto.request.RegisterRequest;
+import com.example.project.model.Document;
 import com.example.project.model.Reader;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,9 +11,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
@@ -30,6 +34,8 @@ public class SignupController {
     @FXML private TextField txtWorkPlace;
     @FXML private TextField txtAddress;
     @FXML private Button btnSignup;
+    @FXML private Button btnUploadAvatar;
+    private File selectedAvatarFile;
 
     @FXML
     public void initialize() {
@@ -47,7 +53,7 @@ public class SignupController {
 
         ReaderApiService api = new ReaderApiService();
         try {
-            ApiResponse<Reader> response = api.registerReader(dto);
+            ApiResponse<Reader> response = api.registerReaderWithAvatar(dto, selectedAvatarFile);
 
             if (response.isSuccess()) {
                 showAlert(Alert.AlertType.INFORMATION, "Thành công", response.getMessage());
@@ -128,6 +134,24 @@ public class SignupController {
         stage.setTitle("Đăng nhập");
         stage.centerOnScreen();
         stage.show();
+    }
+
+    @FXML
+    private void onUploadAvatar() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Chọn ảnh bìa");
+
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter(
+                        "Image Files", "*.png", "*.jpg", "*.jpeg"
+                )
+        );
+
+        File selectedFile = fileChooser.showOpenDialog(btnUploadAvatar.getScene().getWindow());
+        if (selectedFile != null) {
+            btnUploadAvatar.setText(selectedFile.getName());
+            selectedAvatarFile = selectedFile;
+        }
     }
 
     protected void showAlert(Alert.AlertType type, String title, String msg) {
