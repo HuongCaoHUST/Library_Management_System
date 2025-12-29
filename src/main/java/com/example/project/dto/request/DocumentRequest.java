@@ -34,4 +34,5 @@ public class DocumentRequest {
     private String documentTypeName;
     private String accessLink;
     private String status;
+    private String description;
 }
