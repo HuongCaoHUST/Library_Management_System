@@ -92,11 +92,10 @@ public class DocumentAddController {
             if (response.isSuccess()) {
                 Document document = response.getData();
                 Long documentId = document.getDocumentId();
-                System.out.println("Document ID: " + documentId);
 
-//                if (coverImageFile != null) {
-//                    api.uploadDocumentCover(documentId, coverImageFile);
-//                }
+                if (coverImageFile != null) {
+                    api.uploadDocumentCover(documentId, coverImageFile);
+                }
 
                 showAlert(Alert.AlertType.INFORMATION, "Thành công", response.getMessage());
                 clearForm();
@@ -118,9 +117,9 @@ public class DocumentAddController {
         dto.setPublisher(cbPublisher.getValue());
         dto.setPublicationYear(txtPublicationYear.getText().trim());
         dto.setClassificationNumber(txtClassificationNumber.getText().trim());
-        dto.setCategory(cbCategory.getValue());
+        dto.setCategoryName(cbCategory.getValue());
         dto.setShelfLocation(txtShelfLocation.getText().trim());
-        dto.setDocumentType(cbDocumentType.getValue());
+        dto.setDocumentTypeName(cbDocumentType.getValue());
         dto.setAccessLink(txtAccessLink.getText().trim());
         dto.setStatus(cbStatus.getValue());
         dto.setAvailableCopies(0);

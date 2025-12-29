@@ -12,9 +12,9 @@ public class DocumentRequest {
     private String publisher;
     private String publicationYear;
     private String classificationNumber;
-    private String category;
+    private String categoryName;
     private String shelfLocation;
-    private String documentType;
+    private String documentTypeName;
     private String accessLink;
     private String status;
     private Integer availableCopies;
