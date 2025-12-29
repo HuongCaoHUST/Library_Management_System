@@ -2,10 +2,12 @@ package com.example.project.javafxcontroller;
 
 import com.example.project.apiservice.CategoryApiService;
 import com.example.project.apiservice.DocumentApiService;
+import com.example.project.apiservice.DocumentTypeApiService;
 import com.example.project.dto.ApiResponse;
 import com.example.project.dto.request.DocumentRequest;
 import com.example.project.model.Category;
 import com.example.project.model.Document;
+import com.example.project.model.DocumentType;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -33,13 +35,16 @@ public class DocumentAddController {
     private File coverImageFile;
 
     private CategoryApiService categoryApiService;
+    private DocumentTypeApiService documentTypeApiService;
 
     @FXML
     public void initialize() {
+        categoryApiService = new CategoryApiService();
+        documentTypeApiService = new DocumentTypeApiService();
         cbPublisher.getItems().addAll("NXB A", "NXB B", "NXB C", "NXB D");
-        cbDocumentType.getItems().addAll("Tài liệu in", "Tài liệu số");
         cbStatus.getItems().addAll("Được mượn", "Không được mượn");
         loadCategories();
+        loadDocumentTypes();
     }
 
     public void loadCategories() {
@@ -49,6 +54,21 @@ public class DocumentAddController {
             cbCategory.getItems().setAll(
                     categories.stream()
                             .map(Category::getCategoryName)
+                            .toList()
+            );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadDocumentTypes() {
+        try {
+            List<DocumentType> documentTypes = documentTypeApiService.getDocumentTypesList();
+
+            cbDocumentType.getItems().setAll(
+                    documentTypes.stream()
+                            .map(DocumentType::getDocumentTypeName)
                             .toList()
             );
 

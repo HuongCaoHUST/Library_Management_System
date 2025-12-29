@@ -18,6 +18,7 @@ public class Document {
     private String cutterCode;
     private Integer availableCopies;
     private Integer borrowedCopies;
+    private Integer totalCopies;
     private Double coverPrice;
     private String classificationNumber;
     private String category;
