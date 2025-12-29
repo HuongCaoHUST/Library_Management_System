@@ -1,9 +1,12 @@
 package com.example.project.javafxcontroller;
 
+import com.example.project.apiservice.DocumentApiService;
 import com.example.project.model.Document;
 import com.example.project.service.ReaderService;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class DocumentDetailController {
     public Label lblAccessUrl;
@@ -14,10 +17,10 @@ public class DocumentDetailController {
     @FXML private Label lblDocumentType;
     @FXML private Label lblShelfLocation;
     @FXML private Label lblStatus;
+    @FXML private ImageView imgCover;
 
     private Document currentDocument;
-
-    private ReaderService readerService;
+    private final DocumentApiService documentApiService = new DocumentApiService();
 
     public void setDocument(Document document) {
         this.currentDocument = document;
@@ -31,5 +34,9 @@ public class DocumentDetailController {
         lblAccessUrl.setText(document.getAccessLink());
         lblStatus.setText(document.getStatus());
 
+        Image cover = documentApiService.getDocumentCover(document.getDocumentId());
+        if (cover != null) {
+            imgCover.setImage(cover);
+        }
     }
 }

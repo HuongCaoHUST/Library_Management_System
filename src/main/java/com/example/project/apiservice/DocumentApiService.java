@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import javafx.scene.image.Image;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.*;
@@ -15,6 +16,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.net.URI;
 import java.net.URLEncoder;
@@ -106,6 +108,37 @@ public class DocumentApiService {
                 );
 
         return response.getBody();
+    }
+
+    public Image getDocumentCover(Long documentId) {
+        try {
+            String url = "http://14.225.254.18/api/documents/" + documentId + "/cover";
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setBearerAuth(UserSession.getInstance().getToken());
+
+            HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+            RestTemplate restTemplate = new RestTemplate();
+
+            ResponseEntity<byte[]> response = restTemplate.exchange(
+                    url,
+                    HttpMethod.GET,
+                    requestEntity,
+                    byte[].class
+            );
+
+            if (response.getStatusCode().is2xxSuccessful()
+                    && response.getBody() != null) {
+
+                return new Image(new ByteArrayInputStream(response.getBody()));
+            }
+
+        } catch (Exception e) {
+            System.out.println("Lỗi load cover: " + e.getMessage());
+        }
+
+        return null;
     }
 
 }
