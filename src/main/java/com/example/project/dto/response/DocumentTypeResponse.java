@@ -12,10 +12,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DocumentTypeResponse {
+    private Long documentTypeId;
     private String documentTypeName;
     private String description;
 
     public DocumentTypeResponse(DocumentType documentType) {
+        this.documentTypeId = documentType.getDocumentTypeId();
         this.documentTypeName = documentType.getName();
         this.description = documentType.getDescription();
     }
