@@ -104,10 +104,10 @@ public class ReaderController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse<UserResponse>> register(@RequestBody ReaderRequest request) {
+    public ResponseEntity<ApiResponse<ReaderResponse>> register(@RequestBody ReaderRequest request) {
 
         try {
-            UserResponse response = readerService.registerReader(request);
+            ReaderResponse response = readerService.registerReader(request);
             return ResponseEntity.ok(new ApiResponse<>(true, "Thêm reader thành công", response));
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.ok(new ApiResponse<>(false, ex.getMessage(), null));
@@ -125,7 +125,7 @@ public class ReaderController {
 
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ApiResponse<UserResponse>> patchLibrarian(
+    public ResponseEntity<ApiResponse<ReaderResponse>> patchLibrarian(
             @PathVariable Long id,
             @Valid @RequestBody ReaderRequest request) {
         Reader updated = readerService.updatePatch(id, request);

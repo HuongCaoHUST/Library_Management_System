@@ -1,6 +1,7 @@
 package com.example.project.service;
 
 import com.example.project.dto.request.ReaderRequest;
+import com.example.project.dto.response.ReaderResponse;
 import com.example.project.dto.response.UserResponse;
 import com.example.project.mapper.ReaderMapper;
 import com.example.project.model.*;
@@ -67,7 +68,7 @@ public class ReaderService {
 
     public boolean existsByIdCardNumber(String idCardNumber) { return readerRepository.existsByIdCardNumber(idCardNumber);}
 
-    public UserResponse registerReader(ReaderRequest request) {
+    public ReaderResponse registerReader(ReaderRequest request) {
 
         if (readerRepository.existsByEmail(request.getEmail())) {
             throw new IllegalArgumentException("Username đã tồn tại");
