@@ -33,7 +33,7 @@ public class DocumentFileStorageServiceImpl implements FileStorageService {
         }
 
         try {
-            Path uploadPath = Paths.get(uploadDir,"cover/documents");
+            Path uploadPath = Paths.get(uploadDir, "cover");
             if (!Files.exists(uploadPath)) {
                 Files.createDirectories(uploadPath);
             }
