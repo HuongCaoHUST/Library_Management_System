@@ -8,7 +8,14 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.*;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
+import java.io.File;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
@@ -73,4 +80,32 @@ public class DocumentApiService {
                 new TypeReference<ApiResponse<Document>>() {}
         );
     }
+
+    public ApiResponse<String> uploadDocumentCover(Long documentId, File imageFile) {
+
+        String url = "http://14.225.254.18/api/documents/" + documentId + "/cover";
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("file", new FileSystemResource(imageFile));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        headers.setBearerAuth(UserSession.getInstance().getToken());
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity =
+                new HttpEntity<>(body, headers);
+
+        ResponseEntity<ApiResponse<String>> response =
+                restTemplate.exchange(
+                        url,
+                        HttpMethod.POST,
+                        requestEntity,
+                        new ParameterizedTypeReference<ApiResponse<String>>() {}
+                );
+
+        return response.getBody();
+    }
+
 }

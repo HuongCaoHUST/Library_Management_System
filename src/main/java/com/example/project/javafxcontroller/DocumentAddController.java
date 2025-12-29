@@ -6,6 +6,11 @@ import com.example.project.dto.request.DocumentRequest;
 import com.example.project.model.Document;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
+
+import java.io.File;
 
 public class DocumentAddController {
 
@@ -19,6 +24,10 @@ public class DocumentAddController {
     @FXML private ComboBox<String> cbDocumentType;
     @FXML private TextField txtAccessLink;
     @FXML private ComboBox<String> cbStatus;
+
+    @FXML
+    private ImageView imgCover;
+    private File coverImageFile;
 
     @FXML
     public void initialize() {
@@ -80,6 +89,26 @@ public class DocumentAddController {
             return false;
         }
         return true;
+    }
+
+    @FXML
+    private void onUploadCover() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Chọn ảnh bìa");
+
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter(
+                        "Image Files", "*.png", "*.jpg", "*.jpeg"
+                )
+        );
+
+        File file = fileChooser.showOpenDialog(imgCover.getScene().getWindow());
+
+        if (file != null) {
+            coverImageFile = file;
+            Image image = new Image(file.toURI().toString());
+            imgCover.setImage(image);
+        }
     }
 
     protected void showAlert(Alert.AlertType type, String title, String msg) {
