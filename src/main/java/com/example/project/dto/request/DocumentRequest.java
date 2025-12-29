@@ -18,4 +18,5 @@ public class DocumentRequest {
     private String accessLink;
     private String status;
     private Integer availableCopies;
+    private String description;
 }

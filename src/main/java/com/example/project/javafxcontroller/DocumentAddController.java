@@ -29,6 +29,7 @@ public class DocumentAddController {
     @FXML private ComboBox<String> cbDocumentType;
     @FXML private TextField txtAccessLink;
     @FXML private ComboBox<String> cbStatus;
+    @FXML private TextArea txtDescription;
 
     @FXML
     private ImageView imgCover;
@@ -123,6 +124,7 @@ public class DocumentAddController {
         dto.setAccessLink(txtAccessLink.getText().trim());
         dto.setStatus(cbStatus.getValue());
         dto.setAvailableCopies(0);
+        dto.setDescription(txtDescription.getText().trim());
         return dto;
     }
 
