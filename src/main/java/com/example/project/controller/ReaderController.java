@@ -130,7 +130,7 @@ public class ReaderController {
     ) {
         try {
             ReaderResponse response = readerService.registerReader(request);
-            Long readerId = response.getReaderId();
+            Long readerId = response.getUserId();
             System.out.println("Reader ID: " + readerId);
 
             if (file != null && !file.isEmpty()) {
