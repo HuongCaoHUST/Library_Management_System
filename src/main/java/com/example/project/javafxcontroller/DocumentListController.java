@@ -21,11 +21,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -46,6 +48,7 @@ public class DocumentListController {
     @FXML private Button searchButton;
     @FXML private ComboBox<String> documentTypeComboBox;
     @FXML private Button addDocumentButton;
+    @FXML private Button exportDocumentToExceleButton;
 
     private DocumentApiService documentApiService;
 
@@ -275,5 +278,39 @@ public class DocumentListController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void exportDocumentToExcel(ActionEvent event) {
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Lưu file Excel");
+        fileChooser.setInitialFileName("document_export.xlsx");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Excel (*.xlsx)", "*.xlsx")
+        );
+
+        File saveFile = fileChooser.showSaveDialog(
+                exportDocumentToExceleButton.getScene().getWindow()
+        );
+
+        if (saveFile == null) {
+            return;
+        }
+
+        try {
+            documentApiService.exportDocumentsToExcel(saveFile);
+            showAlert(Alert.AlertType.INFORMATION,"Thành công","Xuất file Excel thành công!");
+        } catch (Exception e) {
+            showAlert(Alert.AlertType.ERROR,"Lỗi","Lỗi khi export:" + e.getMessage());
+        }
+    }
+
+    protected void showAlert(Alert.AlertType type, String title, String msg) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(msg);
+        alert.showAndWait();
     }
 }

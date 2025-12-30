@@ -39,6 +39,7 @@
          <children>
             <Button fx:id="addDocumentButton" defaultButton="true" onAction="#addDocument" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Thêm tài liệu" />
             <Button fx:id="addDocumentFromFileButton" defaultButton="true" onAction="#addDocumentFromFile" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Thêm từ Excel" />
+            <Button fx:id="exportDocumentToExceleButton" defaultButton="true" onAction="#exportDocumentToExcel" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Xuất File Excel" />
          </children>
       </HBox>
         </children>

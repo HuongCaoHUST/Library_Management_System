@@ -210,4 +210,34 @@ public class DocumentApiService {
         return response.getBody();
     }
 
+    public void exportDocumentsToExcel(File saveFile) {
+        try {
+            String url = "http://14.225.254.18/api/documents/export";
+
+            RestTemplate restTemplate = new RestTemplate();
+
+            restTemplate.execute(
+                    url,
+                    HttpMethod.GET,
+                    request -> {
+                        // Gắn token
+                        request.getHeaders()
+                                .setBearerAuth(UserSession.getInstance().getToken());
+                    },
+                    (ResponseExtractor<Void>) response -> {
+                        try {
+                            writeResponseToFile(response, saveFile);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                        return null;
+                    }
+            );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Không thể xuất file Excel");
+        }
+    }
+
 }
