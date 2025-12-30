@@ -34,7 +34,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class ReaderService {
 
     public List<Reader> findAll() {
@@ -51,13 +50,26 @@ public class ReaderService {
 
     private final ReaderRepository readerRepository;
     private final RoleRepository roleRepository;
-
     private final LibrarianService librarianService;
     private final EmailService emailService;
     private final ReaderMapper mapper;
-
-    @Qualifier("readerStorage")
     private final FileStorageService fileStorageService;
+
+    public ReaderService(
+            ReaderRepository readerRepository,
+            RoleRepository roleRepository,
+            LibrarianService librarianService,
+            EmailService emailService,
+            ReaderMapper mapper,
+            @Qualifier("readerStorage") FileStorageService fileStorageService
+    ) {
+        this.readerRepository = readerRepository;
+        this.roleRepository = roleRepository;
+        this.librarianService = librarianService;
+        this.emailService = emailService;
+        this.mapper = mapper;
+        this.fileStorageService = fileStorageService;
+    }
 
     public Optional<Reader> findByUsername(String username) {
         return readerRepository.findByUsername(username);
