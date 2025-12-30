@@ -103,7 +103,7 @@ public class ReaderController {
         return ResponseEntity.ok(new ApiResponse<>(true, "Password changed successfully", null));
     }
 
-    @PostMapping("/register")
+    @PostMapping("/register2")
     public ResponseEntity<ApiResponse<ReaderResponse>> register(@RequestBody ReaderRequest request) {
 
         try {
@@ -123,7 +123,7 @@ public class ReaderController {
         return ResponseEntity.ok(new ApiResponse<>(true, "Upload avatar thành công", avatarUrl));
     }
 
-    @PostMapping(value = "/register-with-avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/register", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ApiResponse<ReaderResponse>> registerWithAvatar(
             @RequestPart("data") ReaderRequest request, // sửa từ @RequestBody
             @RequestPart(value = "file", required = false) MultipartFile file
