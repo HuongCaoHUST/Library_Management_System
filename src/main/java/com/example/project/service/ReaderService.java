@@ -108,8 +108,7 @@ public class ReaderService {
                 .depositAmount(BigDecimal.ZERO)
                 .role(readerRole)
                 .build();
-        emailService.sendReaderAccountApproved(reader, rawPassword);
-
+        emailService.sendReaderAccountApprovedWithCard(reader, rawPassword);
         Reader saved = readerRepository.save(reader);
         return mapper.toResponse(saved);
     }

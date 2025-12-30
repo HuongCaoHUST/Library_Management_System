@@ -7,5 +7,5 @@ public interface EmailService {
 
     void sendLibrarianAccountApproved(Librarian librarian, String rawPassword);
     void sendReaderAccountApproved(Reader reader, String rawPassword);
-
+    void sendReaderAccountApprovedWithCard(Reader reader, String rawPassword);
 }
