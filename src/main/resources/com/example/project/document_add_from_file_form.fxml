@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="273.0" prefWidth="344.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.javafxcontroller.DocumentAddFromFileController">
+    <children>
+          <VBox alignment="CENTER" prefHeight="273.0" prefWidth="344.0" spacing="15">
+              
+                    <padding>
+                  <Insets bottom="20" left="20" right="20" top="20" />
+              </padding>
+
+              <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Thêm dữ liệu từ file Excel" />
+
+              <Button fx:id="btnDownloadTemplate" onAction="#downloadTemplate" prefWidth="220" text="Tải file Excel mẫu" />
+
+              <Button fx:id="btnUploadExcel" onAction="#uploadExcel" prefWidth="220" text="Upload file Excel" />
+
+              <Label fx:id="lblFilePath" style="-fx-text-fill: #666666;" text="Chưa chọn file" wrapText="true" />
+
+              <Button text="Gửi dữ liệu" fx:id="btnSubmit" onAction="#submitData" prefWidth="220" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+          </VBox>
+    </children>
+</AnchorPane>

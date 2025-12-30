@@ -261,4 +261,19 @@ public class DocumentListController {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    protected void addDocumentFromFile(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/project/document_add_from_file_form.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Thêm tài liệu từ Excel");
+            stage.setScene(new Scene(root));
+            stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
