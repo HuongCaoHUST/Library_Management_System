@@ -96,7 +96,7 @@ public class EmailServiceImpl implements EmailService {
 
         byte[] readerCardPdf =
                 readerCardPdfService.exportReaderCard(reader);
-
+        System.out.println("DEBUG1");
         try {
             sendEmail.sendMailWithPdf(
                     reader.getEmail(),
