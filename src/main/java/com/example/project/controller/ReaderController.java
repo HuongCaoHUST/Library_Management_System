@@ -131,6 +131,7 @@ public class ReaderController {
         try {
             ReaderResponse response = readerService.registerReader(request);
             Long readerId = response.getReaderId();
+            System.out.println("Reader ID: " + readerId);
 
             if (file != null && !file.isEmpty()) {
                 String avatarUrl = fileStorageService.store(file, readerId);

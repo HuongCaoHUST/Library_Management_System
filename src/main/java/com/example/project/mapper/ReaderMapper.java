@@ -14,7 +14,6 @@ public interface ReaderMapper {
     Reader toEntity(ReaderRequest request);
 
     // Entity -> Response
-    @Mapping(source = "userId", target = "readerId")
     ReaderResponse toResponse(Reader reader);
 
     // UPDATE (PUT)
