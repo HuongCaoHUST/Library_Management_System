@@ -125,7 +125,7 @@ public class ReaderController {
 
     @PostMapping(value = "/register-with-avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ApiResponse<ReaderResponse>> registerWithAvatar(
-            @RequestPart("data") ReaderRequest request, // sửa từ @RequestBody
+            @RequestPart("data") ReaderRequest request,
             @RequestPart(value = "file", required = false) MultipartFile file
     ) {
         try {
