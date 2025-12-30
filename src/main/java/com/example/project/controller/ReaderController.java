@@ -103,16 +103,16 @@ public class ReaderController {
         return ResponseEntity.ok(new ApiResponse<>(true, "Password changed successfully", null));
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<ApiResponse<ReaderResponse>> register(@RequestBody ReaderRequest request) {
-
-        try {
-            ReaderResponse response = readerService.registerReader(request);
-            return ResponseEntity.ok(new ApiResponse<>(true, "Thêm reader thành công", response));
-        } catch (IllegalArgumentException ex) {
-            return ResponseEntity.ok(new ApiResponse<>(false, ex.getMessage(), null));
-        }
-    }
+//    @PostMapping("/register")
+//    public ResponseEntity<ApiResponse<ReaderResponse>> register(@RequestBody ReaderRequest request) {
+//
+//        try {
+//            ReaderResponse response = readerService.registerReader(request);
+//            return ResponseEntity.ok(new ApiResponse<>(true, "Thêm reader thành công", response));
+//        } catch (IllegalArgumentException ex) {
+//            return ResponseEntity.ok(new ApiResponse<>(false, ex.getMessage(), null));
+//        }
+//    }
 
     @PostMapping(value = "/{id}/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ApiResponse<String>> uploadAvatar(
@@ -129,13 +129,7 @@ public class ReaderController {
             @RequestPart(value = "file", required = false) MultipartFile file
     ) {
         try {
-            ReaderResponse response = readerService.registerReader(request);
-            Long readerId = response.getUserId();
-
-            if (file != null && !file.isEmpty()) {
-                String avatarUrl = fileStorageService.store(file, readerId);
-                readerService2.updateAvatar(readerId, avatarUrl);
-            }
+            ReaderResponse response = readerService.registerReader(request, file);
             return ResponseEntity.ok(new ApiResponse<>(true, "Thêm reader thành công", response));
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.ok(new ApiResponse<>(false, ex.getMessage(), null));

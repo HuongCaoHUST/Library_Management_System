@@ -17,8 +17,10 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -54,6 +56,9 @@ public class ReaderService {
     private final EmailService emailService;
     private final ReaderMapper mapper;
 
+    @Qualifier("readerStorage")
+    private final FileStorageService fileStorageService;
+
     public Optional<Reader> findByUsername(String username) {
         return readerRepository.findByUsername(username);
     }
@@ -68,7 +73,7 @@ public class ReaderService {
 
     public boolean existsByIdCardNumber(String idCardNumber) { return readerRepository.existsByIdCardNumber(idCardNumber);}
 
-    public ReaderResponse registerReader(ReaderRequest request) {
+    public ReaderResponse registerReader(ReaderRequest request, MultipartFile file) {
 
         if (readerRepository.existsByEmail(request.getEmail())) {
             throw new IllegalArgumentException("Username đã tồn tại");
@@ -83,8 +88,6 @@ public class ReaderService {
 
         Optional<Librarian> librarian = librarianService.findById(2L);
         Librarian approvingLibrarian = librarian.get();
-        System.out.println("Found librarian ID: " + approvingLibrarian.getUserId());
-        System.out.println("Librarian name: " + approvingLibrarian.getFullName());
 
         Role readerRole = roleRepository.findByName("READER").orElseThrow(() -> new RuntimeException("Role not found"));
 
@@ -111,6 +114,12 @@ public class ReaderService {
                 .role(readerRole)
                 .build();
         Reader saved = readerRepository.save(reader);
+
+        if (file != null && !file.isEmpty()) {
+            String avatarUrl = fileStorageService.store(file, saved.getUserId());
+            saved.setAvatarUrl(avatarUrl);
+        }
+
         emailService.sendReaderAccountApprovedWithCard(reader, rawPassword);
         return mapper.toResponse(saved);
     }
