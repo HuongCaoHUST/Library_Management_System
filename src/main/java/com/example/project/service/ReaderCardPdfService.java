@@ -56,7 +56,6 @@ public class ReaderCardPdfService {
 
             // Load avatar
             String avatarPath = uploadDir + "/avatars/reader/reader_" + reader.getUserId() + ".png";
-            System.out.println("DIR: " + avatarPath);
 
             File avatarFile = new File(avatarPath);
             if (avatarFile.exists()) {
