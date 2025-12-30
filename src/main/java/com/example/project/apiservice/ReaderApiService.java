@@ -75,8 +75,7 @@ public class ReaderApiService extends BaseApiService {
     }
 
     public ApiResponse<Reader> registerReaderWithAvatar(RegisterRequest requestDto, File avatarFile) throws Exception {
-        String url = "http://14.225.254.18/api/readers/register-with-avatar"; // server cần hỗ trợ endpoint multipart
-
+        String url = "http://14.225.254.18/api/readers/register-with-avatar";
         RestTemplate restTemplate = new RestTemplate();
 
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
@@ -85,24 +84,22 @@ public class ReaderApiService extends BaseApiService {
             body.add("file", new FileSystemResource(avatarFile));
         }
 
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(requestDto);
-        body.add("data", json);
+        HttpHeaders jsonHeaders = new HttpHeaders();
+        jsonHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<RegisterRequest> dataPart = new HttpEntity<>(requestDto, jsonHeaders);
+        body.add("data", dataPart);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
         headers.setBearerAuth(UserSession.getInstance().getToken());
+        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
-        HttpEntity<MultiValueMap<String, Object>> requestEntity =
-                new HttpEntity<>(body, headers);
-
-        ResponseEntity<ApiResponse<Reader>> response =
-                restTemplate.exchange(
-                        url,
-                        HttpMethod.POST,
-                        requestEntity,
-                        new ParameterizedTypeReference<ApiResponse<Reader>>() {}
-                );
+        ResponseEntity<ApiResponse<Reader>> response = restTemplate.exchange(
+                url,
+                HttpMethod.POST,
+                requestEntity,
+                new ParameterizedTypeReference<ApiResponse<Reader>>() {}
+        );
 
         return response.getBody();
     }
