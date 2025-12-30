@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.time.LocalDate;
 
@@ -48,6 +49,18 @@ public class ReaderCardPdfService {
                             PDPageContentStream.AppendMode.APPEND,
                             true
                     );
+
+            // Load avatar
+            String avatarPath =
+                    "/home/library_system/uploads/avatars/reader/reader_" + reader.getUserId() + ".png";
+
+            File avatarFile = new File(avatarPath);
+            if (avatarFile.exists()) {
+                PDImageXObject avatar =
+                        PDImageXObject.createFromFile(avatarFile.getAbsolutePath(), document);
+
+                cs.drawImage(avatar, 15, 25, 48, 68);
+            }
 
             PDType0Font font = PDType0Font.load(document, new ClassPathResource("/fonts/Roboto-Bold.ttf").getInputStream());
 
