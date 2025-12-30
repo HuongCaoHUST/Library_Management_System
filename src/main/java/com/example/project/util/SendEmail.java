@@ -35,7 +35,6 @@ public class SendEmail {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper =
                 new MimeMessageHelper(message, true, "UTF-8");
-        System.out.println("DEBUG2");
         helper.setTo(to);
         helper.setSubject(subject);
         helper.setText(body, false);
