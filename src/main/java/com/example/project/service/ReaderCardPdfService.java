@@ -9,6 +9,7 @@ import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,9 @@ import java.time.LocalDate;
 public class ReaderCardPdfService {
 
     private final QrCodeService qrCodeService;
+
+    @Value("${file.upload-dir}")
+    private String uploadDir;
 
     public byte[] exportReaderCard(Reader reader) {
         try (
@@ -51,8 +55,8 @@ public class ReaderCardPdfService {
                     );
 
             // Load avatar
-            String avatarPath =
-                    "/home/library_system/uploads/avatars/reader/reader_" + reader.getUserId() + ".png";
+            String avatarPath = uploadDir + "/avatars/reader/reader_" + reader.getUserId() + ".png";
+            System.out.println("DIR: " + avatarPath);
 
             File avatarFile = new File(avatarPath);
             if (avatarFile.exists()) {
