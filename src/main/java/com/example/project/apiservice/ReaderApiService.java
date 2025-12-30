@@ -87,23 +87,22 @@ public class ReaderApiService extends BaseApiService {
 
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(requestDto);
-        HttpHeaders jsonHeaders = new HttpHeaders();
-        jsonHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> jsonPart = new HttpEntity<>(json, jsonHeaders);
-        body.add("data", jsonPart);
+        body.add("data", json);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
         headers.setBearerAuth(UserSession.getInstance().getToken());
 
-        HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+        HttpEntity<MultiValueMap<String, Object>> requestEntity =
+                new HttpEntity<>(body, headers);
 
-        ResponseEntity<ApiResponse<Reader>> response = restTemplate.exchange(
-                url,
-                HttpMethod.POST,
-                requestEntity,
-                new ParameterizedTypeReference<ApiResponse<Reader>>() {}
-        );
+        ResponseEntity<ApiResponse<Reader>> response =
+                restTemplate.exchange(
+                        url,
+                        HttpMethod.POST,
+                        requestEntity,
+                        new ParameterizedTypeReference<ApiResponse<Reader>>() {}
+                );
 
         return response.getBody();
     }
