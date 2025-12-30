@@ -12,12 +12,16 @@ import javafx.scene.image.Image;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.*;
+import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
@@ -139,6 +143,71 @@ public class DocumentApiService {
         }
 
         return null;
+    }
+
+    public void downloadImportTemplate(File saveFile) {
+        try {
+            String url = "http://14.225.254.18/api/documents/import_template";
+
+            RestTemplate restTemplate = new RestTemplate();
+
+            restTemplate.execute(
+                    url,
+                    HttpMethod.GET,
+                    null,
+                    (ResponseExtractor<Void>) response -> {
+                        try {
+                            writeResponseToFile(response, saveFile);
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
+                        }
+                        return null;
+                    }
+            );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Không thể tải file Excel mẫu");
+        }
+    }
+
+    private void writeResponseToFile(ClientHttpResponse response, File file) throws Exception {
+        try (InputStream is = response.getBody();
+             FileOutputStream fos = new FileOutputStream(file)) {
+
+            byte[] buffer = new byte[4096];
+            int read;
+            while ((read = is.read(buffer)) != -1) {
+                fos.write(buffer, 0, read);
+            }
+        }
+    }
+
+    public ApiResponse<String> importDocuments(File excelFile) {
+
+        String url = "http://14.225.254.18/api/documents/import";
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+        body.add("file", new FileSystemResource(excelFile));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        headers.setBearerAuth(UserSession.getInstance().getToken());
+
+        HttpEntity<MultiValueMap<String, Object>> requestEntity =
+                new HttpEntity<>(body, headers);
+
+        ResponseEntity<ApiResponse<String>> response =
+                restTemplate.exchange(
+                        url,
+                        HttpMethod.POST,
+                        requestEntity,
+                        new ParameterizedTypeReference<ApiResponse<String>>() {}
+                );
+
+        return response.getBody();
     }
 
 }
