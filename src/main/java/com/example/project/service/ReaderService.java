@@ -88,6 +88,7 @@ public class ReaderService {
 
         Role readerRole = roleRepository.findByName("READER").orElseThrow(() -> new RuntimeException("Role not found"));
 
+        LocalDateTime now = LocalDateTime.now();
         Reader reader = Reader.builder()
                 .fullName(request.getFullName())
                 .gender(request.getGender())
@@ -103,6 +104,7 @@ public class ReaderService {
                 .username(username)
                 .password(encryptedPassword)
                 .registrationDate(LocalDateTime.now())
+                .expirationDate(now.plusYears(1))
                 .status("APPROVED")
                 .approvedBy(approvingLibrarian)
                 .depositAmount(BigDecimal.ZERO)
