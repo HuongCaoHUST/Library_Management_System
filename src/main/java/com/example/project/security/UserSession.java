@@ -11,6 +11,7 @@ public class UserSession {
     private static UserSession instance;
 
     private String token;
+    private Long userId;
     private String role;
     private Set<String> permissions;
 

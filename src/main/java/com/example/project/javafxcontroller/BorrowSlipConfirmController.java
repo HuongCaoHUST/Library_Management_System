@@ -9,7 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import com.example.project.security.UserSession;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
@@ -81,7 +81,8 @@ public class BorrowSlipConfirmController {
         try {
             BorrowSlipApiService service = new BorrowSlipApiService();
 
-            Long currentReaderId = 5L;
+            Long currentReaderId = UserSession.getInstance().getUserId();
+            System.out.println("CURRENT ID: "+currentReaderId);
             service.createBorrowSlip(
                     currentReaderId,
                     LocalDate.now().plusDays(14),

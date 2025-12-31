@@ -55,8 +55,8 @@ public class LoginController {
 
 
             UserSession session = UserSession.getInstance();
-
             session.setToken(response.getToken());
+            session.setUserId(response.getUserId());
             session.setRole(response.getRole());
             session.setPermissions(response.getPermissions());
             openMainForm(response.getRole());

@@ -9,6 +9,7 @@ public class LoginResponse {
     private boolean success;
 
     private String token;
+    private Long userId;
     private String fullName;
     private String role;
     private Set<String> permissions;

@@ -49,6 +49,7 @@ public class AuthApiService {
 
                 result.setSuccess(true);
                 result.setToken(node.get("token").asText());
+                result.setUserId(node.get("userId").asLong());
                 result.setFullName(node.get("fullName").asText());
                 result.setRole(node.get("role").asText());
 
