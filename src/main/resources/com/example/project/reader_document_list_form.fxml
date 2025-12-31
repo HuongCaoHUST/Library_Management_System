@@ -60,7 +60,7 @@
                           <TableColumn fx:id="cartColRemove" text="Xóa" />  
                       </columns>
                   </TableView>
-               <Button fx:id="btnReject1" layoutX="1129.0" layoutY="390.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="44.0" prefWidth="160.0" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Xóa phiếu mượn" AnchorPane.bottomAnchor="140.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="390.0">
+               <Button fx:id="btnDeleteBorrowSlip" onAction="#handleDeleteBorrowSlip" layoutX="1129.0" layoutY="390.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="44.0" prefWidth="160.0" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Xóa phiếu mượn" AnchorPane.bottomAnchor="140.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="390.0">
                   <font>
                      <Font name="Segoe UI Bold" size="16.0" />
                   </font>

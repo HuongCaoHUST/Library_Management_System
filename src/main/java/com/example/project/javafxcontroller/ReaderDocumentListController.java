@@ -47,6 +47,7 @@ public class ReaderDocumentListController {
     @FXML private TableColumn<Document, String> colBorrowedCopies;
     @FXML private TableColumn<Document, Void> colDetail;
     @FXML private TableColumn<Document, Void> colAddToBorrowSlip;
+    @FXML private Button btnDeleteBorrowSlip;
     private final ObservableList<BorrowItem> cartItems = FXCollections.observableArrayList();
 
     @FXML private TableView<BorrowItem> cartTableView;
@@ -359,6 +360,29 @@ public class ReaderDocumentListController {
             loadingStage = null;
         }
     }
+
+    @FXML
+    private void handleDeleteBorrowSlip() {
+
+        if (cartItems.isEmpty()) {
+            showAlert(Alert.AlertType.INFORMATION,
+                    "Thông báo",
+                    "Phiếu mượn đang trống");
+            return;
+        }
+
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Xác nhận");
+        confirm.setHeaderText("Xóa toàn bộ phiếu mượn?");
+        confirm.setContentText("Tất cả tài liệu trong giỏ sẽ bị xóa");
+
+        confirm.showAndWait().ifPresent(result -> {
+            if (result == ButtonType.OK) {
+                cartItems.clear();   // 🔥 DÒNG QUAN TRỌNG
+            }
+        });
+    }
+
 
     @FXML
     protected void addDocument(ActionEvent event) {
