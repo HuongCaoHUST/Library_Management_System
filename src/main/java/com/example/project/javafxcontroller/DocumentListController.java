@@ -40,6 +40,7 @@ public class DocumentListController {
     @FXML private TableColumn<Document, String> colPublisher;
     @FXML private TableColumn<Document, String> colShelfLocation;
     @FXML private TableColumn<Document, String> colDocumentType;
+    @FXML private TableColumn<Document, String> colCategory;
     @FXML private TableColumn<Document, String> colAvailableCopies;
     @FXML private TableColumn<Document, String> colBorrowedCopies;
     @FXML private TableColumn<Document, Void> colDetail;
@@ -82,6 +83,7 @@ public class DocumentListController {
         colPublisher.setCellValueFactory(new PropertyValueFactory<>("publisher"));
         colShelfLocation.setCellValueFactory(new PropertyValueFactory<>("shelfLocation"));
         colDocumentType.setCellValueFactory(new PropertyValueFactory<>("documentType"));
+        colCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
         colAvailableCopies.setCellValueFactory(new PropertyValueFactory<>("availableCopies"));
         colBorrowedCopies.setCellValueFactory(new PropertyValueFactory<>("borrowedCopies"));
 
@@ -92,6 +94,7 @@ public class DocumentListController {
         colPublisher.setStyle(cellStyle);
         colShelfLocation.setStyle(cellStyle);
         colDocumentType.setStyle(cellStyle);
+        colCategory.setStyle(cellStyle);
         colAvailableCopies.setStyle(cellStyle);
         colBorrowedCopies.setStyle(cellStyle);
 

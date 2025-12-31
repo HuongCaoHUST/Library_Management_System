@@ -22,15 +22,16 @@
             <children>
                 <TableView fx:id="tableView" prefHeight="571.0" prefWidth="1220.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                        <TableColumn fx:id="colTitle" prefWidth="200.0" text="Tên tài liệu" />
-                        <TableColumn fx:id="colDocumentId" prefWidth="100" text="Mã tài liệu" />
-                        <TableColumn fx:id="colAuthor" prefWidth="150.0" text="Tác giả" />
-                        <TableColumn fx:id="colPublisher" prefWidth="150.0" text="Nhà xuất bản" />
-                        <TableColumn fx:id="colShelfLocation" maxWidth="150.0" prefWidth="100.0" text="Vị trí trên kệ" />
-                        <TableColumn fx:id="colDocumentType" maxWidth="150.0" prefWidth="100.0" text="Thể loại" />
-                        <TableColumn fx:id="colAvailableCopies" maxWidth="150.0" prefWidth="100.0" text="SL còn" />
-                        <TableColumn fx:id="colBorrowedCopies" maxWidth="150.0" prefWidth="100.0" text="SL đã mượn" />
-                        <TableColumn fx:id="colDetail" maxWidth="150.0" prefWidth="100.0" text="Chi tiết" />
+                        <TableColumn fx:id="colTitle" prefWidth="183.20002400875092" text="Tên tài liệu" />
+                        <TableColumn fx:id="colDocumentId" prefWidth="90.39999389648438" text="Mã tài liệu" />
+                        <TableColumn fx:id="colAuthor" prefWidth="174.4000244140625" text="Tác giả" />
+                        <TableColumn fx:id="colPublisher" prefWidth="111.199951171875" text="Nhà xuất bản" />
+                        <TableColumn fx:id="colShelfLocation" maxWidth="166.4000244140625" prefWidth="105.5999755859375" text="Vị trí trên kệ" />
+                        <TableColumn fx:id="colDocumentType" maxWidth="176.800048828125" prefWidth="104.79998779296875" text="Loại tài liệu" />
+                        <TableColumn fx:id="colCategory" maxWidth="182.39996337890625" prefWidth="120.0" text="Thể loại" />
+                        <TableColumn fx:id="colAvailableCopies" maxWidth="150.0" prefWidth="96.800048828125" text="SL còn" />
+                        <TableColumn fx:id="colBorrowedCopies" maxWidth="150.0" prefWidth="130.39990234375" text="SL đã mượn" />
+                        <TableColumn fx:id="colDetail" maxWidth="150.0" prefWidth="82.400146484375" resizable="false" text="Chi tiết" />
                     </columns>
                 </TableView>
             </children>
