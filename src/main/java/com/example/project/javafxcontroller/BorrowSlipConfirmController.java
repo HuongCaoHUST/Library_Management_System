@@ -1,7 +1,9 @@
 package com.example.project.javafxcontroller;
 
+import com.example.project.apiservice.BorrowSlipApiService;
 import com.example.project.model.BorrowItem;
 import com.example.project.model.Document;
+import com.example.project.security.UserSession;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -9,6 +11,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+
+import java.time.LocalDate;
+
 
 public class BorrowSlipConfirmController {
 
@@ -66,7 +71,6 @@ public class BorrowSlipConfirmController {
         );
     }
 
-    /** 👉 Nhận dữ liệu từ màn hình trước */
     public void setCartItems(ObservableList<BorrowItem> cartItems) {
         this.cartItems = cartItems;
         confirmTableView.setItems(cartItems);
@@ -74,10 +78,21 @@ public class BorrowSlipConfirmController {
 
     @FXML
     private void handleConfirmBorrow() {
-        // TODO: gọi API tạo borrow slip
-        System.out.println("Xác nhận mượn: " + cartItems.size() + " tài liệu");
+        try {
+            BorrowSlipApiService service = new BorrowSlipApiService();
 
-        closeStage();
+            Long currentReaderId = 5L;
+            service.createBorrowSlip(
+                    currentReaderId,
+                    LocalDate.now().plusDays(14),
+                    cartItems
+            );
+
+            cartItems.clear();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @FXML
