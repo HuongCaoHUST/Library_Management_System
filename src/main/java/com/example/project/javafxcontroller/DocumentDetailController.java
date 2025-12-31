@@ -10,12 +10,16 @@ import javafx.scene.image.ImageView;
 
 public class DocumentDetailController {
     public Label lblAccessUrl;
+    @FXML private Label lblTitle;
     @FXML private Label lblAuthor;
     @FXML private Label lblPublisher;
     @FXML private Label lblPublicationYear;
     @FXML private Label lblCategory;
     @FXML private Label lblDocumentType;
     @FXML private Label lblShelfLocation;
+    @FXML private Label lblAvailableCopies;
+    @FXML private Label lblBorrowCopies;
+    @FXML private Label lblCoverPrice;
     @FXML private Label lblStatus;
     @FXML private ImageView imgCover;
 
@@ -25,6 +29,7 @@ public class DocumentDetailController {
     public void setDocument(Document document) {
         this.currentDocument = document;
 
+        lblTitle.setText(document.getTitle());
         lblAuthor.setText(document.getAuthor());
         lblPublisher.setText(document.getPublisher());
         lblPublicationYear.setText(document.getPublicationYear().toString());
@@ -32,6 +37,9 @@ public class DocumentDetailController {
         lblDocumentType.setText(document.getDocumentType());
         lblShelfLocation.setText(document.getShelfLocation());
         lblAccessUrl.setText(document.getAccessLink());
+        lblAvailableCopies.setText(document.getAvailableCopies().toString());
+        lblBorrowCopies.setText(document.getBorrowedCopies().toString());
+        lblCoverPrice.setText(document.getCoverPrice().toString());
         lblStatus.setText(document.getStatus());
 
         Image cover = documentApiService.getDocumentCover(document.getDocumentId());
