@@ -48,6 +48,7 @@ public class ReaderDocumentListController {
     @FXML private TableColumn<Document, Void> colDetail;
     @FXML private TableColumn<Document, Void> colAddToBorrowSlip;
     @FXML private Button btnDeleteBorrowSlip;
+    @FXML private Button btnConfirmBorrowSlip;
     private final ObservableList<BorrowItem> cartItems = FXCollections.observableArrayList();
 
     @FXML private TableView<BorrowItem> cartTableView;
@@ -378,9 +379,36 @@ public class ReaderDocumentListController {
 
         confirm.showAndWait().ifPresent(result -> {
             if (result == ButtonType.OK) {
-                cartItems.clear();   // 🔥 DÒNG QUAN TRỌNG
+                cartItems.clear();
             }
         });
+    }
+
+    @FXML
+    protected void openConfirmBorrowSlip(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/project/borrow_slip_confirm.fxml")
+            );
+
+            Parent root = loader.load();
+
+            BorrowSlipConfirmController controller = loader.getController();
+
+            controller.setCartItems(cartItems);
+
+            Stage stage = new Stage();
+            stage.setTitle("Xác nhận phiếu mượn");
+            stage.setScene(new Scene(root));
+
+            stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+            stage.initModality(Modality.WINDOW_MODAL); // chặn form cha
+
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
