@@ -45,6 +45,6 @@ public class AuthController {
                 .map(Permission::getName)
                 .collect(Collectors.toSet());
 
-        return new LoginResponse(token, user.getFullName(), user.getRole().getName(), permissionNames);
+        return new LoginResponse(token, user.getUserId(), user.getFullName(), user.getRole().getName(), permissionNames);
     }
 }
