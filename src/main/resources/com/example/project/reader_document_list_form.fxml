@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #1f3368;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.javafxcontroller.DocumentListController">
+<AnchorPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-color: #1f3368;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.javafxcontroller.ReaderDocumentListController">
     <children>
         <fx:include source="reader_menu_bar.fxml" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
         <AnchorPane layoutX="-14.0" layoutY="151.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="151.0">
@@ -32,7 +32,12 @@
             </AnchorPane>
             <AnchorPane fx:id="searchResultPane" layoutX="47.0" layoutY="75.2" prefHeight="574.0" prefWidth="1280.0" style="-fx-background-color: #1f3368;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="75.0">
                 <children>
-                    <TableView fx:id="tableView" prefHeight="571.0" prefWidth="1220.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
+               <Button fx:id="btnReject" layoutX="1072.0" layoutY="412.0" mnemonicParsing="false" prefHeight="104.0" prefWidth="160.0" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="MƯỢN" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="450.0">
+                  <font>
+                     <Font name="Segoe UI Bold" size="16.0" />
+                  </font>
+               </Button>
+                    <TableView fx:id="tableView" prefHeight="366.0" prefWidth="1240.0" AnchorPane.bottomAnchor="198.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
                         <columns>
                             <TableColumn fx:id="colTitle" prefWidth="200.0" text="Tên tài liệu" />
                             <TableColumn fx:id="colDocumentId" prefWidth="100" text="Mã tài liệu" />
@@ -43,8 +48,23 @@
                             <TableColumn fx:id="colAvailableCopies" maxWidth="150.0" prefWidth="100.0" text="SL còn" />
                             <TableColumn fx:id="colBorrowedCopies" maxWidth="150.0" prefWidth="100.0" text="SL đã mượn" />
                             <TableColumn fx:id="colDetail" maxWidth="150.0" prefWidth="150.0" text="Chi tiết" />
+                            <TableColumn fx:id="colAddToBorrowSlip" prefWidth="120" text="Mượn" />
                         </columns>
                     </TableView>
+      
+                  <TableView fx:id="cartTableView" layoutX="396.0" layoutY="181.0" prefHeight="157.0" prefWidth="1240.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="390.0">
+                      <columns>
+                          <TableColumn fx:id="stt" text="STT" />
+                          <TableColumn fx:id="cartColTitle" text="Tên tài liệu" />
+                          <TableColumn fx:id="quantity" text="Số lượng" />
+                          <TableColumn fx:id="cartColRemove" text="Xóa" />  
+                      </columns>
+                  </TableView>
+               <Button fx:id="btnReject1" layoutX="1129.0" layoutY="390.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="44.0" prefWidth="160.0" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Xóa phiếu mượn" AnchorPane.bottomAnchor="140.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="390.0">
+                  <font>
+                     <Font name="Segoe UI Bold" size="16.0" />
+                  </font>
+               </Button>
                 </children>
             </AnchorPane>
         </AnchorPane>
