@@ -23,7 +23,7 @@ public class GRNController {
 
     private final GRNService grnService;
 
-    private GRNMapper mapper;
+    private final GRNMapper mapper;
 
     @GetMapping("/test")
     public String testEndpoint() {
