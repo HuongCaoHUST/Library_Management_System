@@ -1,7 +1,9 @@
 package com.example.project.javafxcontroller;
+import com.example.project.apiservice.DocumentTypeApiService;
 import com.example.project.model.BorrowItem;
 import com.example.project.model.Document;
 import com.example.project.apiservice.DocumentApiService;
+import com.example.project.model.DocumentType;
 import com.example.project.security.UserSession;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -72,10 +74,12 @@ public class ReaderDocumentListController {
     private Timeline debounceTimeline;
 
     private final FXMLLoader fxmlLoader = new FXMLLoader();
+    private DocumentTypeApiService documentTypeApiService;
 
     @FXML
     public void initialize() {
         documentApiService = new DocumentApiService();
+        documentTypeApiService = new DocumentTypeApiService();
 
         UserSession session = UserSession.getInstance();
 
@@ -205,8 +209,18 @@ public class ReaderDocumentListController {
     }
 
     private void setupComboBox() {
-        documentTypeComboBox.setItems(FXCollections.observableArrayList("Tất cả", "Tài liệu In", "Tài liệu Số"));
-        documentTypeComboBox.setOnAction(e -> searchDocuments());
+        try {
+            List<DocumentType> documentTypes = documentTypeApiService.getDocumentTypesList();
+
+            documentTypeComboBox.getItems().setAll(
+                    documentTypes.stream()
+                            .map(DocumentType::getDocumentTypeName)
+                            .toList()
+            );
+            documentTypeComboBox.setOnAction(e -> searchDocuments());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setupBorrowSlip() {
