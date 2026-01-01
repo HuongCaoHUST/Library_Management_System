@@ -63,12 +63,12 @@ public class DocumentService {
         documentRepository.deleteAllById(ids);
     }
 
-    public List<Document> filterDocuments(String title, String author, String publisher, Long documentTypeId, Integer publicationYear) {
+    public List<Document> filterDocuments(String title, String author, String publisher, String documentType, Integer publicationYear) {
         Specification<Document> spec = Specification
                 .where(DocumentSpecification.hasTitle(title))
                 .and(DocumentSpecification.hasAuthor(author))
                 .and(DocumentSpecification.hasPublisher(publisher))
-                .and(DocumentSpecification.hasDocumentTypeId(documentTypeId))
+                .and(DocumentSpecification.hasDocumentType(documentType))
                 .and(DocumentSpecification.hasPublicationYear(publicationYear));
 
         return documentRepository.findAll(spec);

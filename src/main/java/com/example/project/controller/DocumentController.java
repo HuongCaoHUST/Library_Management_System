@@ -58,7 +58,7 @@ public class DocumentController {
             @RequestParam(required = false) String title,
             @RequestParam(required = false) String author,
             @RequestParam(required = false) String publisher,
-            @RequestParam(required = false) Long documentType,
+            @RequestParam(required = false) String documentType,
             @RequestParam(required = false) Integer publicationYear
     ) {
         return documentService.filterDocuments(title, author, publisher, documentType, publicationYear).stream()
