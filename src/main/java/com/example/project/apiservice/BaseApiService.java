@@ -66,6 +66,7 @@ public abstract class BaseApiService {
         HttpResponse<String> response =
                 client.send(request, HttpResponse.BodyHandlers.ofString());
 
+        System.out.println(response.body());
         return mapper.readValue(response.body(), type);
     }
 
