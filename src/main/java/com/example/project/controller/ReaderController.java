@@ -14,12 +14,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -204,5 +206,18 @@ public class ReaderController {
                         "attachment; filename=reader-card-" + id + ".pdf")
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(pdf);
+    }
+
+    // Delete 1 reader
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteDocument(@PathVariable Long id) {
+        Reader reader = readerService.findById(id);
+
+        if (reader == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        readerService.delete(id);
+        return ResponseEntity.noContent().build(); // 204 No Content
     }
 }

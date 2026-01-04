@@ -9,6 +9,7 @@ import com.example.project.dto.response.LibrarianResponseForFilter;
 import com.example.project.dto.response.UserResponse;
 import com.example.project.mapper.LibrarianMapper;
 import com.example.project.model.Librarian;
+import com.example.project.model.Reader;
 import com.example.project.service.ExportService;
 import com.example.project.service.FileStorageService;
 import com.example.project.service.LibrarianService;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,6 +27,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -184,5 +187,16 @@ public class LibrarianController {
                         )
                 )
                 .body(resource);
+    }
+
+    // Delete 1 reader
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteDocument(@PathVariable Long id) {
+        librarianService.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Không tìm thấy thủ thư"));
+
+        librarianService.delete(id);
+        return ResponseEntity.noContent().build(); // 204 No Content
     }
 }
