@@ -26,8 +26,8 @@ public class MenuBarController {
     private void initialize() {
 
         UserSession session = UserSession.getInstance();
-        menuItemLibrarianList.setVisible(session.hasPermission("LIBRARIAN_VIEW"));
-        menuItemReaderList.setVisible(session.hasPermission("READER_VIEW"));
+        menuItemLibrarianList.setVisible(session.hasPermission("Xem thủ thư"));
+        menuItemReaderList.setVisible(session.hasPermission("Xem bạn đọc"));
 
         if (avatarImage == null) {
             return;

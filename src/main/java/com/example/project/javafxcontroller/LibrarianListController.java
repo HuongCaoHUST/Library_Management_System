@@ -67,7 +67,7 @@ public class LibrarianListController {
         librarianService = new LibrarianService();
 
         UserSession session = UserSession.getInstance();
-        addLibrarianButton.setVisible(session.hasPermission("LIBRARIAN_CREATE"));
+        addLibrarianButton.setVisible(session.hasPermission("Thêm thủ thư"));
         setupTableColumns();
         tableView.setItems(librarianList);
         setupComboBox();
