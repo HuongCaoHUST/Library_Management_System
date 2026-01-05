@@ -30,6 +30,11 @@ public class BorrowSlipConfirmController {
     @FXML private TableColumn<BorrowItem, Integer> colQuantity;
 
     private ObservableList<BorrowItem> cartItems;
+    private Runnable onSuccessCallback;
+
+    public void setOnSuccessCallback(Runnable onSuccessCallback) {
+        this.onSuccessCallback = onSuccessCallback;
+    }
 
     @FXML
     public void initialize() {
@@ -78,6 +83,9 @@ public class BorrowSlipConfirmController {
             ApiResponse<BorrowSlipResponse> response = api.createBorrowSlip(dto);
 
             if (response.isSuccess()) {
+                if (onSuccessCallback != null) {
+                    onSuccessCallback.run();
+                }
                 showAlert(Alert.AlertType.INFORMATION, "Thành công", response.getMessage());
             } else {
                 showAlert(Alert.AlertType.WARNING, "Không thành công", response.getMessage());
@@ -85,6 +93,8 @@ public class BorrowSlipConfirmController {
         } catch (Exception e) {
             showAlert(Alert.AlertType.ERROR, "Lỗi hệ thống", "Không thể kết nối tới server"
             );
+        } finally {
+            closeStage();
         }
     }
 

@@ -154,8 +154,10 @@ public class ReaderDocumentListController {
         // Col add to borrowSlip
         colAddToBorrowSlip.setCellFactory(col -> new TableCell<>() {
             private final Button btn = new Button("➕ Thêm");
+            private final HBox container = new HBox(btn);
 
             {
+                container.setAlignment(Pos.CENTER);
                 btn.getStyleClass().add("primary-btn");
                 btn.setOnAction(e -> {
                     Document doc = getTableView().getItems().get(getIndex());
@@ -174,7 +176,7 @@ public class ReaderDocumentListController {
                 if (empty) {
                     setGraphic(null);
                 } else {
-                    setGraphic(btn);
+                    setGraphic(container);
                 }
             }
         });
@@ -410,6 +412,10 @@ public class ReaderDocumentListController {
             BorrowSlipConfirmController controller = loader.getController();
 
             controller.setCartItems(cartItems);
+            controller.setOnSuccessCallback(() -> {
+                cartItems.clear();
+                searchDocuments();
+            });
 
             Stage stage = new Stage();
             stage.setTitle("Xác nhận phiếu mượn");
