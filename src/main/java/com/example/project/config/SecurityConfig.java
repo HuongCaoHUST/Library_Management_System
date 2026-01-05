@@ -59,6 +59,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/roles/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/grns/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/borrow_slips/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/borrow_slips/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/librarians/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/permissions/**").permitAll()
