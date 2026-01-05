@@ -1,6 +1,7 @@
 package com.example.project.repository;
 
 import com.example.project.model.BorrowSlip;
+import com.example.project.model.Reader;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,4 +15,6 @@ public interface BorrowSlipRepository extends JpaRepository<BorrowSlip, Long> {
 
     @Query("SELECT b FROM BorrowSlip b WHERE b.status = 'BORROWING' AND b.dueDate < :today")
     List<BorrowSlip> findOverdueSlips(@Param("today") LocalDate today);
+
+    List<BorrowSlip> findByReader(Reader reader);
 }

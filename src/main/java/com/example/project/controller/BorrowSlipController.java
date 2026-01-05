@@ -8,7 +8,10 @@ import com.example.project.model.BorrowSlip;
 import com.example.project.service.BorrowSlipService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,5 +33,12 @@ public class BorrowSlipController {
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.ok(new ApiResponse<>(false, ex.getMessage(), null));
         }
+    }
+
+    @GetMapping("/my_borrow_slips")
+    public ResponseEntity<ApiResponse<List<BorrowSlipResponse>>> getMyBorrowSlips(Authentication authentication) {
+        String username = authentication.getName();
+        List<BorrowSlipResponse> borrowSlips = borrowSlipService.findByReaderUsername(username);
+        return ResponseEntity.ok(new ApiResponse<>(true, "Lấy danh sách phiếu mượn thành công", borrowSlips));
     }
 }

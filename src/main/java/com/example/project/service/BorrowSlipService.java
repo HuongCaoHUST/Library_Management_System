@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -60,6 +61,17 @@ public class BorrowSlipService {
         sendBorrowSlipEmail(saved);
 
         return mapper.toResponse(saved);
+    }
+
+    public List<BorrowSlipResponse> findByReaderUsername(String username) {
+        Reader reader = readerRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy bạn đọc với username: " + username));
+
+        List<BorrowSlip> borrowSlips = borrowSlipRepository.findByReader(reader);
+
+        return borrowSlips.stream()
+                .map(mapper::toResponse)
+                .collect(Collectors.toList());
     }
 
     private void sendBorrowSlipEmail(BorrowSlip borrowSlip) {
