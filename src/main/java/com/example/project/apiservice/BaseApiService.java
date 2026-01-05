@@ -86,6 +86,19 @@ public abstract class BaseApiService {
         return mapper.readValue(response.body(), type);
     }
 
+    protected <T> T delete(String url, TypeReference<T> type) throws Exception {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("Authorization", "Bearer " + getToken())
+                .DELETE()
+                .build();
+
+        HttpResponse<String> response =
+                client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        return mapper.readValue(response.body(), type);
+    }
+
     protected ApiResponse<Void> changeMyPassword(
             String url,
             String oldPassword,

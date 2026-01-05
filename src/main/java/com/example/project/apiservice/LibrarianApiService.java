@@ -70,4 +70,14 @@ public class LibrarianApiService extends BaseApiService {
                 newPassword
         );
     }
+
+    private static final String DELETE_LIBRARIAN_URL =
+            "http://14.225.254.18/api/librarians/"; // Trailing slash for ID
+
+    public ApiResponse<Void> deleteLibrarian(Long librarianId) throws Exception {
+        return delete(
+                DELETE_LIBRARIAN_URL + librarianId,
+                new TypeReference<ApiResponse<Void>>() {}
+        );
+    }
 }
