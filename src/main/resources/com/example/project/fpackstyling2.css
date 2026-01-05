@@ -934,13 +934,13 @@
 /* Divider (thanh kéo giữa 2 bảng) */
 .role_permission_form_splitpane .split-pane-divider {
     -fx-background-color: #4a6482;
-    -fx-padding: 0;
+    -fx-padding: 1;
     -fx-background-insets: 0;
 }
 
 /* Hover effect cho divider */
 .role_permission_form_splitpane .split-pane-divider:hover {
-    -fx-background-color: #3498db;
+    -fx-background-color: #193c95;
     -fx-cursor: col-resize;
 }
 
@@ -968,7 +968,6 @@
     -fx-background-insets: 0;
     -fx-padding: 0;
     -fx-border-color: #4a6482;
-    -fx-border-width: 1px;
     -fx-background-radius: 8px;
 }
 
@@ -1017,7 +1016,7 @@
     -fx-border-color: transparent transparent #ecf0f1 transparent;
     -fx-border-width: 0 0 1px 0;
     -fx-padding: 8px;
-    -fx-cell-size: 24px;
+    -fx-cell-size: 26px;
 }
 
 .role_permisstion_form_role_table .table-row-cell:even {
@@ -1034,7 +1033,7 @@
 }
 
 .role_permisstion_form_role_table .table-row-cell:selected {
-    -fx-background-color: #3498db;
+    -fx-background-color: #193c95;
 }
 
 .role_permisstion_form_role_table .table-row-cell:selected:hover {
@@ -1043,7 +1042,6 @@
 
 /* Cells */
 .role_permisstion_form_role_table .table-cell {
-    -fx-padding: 4px 12px;
     -fx-alignment: CENTER-LEFT;
     -fx-border-color: transparent;
 }
@@ -1104,14 +1102,8 @@
     -fx-font-style: italic;
 }
 
-/* Focus */
-.role_permisstion_form_role_table:focused {
-    -fx-border-color: #3498db;
-    -fx-border-width: 2px;
-}
-
 .role_permisstion_form_role_table:focused .table-row-cell:selected {
-    -fx-background-color: #3498db;
+    -fx-background-color: #193c95;
 }
 
 /* ==================== PERMISSION TABLE STYLING ==================== */
@@ -1122,7 +1114,6 @@
     -fx-background-insets: 0;
     -fx-padding: 0;
     -fx-border-color: #4a6482;
-    -fx-border-width: 1px;
     -fx-background-radius: 8px;
 }
 
@@ -1171,7 +1162,7 @@
     -fx-border-color: transparent transparent #ecf0f1 transparent;
     -fx-border-width: 0 0 1px 0;
     -fx-padding: 8px;
-    -fx-cell-size: 24px;
+    -fx-cell-size: 26px;
 }
 
 .role_permisstion_form_permission_table .table-row-cell:even {
@@ -1187,17 +1178,8 @@
     -fx-cursor: hand;
 }
 
-.role_permisstion_form_permission_table .table-row-cell:selected {
-    -fx-background-color: #3498db;
-}
-
-.role_permisstion_form_permission_table .table-row-cell:selected:hover {
-    -fx-background-color: #2980b9;
-}
-
 /* Cells */
 .role_permisstion_form_permission_table .table-cell {
-    -fx-padding: 4px 12px;
     -fx-alignment: CENTER-LEFT;
     -fx-border-color: transparent;
 }
@@ -1206,10 +1188,6 @@
     -fx-fill: #2c3e50;
     -fx-font-size: 13px;
     -fx-font-family: "Segoe UI", Arial, sans-serif;
-}
-
-.role_permisstion_form_permission_table .table-row-cell:selected .table-cell .text {
-    -fx-fill: #ffffff;
 }
 
 /* Scrollbar Vertical */
@@ -1281,16 +1259,6 @@
     -fx-text-fill: #95a5a6;
     -fx-font-size: 14px;
     -fx-font-style: italic;
-}
-
-/* Focus */
-.role_permisstion_form_permission_table:focused {
-    -fx-border-color: #3498db;
-    -fx-border-width: 2px;
-}
-
-.role_permisstion_form_permission_table:focused .table-row-cell:selected {
-    -fx-background-color: #3498db;
 }
 /* ==================== BUTTON STYLING ==================== */
 
@@ -1441,7 +1409,7 @@
     -fx-scale-y: 0.99;
 }
 
-/* Submit Button (Cập nhật) */
+/* Submit Button */
 .role_update_submit_button {
     -fx-background-color: #a81c29;
     -fx-text-fill: #ffffff;
@@ -1471,42 +1439,36 @@
 /* ==================== TABLE STYLING - AVAILABLE PERMISSIONS ==================== */
 
 .role_update_available_table {
-    -fx-background-color: transparent;
-    -fx-background-insets: 0;
-    -fx-padding: 0;
+    -fx-background-color: #ffffff;
+
     -fx-border-color: #4a6482;
     -fx-border-width: 2px;
-}
+    -fx-border-radius: 10;
 
-.role_update_available_table .corner {
-    -fx-background-color: #4a6482;
+    -fx-padding: 0;
 }
 
 /* Header */
 .role_update_available_table .column-header-background {
-    -fx-background-color: #4a6482;
+    -fx-background-color: #f8f8f8;
+    -fx-background-insets: 0;
+    -fx-background-radius: 10 10 0 0;
+
+    -fx-border-color: #d1d1d1;
+    -fx-border-width: 0 0 1 0;
 }
 
-.role_update_available_table .column-header-background .filler {
-    -fx-background-color: #4a6482;
-}
-
-.role_update_available_table .column-header {
-    -fx-background-color: #4a6482;
-    -fx-border-color: transparent;
-    -fx-padding: 12px 8px;
+.role_update_available_table .column-header,
+.role_update_available_table .filler {
+    -fx-background-color: transparent;
 }
 
 .role_update_available_table .column-header .label {
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #333333;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-font-family: "Segoe UI";
     -fx-alignment: CENTER;
-}
-
-.role_update_available_table .column-header:hover {
-    -fx-background-color: #5a7593;
 }
 
 /* Rows */
@@ -1515,7 +1477,7 @@
     -fx-border-color: transparent transparent #ecf0f1 transparent;
     -fx-border-width: 0 0 1px 0;
     -fx-padding: 6px;
-    -fx-cell-size: 22px;
+    -fx-cell-size: 24px;
 }
 
 .role_update_available_table .table-row-cell:even {
@@ -1598,44 +1560,38 @@
 /* ==================== TABLE STYLING - ASSIGNED PERMISSIONS ==================== */
 
 .role_update_assigned_table {
-    -fx-background-color: transparent;
-    -fx-background-insets: 0;
-    -fx-padding: 0;
+    -fx-background-color: #ffffff;
+
     -fx-border-color: #4a6482;
     -fx-border-width: 2px;
-    -fx-background-radius: 8px;
-}
+    -fx-border-radius: 10;
 
-.role_update_assigned_table .corner {
-    -fx-background-color: #4a6482;
+    -fx-padding: 0;
 }
 
 /* Header */
 .role_update_assigned_table .column-header-background {
-    -fx-background-color: #4a6482;
-    -fx-background-radius: 8px 8px 0 0;
+    -fx-background-color: #f8f8f8;
+    -fx-background-insets: 0;
+    -fx-background-radius: 10 10 0 0;
+
+    -fx-border-color: #d1d1d1;
+    -fx-border-width: 0 0 1 0;
 }
 
-.role_update_assigned_table .column-header-background .filler {
-    -fx-background-color: #4a6482;
+.role_update_assigned_table .column-header,
+.role_update_assigned_table .filler {
+    -fx-background-color: transparent;
 }
 
-.role_update_assigned_table .column-header {
-    -fx-background-color: #4a6482;
-    -fx-border-color: transparent;
-    -fx-padding: 12px 8px;
-}
+
 
 .role_update_assigned_table .column-header .label {
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: #333333;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-font-family: "Segoe UI";
     -fx-alignment: CENTER;
-}
-
-.role_update_assigned_table .column-header:hover {
-    -fx-background-color: #5a7593;
 }
 
 /* Rows */
@@ -1644,7 +1600,7 @@
     -fx-border-color: transparent transparent #ecf0f1 transparent;
     -fx-border-width: 0 0 1px 0;
     -fx-padding: 6px;
-    -fx-cell-size: 22px;
+    -fx-cell-size: 24px;
 }
 
 .role_update_assigned_table .table-row-cell:even {
@@ -1724,3 +1680,221 @@
     -fx-border-color: #1f3368;
 }
 
+
+/* =========================
+   Role Add Form (Modena)
+   No looked-up colors
+   Prefix scope: .role-add-form
+   ========================= */
+
+/* ---------- Root / base ---------- */
+.role-add-form {
+    -fx-background-color: #ffffff;
+}
+
+/* ---------- Typography ---------- */
+.role-add-form .form-label,
+.role-add-form .section-label {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 15px;
+    -fx-text-fill: #4a6482; /* base #4a6482 */
+}
+
+.role-add-form .section-label {
+    -fx-font-weight: 600;
+}
+
+/* ---------- Containers ---------- */
+.role-add-form .content-pane {
+    -fx-background-color: transparent;
+}
+
+.role-add-form .form-grid {
+    -fx-hgap: 14;
+    -fx-vgap: 14;
+}
+
+/* ---------- Form controls ---------- */
+.role-add-form .form-input,
+.role-add-form .form-select {
+    -fx-background-color: #ffffff;
+    -fx-background-insets: 0;
+    -fx-background-radius: 6;
+
+    -fx-border-color: #d1d1d1;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+
+    -fx-padding: 6 10 6 10;
+    -fx-prompt-text-fill: #666666;
+}
+
+.role-add-form .form-input:focused,
+.role-add-form .form-select:focused {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #4a6482;
+    -fx-border-width: 2;
+}
+
+.role-add-form .form-input:disabled,
+.role-add-form .form-select:disabled {
+    -fx-opacity: 0.55;
+}
+
+/* ComboBox arrow button */
+.role-add-form .form-select .arrow-button {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0 6 6 0;
+    -fx-border-color: transparent;
+}
+
+.role-add-form .form-select .arrow {
+    -fx-background-color: #666666;
+}
+
+/* ---------- Buttons ---------- */
+.role-add-form .btn {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 14px;
+    -fx-padding: 8 14 8 14;
+
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+
+    -fx-cursor: hand;
+}
+
+.role-add-form .btn:disabled {
+    -fx-opacity: 0.55;
+    -fx-cursor: default;
+}
+
+/* Primary = outline */
+.role-add-form .btn-primary {
+    -fx-background-color: #a81c29;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 4, 0, 0, 2);
+}
+
+.role-add-form .btn-primary:hover {
+    -fx-background-color: #c02030;
+    -fx-effect: dropshadow(gaussian, rgba(168, 28, 41, 0.4), 6, 0, 0, 3);
+    -fx-scale-x: 1.01;
+    -fx-scale-y: 1.01;
+}
+
+.role-add-form .btn-primary:pressed {
+    -fx-background-color: #8a1621;
+    -fx-scale-x: 0.99;
+    -fx-scale-y: 0.99;
+}
+
+/* ---------- TableView ---------- */
+.role-add-form .permissions-table {
+    -fx-background-color: #ffffff;
+
+    -fx-border-color: #4a6482;
+    -fx-border-width: 2px;
+    -fx-border-radius: 10;
+
+    -fx-padding: 0;
+}
+
+/* Header */
+.role-add-form .permissions-table .column-header-background {
+    -fx-background-color: #f8f8f8;
+    -fx-background-insets: 0;
+    -fx-background-radius: 10 10 0 0;
+
+    -fx-border-color: #d1d1d1;
+    -fx-border-width: 0 0 1 0;
+}
+
+.role-add-form .permissions-table .column-header,
+.role-add-form .permissions-table .filler {
+    -fx-background-color: transparent;
+}
+
+.role-add-form .permissions-table .column-header .label {
+    -fx-text-fill: #333333;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+/* Rows / cells */
+.role-add-form .permissions-table .table-row-cell {
+    -fx-background-color: #ffffff;
+    -fx-cell-size: 32px;
+}
+
+.role-add-form .permissions-table .table-row-cell:filled:hover {
+    -fx-background-color: #f8f8f8;
+}
+
+.role-add-form .permissions-table .table-row-cell:filled:selected {
+    -fx-background-color: #dbe3ea;
+}
+
+.role-add-form .permissions-table .table-cell {
+    -fx-border-color: transparent;
+    -fx-text-fill: #333333;
+    -fx-alignment: CENTER-LEFT;
+}
+
+/* Selection text */
+.role-add-form .permissions-table .table-row-cell:selected .table-cell {
+    -fx-text-fill: #1f3368;
+}
+
+/* CheckBox inside table (select column) */
+.role-add-form .permissions-table .check-box .box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d1d1d1;
+    -fx-border-radius: 3;
+}
+
+.role-add-form .permissions-table .check-box:selected .mark {
+    -fx-background-color: #4a6482;
+}
+
+.role-add-form .permissions-table .check-box:focused .box {
+    -fx-border-color: #4a6482;
+    -fx-border-width: 2;
+}
+
+/* ---------- ScrollBars (TableView) ---------- */
+.role-add-form .permissions-table .scroll-bar:vertical,
+.role-add-form .permissions-table .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+.role-add-form .permissions-table .scroll-bar .track {
+    -fx-background-color: transparent;
+}
+
+.role-add-form .permissions-table .scroll-bar .thumb {
+    -fx-background-color: #b7c0cf; /* muted tint from secondary family */
+    -fx-background-insets: 2;
+    -fx-background-radius: 999;
+}
+
+.role-add-form .permissions-table .scroll-bar .thumb:hover {
+    -fx-background-color: #a9b4c6;
+}
+
+/* ---------- Focus colors (Modena hooks) ---------- */
+.role-add-form .text-field:focused,
+.role-add-form .combo-box-base:focused,
+.role-add-form .table-view:focused {
+    -fx-border-color: #1f3368;
+    -fx-faint-focus-color: transparent;
+}
