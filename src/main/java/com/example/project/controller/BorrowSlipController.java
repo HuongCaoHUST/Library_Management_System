@@ -17,7 +17,7 @@ public class BorrowSlipController {
 
     @GetMapping("/test")
     public String testEndpoint() {
-        return "Borrow Slip Controller is working!";
+        return "BorrowSlip Controller is working!";
     }
 
     @PostMapping("/add")
