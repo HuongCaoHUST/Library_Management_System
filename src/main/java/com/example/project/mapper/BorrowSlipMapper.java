@@ -1,8 +1,10 @@
 package com.example.project.mapper;
 
 import com.example.project.dto.request.BorrowSlipRequest;
+import com.example.project.dto.response.BorrowSlipDetailResponse;
 import com.example.project.dto.response.BorrowSlipResponse;
 import com.example.project.model.BorrowSlip;
+import com.example.project.model.BorrowSlipDetail;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -19,5 +21,10 @@ public interface BorrowSlipMapper {
 
     // Entity → Response
     @Mapping(target = "readerName", source = "reader.fullName")
+    @Mapping(target = "readerId", source = "reader.readerId")
     BorrowSlipResponse toResponse(BorrowSlip borrowSlip);
+
+    @Mapping(target = "documentId", source = "document.documentId")
+    @Mapping(target = "documentTitle", source = "document.title")
+    BorrowSlipDetailResponse toDetailResponse(BorrowSlipDetail detail);
 }
