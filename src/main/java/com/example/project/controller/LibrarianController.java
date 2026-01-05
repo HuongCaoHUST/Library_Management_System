@@ -64,6 +64,7 @@ public class LibrarianController {
     }
 
     @GetMapping("/filter")
+    @PreAuthorize("hasAuthority('Xem thủ thư')")
     public ResponseEntity<List<LibrarianResponseForFilter>> filterLibrarians(
             @RequestParam(required = false) String fullName,
             @RequestParam(required = false) String email,
