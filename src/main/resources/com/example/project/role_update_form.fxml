@@ -14,57 +14,71 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="633.0" prefWidth="794.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.javafxcontroller.RoleUpdateController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="633.0" prefWidth="794.0" styleClass="role_update_root_container" stylesheets="@fpackstyling2.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.javafxcontroller.RoleUpdateController">
     <children>
-        <Pane layoutX="51.0" layoutY="48.0" prefHeight="538.0" prefWidth="692.0" AnchorPane.bottomAnchor="47.0" AnchorPane.topAnchor="48.0">
+        <Pane layoutX="51.0" layoutY="16.0" prefHeight="600.0" prefWidth="692.0" styleClass="role_update_content_pane" AnchorPane.bottomAnchor="16.799999999999955" AnchorPane.topAnchor="16.0">
             <children>
-                <GridPane layoutX="18.0" layoutY="14.0" prefHeight="99.0" prefWidth="657.0">
+                <!-- GridPane cho form nhập liệu -->
+                <GridPane hgap="15" layoutX="8.0" layoutY="14.0" prefHeight="108.0" prefWidth="657.0" styleClass="role_update_grid" vgap="15">
                     <columnConstraints>
-                        <ColumnConstraints percentWidth="30.0" prefWidth="76.0" />
-                        <ColumnConstraints percentWidth="70.0" prefWidth="118.0" />
+                        <ColumnConstraints percentWidth="25.0" prefWidth="76.0" />
+                        <ColumnConstraints percentWidth="75.0" prefWidth="118.0" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints prefHeight="47.0" />
                         <RowConstraints prefHeight="47.0" />
                     </rowConstraints>
 
-                    <children>
-                        <Label text="Tên vai trò:" textFill="#5383ff">
-                            <font><Font name="Segoe UI" size="15.0" /></font>
+                                <children>
+                        <Label styleClass="role_update_label" text="Tên vai trò:">
+                            <font>
+                        <Font name="Segoe UI" size="15.0" />
+                     </font>
                         </Label>
-                        <TextField fx:id="txtRoleName" prefHeight="28.0" GridPane.columnIndex="1" />
-                        <Label text="Mô tả:" textFill="#5383ff" GridPane.rowIndex="1">
-                            <font><Font name="Segoe UI" size="15.0" /></font>
+                        <TextField fx:id="txtRoleName" prefHeight="28.0" prefWidth="445.0" promptText="Nhập tên vai trò" styleClass="role_update_text_field" GridPane.columnIndex="1" />
+
+                                    <Label prefWidth="48.0" styleClass="role_update_label" text="Mô tả:" GridPane.rowIndex="1">
+                            <font>
+                        <Font name="Segoe UI" size="15.0" />
+                     </font>
                         </Label>
-                        <TextField fx:id="txtRoleDescription" prefHeight="28.0" prefWidth="422.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtRoleDescription" prefHeight="28.0" prefWidth="422.0" promptText="Nhập mô tả" styleClass="role_update_text_field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                     </children>
                 </GridPane>
 
-                <Button fx:id="btnOnUpdateRole" onAction="#onUpdateRole" defaultButton="true" layoutX="18.0" layoutY="490.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="657.0" stylesheets="@fullpackstyling.css" text="Cập nhật" />
-                <HBox layoutX="18.0" layoutY="142.0" prefHeight="329.0" prefWidth="657.0" spacing="20" AnchorPane.bottomAnchor="67.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="-18.0" AnchorPane.topAnchor="160.0">
+                                                                            <!-- Label "Cập nhật quyền" -->
+                <Label layoutX="18.0" layoutY="134.0" styleClass="role_update_section_label" text="Cập nhật quyền:">
+                    <font>
+                  <Font name="Segoe UI" size="15.0" />
+               </font>
+                </Label>
 
-                    <TableView fx:id="availablePermissionTable" prefWidth="300.0">
+                                                                            <!-- HBox chứa 2 TableView và VBox buttons -->
+                <HBox layoutX="14.0" layoutY="169.0" prefHeight="329.0" prefWidth="657.0" spacing="20" styleClass="role_update_permission_hbox" AnchorPane.bottomAnchor="39.799999999999955" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="21.0" AnchorPane.topAnchor="169.0">
+
+                                                                                <!-- TableView: Available Permissions -->
+                    <TableView fx:id="availablePermissionTable" prefWidth="300.0" styleClass="role_update_available_table">
                         <columns>
-                            <TableColumn fx:id="availablePermissionCol" prefWidth="300.0" text="Quyền chưa có" />
+                            <TableColumn fx:id="availablePermissionCol" prefWidth="255.99998474121094" text="Quyền chưa có" />
                         </columns>
                     </TableView>
 
-                    <VBox alignment="CENTER" prefHeight="311.0" prefWidth="80.0" spacing="10">
-                        <Button fx:id="addPermissionBtn" onAction="#handleAddPermission" text="Thêm" />
-                        <Button fx:id="revokePermissionBtn" onAction="#handleRevokePermission" text="Thu hồi" />
+                                                                                <!-- VBox chứa 2 nút -->
+                    <VBox alignment="CENTER" prefHeight="311.0" prefWidth="80.0" spacing="15" styleClass="role_update_button_vbox">
+                        <Button fx:id="addPermissionBtn" onAction="#handleAddPermission" styleClass="role_update_arrow_button" text="Thêm ➜" />
+                        <Button fx:id="revokePermissionBtn" onAction="#handleRevokePermission" styleClass="role_update_arrow_button" text="➜ Thu hồi" />
                     </VBox>
 
-                    <TableView fx:id="assignedPermissionTable" prefWidth="300.0">
+                                                                                <!-- TableView: Assigned Permissions -->
+                    <TableView fx:id="assignedPermissionTable" prefWidth="300.0" styleClass="role_update_assigned_table">
                         <columns>
-                            <TableColumn fx:id="assignedPermissionCol" prefWidth="300.0" text="Quyền đã có" />
+                            <TableColumn fx:id="assignedPermissionCol" prefWidth="258.3999877691269" text="Quyền đã có" />
                         </columns>
                     </TableView>
                 </HBox>
-                <Label layoutX="19.0" layoutY="113.0" text="Cập nhật quyền:" textFill="#5383ff">
-                    <font>
-                        <Font name="Segoe UI" size="15.0" />
-                    </font>
-                </Label>
+      
+                                                                            <!-- Button Cập nhật -->
+                <Button fx:id="btnOnUpdateRole" defaultButton="true" layoutX="18.0" layoutY="533.0" mnemonicParsing="false" onAction="#onUpdateRole" prefHeight="34.0" prefWidth="657.0" styleClass="role_update_submit_button" text="Cập nhật" />
 
             </children>
         </Pane>
