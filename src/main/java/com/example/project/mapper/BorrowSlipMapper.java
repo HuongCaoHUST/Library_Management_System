@@ -21,7 +21,7 @@ public interface BorrowSlipMapper {
 
     // Entity → Response
     @Mapping(target = "readerName", source = "reader.fullName")
-    @Mapping(target = "readerId", source = "reader.readerId")
+    @Mapping(target = "readerId", source = "reader.userId")
     BorrowSlipResponse toResponse(BorrowSlip borrowSlip);
 
     @Mapping(target = "documentId", source = "document.documentId")
