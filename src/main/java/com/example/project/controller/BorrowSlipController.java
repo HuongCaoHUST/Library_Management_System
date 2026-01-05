@@ -41,4 +41,10 @@ public class BorrowSlipController {
         List<BorrowSlipResponse> borrowSlips = borrowSlipService.findByReaderUsername(username);
         return ResponseEntity.ok(new ApiResponse<>(true, "Lấy danh sách phiếu mượn thành công", borrowSlips));
     }
+
+    @GetMapping("/list")
+    public ResponseEntity<ApiResponse<List<BorrowSlipResponse>>> getAllBorrowSlips() {
+        List<BorrowSlipResponse> borrowSlips = borrowSlipService.getAll();
+        return ResponseEntity.ok(new ApiResponse<>(true, "Lấy tất cả phiếu mượn thành công", borrowSlips));
+    }
 }

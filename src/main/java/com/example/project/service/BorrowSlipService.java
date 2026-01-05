@@ -74,6 +74,12 @@ public class BorrowSlipService {
                 .collect(Collectors.toList());
     }
 
+    public List<BorrowSlipResponse> getAll() {
+        return borrowSlipRepository.findAll().stream()
+                .map(mapper::toResponse)
+                .collect(Collectors.toList());
+    }
+
     private void sendBorrowSlipEmail(BorrowSlip borrowSlip) {
         String to = "huongcao.seee@gmail.com";
         String subject = "Thông tin chi tiết phiếu mượn";
