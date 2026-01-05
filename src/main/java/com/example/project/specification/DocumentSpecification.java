@@ -30,7 +30,14 @@ public class DocumentSpecification {
         return (root, query, cb) ->
                 documentType == null || documentType.isEmpty()
                         ? cb.conjunction()
-                        : cb.like(cb.lower(root.get("publisher")), "%" + documentType.toLowerCase() + "%");
+                        : cb.like(cb.lower(root.join("documentType").get("name")), "%" + documentType.toLowerCase() + "%");
+    }
+
+    public static Specification<Document> hasCategory(String category) {
+        return (root, query, cb) ->
+                category == null || category.isEmpty()
+                        ? cb.conjunction()
+                        : cb.like(cb.lower(root.join("category").get("name")), "%" + category.toLowerCase() + "%");
     }
 
     public static Specification<Document> hasPublicationYear(Integer publicationYear) {

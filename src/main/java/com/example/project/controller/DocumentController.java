@@ -59,9 +59,10 @@ public class DocumentController {
             @RequestParam(required = false) String author,
             @RequestParam(required = false) String publisher,
             @RequestParam(required = false) String documentType,
+            @RequestParam(required = false) String category,
             @RequestParam(required = false) Integer publicationYear
     ) {
-        return documentService.filterDocuments(title, author, publisher, documentType, publicationYear).stream()
+        return documentService.filterDocuments(title, author, publisher, documentType, category, publicationYear).stream()
                 .map(documentMapper::toResponse)
                 .toList();
     }
