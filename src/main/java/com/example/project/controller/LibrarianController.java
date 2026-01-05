@@ -191,7 +191,7 @@ public class LibrarianController {
 
     // Delete 1 reader
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteDocument(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteLibrarians(@PathVariable Long id) {
         librarianService.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, "Không tìm thấy thủ thư"));
