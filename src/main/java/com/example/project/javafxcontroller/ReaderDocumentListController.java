@@ -33,6 +33,8 @@ import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,7 +58,10 @@ public class ReaderDocumentListController {
     @FXML private TableView<BorrowItem> cartTableView;
     @FXML private TableColumn<BorrowItem, Number> stt;
     @FXML private TableColumn<BorrowItem, String> cartColTitle;
+    @FXML private TableColumn<BorrowItem, String> cartColAuthor;
     @FXML private TableColumn<BorrowItem, Number> quantity;
+    @FXML private TableColumn<BorrowItem, String> cartColBorrowDate;
+    @FXML private TableColumn<BorrowItem, String> cartColDueDate;
     @FXML private TableColumn<BorrowItem, Void> cartColRemove;
 
 
@@ -144,7 +149,6 @@ public class ReaderDocumentListController {
                 });
             }
         });
-        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
         tableView.setRowFactory(tv -> new TableRow<>() {
             {
                 setPrefHeight(50);
@@ -227,12 +231,16 @@ public class ReaderDocumentListController {
 
     private void setupBorrowSlip() {
         cartTableView.setItems(cartItems);
-        stt.setCellFactory(col -> new TableCell<BorrowItem, Number>() {
-            @Override
-            protected void updateItem(Number item, boolean empty) {
-                super.updateItem(item, empty);
-                setText(empty ? null : String.valueOf(getIndex() + 1));
-            }
+        stt.setCellFactory(col -> {
+            TableCell<BorrowItem, Number> cell = new TableCell<>() {
+                @Override
+                protected void updateItem(Number item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(empty ? null : String.valueOf(getIndex() + 1));
+                }
+            };
+            cell.setAlignment(Pos.CENTER);
+            return cell;
         });
 
         cartColTitle.setCellValueFactory(data ->
@@ -241,27 +249,78 @@ public class ReaderDocumentListController {
                 )
         );
 
+        cartColAuthor.setCellValueFactory(data ->
+                new SimpleStringProperty(
+                        data.getValue().getDocument().getAuthor()
+                )
+        );
 
         quantity.setCellValueFactory(data ->
                 data.getValue().quantityProperty()
         );
+        quantity.setCellFactory(col -> {
+            TableCell<BorrowItem, Number> cell = new TableCell<>() {
+                @Override
+                protected void updateItem(Number item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(empty ? null : item.toString());
+                }
+            };
+            cell.setAlignment(Pos.CENTER);
+            return cell;
+        });
 
-        cartColRemove.setCellFactory(col -> new TableCell<>() {
-            private final Button btn = new Button("❌");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-            {
-                btn.setOnAction(e -> {
-                    BorrowItem item =
-                            getTableView().getItems().get(getIndex());
-                    cartItems.remove(item);
-                });
-            }
+        cartColBorrowDate.setCellValueFactory(cellData ->
+                new SimpleStringProperty(LocalDate.now().format(dtf))
+        );
+        cartColBorrowDate.setCellFactory(col -> {
+            TableCell<BorrowItem, String> cell = new TableCell<>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(empty ? null : item);
+                }
+            };
+            cell.setAlignment(Pos.CENTER);
+            return cell;
+        });
 
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                setGraphic(empty ? null : btn);
-            }
+        cartColDueDate.setCellValueFactory(cellData ->
+                new SimpleStringProperty(LocalDate.now().plusMonths(3).format(dtf))
+        );
+        cartColDueDate.setCellFactory(col -> {
+            TableCell<BorrowItem, String> cell = new TableCell<>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(empty ? null : item);
+                }
+            };
+            cell.setAlignment(Pos.CENTER);
+            return cell;
+        });
+
+        cartColRemove.setCellFactory(col -> {
+            TableCell<BorrowItem, Void> cell = new TableCell<>() {
+                private final Button btn = new Button("❌");
+                private final HBox container = new HBox(btn);
+                {
+                    container.setAlignment(Pos.CENTER);
+                    btn.setOnAction(e -> {
+                        BorrowItem item =
+                                getTableView().getItems().get(getIndex());
+                        cartItems.remove(item);
+                    });
+                }
+                @Override
+                protected void updateItem(Void item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setGraphic(empty ? null : container);
+                }
+            };
+            return cell;
         });
     }
 
