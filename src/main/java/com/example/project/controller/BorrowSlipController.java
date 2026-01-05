@@ -3,8 +3,6 @@ package com.example.project.controller;
 import com.example.project.dto.ApiResponse;
 import com.example.project.dto.request.BorrowSlipRequest;
 import com.example.project.dto.response.BorrowSlipResponse;
-import com.example.project.mapper.BorrowSlipMapper;
-import com.example.project.model.BorrowSlip;
 import com.example.project.service.BorrowSlipService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
