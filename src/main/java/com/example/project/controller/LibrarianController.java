@@ -34,7 +34,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/librarians")
 @CrossOrigin(origins = "*")
-@PreAuthorize("hasRole('ADMIN')")
+//@PreAuthorize("hasRole('ADMIN')")
 public class LibrarianController {
 
     private final LibrarianService librarianService;
