@@ -82,7 +82,25 @@
                                 <Font name="Segoe UI" size="18.0" />
                             </font>
                         </MenuButton>
-                        <MenuButton alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" prefHeight="46.0" prefWidth="140.0" styleClass="menu_button_reader" stylesheets="@fullpackstyling.css" text="Dịch vụ" GridPane.columnIndex="1">
+                        <MenuButton alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" prefHeight="46.0" prefWidth="140.0" styleClass="menu_button_reader" stylesheets="@fullpackstyling.css" text="Cá nhân" GridPane.columnIndex="1">
+                            <items>
+                                <CustomMenuItem mnemonicParsing="false">
+                                    <content>
+                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Góc cá nhân">
+                                            <font>
+                                                <Font name="Segoe UI Bold" size="16.0" />
+                                            </font>
+                                        </Text>
+                                    </content>
+                                </CustomMenuItem>
+                                <MenuItem fx:id="menuItemMyBorrowSlips" mnemonicParsing="false" onAction="#openMyBorrowSlipsForm" text="Tài liệu đang mượn" />
+                                <MenuItem mnemonicParsing="false" text="Gia hạn tài liệu" />
+                            </items>
+                            <font>
+                                <Font name="Segoe UI" size="18.0" />
+                            </font>
+                        </MenuButton>
+                        <MenuButton alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" prefHeight="46.0" prefWidth="140.0" styleClass="menu_button_reader" stylesheets="@fullpackstyling.css" text="Dịch vụ" GridPane.columnIndex="2">
                             <items>
                                 <CustomMenuItem mnemonicParsing="false">
                                     <content>
@@ -101,7 +119,7 @@
                                 <Font name="Segoe UI" size="18.0" />
                             </font>
                         </MenuButton>
-                        <MenuButton alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" prefHeight="46.0" prefWidth="150.0" styleClass="menu_button_reader" stylesheets="@fullpackstyling.css" text="Hướng dẫn" GridPane.columnIndex="2">
+                        <MenuButton alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" prefHeight="46.0" prefWidth="150.0" styleClass="menu_button_reader" stylesheets="@fullpackstyling.css" text="Hướng dẫn" GridPane.columnIndex="3">
                             <items>
                                 <CustomMenuItem mnemonicParsing="false">
                                     <content>
@@ -114,25 +132,6 @@
                                 </CustomMenuItem>
                                 <MenuItem mnemonicParsing="false" text="Giờ hoạt động" />
                                 <MenuItem mnemonicParsing="false" text="Thẻ &amp; Tài khoản" />
-                            </items>
-                            <font>
-                                <Font name="Segoe UI" size="18.0" />
-                            </font>
-                        </MenuButton>
-                        <MenuButton alignment="CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" prefHeight="46.0" prefWidth="140.0" styleClass="menu_button_reader" stylesheets="@fullpackstyling.css" text="Cá nhân" GridPane.columnIndex="3">
-                            <items>
-                                <CustomMenuItem mnemonicParsing="false">
-                                    <content>
-                                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Góc cá nhân">
-                                            <font>
-                                                <Font name="Segoe UI Bold" size="16.0" />
-                                            </font>
-                                        </Text>
-                                    </content>
-                                </CustomMenuItem>
-                                <MenuItem fx:id="menuItemReaderDetail" mnemonicParsing="false" text="Tài khoản thư viện" />
-                                <MenuItem fx:id="menuItemMyBorrowSlips" mnemonicParsing="false" onAction="#openMyBorrowSlipsForm" text="Tài liệu đang mượn" />
-                                <MenuItem mnemonicParsing="false" text="Gia hạn tài liệu" />
                             </items>
                             <font>
                                 <Font name="Segoe UI" size="18.0" />
