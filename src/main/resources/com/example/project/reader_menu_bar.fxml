@@ -131,7 +131,7 @@
                                     </content>
                                 </CustomMenuItem>
                                 <MenuItem fx:id="menuItemReaderDetail" mnemonicParsing="false" text="Tài khoản thư viện" />
-                                <MenuItem mnemonicParsing="false" text="Tài liệu đang mượn" />
+                                <MenuItem fx:id="menuItemMyBorrowSlips" mnemonicParsing="false" onAction="#openMyBorrowSlipsForm" text="Tài liệu đang mượn" />
                                 <MenuItem mnemonicParsing="false" text="Gia hạn tài liệu" />
                             </items>
                             <font>

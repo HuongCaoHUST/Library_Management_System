@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_CENTER" spacing="20.0" styleClass="root-pane" stylesheets="@fullpackstyling.css"
+      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.project.javafxcontroller.ReaderMyBorrowSlipController">
+    <Label text="Danh Sách Phiếu Mượn Của Tôi">
+        <font>
+            <Font name="System Bold" size="24.0"/>
+        </font>
+    </Label>
+    <TableView fx:id="borrowSlipTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colBorrowSlipId" prefWidth="100.0" text="Mã Phiếu Mượn"/>
+            <TableColumn fx:id="colBorrowDate" prefWidth="150.0" text="Ngày Mượn"/>
+            <TableColumn fx:id="colDueDate" prefWidth="150.0" text="Ngày Hết Hạn"/>
+            <TableColumn fx:id="colStatus" prefWidth="150.0" text="Trạng Thái"/>
+            <!-- Add more columns if needed, for example, for details -->
+        </columns>
+        <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+        </columnResizePolicy>
+    </TableView>
+</VBox>
