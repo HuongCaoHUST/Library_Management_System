@@ -32,9 +32,20 @@ public class BorrowSlipService {
 
         List<BorrowSlipDetail> details = request.getDetails().stream()
                 .map(d -> {
+                    Document document = documentRepository.findById(d.getDocumentId())
+                            .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy tài liệu với id: " + d.getDocumentId()));
+
+                    if (document.getAvailableCopies() < d.getQuantity()) {
+                        throw new IllegalArgumentException("Không đủ số lượng tài liệu '" + document.getTitle() + "' cho mượn.");
+                    }
+
+                    document.setAvailableCopies(document.getAvailableCopies() - d.getQuantity());
+                    document.setBorrowedCopies(document.getBorrowedCopies() + d.getQuantity());
+                    documentRepository.save(document);
+
                     BorrowSlipDetail detail = new BorrowSlipDetail();
                     detail.setBorrowSlip(borrowSlip);
-                    detail.setDocument(documentRepository.findById(d.getDocumentId()).orElseThrow());
+                    detail.setDocument(document);
                     detail.setQuantity(d.getQuantity());
                     return detail;
                 }).toList();
@@ -46,4 +57,3 @@ public class BorrowSlipService {
     }
 
 }
-
