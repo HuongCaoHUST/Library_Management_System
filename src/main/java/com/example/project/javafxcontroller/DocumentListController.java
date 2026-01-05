@@ -51,7 +51,6 @@ public class DocumentListController {
     @FXML private TextField searchField;
     @FXML private Button searchButton;
     @FXML private ComboBox<String> documentTypeComboBox;
-    // Remember to add this to the fxml file
     @FXML private ComboBox<String> categoryComboBox;
     @FXML private Button addDocumentButton;
     @FXML private Button exportDocumentToExceleButton;
