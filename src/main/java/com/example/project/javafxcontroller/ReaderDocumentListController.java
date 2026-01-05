@@ -391,7 +391,7 @@ public class ReaderDocumentListController {
         Task<List<Document>> task = new Task<>() {
             @Override
             protected List<Document> call() throws Exception {
-                return documentApiService.filterDocuments(title, null, finalCategory, finalDocumentType, null);
+                return documentApiService.filterDocuments(title, null, null, finalDocumentType, finalCategory, null);
             }
         };
         task.setOnSucceeded(e -> Platform.runLater(() -> {

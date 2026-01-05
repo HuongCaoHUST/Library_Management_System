@@ -1,5 +1,7 @@
 package com.example.project.javafxcontroller;
+import com.example.project.apiservice.CategoryApiService;
 import com.example.project.apiservice.DocumentTypeApiService;
+import com.example.project.model.Category;
 import com.example.project.model.Document;
 import com.example.project.apiservice.DocumentApiService;
 import com.example.project.model.DocumentType;
@@ -49,6 +51,8 @@ public class DocumentListController {
     @FXML private TextField searchField;
     @FXML private Button searchButton;
     @FXML private ComboBox<String> documentTypeComboBox;
+    // Remember to add this to the fxml file
+    @FXML private ComboBox<String> categoryComboBox;
     @FXML private Button addDocumentButton;
     @FXML private Button exportDocumentToExceleButton;
 
@@ -61,11 +65,14 @@ public class DocumentListController {
 
     private final FXMLLoader fxmlLoader = new FXMLLoader();
     private DocumentTypeApiService documentTypeApiService;
+    private CategoryApiService categoryApiService;
+
 
     @FXML
     public void initialize() {
         documentApiService = new DocumentApiService();
         documentTypeApiService = new DocumentTypeApiService();
+        categoryApiService = new CategoryApiService();
 
         UserSession session = UserSession.getInstance();
 
@@ -74,7 +81,7 @@ public class DocumentListController {
         }
         setupTableColumns();
         tableView.setItems(documentList);
-        setupComboBox();
+        setupComboBoxes();
         searchDocuments();
         setupSearch();
     }
@@ -162,16 +169,31 @@ public class DocumentListController {
         }
     }
 
-    private void setupComboBox() {
+    private void setupComboBoxes() {
         try {
             List<DocumentType> documentTypes = documentTypeApiService.getDocumentTypesList();
-
-            documentTypeComboBox.getItems().setAll(
+            documentTypeComboBox.getItems().add("Tất cả");
+            documentTypeComboBox.getItems().addAll(
                     documentTypes.stream()
                             .map(DocumentType::getDocumentTypeName)
                             .toList()
             );
+            documentTypeComboBox.getSelectionModel().select("Tất cả");
             documentTypeComboBox.setOnAction(e -> searchDocuments());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            List<Category> categories = categoryApiService.getCategoriesList();
+            categoryComboBox.getItems().add("Tất cả");
+            categoryComboBox.getItems().addAll(
+                    categories.stream()
+                            .map(Category::getCategoryName)
+                            .toList()
+            );
+            categoryComboBox.getSelectionModel().select("Tất cả");
+            categoryComboBox.setOnAction(e -> searchDocuments());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -184,14 +206,18 @@ public class DocumentListController {
         String documentType = documentTypeComboBox.getValue();
         if ("Tất cả".equals(documentType)) documentType = null;
 
+        String category = categoryComboBox.getValue();
+        if ("Tất cả".equals(category)) category = null;
+
         showLoadingPopup("Đang tải danh sách tài liệu...");
 
         String finalDocumentType = documentType;
+        String finalCategory = category;
 
         Task<List<Document>> task = new Task<>() {
             @Override
             protected List<Document> call() throws Exception {
-                return documentApiService.filterDocuments(title, null, null, finalDocumentType, null);
+                return documentApiService.filterDocuments(title, null, null, finalDocumentType, finalCategory, null);
             }
         };
         task.setOnSucceeded(e -> Platform.runLater(() -> {
