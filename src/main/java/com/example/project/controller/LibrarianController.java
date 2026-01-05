@@ -188,15 +188,4 @@ public class LibrarianController {
                 )
                 .body(resource);
     }
-
-    // Delete 1 reader
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteDocument(@PathVariable Long id) {
-        librarianService.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Không tìm thấy thủ thư"));
-
-        librarianService.delete(id);
-        return ResponseEntity.noContent().build(); // 204 No Content
-    }
 }
