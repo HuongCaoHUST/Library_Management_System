@@ -52,11 +52,12 @@
       </AnchorPane>
       <AnchorPane prefHeight="50.0" prefWidth="1280.0" style="-fx-background-color: a81c29;">
          <children>
-            <GridPane layoutX="772.0" prefHeight="50.0" prefWidth="781.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="10.0">
+            <GridPane layoutX="772.0" prefHeight="50.0" prefWidth="980.0" AnchorPane.leftAnchor="290.0" AnchorPane.rightAnchor="10.0">
                <columnConstraints>
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="261.0" minWidth="10.0" prefWidth="260.33333333333" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="261.0" minWidth="10.0" prefWidth="260.33333333333" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="261.0" minWidth="10.0" prefWidth="260.33333333333" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="261.0" minWidth="10.0" prefWidth="245.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="261.0" minWidth="10.0" prefWidth="245.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="261.0" minWidth="10.0" prefWidth="245.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="261.0" minWidth="10.0" prefWidth="245.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -65,12 +66,21 @@
                   <Insets />
                </opaqueInsets>
                <children>
-                  <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="238.0" styleClass="menu_button" stylesheets="@fullpackstyling.css" text="Quản lý tài liệu" GridPane.columnIndex="2">
+                  <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="238.0" styleClass="menu_button" stylesheets="@fullpackstyling.css" text="Quản lý tài liệu" GridPane.columnIndex="3">
                     <items>
                       <MenuItem fx:id="menuItemDocumentList" onAction="#openDocumentListForm" mnemonicParsing="false" styleClass="menu_item" text="Danh sách tài liệu" />
                       <MenuItem fx:id="menuItemAddDocument" onAction="#openGrnAddForm" mnemonicParsing="false" styleClass="menu_item" text="Thêm phiếu nhập kho" />
                         <MenuItem mnemonicParsing="false" styleClass="menu_item" text="Yêu cầu mượn" />
                     </items>
+                     <font>
+                        <Font name="Segoe UI Bold" size="16.0" />
+                     </font>
+                  </MenuButton>
+                  <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="238.0" styleClass="menu_button" stylesheets="@fullpackstyling.css" text="Quản lý mượn trả" GridPane.columnIndex="2">
+                     <items>
+                        <MenuItem mnemonicParsing="false" styleClass="menu_item" text="Phiếu mượn còn hạn" />
+                        <MenuItem mnemonicParsing="false" styleClass="menu_item" text="Phiếu mượn quá hạn" />
+                     </items>
                      <font>
                         <Font name="Segoe UI Bold" size="16.0" />
                      </font>
