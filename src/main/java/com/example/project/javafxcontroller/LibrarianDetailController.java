@@ -2,6 +2,7 @@ package com.example.project.javafxcontroller;
 
 import com.example.project.model.Librarian;
 import com.example.project.apiservice.LibrarianApiService;
+import com.example.project.security.PermissionService;
 import com.example.project.security.UserSession;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,13 +27,15 @@ public class LibrarianDetailController {
     @FXML private Button deleteLibrarianButton;
 
     private LibrarianApiService librarianApiService;
+    private PermissionService permissionService; // Declare PermissionService
     private Librarian currentLibrarian;
 
     @FXML
     public void initialize() {
         librarianApiService = new LibrarianApiService();
+        permissionService = new PermissionService(); // Instantiate PermissionService
 
-        if (UserSession.getInstance().hasPermission("Xóa thủ thư")) {
+        if (permissionService.canDeleteLibrarian()) { // Use PermissionService
             deleteLibrarianButton.setVisible(true);
         } else {
             deleteLibrarianButton.setVisible(false);

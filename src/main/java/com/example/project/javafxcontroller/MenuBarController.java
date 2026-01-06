@@ -3,6 +3,7 @@ package com.example.project.javafxcontroller;
 import com.example.project.apiservice.LibrarianApiService;
 import com.example.project.dto.ApiResponse;
 import com.example.project.model.Librarian;
+import com.example.project.security.PermissionService; // Import PermissionService
 import com.example.project.security.UserSession;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,13 +22,14 @@ public class MenuBarController {
     @FXML private MenuItem menuItemLibrarianList;
     @FXML private MenuItem menuItemReaderList;
     private ContextMenu dropdownMenu;
+    private PermissionService permissionService;
 
     @FXML
     private void initialize() {
+        permissionService = new PermissionService();
 
-        UserSession session = UserSession.getInstance();
-        menuItemLibrarianList.setVisible(session.hasPermission("Xem thủ thư"));
-        menuItemReaderList.setVisible(session.hasPermission("Xem bạn đọc"));
+        menuItemLibrarianList.setVisible(permissionService.canViewLibrarianList());
+        menuItemReaderList.setVisible(permissionService.canViewReaderList());
 
         if (avatarImage == null) {
             return;
