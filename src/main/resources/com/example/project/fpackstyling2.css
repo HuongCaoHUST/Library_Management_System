@@ -2423,3 +2423,95 @@
     -fx-effect: none;
     -fx-translate-y: 1;
 }
+
+/* =========================================
+   Document Add Form
+   ========================================= */
+
+.document-add-container {
+    -fx-background-color: #ffffff;
+}
+
+.document-add-container .label {
+    -fx-text-fill: #10165F;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.document-add-container .text-field,
+.document-add-container .text-area {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cfd2dc;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 6px 10px;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 13px;
+    -fx-text-fill: #333333;
+}
+
+.document-add-container .combo-box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cfd2dc;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 2px 10px;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 13px;
+    -fx-text-fill: #333333;
+}
+
+.document-add-container .text-field:focused,
+.document-add-container .text-area:focused,
+.document-add-container .combo-box:focused {
+    -fx-border-color: #10165F;
+    -fx-effect: dropshadow(three-pass-box, rgba(16, 22, 95, 0.2), 4, 0, 0, 0);
+}
+
+.document-add-container .text-area .content {
+    -fx-background-color: white;
+    -fx-background-radius: 4px;
+}
+
+.document-add-container .button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #10165F;
+    -fx-border-color: #10165F;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-font-family: "Segoe UI";
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-cursor: hand;
+    -fx-padding: 5px 10px;
+}
+
+.document-add-container .button:hover {
+    -fx-background-color: #f0f4ff;
+}
+
+.document-add-container #btnOnAddDocument {
+    -fx-background-color: #a81c29;
+    -fx-text-fill: white;
+    -fx-border-color: transparent;
+    -fx-font-size: 14px;
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 3, 0, 0, 2);
+}
+
+.document-add-container #btnOnAddDocument:hover {
+    -fx-background-color: derive(#a81c29, 20%); /* Sáng hơn khi hover */
+}
+
+.document-add-container #btnOnAddDocument:pressed {
+    -fx-background-color: derive(#a81c29, -10%); /* Tối hơn khi nhấn */
+    -fx-effect: none;
+    -fx-translate-y: 1;
+}
+
+.document-add-container .image-view {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 0);
+}
