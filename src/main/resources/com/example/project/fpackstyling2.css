@@ -2104,3 +2104,33 @@
     -fx-border-color: #1f3368;
     -fx-faint-focus-color: transparent;
 }
+
+.rdl-button{
+    -fx-background-color: #c83c49;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-font: "Segoe UI";
+
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
+
+    -fx-padding: 6px 10px;
+    -fx-cursor: hand;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 12, 0.25, 0, 6);
+}
+
+/* hover */
+.rdl-button:hover{
+    -fx-background-color: derive(#c83c49, 20%);
+    -fx-scale-x: 1.01;
+    -fx-scale-y: 1.01;
+}
+
+/* pressed */
+.rdl-button:pressed{
+    -fx-background-color: #a22f39;
+    -fx-scale-x: 0.99;
+    -fx-scale-y: 0.99;
+}

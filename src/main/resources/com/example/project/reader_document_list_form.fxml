@@ -33,10 +33,7 @@
             </AnchorPane>
             <AnchorPane fx:id="searchResultPane" layoutX="47.0" layoutY="75.2" prefHeight="574.0" prefWidth="1280.0" style="-fx-background-color: #1f3368;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="75.0">
                 <children>
-               <Button fx:id="btnConfirmBorrowSlip" onAction="#openConfirmBorrowSlip" layoutX="1072.0" layoutY="412.0" mnemonicParsing="false" prefHeight="104.0" prefWidth="160.0" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="MƯỢN" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="450.0">
-                  <font>
-                     <Font name="Segoe UI Bold" size="16.0" />
-                  </font>
+               <Button fx:id="btnConfirmBorrowSlip" onAction="#openConfirmBorrowSlip" layoutX="1072.0" layoutY="412.0" mnemonicParsing="false" prefHeight="104.0" prefWidth="160.0" styleClass="rdl-button" stylesheets="@fpackstyling2.css" text="MƯỢN" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="450.0">
                </Button>
                     <TableView fx:id="tableView" prefHeight="366.0" prefWidth="1240.0" AnchorPane.bottomAnchor="198.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
                         <columns>
@@ -70,10 +67,7 @@
                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                       </columnResizePolicy>
                   </TableView>
-               <Button fx:id="btnDeleteBorrowSlip" onAction="#handleDeleteBorrowSlip" layoutX="1129.0" layoutY="390.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="44.0" prefWidth="160.0" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="Xóa phiếu mượn" AnchorPane.bottomAnchor="140.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="390.0">
-                  <font>
-                     <Font name="Segoe UI Bold" size="16.0" />
-                  </font>
+               <Button fx:id="btnDeleteBorrowSlip" onAction="#handleDeleteBorrowSlip" layoutX="1129.0" layoutY="390.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="44.0" prefWidth="160.0" styleClass="rdl-button" stylesheets="@fpackstyling2.css" text="Xóa phiếu mượn" AnchorPane.bottomAnchor="140.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="390.0">
                </Button>
                 </children>
             </AnchorPane>
