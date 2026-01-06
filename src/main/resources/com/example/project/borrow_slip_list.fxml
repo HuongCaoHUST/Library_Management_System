@@ -12,6 +12,8 @@
                 <TableView fx:id="borrowSlipTable" stylesheets="@fullpackstyling.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                     <columns>
                         <TableColumn fx:id="colBorrowSlipId" prefWidth="100.0" text="Mã Phiếu Mượn"/>
+                        <TableColumn fx:id="colReaderId" prefWidth="100.0" text="Mã Độc Giả"/>
+                        <TableColumn fx:id="colReaderName" prefWidth="150.0" text="Tên Độc Giả"/>
                         <TableColumn fx:id="colBorrowDate" prefWidth="150.0" text="Ngày Mượn"/>
                         <TableColumn fx:id="colDueDate" prefWidth="150.0" text="Ngày Hết Hạn"/>
                         <TableColumn fx:id="colStatus" prefWidth="150.0" text="Trạng Thái"/>

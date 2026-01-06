@@ -34,6 +34,10 @@ public class BorrowSlipListController {
     @FXML
     private TableColumn<BorrowSlipResponse, Long> colBorrowSlipId;
     @FXML
+    private TableColumn<BorrowSlipResponse, Long> colReaderId; // New
+    @FXML
+    private TableColumn<BorrowSlipResponse, String> colReaderName; // New
+    @FXML
     private TableColumn<BorrowSlipResponse, LocalDate> colBorrowDate;
     @FXML
     private TableColumn<BorrowSlipResponse, LocalDate> colDueDate;
@@ -48,6 +52,8 @@ public class BorrowSlipListController {
     @FXML
     public void initialize() {
         colBorrowSlipId.setCellValueFactory(new PropertyValueFactory<>("borrowSlipId"));
+        colReaderId.setCellValueFactory(new PropertyValueFactory<>("readerId")); // New
+        colReaderName.setCellValueFactory(new PropertyValueFactory<>("readerName")); // New
         colBorrowDate.setCellValueFactory(new PropertyValueFactory<>("borrowDate"));
         colDueDate.setCellValueFactory(new PropertyValueFactory<>("dueDate"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
