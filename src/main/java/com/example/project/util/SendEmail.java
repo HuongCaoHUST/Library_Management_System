@@ -16,6 +16,14 @@ public class SendEmail {
         this.mailSender = mailSender;
     }
 
+    public MimeMessage createMimeMessage() {
+        return mailSender.createMimeMessage();
+    }
+
+    public void send(MimeMessage mimeMessage) {
+        mailSender.send(mimeMessage);
+    }
+
     public void sendMail(String to, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);

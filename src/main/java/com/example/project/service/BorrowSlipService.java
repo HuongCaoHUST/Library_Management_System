@@ -7,8 +7,11 @@ import com.example.project.model.*;
 import com.example.project.repository.*;
 import com.example.project.util.SendEmail;
 import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +26,8 @@ public class BorrowSlipService {
     private final DocumentRepository documentRepository;
     private final BorrowSlipMapper mapper;
     private final SendEmail sendEmail;
+    private final QrCodeService qrCodeService;
+
 
     @Transactional
     public BorrowSlipResponse create(BorrowSlipRequest request) {
@@ -83,9 +88,18 @@ public class BorrowSlipService {
     private void sendBorrowSlipEmail(BorrowSlip borrowSlip) {
         String to = "huongcao.seee@gmail.com";
         String subject = "Thông tin chi tiết phiếu mượn";
+        String qrContent = "BorrowSlipID:" + borrowSlip.getBorrowSlipId();
+        byte[] qrCode = qrCodeService.generateQr(qrContent, 200, 200);
+
         String htmlContent = buildBorrowSlipEmailContent(borrowSlip);
         try {
-            sendEmail.sendHtmlMail(to, subject, htmlContent);
+            MimeMessage message = sendEmail.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(htmlContent, true);
+            helper.addInline("qrCodeImage", new ByteArrayResource(qrCode), "image/png");
+            sendEmail.send(message);
         } catch (MessagingException e) {
             e.printStackTrace();
         }
@@ -101,15 +115,18 @@ public class BorrowSlipService {
         html.append("<p><strong>Ngày hết hạn:</strong> ").append(borrowSlip.getDueDate()).append("</p>");
         html.append("<h3>Danh sách tài liệu mượn:</h3>");
         html.append("<table border='1' style='border-collapse: collapse; width: 100%;'>");
-        html.append("<thead><tr><th>Tên tài liệu</th><th>Số lượng</th></tr></thead>");
+        html.append("<thead><tr><th>Tên tài liệu</th><th>Tác giả</th><th>Số lượng</th></tr></thead>");
         html.append("<tbody>");
         for (BorrowSlipDetail detail : borrowSlip.getDetails()) {
             html.append("<tr>");
             html.append("<td>").append(detail.getDocument().getTitle()).append("</td>");
+            html.append("<td>").append(detail.getDocument().getAuthor()).append("</td>");
             html.append("<td>").append(detail.getQuantity()).append("</td>");
             html.append("</tr>");
         }
         html.append("</tbody></table>");
+        html.append("<h3>QR Code phiếu mượn:</h3>");
+        html.append("<img src='cid:qrCodeImage' />");
         html.append("</body></html>");
         return html.toString();
     }
