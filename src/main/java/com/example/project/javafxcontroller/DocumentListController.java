@@ -77,7 +77,7 @@ public class DocumentListController {
         UserSession session = UserSession.getInstance();
 
         if (addDocumentButton != null) {
-            addDocumentButton.setVisible(session.hasPermission("DOCUMENT_CREATE"));
+            addDocumentButton.setVisible(session.hasPermission("Thêm tài liệu"));
         }
         setupTableColumns();
         tableView.setItems(documentList);
