@@ -55,8 +55,33 @@ public class ReaderMenuBarController {
         }
     }
 
+    @FXML
+    private void openMyBorrowSlipsForm(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/project/reader_my_borrow_slip_form.fxml")
+            );
+
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((MenuItem) event.getSource())
+                    .getParentPopup().getOwnerWindow();
+
+            stage.setScene(scene);
+            stage.setTitle("Phiếu mượn của tôi - Hệ thống quản lý thư viện");
+            stage.centerOnScreen();
+            stage.getIcons().add(new javafx.scene.image.Image(
+                    getClass().getResourceAsStream("/com/example/project/images/logo_HUB.png")
+            ));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void createDropdownMenu() {
         dropdownMenu = new ContextMenu();
+
 
         MenuItem profileItem = new MenuItem("Thông tin cá nhân");
         profileItem.setOnAction(e -> onViewProfile());

@@ -1,6 +1,7 @@
 package com.example.project.javafxcontroller;
 import com.example.project.apiservice.CategoryApiService;
 import com.example.project.apiservice.DocumentTypeApiService;
+import com.example.project.model.BorrowItem;
 import com.example.project.model.Category;
 import com.example.project.model.Document;
 import com.example.project.apiservice.DocumentApiService;
@@ -9,6 +10,7 @@ import com.example.project.security.UserSession;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -33,9 +35,12 @@ import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
-public class DocumentListController {
+public class ReaderDocumentListController {
 
     @FXML private TableView<Document> tableView;
     @FXML private TableColumn<Document, String> colTitle;
@@ -44,15 +49,28 @@ public class DocumentListController {
     @FXML private TableColumn<Document, String> colPublisher;
     @FXML private TableColumn<Document, String> colShelfLocation;
     @FXML private TableColumn<Document, String> colDocumentType;
-    @FXML private TableColumn<Document, String> colCategory;
     @FXML private TableColumn<Document, String> colAvailableCopies;
     @FXML private TableColumn<Document, String> colBorrowedCopies;
     @FXML private TableColumn<Document, Void> colDetail;
+    @FXML private TableColumn<Document, Void> colAddToBorrowSlip;
+    @FXML private Button btnDeleteBorrowSlip;
+    @FXML private Button btnConfirmBorrowSlip;
+    private final ObservableList<BorrowItem> cartItems = FXCollections.observableArrayList();
+
+    @FXML private TableView<BorrowItem> cartTableView;
+    @FXML private TableColumn<BorrowItem, Number> stt;
+    @FXML private TableColumn<BorrowItem, String> cartColTitle;
+    @FXML private TableColumn<BorrowItem, String> cartColAuthor;
+    @FXML private TableColumn<BorrowItem, Number> quantity;
+    @FXML private TableColumn<BorrowItem, String> cartColBorrowDate;
+    @FXML private TableColumn<BorrowItem, String> cartColDueDate;
+    @FXML private TableColumn<BorrowItem, Void> cartColRemove;
+
 
     @FXML private TextField searchField;
     @FXML private Button searchButton;
-    @FXML private ComboBox<String> documentTypeComboBox;
     @FXML private ComboBox<String> categoryComboBox;
+    @FXML private ComboBox<String> documentTypeComboBox;
     @FXML private Button addDocumentButton;
     @FXML private Button exportDocumentToExceleButton;
 
@@ -67,7 +85,6 @@ public class DocumentListController {
     private DocumentTypeApiService documentTypeApiService;
     private CategoryApiService categoryApiService;
 
-
     @FXML
     public void initialize() {
         documentApiService = new DocumentApiService();
@@ -81,9 +98,28 @@ public class DocumentListController {
         }
         setupTableColumns();
         tableView.setItems(documentList);
-        setupComboBoxes();
+        setupComboBox();
+        setupCategoryComboBox();
         searchDocuments();
         setupSearch();
+        setupBorrowSlip();
+
+    }
+
+    private void setupCategoryComboBox() {
+        try {
+            List<Category> categories = categoryApiService.getCategoriesList();
+            categoryComboBox.getItems().add("Tất cả");
+            categoryComboBox.getItems().addAll(
+                    categories.stream()
+                            .map(Category::getCategoryName)
+                            .toList()
+            );
+            categoryComboBox.getSelectionModel().selectFirst();
+            categoryComboBox.setOnAction(e -> searchDocuments());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setupTableColumns() {
@@ -93,7 +129,6 @@ public class DocumentListController {
         colPublisher.setCellValueFactory(new PropertyValueFactory<>("publisher"));
         colShelfLocation.setCellValueFactory(new PropertyValueFactory<>("shelfLocation"));
         colDocumentType.setCellValueFactory(new PropertyValueFactory<>("documentType"));
-        colCategory.setCellValueFactory(new PropertyValueFactory<>("category"));
         colAvailableCopies.setCellValueFactory(new PropertyValueFactory<>("availableCopies"));
         colBorrowedCopies.setCellValueFactory(new PropertyValueFactory<>("borrowedCopies"));
 
@@ -104,8 +139,8 @@ public class DocumentListController {
         colPublisher.setStyle(cellStyle);
         colShelfLocation.setStyle(cellStyle);
         colDocumentType.setStyle(cellStyle);
-        colCategory.setStyle(cellStyle);
         colAvailableCopies.setStyle(cellStyle);
+        colBorrowedCopies.setStyle(cellStyle);
         colBorrowedCopies.setStyle(cellStyle);
 
         // Detail Col
@@ -136,12 +171,42 @@ public class DocumentListController {
                 });
             }
         });
-        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
         tableView.setRowFactory(tv -> new TableRow<>() {
             {
                 setPrefHeight(50);
             }
         });
+
+        // Col add to borrowSlip
+        colAddToBorrowSlip.setCellFactory(col -> new TableCell<>() {
+            private final Button btn = new Button("➕ Thêm");
+            private final HBox container = new HBox(btn);
+
+            {
+                container.setAlignment(Pos.CENTER);
+                btn.getStyleClass().add("primary-btn");
+                btn.setOnAction(e -> {
+                    Document doc = getTableView().getItems().get(getIndex());
+
+                    if (doc.getAvailableCopies() <= 0) {
+                        showAlert(Alert.AlertType.ERROR,"Hết sách","Tài liệu đã hết!");
+                        return;
+                    }
+                    addToCart(doc);
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(container);
+                }
+            }
+        });
+
     }
 
     private Button createButton(String text, String color) {
@@ -171,7 +236,7 @@ public class DocumentListController {
         }
     }
 
-    private void setupComboBoxes() {
+    private void setupComboBox() {
         try {
             List<DocumentType> documentTypes = documentTypeApiService.getDocumentTypesList();
             documentTypeComboBox.getItems().add("Tất cả");
@@ -180,26 +245,133 @@ public class DocumentListController {
                             .map(DocumentType::getDocumentTypeName)
                             .toList()
             );
-            documentTypeComboBox.getSelectionModel().select("Tất cả");
+            documentTypeComboBox.getSelectionModel().selectFirst();
             documentTypeComboBox.setOnAction(e -> searchDocuments());
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
-        try {
-            List<Category> categories = categoryApiService.getCategoriesList();
-            categoryComboBox.getItems().add("Tất cả");
-            categoryComboBox.getItems().addAll(
-                    categories.stream()
-                            .map(Category::getCategoryName)
-                            .toList()
-            );
-            categoryComboBox.getSelectionModel().select("Tất cả");
-            categoryComboBox.setOnAction(e -> searchDocuments());
-        } catch (Exception e) {
-            e.printStackTrace();
+    private void setupBorrowSlip() {
+        cartTableView.setItems(cartItems);
+        stt.setCellFactory(col -> {
+            TableCell<BorrowItem, Number> cell = new TableCell<>() {
+                @Override
+                protected void updateItem(Number item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(empty ? null : String.valueOf(getIndex() + 1));
+                }
+            };
+            cell.setAlignment(Pos.CENTER);
+            return cell;
+        });
+
+        cartColTitle.setCellValueFactory(data ->
+                new SimpleStringProperty(
+                        data.getValue().getDocument().getTitle()
+                )
+        );
+
+        cartColAuthor.setCellValueFactory(data ->
+                new SimpleStringProperty(
+                        data.getValue().getDocument().getAuthor()
+                )
+        );
+
+        quantity.setCellValueFactory(data ->
+                data.getValue().quantityProperty()
+        );
+        quantity.setCellFactory(col -> {
+            TableCell<BorrowItem, Number> cell = new TableCell<>() {
+                @Override
+                protected void updateItem(Number item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(empty ? null : item.toString());
+                }
+            };
+            cell.setAlignment(Pos.CENTER);
+            return cell;
+        });
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        cartColBorrowDate.setCellValueFactory(cellData ->
+                new SimpleStringProperty(LocalDate.now().format(dtf))
+        );
+        cartColBorrowDate.setCellFactory(col -> {
+            TableCell<BorrowItem, String> cell = new TableCell<>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(empty ? null : item);
+                }
+            };
+            cell.setAlignment(Pos.CENTER);
+            return cell;
+        });
+
+        cartColDueDate.setCellValueFactory(cellData ->
+                new SimpleStringProperty(LocalDate.now().plusMonths(3).format(dtf))
+        );
+        cartColDueDate.setCellFactory(col -> {
+            TableCell<BorrowItem, String> cell = new TableCell<>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setText(empty ? null : item);
+                }
+            };
+            cell.setAlignment(Pos.CENTER);
+            return cell;
+        });
+
+        cartColRemove.setCellFactory(col -> {
+            TableCell<BorrowItem, Void> cell = new TableCell<>() {
+                private final Button btn = new Button("❌");
+                private final HBox container = new HBox(btn);
+                {
+                    container.setAlignment(Pos.CENTER);
+                    btn.setOnAction(e -> {
+                        BorrowItem item =
+                                getTableView().getItems().get(getIndex());
+                        cartItems.remove(item);
+                    });
+                }
+                @Override
+                protected void updateItem(Void item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setGraphic(empty ? null : container);
+                }
+            };
+            return cell;
+        });
+    }
+
+    private void addToCart(Document doc) {
+
+        Optional<BorrowItem> existingItem =
+                cartItems.stream()
+                        .filter(i -> i.getDocument().getDocumentId().equals(doc.getDocumentId()))
+                        .findFirst();
+
+        if (existingItem.isPresent()) {
+            BorrowItem item = existingItem.get();
+
+            if (item.quantityProperty().get() < doc.getAvailableCopies()) {
+                item.increaseQuantity();
+            } else {
+                showAlert(Alert.AlertType.ERROR,"Hết sách","Không thể mượn thêm, số lượng đã đạt tối đa");
+            }
+
+        } else {
+            if (doc.getAvailableCopies() <= 0) {
+                showAlert(Alert.AlertType.ERROR,"Hết sách","Tài liệu không còn bản nào");
+                return;
+            }
+            cartItems.add(new BorrowItem(doc));
         }
     }
+
 
     private void searchDocuments() {
         String keyword = searchField.getText().trim();
@@ -291,6 +463,60 @@ public class DocumentListController {
             loadingStage = null;
         }
     }
+
+    @FXML
+    private void handleDeleteBorrowSlip() {
+
+        if (cartItems.isEmpty()) {
+            showAlert(Alert.AlertType.INFORMATION,
+                    "Thông báo",
+                    "Phiếu mượn đang trống");
+            return;
+        }
+
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Xác nhận");
+        confirm.setHeaderText("Xóa toàn bộ phiếu mượn?");
+        confirm.setContentText("Tất cả tài liệu trong giỏ sẽ bị xóa");
+
+        confirm.showAndWait().ifPresent(result -> {
+            if (result == ButtonType.OK) {
+                cartItems.clear();
+            }
+        });
+    }
+
+    @FXML
+    protected void openConfirmBorrowSlip(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/project/borrow_slip_confirm.fxml")
+            );
+
+            Parent root = loader.load();
+
+            BorrowSlipConfirmController controller = loader.getController();
+
+            controller.setCartItems(cartItems);
+            controller.setOnSuccessCallback(() -> {
+                cartItems.clear();
+                searchDocuments();
+            });
+
+            Stage stage = new Stage();
+            stage.setTitle("Xác nhận phiếu mượn");
+            stage.setScene(new Scene(root));
+
+            stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+            stage.initModality(Modality.WINDOW_MODAL); // chặn form cha
+
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @FXML
     protected void addDocument(ActionEvent event) {

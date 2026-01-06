@@ -2,6 +2,7 @@ package com.example.project.javafxcontroller;
 
 import com.example.project.apiservice.LibrarianApiService;
 import com.example.project.model.Librarian;
+import com.example.project.security.PermissionService;
 import com.example.project.security.UserSession;
 import com.example.project.service.LibrarianService;
 import javafx.animation.KeyFrame;
@@ -50,8 +51,8 @@ public class LibrarianListController {
     @FXML private Button addLibrarianButton;
 
     private LibrarianApiService librarianApiService;
-
     private LibrarianService librarianService;
+    private PermissionService permissionService; // New instance of PermissionService
 
     private Stage loadingStage;
 
@@ -65,9 +66,9 @@ public class LibrarianListController {
     public void initialize() {
         librarianApiService = new LibrarianApiService();
         librarianService = new LibrarianService();
+        permissionService = new PermissionService(); // Initialize PermissionService
 
-        UserSession session = UserSession.getInstance();
-        addLibrarianButton.setVisible(session.hasPermission("LIBRARIAN_CREATE"));
+        addLibrarianButton.setVisible(permissionService.canAddLibrarian()); // Use PermissionService
         setupTableColumns();
         tableView.setItems(librarianList);
         setupComboBox();

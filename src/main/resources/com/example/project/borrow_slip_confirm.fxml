@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #1f3368;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.project.javafxcontroller.BorrowSlipConfirmController">
+
+    <children>
+
+        <!-- Title -->
+        <Label layoutX="30.0" layoutY="20.0" text="XÁC NHẬN PHIẾU MƯỢN" textFill="WHITE">
+            <font>
+                <Font name="Segoe UI Bold" size="24.0" />
+            </font>
+        </Label>
+
+        <!-- Table -->
+        <TableView fx:id="confirmTableView" layoutX="30.0" layoutY="80.0" prefHeight="380.0" prefWidth="840.0" AnchorPane.rightAnchor="30.0">
+
+            <columns>
+                <TableColumn fx:id="colIndex" prefWidth="60" text="STT" />
+                <TableColumn fx:id="colDocumentId" prefWidth="120" text="Mã tài liệu" />
+                <TableColumn fx:id="colTitle" prefWidth="260" text="Tên tài liệu" />
+                <TableColumn fx:id="colAuthor" prefWidth="180" text="Tác giả" />
+                <TableColumn fx:id="colQuantity" prefWidth="100" text="Số lượng" />
+            </columns>
+
+        </TableView>
+
+        <!-- Action buttons -->
+        <HBox layoutX="30.0" layoutY="490.0" spacing="20.0" AnchorPane.rightAnchor="30.0">
+
+            <Button fx:id="btnCancel" onAction="#handleCancel" prefHeight="45" prefWidth="140" styleClass="button_reject" stylesheets="@fullpackstyling.css" text="HỦY">
+                <font>
+                    <Font name="Segoe UI Bold" size="14.0" />
+                </font>
+            </Button>
+
+            <Button fx:id="btnConfirm" onAction="#handleConfirmBorrow" prefHeight="45" prefWidth="180" styleClass="primary-btn" stylesheets="@fullpackstyling.css" text="XÁC NHẬN MƯỢN">
+                <font>
+                    <Font name="Segoe UI Bold" size="14.0" />
+                </font>
+            </Button>
+
+        </HBox>
+
+    </children>
+</AnchorPane>
