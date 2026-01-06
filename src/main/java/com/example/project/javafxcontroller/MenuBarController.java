@@ -156,6 +156,26 @@ public class MenuBarController {
 //        }
     }
 
+    @FXML
+    private void openBorrowSlipListForm(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/project/borrow_slip_list.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((MenuItem) event.getSource()).getParentPopup().getOwnerWindow();
+
+            stage.setScene(scene);
+            stage.setTitle("Danh sách phiếu mượn - Hệ thống quản lý thư viện");
+            stage.centerOnScreen();
+            stage.getIcons().add(new javafx.scene.image.Image(getClass().getResourceAsStream("/com/example/project/images/logo_HUB.png")));
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void createDropdownMenu() {
         dropdownMenu = new ContextMenu();
 

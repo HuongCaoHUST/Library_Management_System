@@ -78,7 +78,7 @@
                   </MenuButton>
                   <MenuButton alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="238.0" styleClass="menu_button" stylesheets="@fullpackstyling.css" text="Quản lý mượn trả" GridPane.columnIndex="2">
                      <items>
-                        <MenuItem mnemonicParsing="false" styleClass="menu_item" text="Phiếu mượn còn hạn" />
+                        <MenuItem fx:id="menuItemBorrowSlipList" onAction="#openBorrowSlipListForm" mnemonicParsing="false" styleClass="menu_item" text="Phiếu mượn còn hạn" />
                         <MenuItem mnemonicParsing="false" styleClass="menu_item" text="Phiếu mượn quá hạn" />
                      </items>
                      <font>
