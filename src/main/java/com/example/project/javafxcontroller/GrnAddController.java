@@ -1,5 +1,9 @@
 package com.example.project.javafxcontroller;
 
+import com.example.project.apiservice.DocumentApiService;
+import com.example.project.apiservice.SupplierApiService;
+import com.example.project.model.Category;
+import com.example.project.model.Supplier;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,6 +25,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -58,11 +63,17 @@ public class GrnAddController implements Initializable {
     // ========== Data ==========
     private final ObservableList<TaiLieuNhap> danhSachTaiLieu = FXCollections.observableArrayList();
 
+    // ========== Api ===========
+    private SupplierApiService supplierApiService;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        supplierApiService = new SupplierApiService();
+
         setupDatePicker();
         setupTable();
         setupTableEditing();
+        setupSupplierComboBox();
     }
 
     /**
@@ -70,6 +81,25 @@ public class GrnAddController implements Initializable {
      */
     private void setupDatePicker() {
         dpNgayNhan.setValue(LocalDate.now());
+    }
+
+
+    /**
+     * Cấu hình SupplierComboBox
+     */
+    private void setupSupplierComboBox() {
+        try {
+            List<Supplier> suppliers = supplierApiService.filterSuppliers(null, null);
+            grnSupplierComboBox.getItems().add("Tất cả");
+            grnSupplierComboBox.getItems().addAll(
+                    suppliers.stream()
+                            .map(Supplier::getSupplierName)
+                            .toList()
+            );
+            grnSupplierComboBox.getSelectionModel().selectFirst();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -396,12 +426,6 @@ public class GrnAddController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    // ==================== GETTER METHODS (cho việc test/debug) ====================
-
-    public ObservableList<TaiLieuNhap> getDanhSachTaiLieu() {
-        return danhSachTaiLieu;
     }
 
     // ==================== INNER CLASS - Model TaiLieuNhap ====================
