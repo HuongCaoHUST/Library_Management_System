@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -146,16 +147,17 @@ public class MenuBarController {
 
     @FXML
     private void openGrnAddForm(ActionEvent event) {
-//        try {
-//            Parent root = fxmlLoader.load("/com/example/project/grn_add_form.fxml");
-//            Stage stage = new Stage();
-//            stage.setTitle("Thêm tài liệu mới");
-//            stage.initModality(Modality.APPLICATION_MODAL);
-//            stage.setScene(new Scene(root));
-//            stage.showAndWait();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/project/grn_add_form.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Thêm tài liệu mới");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root));
+            stage.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
