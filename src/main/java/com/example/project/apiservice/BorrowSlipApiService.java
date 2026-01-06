@@ -22,6 +22,10 @@ public class BorrowSlipApiService extends BaseApiService {
             "http://14.225.254.18/api/borrow_slips/add";
     private static final String MY_BORROW_SLIPS_URL =
             "http://14.225.254.18/api/borrow_slips/my_borrow_slips";
+    private static final String GET_ALL_BORROW_SLIPS_URL =
+            "http://14.225.254.18/api/borrow_slips/list";
+    private static final String GET_BORROW_SLIP_BY_ID_URL =
+            "http://14.225.254.18/api/borrow_slips/"; // Will append ID to this
 
     public ApiResponse<BorrowSlipResponse> createBorrowSlip(BorrowSlipRequest request)
             throws Exception {
@@ -31,5 +35,13 @@ public class BorrowSlipApiService extends BaseApiService {
 
     public ApiResponse<List<BorrowSlipResponse>> getMyBorrowSlips() throws Exception {
         return get(MY_BORROW_SLIPS_URL, new TypeReference<ApiResponse<List<BorrowSlipResponse>>>() {});
+    }
+
+    public ApiResponse<List<BorrowSlipResponse>> getAllBorrowSlips() throws Exception {
+        return get(GET_ALL_BORROW_SLIPS_URL, new TypeReference<ApiResponse<List<BorrowSlipResponse>>>() {});
+    }
+
+    public ApiResponse<BorrowSlipResponse> getBorrowSlipById(Long id) throws Exception {
+        return get(GET_BORROW_SLIP_BY_ID_URL + id, new TypeReference<ApiResponse<BorrowSlipResponse>>() {});
     }
 }
