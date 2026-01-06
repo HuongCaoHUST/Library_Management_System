@@ -70,6 +70,7 @@ public class BorrowSlipListController {
                     private final Button btn = new Button("Xem");
 
                     {
+                        btn.getStyleClass().add("detail-button");
                         btn.setOnAction((ActionEvent event) -> {
                             BorrowSlipResponse data = getTableView().getItems().get(getIndex());
                             showDetailView(data.getDetails());
