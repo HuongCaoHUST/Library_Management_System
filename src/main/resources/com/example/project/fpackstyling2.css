@@ -2104,3 +2104,322 @@
     -fx-border-color: #1f3368;
     -fx-faint-focus-color: transparent;
 }
+
+.rdl-button{
+    -fx-background-color: #c83c49;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-font: "Segoe UI";
+
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
+
+    -fx-padding: 6px 10px;
+    -fx-cursor: hand;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 12, 0.25, 0, 6);
+}
+
+/* hover */
+.rdl-button:hover{
+    -fx-background-color: derive(#c83c49, 20%);
+    -fx-scale-x: 1.01;
+    -fx-scale-y: 1.01;
+}
+
+/* pressed */
+.rdl-button:pressed{
+    -fx-background-color: #a22f39;
+    -fx-scale-x: 0.99;
+    -fx-scale-y: 0.99;
+}
+
+/*=============== Borrow slip confirm form ==================*/
+.borrow-slip-confirm-approve-btn{
+    -fx-background-color: #2ecc71;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-font: "Segoe UI";
+
+    -fx-background-radius: 14px;
+    -fx-border-radius: 14px;
+
+    -fx-padding: 6px 10px;
+    -fx-cursor: hand;
+
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 12, 0.25, 0, 6);
+}
+
+.borrow-slip-confirm-approve-btn:hover{
+    -fx-background-color: derive(#2ecc71, 20%);
+    -fx-scale-x: 1.01;
+    -fx-scale-y: 1.01;
+}
+
+.borrow-slip-confirm-approve-btn:pressed{
+    -fx-background-color: #27ae60;
+    -fx-scale-x: 0.99;
+    -fx-scale-y: 0.99;
+}
+
+.borrow-slip-confirm-table {
+    -fx-background-color: white;
+    -fx-background-radius: 12px;
+    -fx-border-radius: 12px;
+
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
+
+    -fx-padding: 10px;
+}
+
+.borrow-slip-confirm-table .column-header-background {
+    -fx-background-color: transparent;
+    -fx-background-radius: 12px 12px 0 0;
+    -fx-padding: 0 0 5px 0;
+}
+
+.borrow-slip-confirm-table .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: #1f3368;
+    -fx-border-width: 0 0 2px 0;
+    -fx-padding: 0px 6px 0px 4px;
+    -fx-cell-size: 30px;
+}
+
+/* Chữ trong tiêu đề */
+.borrow-slip-confirm-table .column-header .label {
+    -fx-text-fill: #1f3368;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI";
+    -fx-alignment: CENTER-LEFT;
+}
+
+/* Các ô dữ liệu */
+.borrow-slip-confirm-table .table-cell {
+    -fx-text-fill: #333333;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 14px;
+    -fx-padding: 0px 6px 0px 4px;
+    -fx-alignment: CENTER-LEFT;
+    -fx-border-color: #eeeeee;
+    -fx-border-width: 0 0 1px 0;
+}
+
+/* Dòng dữ liệu (Row) */
+.borrow-slip-confirm-table .table-row-cell {
+    -fx-background-color: white;
+    -fx-background-insets: 0;
+    -fx-cell-size: 36px;
+}
+
+.borrow-slip-confirm-table .table-row-cell:hover {
+    -fx-background-color: #d6d6d6;
+    -fx-cursor: hand;
+}
+
+.borrow-slip-confirm-table .corner {
+    -fx-background-color: transparent;
+}
+
+/*============ Borrow Slip Detail Form ==============*/
+
+/* =========================================
+   STYLE CHO BẢNG HIỆN ĐẠI (MODERN TABLE)
+   ========================================= */
+.borrow-slip-detail-container {
+    -fx-padding: 10px 0px;
+}
+.borrow-slip-detail-container .modern-table {
+    -fx-background-color: white;
+    -fx-background-radius: 12px;
+    -fx-border-radius: 12px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
+}
+
+.borrow-slip-detail-container .modern-table .column-header-background {
+    -fx-background-color: transparent;
+    -fx-background-radius: 12px 12px 0 0;
+    -fx-padding: 0 0 5px 0;
+}
+
+.borrow-slip-detail-container .modern-table .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: #1f3368;
+    -fx-border-width: 0 0 2px 0;
+    -fx-padding: 0px 6px 0px 4px;
+}
+
+.borrow-slip-detail-container .modern-table .column-header .label {
+    -fx-text-fill: #1f3368;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI";
+    -fx-alignment: CENTER-LEFT;
+}
+
+.borrow-slip-detail-container .modern-table .table-cell {
+    -fx-text-fill: #333333;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 14px;
+    -fx-padding: 0px 6px 0px 4px;
+    -fx-alignment: CENTER-LEFT;
+    -fx-border-color: #eeeeee;
+    -fx-border-width: 0 0 1px 0;
+}
+
+.borrow-slip-detail-container .modern-table .table-row-cell {
+    -fx-background-color: white;
+    -fx-background-insets: 0;
+    -fx-cell-size: 28px;
+}
+
+.borrow-slip-detail-container .modern-table .table-row-cell:hover {
+    -fx-background-color: #d6d6d6;
+    -fx-cursor: hand;
+}
+
+.modern-table .corner {
+    -fx-background-color: transparent;
+}
+
+.borrow-slip-list-table {
+    -fx-background-color: white;
+    -fx-background-radius: 12px;
+    -fx-border-radius: 12px;
+
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 5);
+    -fx-padding: 6px 10px 10px 10px;
+}
+
+.borrow-slip-list-table .column-header-background {
+    -fx-background-color: transparent;
+    -fx-background-radius: 12px 12px 0 0;
+    -fx-padding: 0 0 5px 0;
+}
+
+.borrow-slip-list-table .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: #1f3368;
+    -fx-border-width: 0 0 2px 0;
+    -fx-padding: 0px 6px 0px 4px;
+}
+
+.borrow-slip-list-table .column-header .label {
+    -fx-text-fill: #1f3368;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI";
+    -fx-alignment: CENTER-LEFT;
+}
+
+.borrow-slip-list-table .table-cell {
+    -fx-text-fill: #333333;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 14px;
+    -fx-padding: 0px 6px 0px 4px;
+    -fx-alignment: CENTER-LEFT;
+    -fx-border-color: #eeeeee;
+    -fx-border-width: 0 0 1px 0;
+}
+
+.borrow-slip-list-table .table-row-cell {
+    -fx-background-color: white;
+    -fx-background-insets: 0;
+    -fx-cell-size: 36px;
+}
+
+.borrow-slip-list-table .table-row-cell:hover {
+    -fx-background-color: #d6d6d6;
+    -fx-cursor: hand;
+}
+
+.borrow-slip-list-table .corner {
+    -fx-background-color: transparent;
+}
+
+.borrow-slip-list-table .detail-button {
+    -fx-background-color: #2ecc71; /* Màu xanh chủ đạo */
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Segoe UI";
+    -fx-font-weight: bold;
+    -fx-font-size: 13px; /* Cỡ chữ nhỏ hơn nút chính (15px -> 13px) để vừa ô bảng */
+
+    -fx-background-radius: 10px; /* Bo góc mềm mại */
+    -fx-border-radius: 10px;
+
+    -fx-padding: 5px 14px; /* Padding gọn gàng hơn */
+    -fx-cursor: hand;
+
+    /* Đổ bóng nhẹ hơn so với nút to để bảng không bị rối */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 2);
+}
+
+/* Hover: Sáng lên và phóng to nhẹ */
+.borrow-slip-list-table .detail-button:hover {
+    -fx-background-color: derive(#2ecc71, 20%);
+    -fx-scale-x: 1.01;
+    -fx-scale-y: 1.01;
+}
+
+/* Pressed: Tối màu đi */
+.borrow-slip-list-table .detail-button:pressed {
+    -fx-background-color: #27ae60;
+    -fx-scale-x: 0.99;
+    -fx-scale-y: 0.99;
+}
+
+/* ================= Supplier add form ==================== */
+
+.supplier-add-container {
+    -fx-background-color: #ffffff;
+}
+
+.supplier-add-container .label {
+    -fx-text-fill: #10165F;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.supplier-add-container .text-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cfd2dc;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 6px 10px;
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 13px;
+    -fx-text-fill: #333333;
+}
+
+.supplier-add-container .text-field:focused {
+    -fx-border-color: #10165F;
+    -fx-effect: dropshadow(three-pass-box, rgba(83,131,255,0.25), 4, 0, 0, 0);
+}
+
+.supplier-add-container .button {
+    -fx-background-color: #a81c29;
+    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI";
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-cursor: hand;
+
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 3, 0, 0, 2);
+}
+
+.supplier-add-container .button:hover {
+    -fx-background-color: #c02030;
+}
+
+.supplier-add-container .button:pressed {
+    -fx-background-color: #8a1621;
+    -fx-effect: none;
+    -fx-translate-y: 1;
+}

@@ -115,7 +115,7 @@ public class ReaderDocumentListController {
                             .map(Category::getCategoryName)
                             .toList()
             );
-            categoryComboBox.getSelectionModel().selectFirst();
+//            categoryComboBox.getSelectionModel().selectFirst();
             categoryComboBox.setOnAction(e -> searchDocuments());
         } catch (Exception e) {
             e.printStackTrace();
@@ -185,6 +185,7 @@ public class ReaderDocumentListController {
             {
                 container.setAlignment(Pos.CENTER);
                 btn.getStyleClass().add("primary-btn");
+                btn.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 5 10; -fx-cursor: hand");
                 btn.setOnAction(e -> {
                     Document doc = getTableView().getItems().get(getIndex());
 
@@ -245,7 +246,7 @@ public class ReaderDocumentListController {
                             .map(DocumentType::getDocumentTypeName)
                             .toList()
             );
-            documentTypeComboBox.getSelectionModel().selectFirst();
+//            documentTypeComboBox.getSelectionModel().selectFirst();
             documentTypeComboBox.setOnAction(e -> searchDocuments());
         } catch (Exception e) {
             e.printStackTrace();
@@ -331,6 +332,7 @@ public class ReaderDocumentListController {
                 private final HBox container = new HBox(btn);
                 {
                     container.setAlignment(Pos.CENTER);
+                    btn.setStyle("-fx-background-color: #c83c49; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand");
                     btn.setOnAction(e -> {
                         BorrowItem item =
                                 getTableView().getItems().get(getIndex());
